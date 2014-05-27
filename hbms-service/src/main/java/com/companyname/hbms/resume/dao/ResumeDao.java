@@ -1,4 +1,6 @@
-package com.companyname.hbms.candidate.dao;
+package com.companyname.hbms.resume.dao;
+
+import com.companyname.hbms.resume.domain.Resume;
 
 /**
  * Created by wangjinsi on 2014-05-16.

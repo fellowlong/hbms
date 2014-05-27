@@ -28,13 +28,28 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="${dataSource.driverClassName}"/>
+    <property name="url" value="${dataSource.url}"/>
+    <property name="username" value="${dataSource.username}"/>
+    <property name="password" value="${dataSource.password}"/>
+    <property name="initialSize" value="${dataSource.initialSize}"/>
+    <property name="maxActive" value="${dataSource.maxActive}"/>
+    <property name="maxIdle" value="${dataSource.maxIdle}"/>
+    <property name="minIdle" value="${dataSource.minIdle}"/>
+    <property name="maxWait" value="${dataSource.maxWait}"/>
+    <property name="minEvictableIdleTimeMillis" value="${dataSource.minEvictableIdleTimeMillis}"/>
+    <property name="timeBetweenEvictionRunsMillis" value="${dataSource.timeBetweenEvictionRunsMillis}"/>
+    <property name="numTestsPerEvictionRun" value="${dataSource.numTestsPerEvictionRun}"/>
+  </bean>
+
   <!-- transaction manager, use JtaTransactionManager for global tx -->
   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="dataSource" />
   </bean>
 
   <!-- enable component scanning (beware that this does not enable mapper scanning!) -->
-  <context:component-scan base-package="org.mybatis.jpetstore.service" />
+  <context:component-scan base-package="com.companyname.hbms" />
 
   <!-- enable autowire -->
   <context:annotation-config />
@@ -48,8 +63,4 @@
     <property name="typeAliasesPackage" value="org.mybatis.jpetstore.domain" />
   </bean>
 
-  <!-- scan for mappers and let them be autowired -->
-  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    <property name="basePackage" value="org.mybatis.jpetstore.persistence" />
-  </bean>
 </beans>
