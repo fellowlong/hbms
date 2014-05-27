@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.companyname.hbms.resume.dao.PersonalInfoDao">
+
+  <cache/>
+
+  <insert id="insert" parameterType="com.companyname.hbms.resume.domain.PersonalInfo">
+    insert into PersonalInfo(
+      resumeId,
+      name,
+      sex,
+      birthday,
+      workingYears,
+      papersType,
+      papersNumber,
+      residence,
+      abroadStudyOrWork,
+      email,
+      currentAnnualSalary,
+      mobilePhone,
+      homePhone,
+      companyPhone,
+      jobHuntingStatus,
+      householdRegister,
+      keyword,
+      country,
+      high,
+      maritalStatus,
+      politicalStatus,
+      postcode,
+      qq,
+      address,
+      selfHomepage
+    ) values (
+      #{resumeId},
+      #{name},
+      #{sex},
+      #{birthday},
+      #{workingYears},
+      #{papersType},
+      #{papersNumber},
+      #{residence},
+      #{abroadStudyOrWork},
+      #{email},
+      #{currentAnnualSalary},
+      #{mobilePhone},
+      #{homePhone},
+      #{companyPhone},
+      #{jobHuntingStatus},
+      #{householdRegister},
+      #{keyword},
+      #{country},
+      #{high},
+      #{maritalStatus},
+      #{politicalStatus},
+      #{postcode},
+      #{qq},
+      #{address},
+      #{selfHomepage}
+    )
+  </insert>
+
+  <update id="update" parameterType="com.companyname.hbms.resume.domain.PersonalInfo">
+    update PersonalInfo set
+      resumeId = #{resumeId},
+      name = #{name},
+      sex = #{sex},
+      birthday = #{birthday},
+      workingYears = #{workingYears},
+      papersType = #{papersType},
+      papersNumber = #{papersNumber},
+      residence = #{residence},
+      abroadStudyOrWork = #{abroadStudyOrWork},
+      email = #{email},
+      currentAnnualSalary = #{currentAnnualSalary},
+      mobilePhone = #{mobilePhone},
+      homePhone = #{homePhone},
+      companyPhone = #{companyPhone},
+      jobHuntingStatus = #{jobHuntingStatus},
+      householdRegister = #{householdRegister},
+      keyword = #{keyword},
+      country = #{country},
+      high = #{high},
+      maritalStatus = #{maritalStatus},
+      politicalStatus = #{politicalStatus},
+      postcode = #{postcode},
+      qq = #{qq},
+      address = #{address},
+      selfHomepage = #{selfHomepage}
+    where resumeId = #{resumeId}
+  </update>
+
+</mapper>

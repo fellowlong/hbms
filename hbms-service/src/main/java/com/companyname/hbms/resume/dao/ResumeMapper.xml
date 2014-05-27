@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.companyname.hbms.resume.domain.Resume">
+<mapper namespace="com.companyname.hbms.resume.domain.Resume_bak">
 
   <cache/>
 
-  <insert id="save" parameterType="com.companyname.hbms.resume.domain.Resume">
+  <insert id="save" parameterType="com.companyname.hbms.resume.domain.Resume_bak">
     insert into resume() values ()
   </insert>
 

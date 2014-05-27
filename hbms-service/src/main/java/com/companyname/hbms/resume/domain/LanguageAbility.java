@@ -5,6 +5,5 @@ import java.io.Serializable;
 /**
  * Created by fellowlong on 2014-05-27.
  */
-public class ProjectExperience implements Serializable {
-
+public class LanguageAbility implements Serializable {
 }
