@@ -12,6 +12,16 @@ public class Resume implements Serializable {
   private Long resumeId;
 
   /**
+   * 简历名称
+   */
+  private String name;
+
+  /**
+   * 语言
+   */
+  private Integer languageId;
+
+  /**
    * 个人信息
    */
   private PersonalInfo personalInfo;

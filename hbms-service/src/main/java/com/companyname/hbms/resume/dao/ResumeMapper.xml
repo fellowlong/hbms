@@ -2,12 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.companyname.hbms.resume.domain.Resume_bak">
+<mapper namespace="com.companyname.hbms.resume.dao.ResumeDao">
 
   <cache/>
 
-  <insert id="save" parameterType="com.companyname.hbms.resume.domain.Resume_bak">
-    insert into resume() values ()
+  <insert id="save" parameterType="com.companyname.hbms.resume.domain.Resume">
+    insert into Resume(
+      resumeId,
+      name,
+      languageId,
+      yn
+    ) values (
+      #{name},
+      #{languageId},
+      1
+    )
   </insert>
 
 </mapper>
