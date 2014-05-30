@@ -5,7 +5,7 @@ import com.companyname.hbms.resume.domain.PersonalInfo;
 import com.companyname.hbms.resume.service.PersonalInfoService;
 
 /**
- * Created by wangjinsi on 14-5-30.
+ * Created by fellowlong on 14-5-30.
  */
 public class PersonalInfoServiceImpl implements PersonalInfoService {
 

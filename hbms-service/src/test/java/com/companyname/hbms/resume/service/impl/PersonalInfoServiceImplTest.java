@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Created by wangjinsi on 14-5-29.
+ * Created by fellowlong on 14-5-29.
  */
 public class PersonalInfoServiceImplTest extends TestCase {
 

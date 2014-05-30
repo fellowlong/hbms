@@ -6,7 +6,7 @@ import com.companyname.hbms.resume.service.ResumeService;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by wangjinsi on 14-5-29.
+ * Created by fellowlong on 14-5-29.
  */
 public class ResumeServiceImpl implements ResumeService {
 

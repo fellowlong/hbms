@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Created by wangjinsi on 14-5-30.
+ * Created by fellowlong on 14-5-30.
  */
 public abstract class TestUtils {
 

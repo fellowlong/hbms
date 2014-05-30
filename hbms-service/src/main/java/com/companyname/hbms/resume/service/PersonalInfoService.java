@@ -3,7 +3,7 @@ package com.companyname.hbms.resume.service;
 import com.companyname.hbms.resume.domain.PersonalInfo;
 
 /**
- * Created by wangjinsi on 14-5-30.
+ * Created by fellowlong on 14-5-30.
  */
 public interface PersonalInfoService {
 
