@@ -2,7 +2,7 @@ package com.companyname.hbms.archive;
 
 import java.io.Serializable;
 
-public class Resume implements Serializable{
+public class ResumeTet implements Serializable{
 
   private Long id;
 

@@ -76,20 +76,28 @@ public class Resume implements Serializable {
    */
   private Boolean yn = true;
 
-  public Boolean getYn() {
-    return yn;
-  }
-
-  public void setYn(Boolean yn) {
-    this.yn = yn;
-  }
-
   public Long getResumeId() {
     return resumeId;
   }
 
   public void setResumeId(Long resumeId) {
     this.resumeId = resumeId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Integer getLanguageId() {
+    return languageId;
+  }
+
+  public void setLanguageId(Integer languageId) {
+    this.languageId = languageId;
   }
 
   public PersonalInfo getPersonalInfo() {
@@ -170,5 +178,13 @@ public class Resume implements Serializable {
 
   public void setProfessionalSkills(List<ProfessionalSkill> professionalSkills) {
     this.professionalSkills = professionalSkills;
+  }
+
+  public Boolean getYn() {
+    return yn;
+  }
+
+  public void setYn(Boolean yn) {
+    this.yn = yn;
   }
 }

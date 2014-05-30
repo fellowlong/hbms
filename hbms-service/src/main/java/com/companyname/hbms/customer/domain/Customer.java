@@ -2,7 +2,7 @@ package com.companyname.hbms.customer.domain;
 
 import java.io.Serializable;
 
-public class Resume implements Serializable{
+public class Customer implements Serializable{
 
   private Long id;
 

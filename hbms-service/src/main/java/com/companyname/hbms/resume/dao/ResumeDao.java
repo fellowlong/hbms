@@ -11,7 +11,7 @@ public interface ResumeDao {
 
   public int update(Resume resume);
 
-  public int delete(Resume resume);
+  public int delete(Long resumeId);
 
   public int findById(Long resumeId);
 
