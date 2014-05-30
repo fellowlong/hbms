@@ -1,12 +1,11 @@
-package com.companyname.hbms.resume.dao;
+package com.companyname.hbms.resume.service;
 
 import com.companyname.hbms.resume.domain.PersonalInfo;
-import com.companyname.hbms.resume.domain.Resume_bak;
 
 /**
- * Created by fellowlong on 2014-05-16.
+ * Created by wangjinsi on 14-5-30.
  */
-public interface PersonalInfoDao {
+public interface PersonalInfoService {
 
   public int insert(PersonalInfo personalInfo);
 

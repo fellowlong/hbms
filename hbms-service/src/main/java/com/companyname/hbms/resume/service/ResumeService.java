@@ -13,9 +13,11 @@ public interface ResumeService {
 
   public int update(Resume resume);
 
-  public int delete(Long resumeId);
+  public int disable(Long resumeId);
 
-  public int findById(Long resumeId);
+  public int enable(Long resumeId);
+
+  public Resume findById(Long resumeId);
 
 
 }

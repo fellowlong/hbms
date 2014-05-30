@@ -92,4 +92,8 @@
     where resumeId = #{resumeId}
   </update>
 
+  <select id="findById" resultType="com.companyname.hbms.resume.domain.PersonalInfo">
+    select * from PersonalInfo where resumeId = #{resumeId}
+  </select>
+
 </mapper>

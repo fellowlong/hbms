@@ -76,6 +76,16 @@ public class Resume implements Serializable {
    */
   private Boolean yn = true;
 
+  /**
+   * 创建时间
+   */
+  private Date createTime;
+
+  /**
+   * 修改时间
+   */
+  private Date updateTime;
+
   public Long getResumeId() {
     return resumeId;
   }

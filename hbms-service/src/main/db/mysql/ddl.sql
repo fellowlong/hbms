@@ -23,12 +23,16 @@ create table PersonalInfo (
   postcode varchar(10) comment '邮编',
   qq varchar(20) comment 'QQ号码',
   address varchar(200) comment '联系地址',
-  selfHomepage varchar(200) comment '个人主页'
+  selfHomepage varchar(200) comment '个人主页',
+  createTime datetime comment '创建时间',
+  updateTime datetime comment '修改时间'
 ) engine=innodb default charset=utf8 comment '个人信息表';
 
 create table Resume(
   resumeId int auto_increment not null primary key comment '简历编号，主键',
   name varchar(100) comment '简历名称',
   languageId int(2) comment '简历语言',
-  yn int(1) comment '是否有效'
+  yn int(1) comment '是否有效',
+  createTime datetime comment '创建时间',
+  updateTime datetime comment '修改时间'
 );

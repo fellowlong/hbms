@@ -7,11 +7,32 @@
   <cache/>
 
   <insert id="insert" parameterType="com.companyname.hbms.resume.domain.Resume">
-    insert into Resume(name, languageId, yn)
-    values (#{name, jdbcType=VARCHAR}, #{languageId,jdbcType=INTEGER}, 1)
+    insert into Resume(name, languageId, yn, createTime, updateTime)
+    values (#{name, jdbcType=VARCHAR}, #{languageId,jdbcType=INTEGER}, 1, now(), now())
     <selectKey keyProperty="resumeId" order="AFTER" resultType="java.lang.Long">
       select last_insert_id();
     </selectKey>
   </insert>
+
+  <update id="update" parameterType="com.companyname.hbms.resume.domain.Resume">
+    update Resume set
+      name = #{name},
+      languageId = #{languageId},
+      updateTime = now()
+    where
+      resumeId = #{resumeId}
+  </update>
+
+  <delete id="disable" parameterType="java.lang.Long">
+    update Resume set yn = 0 where resumeId = #{resumeId}
+  </delete>
+
+  <delete id="enable" parameterType="java.lang.Long">
+    update Resume set yn = 1 where resumeId = #{resumeId}
+  </delete>
+  
+  <select id="findById" parameterType="java.lang.Long" resultType="com.companyname.hbms.resume.domain.Resume">
+    select * from Resume where resumeId = #{value} and yn = 1
+  </select>
 
 </mapper>

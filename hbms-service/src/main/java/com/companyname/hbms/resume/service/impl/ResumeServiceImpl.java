@@ -28,13 +28,18 @@ public class ResumeServiceImpl implements ResumeService {
   }
 
   @Override
-  public int delete(Long resumeId) {
-    return resumeDao.delete(resumeId);
+  public int disable(Long resumeId) {
+    return resumeDao.disable(resumeId);
   }
 
   @Override
-  public int findById(Long resumeId) {
-    return 0;
+  public int enable(Long resumeId) {
+    return resumeDao.enable(resumeId);
+  }
+
+  @Override
+  public Resume findById(Long resumeId) {
+    return resumeDao.findById(resumeId);
   }
 
 }
