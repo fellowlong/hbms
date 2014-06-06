@@ -1,7 +1,6 @@
 package com.companyname.hbms.resume.dao;
 
 import com.companyname.hbms.resume.domain.PersonalInfo;
-import com.companyname.hbms.resume.domain.Resume_bak;
 
 /**
  * Created by fellowlong on 2014-05-16.

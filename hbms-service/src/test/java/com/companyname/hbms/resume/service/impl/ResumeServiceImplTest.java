@@ -5,7 +5,6 @@ import com.companyname.hbms.resume.service.ResumeService;
 import common.TestUtils;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Created by fellowlong on 14-5-29.
