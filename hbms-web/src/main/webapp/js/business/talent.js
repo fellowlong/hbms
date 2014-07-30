@@ -1,13 +1,13 @@
 /**
  * Created by fellowlong on 2014-08-12.
  */
-
 $("#resumeList").datagrid({
   url:"/talent/list.do",
   pagination:true,
-  title : "DestinationCode管理",
+  title : "人才管理",
   singleSelect: true,
   fitColumns : true,
+  toolbar:"#talentTb",
   columns:[[
     {field:'id',title:'编号',width:100},
     {field:'name',title:'名称',width:100},
@@ -27,5 +27,6 @@ $("#resumeList").datagrid({
     return true;
   }
 });
+$('#talentTb a').linkbutton();
 
 
