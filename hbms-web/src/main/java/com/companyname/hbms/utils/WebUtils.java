@@ -71,21 +71,22 @@ public abstract class WebUtils {
     StringBuilder data = new StringBuilder("{\"total\":\"" + pagingResult.getRecordTotal() + "\",\"rows\":[");
     if (pagingResult.getRecords() != null && request.getParameter("columnFields") != null) {
       String[] columnFields = request.getParameter("columnFields").split(",");
-      for (int i = 0; i < pagingResult.getRecords().size(); i++) {
+      for (int i = 0; columnFields.length > 0 && i < pagingResult.getRecords().size(); i++) {
+        MapContext jexlContext = new MapContext();
+        jexlContext.set("record", pagingResult.getRecords().get(i));
         StringBuilder row = new StringBuilder("{");
         for (int j = 0; j < columnFields.length; j++) {
-          Object value = null;
           if (columnFields[j] != null) {
+            String field = columnFields[j].trim();
+            field = field.startsWith("copyFrom") ? field.substring("copyFrom".length()) : field;
             //创建jexl对象
-            Expression jexlExp = jexlEngine.createExpression("record." + columnFields[j].trim());
+            Expression jexlExp = jexlEngine.createExpression("record." + field);
             //将参数塞入MapContext以便表达式中应用这些参数
-            MapContext jexlContext = new MapContext();
-            jexlContext.set("record", pagingResult.getRecords().get(i));
-            value = jexlExp.evaluate(jexlContext);
-          }
-          if (value != null && value.toString().trim().length() > 0) {
-            value = "\"" + columnFields[j].trim() + "\":\"" + value + "\"";
-            row.append((j > 0 ? "," : "") + value);
+            Object value = jexlExp.evaluate(jexlContext);
+            if (value != null && value.toString().trim().length() > 0) {
+              value = "\"" + columnFields[j].trim() + "\":\"" + value + "\"";
+              row.append((j > 0 ? "," : "") + value);
+            }
           }
         }
         row.append("}");
