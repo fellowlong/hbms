@@ -63,6 +63,11 @@
 
   <!-- define the SqlSessionFactory -->
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="plugins">
+      <list>
+        <bean class="com.companyname.hbms.utils.paging.PagingPlugin"/>
+      </list>
+    </property>
     <property name="dataSource" ref="dataSource" />
     <property name="mapperLocations">
       <list>
@@ -76,14 +81,23 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
-
   <bean id="resumeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface" value="com.companyname.hbms.resume.dao.ResumeDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
+  <bean id="originalResumeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.OriginalResumeDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
   <bean id="resumeService" class="com.companyname.hbms.resume.service.impl.ResumeServiceImpl">
     <property name="resumeDao" ref="resumeDao"/>
+  </bean>
+
+
+  <bean id="originalResumeService" class="com.companyname.hbms.resume.service.impl.OriginalResumeServiceImpl">
+    <property name="originalResumeDao" ref="originalResumeDao"/>
   </bean>
 
   <bean id="personalInfoService" class="com.companyname.hbms.resume.service.impl.PersonalInfoServiceImpl">

@@ -95,6 +95,11 @@
       <version>${junit.version}</version>
     </dependency>
     <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.9.2</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
       <version>${springframework.version}</version>
@@ -189,6 +194,16 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>${mysql.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
   </dependencies>
 
   <properties>
@@ -198,6 +213,8 @@
     <mybatis-spring.version>1.2.2</mybatis-spring.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <mysql.version>5.1.26</mysql.version>
+    <jackson.version>1.9.7</jackson.version>
+    <log4j.version>1.2.16</log4j.version>
   </properties>
 
   <modules>

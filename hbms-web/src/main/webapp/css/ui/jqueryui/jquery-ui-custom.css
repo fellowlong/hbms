@@ -1,0 +1,53 @@
+.ui-widget {
+    font-family: "微软雅黑", "宋体", "黑体",Arial,Lucida Grande,Lucida Sans,sans-serif;
+    font-size: 0.9em;
+    /*font-size: 12px;*/
+}
+
+.ui-selecting {
+    color: #003147;
+    background: #c0e9fc;
+}
+
+.ui-selected {
+    color: white;
+    background: #2e83ff url('/css/img/menu-active.png') no-repeat right center;
+}
+
+.ui-selectable-item {
+    margin: 0px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border: 0px;
+    font-size: 0.9em;
+    vertical-align: top;
+    cursor: pointer;
+    border-bottom: 1px #ffffff solid;
+}
+
+/* Corner radius */
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-left,
+.ui-corner-tl {
+    border-top-left-radius: 0px;
+}
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-right,
+.ui-corner-tr {
+    border-top-right-radius: 0px;
+}
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-left,
+.ui-corner-bl {
+    border-bottom-left-radius: 0px;
+}
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-right,
+.ui-corner-br {
+    border-bottom-right-radius: 0px;
+}

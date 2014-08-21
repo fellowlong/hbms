@@ -24,7 +24,7 @@ public class PersonalInfoServiceImplTest extends TestCase {
     Resume resume = new Resume();
     resume.setName("Zhangsan's Resume");
     resumeService.insert(resume);
-    resumeId = resume.getResumeId();
+    resumeId = resume.getId();
     Assert.assertNotNull(resumeId);
   }
 

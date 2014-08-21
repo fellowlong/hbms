@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta charset="utf-8">
+    <title>HBMS</title>
+    <link rel="stylesheet" type="text/css" href="/css/layout-default-latest.css">
+    <link rel="stylesheet" type="text/css" href="/css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/jqueryui/themes/flick/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="/css/jqueryui/themes/flick/theme.css">
+
+    <style type="text/css">
+
+        /* remove padding and scrolling from elements that contain an Accordion OR a content-div */
+        .ui-layout-center ,	/* has content-div */
+        .ui-layout-west ,	/* has Accordion */
+        .ui-layout-east ,	/* has content-div ... */
+        .ui-layout-east .ui-layout-content { /* content-div has Accordion */
+            padding: 0;
+            overflow: hidden;
+        }
+        .ui-layout-center P.ui-layout-content {
+            line-height:	1.4em;
+            margin:			0; /* remove top/bottom margins from <P> used as content-div */
+        }
+        h3, h4 { /* Headers & Footer in Center & East panes */
+            font-size:		1.1em;
+            background:		#EEF;
+            border:			1px solid #BBB;
+            border-width:	0 0 1px;
+            padding:		7px 10px;
+            margin:			0;
+        }
+        .ui-layout-east h4 { /* Footer in East-pane */
+            font-size:		0.9em;
+            font-weight:	normal;
+            border-width:	1px 0 0;
+        }
+        #feedback { font-size: 1.4em; }
+        #selectable .ui-selecting { background:#c0e9fc; }
+        #selectable .ui-selected { color: white; background:#2e83ff url('/css/img/menu-active.png') no-repeat right center;}
+    </style>
+
+
+    <script src="/js/json2.js" type="text/javascript" lang="javascript"></script>
+    <script src="/js/jquery-2.1.1.js" type="text/javascript" lang="javascript"></script>
+    <script src="/js/jquery-ui.js" type="text/javascript" lang="javascript"></script>
+    <!--<script src="/js/jquery.easyui.min.js" type="text/javascript" lang="javascript"></script>-->
+    <script src="/js/jquery.layout-latest.js" type="text/javascript" lang="javascript"></script>
+    <script src="/js/jquery.ztree.all-3.5.js" type="text/javascript" lang="javascript"></script>
+    <script src="/js/business/common.js" type="text/javascript" lang="javascript"></script>
+    <script src="/js/business/workPanel.js" type="text/javascript" lang="javascript"></script>
+
+</head>
+<body>
+<div class="ui-layout-north" style="height:100px;background-color: #00458a;border: 0px">
+</div>
+<div class="ui-layout-west">
+    <div id="accordion1" class="basic" style="margin: 0px">
+
+        <h3><a href="#">Section 1</a></h3>
+        <div style="margin: 0px;padding: 0px">
+            <div id="selectable" style="text-align: left">
+                <div class="ui-widget-content" style="height: 35px;cursor: pointer;border: 0px">
+                        <a href="#">aaaaaaaaa</a>
+                </div>
+                <div class="ui-widget-content" style="height: 35px;cursor: pointer;border: 0px">Item 2</div>
+                <div class="ui-widget-content" style="height: 35px;cursor: pointer;border: 0px">Item 3</div>
+                <div class="ui-widget-content" style="height: 35px;cursor: pointer;border: 0px">Item 4</div>
+                <div class="ui-widget-content" style="height: 35px;cursor: pointer;border: 0px">Item 5</div>
+                <div class="ui-widget-content" style="height: 35px;cursor: pointer;border: 0px">Item 6</div>
+                <div class="ui-widget-content" style="height: 35px;cursor: pointer;border: 0px">Item 7</div>
+            </div>
+        </div>
+
+        <h3><a href="#">Section 2</a></h3>
+        <div>
+            <h5>Sed Non Urna</h5>
+            <p>Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus.
+                Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit,
+                faucibus interdum tellus libero ac justo.</p>
+            <p>Vivamus non quam. In suscipit faucibus urna.</p>
+        </div>
+
+        <h3><a href="#">Section 3</a></h3>
+        <div>
+            <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+                Phasellus pellentesque purus in massa. Aenean in pede.</p>
+            <p>Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo,
+                magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.</p>
+            <ul>
+                <li>List item one</li>
+                <li>List item two</li>
+                <li>List item three</li>
+            </ul>
+        </div>
+
+        <h3><a href="#">Section 4</a></h3>
+        <div>
+            <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                ac turpis egestas.</p>
+            <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                Aenean lacinia mauris vel est.</p>
+            <p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
+                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+    </div>
+</div>
+<div class="ui-layout-center"></div>
+</body>
+</html>
+<script type="text/javascript" lang="javascript">
+    $("body").layout({
+        scrollToBookmarkOnLoad:true,
+        defaults: {},
+        livePaneResizing:true,
+        north__closable:false,
+        north__resizable:false,
+        north__spacing_open:0,
+        north__size:50,
+        west__size:300,
+        west__onresize:$.layout.callbacks.resizePaneAccordions
+    });
+    $("#accordion1").accordion({
+        heightStyle:	"fill",
+        collapsible:true,
+        active : false,
+        activate: function( event, ui ) {
+            $("#selectable div").removeClass("ui-selected");
+        }
+    });
+
+    $("#selectable").selectable();
+    $("#selectable div").hover(
+            function() {
+                $(this).addClass("ui-selecting")
+            },
+            function() {
+                $(this).removeClass("ui-selecting")
+            });
+
+</script>

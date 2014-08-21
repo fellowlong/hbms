@@ -3,6 +3,8 @@ package com.companyname.hbms.resume.service.impl;
 import com.companyname.hbms.resume.dao.ResumeDao;
 import com.companyname.hbms.resume.domain.Resume;
 import com.companyname.hbms.resume.service.ResumeService;
+import com.companyname.hbms.utils.paging.PagingParameter;
+import com.companyname.hbms.utils.paging.PagingResult;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -38,8 +40,8 @@ public class ResumeServiceImpl implements ResumeService {
   }
 
   @Override
-  public Resume findById(Long resumeId) {
-    return resumeDao.findById(resumeId);
+  public PagingResult<Resume> findByBean(PagingParameter resumePage) {
+    return resumeDao.findByBean(resumePage);
   }
 
 }

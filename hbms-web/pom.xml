@@ -12,7 +12,19 @@
   <groupId>${parent.groupId}</groupId>
   <artifactId>hbms-web</artifactId>
   <version>${parent.version}</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.companyname.hbms</groupId>
+      <artifactId>hbms-service</artifactId>
+      <version>${parent.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+    </dependency>
+  </dependencies>
 
 </project>

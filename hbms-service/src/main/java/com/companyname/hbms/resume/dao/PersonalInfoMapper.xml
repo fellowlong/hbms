@@ -4,7 +4,7 @@
 
 <mapper namespace="com.companyname.hbms.resume.dao.PersonalInfoDao">
 
-  <cache/>
+
 
   <insert id="insert" parameterType="com.companyname.hbms.resume.domain.PersonalInfo">
     insert into PersonalInfo(

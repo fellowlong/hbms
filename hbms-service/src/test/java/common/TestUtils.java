@@ -20,4 +20,12 @@ public abstract class TestUtils {
     return applicationContext;
   }
 
+  public static <T> T getBean(String name){
+    return (T)applicationContext.getBean(name);
+  }
+
+  public static <T> T getBean(Class<T> tClass){
+    return applicationContext.getBean(tClass);
+  }
+
 }

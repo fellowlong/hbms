@@ -9,7 +9,7 @@ public class Resume implements Serializable {
   /**
    * 简历编号
    */
-  private Long resumeId;
+  private Long id;
 
   /**
    * 简历名称
@@ -20,6 +20,11 @@ public class Resume implements Serializable {
    * 语言
    */
   private Integer languageId;
+
+  /**
+   * 原始简历
+   */
+  private OriginalResume originalResume;
 
   /**
    * 个人信息
@@ -86,12 +91,12 @@ public class Resume implements Serializable {
    */
   private Date updateTime;
 
-  public Long getResumeId() {
-    return resumeId;
+  public Long getId() {
+    return id;
   }
 
-  public void setResumeId(Long resumeId) {
-    this.resumeId = resumeId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -108,6 +113,14 @@ public class Resume implements Serializable {
 
   public void setLanguageId(Integer languageId) {
     this.languageId = languageId;
+  }
+
+  public OriginalResume getOriginalResume() {
+    return originalResume;
+  }
+
+  public void setOriginalResume(OriginalResume originalResume) {
+    this.originalResume = originalResume;
   }
 
   public PersonalInfo getPersonalInfo() {
@@ -196,5 +209,33 @@ public class Resume implements Serializable {
 
   public void setYn(Boolean yn) {
     this.yn = yn;
+  }
+
+  public Date getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
+
+  public Date getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
+
+  @Override
+  public String toString() {
+    return "Resume{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", languageId=" + languageId +
+        ", yn=" + yn +
+        ", createTime=" + createTime +
+        ", updateTime=" + updateTime +
+        '}';
   }
 }
