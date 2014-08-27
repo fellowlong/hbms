@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.companyname.hbms.talent.dao.TalentDao">
+
+  <insert id="insert" parameterType="com.companyname.hbms.talent.domain.Talent">
+    insert into Talent(
+      name,
+      keyword,
+      yn,
+      createTime,
+      createUser,
+      updateTime,
+      updateUser
+    ) values (
+      #{name, jdbcType=VARCHAR},
+      #{keyword,jdbcType=VARCHAR},
+      1,
+      now(),
+      #{createUser,jdbcType=VARCHAR},
+      now(),
+      #{updateUser,jdbcType=VARCHAR}
+    )
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select last_insert_id();
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterType="com.companyname.hbms.talent.domain.Talent">
+    update Talent set
+      name = #{name},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      createTime = now(),
+      createUser =  #{createUser,jdbcType=VARCHAR},
+      updateTime = now(),
+      updateUser = #{updateUser,jdbcType=VARCHAR}
+    where
+      id = #{id}
+  </update>
+
+  <delete id="disable" parameterType="java.lang.Long">
+    update Talent set yn = 0 where id = #{id}
+  </delete>
+
+  <delete id="enable" parameterType="java.lang.Long">
+    update Talent set yn = 1 where id = #{id}
+  </delete>
+  
+  <select id="findByBean"
+          parameterType="com.companyname.hbms.talent.domain.Talent"
+          resultMap="domain.Talent">
+    <!--
+    select * from Talent where 1=1
+      -->
+    select
+      t.*,
+      reportR.talentId as RES_ORI_talentId,
+      reportR.name as RES_ORI_name,
+      reportR.keyword as RES_ORI_keyword,
+      reportR.path as RES_ORI_path,
+      reportR.languageId as RES_ORI_languageId,
+      reportR.type as RES_ORI_type,
+      reportR.yn as RES_ORI_yn,
+      originalR.talentId as RES_REP_talentId,
+      originalR.name as RES_REP_name,
+      originalR.keyword as RES_REP_keyword,
+      originalR.path as RES_REP_path,
+      originalR.languageId as RES_REP_languageId,
+      originalR.type as RES_REP_type,
+      originalR.yn as RES_REP_yn
+    from
+      (select * from Talent where 1=1
+        <if test="id != null">
+          and id = #{id}
+        </if>
+        <if test="name != null">
+          and name = #{name}
+        </if>
+        <if test="keyword != null">
+          and keyword = #{keyword}
+        </if>
+        <if test="yn != null">
+          and yn = #{yn}
+        </if>
+        <if test="createUser != null">
+          and createUser = #{createUser}
+        </if>
+        <if test="updateUser != null">
+          and updateUser = #{updateUser}
+        </if>
+      ) t
+      left join (
+        select * from Resume where id in (
+          select max(id) from Resume where 1=1
+          <if test="lastOriginalResume != null">
+            <if test="lastOriginalResume.id != null">
+              and id = #{lastOriginalResume.id}
+            </if>
+            <if test="lastOriginalResume.talentId != null">
+              and talentId = #{lastOriginalResume.talentId}
+            </if>
+            <if test="lastOriginalResume.name != null">
+              and name = #{lastOriginalResume.name}
+            </if>
+            <if test="lastOriginalResume.keyword != null">
+              and keyword = #{lastOriginalResume.keyword}
+            </if>
+            <if test="lastOriginalResume.languageId != null">
+              and languageId = #{lastOriginalResume.languageId}
+            </if>
+            <if test="lastOriginalResume.yn != null">
+              and yn = #{lastOriginalResume.yn}
+            </if>
+          </if>
+          group by talentId
+        )
+      ) originalR on t.id=originalR.talentId
+      left join (
+        select * from Resume where id in (
+          select max(id) from Resume where 1=1
+          <if test="lastReportResume != null">
+            <if test="lastReportResume.id != null">
+              and id = #{lastReportResume.id}
+            </if>
+            <if test="lastReportResume.talentId != null">
+              and talentId = #{lastReportResume.talentId}
+            </if>
+            <if test="lastReportResume.name != null">
+              and name = #{lastReportResume.name}
+            </if>
+            <if test="lastReportResume.keyword != null">
+              and keyword = #{lastReportResume.keyword}
+            </if>
+            <if test="lastReportResume.languageId != null">
+              and languageId = #{lastReportResume.languageId}
+            </if>
+            <if test="lastReportResume.yn != null">
+              and yn = #{lastReportResume.yn}
+            </if>
+          </if>
+          group by talentId
+        )
+    ) reportR on t.id=reportR.talentId
+  </select>
+
+</mapper>

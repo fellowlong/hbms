@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="domain">
+
+  <resultMap id="Talent" type="com.companyname.hbms.talent.domain.Talent">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="keyword" column="keyword"/>
+    <result property="yn" column="yn"/>
+    <result property="createTime" column="createTime"/>
+    <result property="createUser" column="createUser"/>
+    <result property="updateTime" column="updateTime"/>
+    <result property="updateUser" column="updateUser"/>
+    <association property="lastOriginalResume" columnPrefix="RES_ORI_" resultMap="Resume"/>
+    <association property="lastReportResume" columnPrefix="RES_REP_" resultMap="Resume"/>
+  </resultMap>
+
+  <resultMap id="Resume" type="com.companyname.hbms.talent.domain.Resume">
+    <id property="id" column="id"/>
+    <result property="talentId" column="talentId"/>
+    <result property="name" column="name"/>
+    <result property="keyword" column="keyword"/>
+    <result property="path" column="path"/>
+    <result property="languageId" column="languageId"/>
+    <result property="type" column="type"/>
+    <result property="yn" column="yn"/>
+    <association property="talent" columnPrefix="TAL_" resultMap="Talent"/>
+  </resultMap>
+
+</mapper>

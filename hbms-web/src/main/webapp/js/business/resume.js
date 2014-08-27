@@ -3,7 +3,7 @@
  */
 
 jQuery("#resumeList").jqGrid({
-  url:"/resume/list.do",
+  url:"/talent/list.do",
   datatype: "json",
   colNames:['编号','名称', '简历报告', '原始简历', '关键字', '语言', '最后修改人', '最后修改时间'],
   colModel:[

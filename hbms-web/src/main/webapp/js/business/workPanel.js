@@ -12,7 +12,7 @@ var workPanelFactoryConfig = [
       [
         {
           name : "全局配置管理",
-          url : contextPath + "/page/resume.html"
+          url : contextPath + "/page/talent.html"
         },
         {
           name : "环境管理",
@@ -93,7 +93,7 @@ jQuery(document).ready(function () {
       $.each(item.children, function (innerIndex, item) {
         menuItemBundle += "<div id=\"menuItem-" + outIndex + "-" + innerIndex + "\" " +
                                "url=\"" + item.url + "\" " +
-                               "class=\"ui-selectable-item\"><span>" + item.name + "</span></div>";
+                               "class=\"ui-selectable-item\">" + item.name + "</div>";
       });
       menuItemBundle = "<div id=\"menuItemBundle-" + outIndex + "\">" + menuItemBundle + "</div>"
     }
@@ -126,11 +126,11 @@ jQuery(document).ready(function () {
 
   $("div[id^=menuItemBundle]").selectable({
     selected:function(event, ui) {
+      $("#workPanel").empty();
       $.ajax(
         getRandomUrl($(ui.selected).attr("url")),
         {
           success: function (data, textStatus, jqXHR) {
-            $("#workPanel").empty();
             $("#workPanel").html(data);
           },
           dataType: "html"

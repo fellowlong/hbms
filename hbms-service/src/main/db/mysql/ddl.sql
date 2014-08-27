@@ -3,22 +3,24 @@ drop table Resume;
 create table Resume(
   id int auto_increment not null primary key comment '简历编号，主键',
   name varchar(100) comment '简历名称',
-  languageId int(2) comment '简历语言',
+  keyword varchar(200) comment '简历关键字',
   yn int(1) comment '是否有效',
   createTime datetime comment '创建时间',
-  updateTime datetime comment '修改时间'
+  createUser varchar(50) comment '创建人账户',
+  updateTime datetime comment '修改时间',
+  updateUser varchar(50) comment '修改人账户'
 );
 
 drop table OriginalResume;
 create table OriginalResume(
   id int auto_increment not null primary key comment '原始简历编号，主键',
   resumeId int comment '简历编号，外键',
-  name varchar(200) comment '原始简历名称',
+  path varchar(200) comment '原始简历附件路径',
   keyword varchar(200) comment '简历关键字',
-  attachmentName varchar(200) comment '原始简历附件名称',
-  attachmentPath varchar(200) comment '原始简历附件路径',
-  yn int(1) comment '是否有效'
+  languageId int(2) comment '简历语言',
+  type int(1) comment '类型，原始：0,报告：1'
 );
+
 
 drop table PersonalInfo;
 create table PersonalInfo (

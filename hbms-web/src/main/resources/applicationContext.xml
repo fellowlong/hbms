@@ -77,30 +77,30 @@
   </bean>
 
   <bean id="personalInfoDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.PersonalInfoDao"/>
+    <property name="mapperInterface" value="com.companyname.hbms.talent.dao.PersonalInfoDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
   <bean id="resumeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.ResumeDao"/>
+    <property name="mapperInterface" value="com.companyname.hbms.talent.dao.TalentDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
   <bean id="originalResumeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.OriginalResumeDao"/>
+    <property name="mapperInterface" value="com.companyname.hbms.talent.dao.ResumeDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
-  <bean id="resumeService" class="com.companyname.hbms.resume.service.impl.ResumeServiceImpl">
+  <bean id="resumeService" class="com.companyname.hbms.talent.service.impl.TalentServiceImpl">
     <property name="resumeDao" ref="resumeDao"/>
   </bean>
 
 
-  <bean id="originalResumeService" class="com.companyname.hbms.resume.service.impl.OriginalResumeServiceImpl">
+  <bean id="originalResumeService" class="com.companyname.hbms.talent.service.impl.ResumeServiceImpl">
     <property name="originalResumeDao" ref="originalResumeDao"/>
   </bean>
 
-  <bean id="personalInfoService" class="com.companyname.hbms.resume.service.impl.PersonalInfoServiceImpl">
+  <bean id="personalInfoService" class="com.companyname.hbms.talent.service.impl.PersonalInfoServiceImpl">
     <property name="personalInfoDao" ref="personalInfoDao"/>
   </bean>
 
@@ -112,7 +112,7 @@
 
   <bean id="exceptionResolver" class="com.companyname.hbms.mvc.LoggerHandlerExceptionResolver"/>
 
-  <bean id="resumeController" class="com.companyname.hbms.resume.web.controller.ResumeController">
+  <bean id="resumeController" class="com.companyname.hbms.talent.web.controller.ResumeController">
     <property name="resumeService" ref="resumeService"/>
   </bean>
 </beans>
