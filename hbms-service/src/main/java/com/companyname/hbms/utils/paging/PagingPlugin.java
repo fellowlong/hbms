@@ -43,6 +43,7 @@ public class PagingPlugin implements Interceptor {
           Map tempNoPageParams = new HashMap(paramMap);
           tempNoPageParams.remove(lastMethodArgKey);
           tempNoPageParams.remove("param" + lastMethodArgKey);
+          noPageParams = tempNoPageParams;
         }
       }
     }
