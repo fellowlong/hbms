@@ -31,13 +31,9 @@ public class TalentController extends MultiActionController {
     if (talent.getLastReportResume() != null) {
       talent.getLastReportResume().setYn(Boolean.TRUE);
     }
-    PagingResult<Talent> talentPagingResult = talentService.findByBean(
-      talent,
-      new PageRange(
-        WebUtils.getLong(request, "pageNum").intValue(),
-        WebUtils.getLong(request, "pageSize").intValue()));
-    String json = WebUtils.createJQGridData(talentPagingResult, "id", request.getParameter("colNames").split(","));
-    WebUtils.writeWithJson(response, json);
+    PagingResult<Talent> talentPagingResult = talentService.findByBean(talent, WebUtils.getPageRange(request));
+    WebUtils.writeForJQGrid(request, response, talentPagingResult, "id");
+
   }
 
 

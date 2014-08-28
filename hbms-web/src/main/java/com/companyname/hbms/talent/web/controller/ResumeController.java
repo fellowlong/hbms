@@ -24,9 +24,8 @@ public class ResumeController extends MultiActionController {
                    HttpServletResponse response,
                    Resume resume) throws Exception {
     resume.setYn(Boolean.TRUE);
-    PagingResult<Resume> resumes = resumeService.findByBean(resume, null);
-    String json = WebUtils.createJQGridData(resumes, "id", request.getParameter("colNames").split(","));
-    WebUtils.writeWithJson(response, json);
+    PagingResult<Resume> resumePagingResult = resumeService.findByBean(resume, null);
+    WebUtils.writeForJQGrid(request, response, resumePagingResult, "id");
   }
 
 

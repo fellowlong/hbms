@@ -1,5 +1,6 @@
 package com.companyname.hbms.utils;
 
+import com.companyname.hbms.utils.paging.PageRange;
 import com.companyname.hbms.utils.paging.PagingResult;
 import org.apache.commons.beanutils.*;
 import org.apache.commons.beanutils.BeanUtils;
@@ -53,37 +54,42 @@ public abstract class WebUtils {
     response.getWriter().write(JsonUtils.beanToJson(value));
   }
 
-  public static String createJQGridData(PagingResult<?> pagingResult, String idProperty, String[] colNames) {
+  public static PageRange getPageRange(HttpServletRequest request) {
+    Long pageNum = WebUtils.getLong(request, "pageNum");
+    Long pageSize = WebUtils.getLong(request, "pageSize");
+    return new PageRange(
+      pageNum == null ? 1 : pageNum.intValue(),
+      pageSize == null ? 10 : pageSize.intValue());
+  }
+
+  public static void writeForJQGrid(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    PagingResult<?> pagingResult,
+                                    String idProperty) throws Exception{
+    String colNamesParam = request.getParameter("colNames");
+    String[] colNames = colNamesParam == null ? new String[0] : colNamesParam.split(",");
     StringBuilder content = new StringBuilder("{\"page\": \"" + pagingResult.getPageNum() + "\", \"total\": " + pagingResult.getPageTotal() + ", \"records\": " + pagingResult.getRecordTotal() + ", \"rows\": [");
-    try {
-      for (int i =0; i < pagingResult.getRecords().size(); i ++) {
-        Object record = pagingResult.getRecords().get(i);
-        if (record == null) {
-          continue;
-        }
-        StringBuilder cell = new StringBuilder("[");
-        for (int j = 0; colNames != null && j < colNames.length; j++) {
-          //创建jexl对象
-          Expression jexlExp = jexlEngine.createExpression("record." + colNames[j].trim());
-          //将参数塞入MapContext以便表达式中应用这些参数
-          MapContext jexlContext = new MapContext();
-          jexlContext.set("record", record);
-          Object value = jexlExp.evaluate(jexlContext);
-          cell.append((j > 0 ? "," : "") + "\"" + (value == null ? "" : value) + "\"");
-        }
-        cell.append("]");
-        String idValue = BeanUtils.getProperty(record, idProperty.trim());
-        content.append((i > 0 ? "," : "") + "{\"id\": \"" + (idValue == null ? "" : idValue) + "\", \"cell\":" + cell + "}");
+    for (int i =0; i < pagingResult.getRecords().size(); i ++) {
+      Object record = pagingResult.getRecords().get(i);
+      if (record == null) {
+        continue;
       }
-      content.append("]}");
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
-    } catch (NoSuchMethodException e) {
-      e.printStackTrace();
+      StringBuilder cell = new StringBuilder("[");
+      for (int j = 0; colNames != null && j < colNames.length; j++) {
+        //创建jexl对象
+        Expression jexlExp = jexlEngine.createExpression("record." + colNames[j].trim());
+        //将参数塞入MapContext以便表达式中应用这些参数
+        MapContext jexlContext = new MapContext();
+        jexlContext.set("record", record);
+        Object value = jexlExp.evaluate(jexlContext);
+        cell.append((j > 0 ? "," : "") + "\"" + (value == null ? "" : value) + "\"");
+      }
+      cell.append("]");
+      String idValue = BeanUtils.getProperty(record, idProperty.trim());
+      content.append((i > 0 ? "," : "") + "{\"id\": \"" + (idValue == null ? "" : idValue) + "\", \"cell\":" + cell + "}");
     }
-    return content.toString();
+    content.append("]}");
+    writeWithJson(response, content.toString());
   }
 
 }
