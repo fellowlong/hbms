@@ -85,6 +85,27 @@ var workPanelFactoryConfig = [
 ];
 
 jQuery(document).ready(function () {
+  var navTreeData = [];
+  $.each(workPanelFactoryConfig, function(moduleIndex, module){
+    var children = [];
+    $.each(module.children, function(funcIndex, func) {
+      children.push({id: moduleIndex + "" + funcIndex, text: func.name, url: func.url});
+    });
+    navTreeData.push({id: moduleIndex, text:module.name, children:children});
+  });
+  $("#navTree").tree({
+    animate:true,
+    data: navTreeData,
+    onSelect: openFuncPanel
+  });
+});
+
+function openFuncPanel(node) {
+  alert(node.url);
+}
+
+/*
+jQuery(document).ready(function () {
   //创建功能菜单
   var menuPanelContent = "";
   $.each(workPanelFactoryConfig, function(outIndex, item) {
@@ -147,3 +168,4 @@ jQuery(document).ready(function () {
     }
   );
 });
+*/
