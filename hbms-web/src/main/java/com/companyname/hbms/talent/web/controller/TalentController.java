@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 /**
  * Created by fellowlong on 2014-08-07.
@@ -32,7 +33,7 @@ public class TalentController extends MultiActionController {
       talent.getLastReportResume().setYn(Boolean.TRUE);
     }
     PagingResult<Talent> talentPagingResult = talentService.findByBean(talent, WebUtils.getPageRange(request));
-    WebUtils.writeForJQGrid(request, response, talentPagingResult, "id");
+    WebUtils.writeForEasyUIDataGrid(request, response, talentPagingResult);
 
   }
 

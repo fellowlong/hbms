@@ -24,6 +24,9 @@ public abstract class WebUtils {
   public final static String ID = "id";
 
   private static JexlEngine jexlEngine = new JexlEngine();
+  static {
+    jexlEngine.setSilent(Boolean.TRUE);
+  }
 
   public static Long getLong(HttpServletRequest request, String name) {
     String id = request.getParameter(name);
@@ -55,11 +58,42 @@ public abstract class WebUtils {
   }
 
   public static PageRange getPageRange(HttpServletRequest request) {
-    Long pageNum = WebUtils.getLong(request, "pageNum");
-    Long pageSize = WebUtils.getLong(request, "pageSize");
+    Long pageNum = WebUtils.getLong(request, "page");
+    Long pageSize = WebUtils.getLong(request, "rows");
     return new PageRange(
       pageNum == null ? 1 : pageNum.intValue(),
       pageSize == null ? 10 : pageSize.intValue());
+  }
+
+  public static void writeForEasyUIDataGrid(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            PagingResult<?> pagingResult) throws Exception{
+    StringBuilder data = new StringBuilder("{\"total\":\"" + pagingResult.getRecordTotal() + "\",\"rows\":[");
+    if (pagingResult.getRecords() != null && request.getParameter("columnFields") != null) {
+      String[] columnFields = request.getParameter("columnFields").split(",");
+      for (int i = 0; i < pagingResult.getRecords().size(); i++) {
+        StringBuilder row = new StringBuilder("{");
+        for (int j = 0; j < columnFields.length; j++) {
+          Object value = null;
+          if (columnFields[j] != null) {
+            //创建jexl对象
+            Expression jexlExp = jexlEngine.createExpression("record." + columnFields[j].trim());
+            //将参数塞入MapContext以便表达式中应用这些参数
+            MapContext jexlContext = new MapContext();
+            jexlContext.set("record", pagingResult.getRecords().get(i));
+            value = jexlExp.evaluate(jexlContext);
+          }
+          if (value != null && value.toString().trim().length() > 0) {
+            value = "\"" + columnFields[j].trim() + "\":\"" + value + "\"";
+            row.append((j > 0 ? "," : "") + value);
+          }
+        }
+        row.append("}");
+        data.append((i > 0 ? "," : "") + row);
+      }
+    }
+    data.append("]}");
+    writeWithJson(response, data.toString());
   }
 
   public static void writeForJQGrid(HttpServletRequest request,
@@ -94,5 +128,7 @@ public abstract class WebUtils {
     content.append("]}");
     writeWithJson(response, content.toString());
   }
+
+
 
 }

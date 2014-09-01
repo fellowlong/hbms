@@ -50,9 +50,6 @@
   <select id="findByBean"
           parameterType="com.companyname.hbms.talent.domain.Talent"
           resultMap="domain.Talent">
-    <!--
-    select * from Talent where 1=1
-      -->
     select
       t.*,
       reportR.talentId as RES_ORI_talentId,

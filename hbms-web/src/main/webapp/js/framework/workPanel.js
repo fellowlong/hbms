@@ -101,71 +101,15 @@ jQuery(document).ready(function () {
 });
 
 function openFuncPanel(node) {
-  alert(node.url);
-}
-
-/*
-jQuery(document).ready(function () {
-  //创建功能菜单
-  var menuPanelContent = "";
-  $.each(workPanelFactoryConfig, function(outIndex, item) {
-    var menuItemBundle = "";
-    if (item.children && item.children.length > 0) {
-      $.each(item.children, function (innerIndex, item) {
-        menuItemBundle += "<div id=\"menuItem-" + outIndex + "-" + innerIndex + "\" " +
-                               "url=\"" + item.url + "\" " +
-                               "class=\"ui-selectable-item\">" + item.name + "</div>";
+  if($("#navTree").tree("isLeaf", node.target)) {
+    $("#workPanel").empty();
+    $.ajax(
+      getRandomUrl(node.url),
+      {
+        success: function (data, textStatus, jqXHR) {
+          $("#workPanel").html(data);
+        },
+        dataType: "html"
       });
-      menuItemBundle = "<div id=\"menuItemBundle-" + outIndex + "\">" + menuItemBundle + "</div>"
-    }
-    //每个抽屉的标题
-    menuPanelContent += "<h7>" + item.name + "</h7>";
-    //每个抽屉的内容
-    menuPanelContent += "<div style=\"margin: 0px;padding: 0px;\">" + menuItemBundle + "</div>";
-  });
-  $("#menuPanel").append(menuPanelContent);
-  //创建布局
-  $("body").layout({
-    scrollToBookmarkOnLoad:true,
-    defaults: {},
-    livePaneResizing:true,
-    north__closable:false,
-    north__resizable:false,
-    north__spacing_open:0,
-    north__size:50,
-    west__size:200,
-    west__onresize:$.layout.callbacks.resizePaneAccordions
-  });
-  $("#menuPanel").accordion({
-    heightStyle:	"fill",
-    collapsible:false,
-    active : 0,
-    activate: function(event, ui ) {
-      $("div[id^=menuItem] div").removeClass("ui-selected");
-    }
-  });
-
-  $("div[id^=menuItemBundle]").selectable({
-    selected:function(event, ui) {
-      $("#workPanel").empty();
-      $.ajax(
-        getRandomUrl($(ui.selected).attr("url")),
-        {
-          success: function (data, textStatus, jqXHR) {
-            $("#workPanel").html(data);
-          },
-          dataType: "html"
-        });
-    }
-
-  });
-  $("div[id^=menuItemBundle] div").hover(
-    function() {
-      $(this).addClass("ui-selecting")
-    },
-    function() {
-      $(this).removeClass("ui-selecting")
-    }
-  );
-});
-*/
+  }
+}
