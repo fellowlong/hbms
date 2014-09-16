@@ -8,56 +8,65 @@ jQuery(document).ready(function(){
   $("body").append("<div id='messageWin'></div>");
 });
 
-var editAndDeleteBar = "<a href=\"javascript:void(0)\" type=\"edit\">编辑</a>&nbsp;<a href=\"javascript:void(0)\" type=\"delete\">删除</a>";
-
-var viewAndEditAndDeleteBar = "<a href=\"javascript:void(0)\" type=\"view\">查看</a>&nbsp;" + editAndDeleteBar;
-
-function editOrDeleteRow(dataGridId, rowIndex, field, value) {
-  var event = event || window.event;
-  if(event.srcElement.tagName == "A" && event.srcElement.type == "delete") {
-    $("#" + dataGridId).datagrid("deleteRow", rowIndex);
-  }
-  if(event.srcElement.tagName == "A" && event.srcElement.type == "edit") {
-    $("#" + dataGridId).datagrid("selectRow", rowIndex).datagrid("beginEdit", rowIndex);
-  }
-}
-
-function editOrDeleteRecord(options) {
-  var row = getRowByIndex(options.dataGridId, options.rowIndex);
-  var event = event || window.event;
-  if(event.srcElement.tagName == "A" && event.srcElement.type == "delete") {
+function addOrEditOrDeleteOrViewRecord(options) {
+  var defaults = {
+    dataGridId:undefined,
+    type: undefined,
+    add : undefined,
+    edit : undefined,
+    remove : undefined,
+    removeUrl : undefined,
+    removeParameter : undefined,
+    removePromptField : undefined,
+    deleteSuccess : undefined,
+    view : undefined
+  };
+  var setting = $.extend(defaults, options);
+  var selectedRows = $("#" + setting.dataGridId).datagrid("getSelections");
+  if(setting.type == "add" && setting.add) {
+      setting.add(setting);
+  } else if(setting.type == "remove"){
+    if(!selectedRows || selectedRows.length == 0) {
+      $.messager.alert('警告','请选择需要的记录！','warning');
+      return;
+    }
+    var param = {};
     var promptText = "";
-    if(options.deletePromptField) {
-      if(options.deletePromptField instanceof Array) {
-        for(i =0 ; i < options.deletePromptField.length; i++) {
-          if(i > 0) {
-            promptText += " ";
-          }
-          promptText += getValueFromJson(options.deletePromptField[i], row);
+    for(var i = 0 ; i < selectedRows.length; i++) {
+      var row = selectedRows[i];
+      //删除参数
+      if(setting.removeParameter) {
+        for(var key in setting.removeParameter) {
+          param[key] =  (param[key] ?  param[key] : "") + (i > 0 ? "," : "") + getValueFromJson(setting.removeParameter[key], row);
         }
       } else {
-        promptText += getValueFromJson(options.deletePromptField, row);
+        param.id = (param.id ? param.id : "") + (i > 0 ? "," : "") + row.id;
       }
-    }
-    $.messager.confirm("警告", "真的要删除[" + promptText + "] ?", function(result) {
-      if(result) {
-        $.messager.progress({title : "Waiting"});
-        var param = {};
-        if(options.deleteParameter) {
-          for(key in options.deleteParameter) {
-            param[key] = getValueFromJson(options.deleteParameter[key], row);
+      //删除提示
+      if(setting.removePromptField) {
+        promptText += "<tr><td>";
+        if(setting.removePromptField instanceof Array) {
+          for(var j =0 ; j < setting.removePromptField.length; j++) {
+            promptText += (j > 0 ? "," : "") + getValueFromJson(setting.removePromptField[j], row);
           }
         } else {
-          param.id = row.id;
+          promptText += getValueFromJson(setting.removePromptField, row);
         }
+        promptText += "</td></tr>";
+      }
+    }
+    promptText = "<table cellpadding='0' cellspacing='0' border='0'>" + promptText + "</table>"
+    $.messager.confirm("警告", "真的要删除 ？ <br/>" + promptText, function(result) {
+      if(result) {
+        $.messager.progress({title : "Waiting"});
         jQuery.ajax(
-          getRandomUrl(contextPath + options.deleteUrl),
+          getRandomUrl(contextPath + setting.removeUrl),
           {
             data : param,
             success : function(message) {
               $.messager.progress('close');
               if(showAjaxMessage(message))  {
-                options.deleteSuccessFunction(row);
+                setting.deleteSuccess(row);
               }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -68,12 +77,20 @@ function editOrDeleteRecord(options) {
         );
       }
     });
-  }
-  if(window.event.srcElement.tagName == "A" && window.event.srcElement.type == "edit") {
-    options.editFunction(row);
-  }
-  if(window.event.srcElement.tagName == "A" && window.event.srcElement.type == "view") {
-    options.viewFunction(row);
+  } else if(setting.type == "edit" && setting.edit) {
+    if(!selectedRows ||selectedRows.length != 1) {
+      $.messager.alert('警告','请选择一条记录进行编辑！','warning');
+      return;
+    }
+    setting.edit(setting, selectedRows[0]);
+  } else if(setting.type == "view" && setting.view) {
+    if(!selectedRows ||selectedRows.length > 1) {
+      $.messager.alert('警告','请选择一条记录进行查看详情！','warning');
+      return;
+    }
+    setting.view(setting, selectedRows[0]);
+  } else {
+    $.messager.alert('错误', setting.type + '，没有对应的处理器！','error');
   }
 }
 

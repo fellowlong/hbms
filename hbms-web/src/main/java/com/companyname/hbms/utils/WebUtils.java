@@ -23,14 +23,46 @@ public abstract class WebUtils {
 
   public final static String ID = "id";
 
+  public final static String SUCCESS = "SUCCESS";
+
+  public final static String ERROR = "ERROR";
+
   private static JexlEngine jexlEngine = new JexlEngine();
   static {
     jexlEngine.setSilent(Boolean.TRUE);
   }
 
+  public static Long[] getLongArrayBySpearator(HttpServletRequest request, String name, String spearator) {
+    String strValue = request.getParameter(name);
+    Long[] longArray = null;
+    if (strValue != null) {
+      String[] strArray = strValue.split(spearator);
+      longArray = new Long[strArray.length];
+      for (int i = 0 ; i < longArray.length ;i ++) {
+        longArray[i] = new Long(strArray[i].trim());
+      }
+    }
+    return longArray;
+  }
+
   public static Long getLong(HttpServletRequest request, String name) {
-    String id = request.getParameter(name);
-    return StringUtils.hasText(id) ? new Long(id) : null;
+    Long[] longArray = getLongArray(request, name);
+    return longArray != null ? longArray[0] : null;
+  }
+
+
+  public static Long[] getLongArray(HttpServletRequest request, String name) {
+    String[] longStrArray = request.getParameterValues(name);
+    Long[] longs = null;
+    if (longStrArray != null) {
+      longs = new Long[longStrArray.length];
+      for (int i = 0; i < longs.length; i ++) {
+        if (StringUtils.hasText(longStrArray[i])) {
+          longs[i] =  new Long(longStrArray[i]);
+        }
+      }
+    }
+    return longs;
   }
 
   public static Boolean getBoolean(HttpServletRequest request, String name) {
@@ -44,7 +76,7 @@ public abstract class WebUtils {
       return;
     }
     String json = value instanceof String ? (String) value : JsonUtils.beanToJson(value);
-    response.setContentType("text/json;charset=UTF-8");
+    response.setContentType("application/json;charset=UTF-8");
     response.getWriter().write(json);
   }
 
@@ -77,12 +109,7 @@ public abstract class WebUtils {
         StringBuilder row = new StringBuilder("{");
         for (int j = 0; j < columnFields.length; j++) {
           if (columnFields[j] != null) {
-            String field = columnFields[j].trim();
-            field = field.startsWith("copyFrom") ? field.substring("copyFrom".length()) : field;
-            //创建jexl对象
-            Expression jexlExp = jexlEngine.createExpression("record." + field);
-            //将参数塞入MapContext以便表达式中应用这些参数
-            Object value = jexlExp.evaluate(jexlContext);
+            Object value = jexlEngine.createExpression("record." + columnFields[j].trim()).evaluate(jexlContext);
             if (value != null && value.toString().trim().length() > 0) {
               value = "\"" + columnFields[j].trim() + "\":\"" + value + "\"";
               row.append((j > 0 ? "," : "") + value);

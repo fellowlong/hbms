@@ -1,0 +1,22 @@
+package com.companyname.hbms.basedata.dao;
+
+import com.companyname.hbms.basedata.domain.ListItem;
+
+import java.util.List;
+
+/**
+ * Created by fellowlong on 2014-09-04.
+ */
+public interface ListItemDao {
+
+  public int insert(ListItem listItem);
+
+  public int update(ListItem listItem);
+
+  public int deleteById(Long[] ids);
+
+  public List<ListItem> findByBean(ListItem listItem);
+
+  public List<ListItem> findAllCategory();
+
+}

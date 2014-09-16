@@ -69,7 +69,7 @@ public class TalentServiceImplTest extends TestCase {
     TalentService talentService = TestUtils.getApplicationContext().getBean(TalentService.class);
     Talent talent = new Talent();
     talent.setYn(Boolean.TRUE);
-    PagingResult<Talent> pagingResult = talentService.findByBean(talent, new PageRange(1, 1));
+    PagingResult<Talent> pagingResult = talentService.findByBean(talent, new PageRange(1, 10));
     System.out.println(pagingResult);
     Assert.assertTrue(pagingResult.getRecords() != null && pagingResult.getRecords().size() == 10);
   }

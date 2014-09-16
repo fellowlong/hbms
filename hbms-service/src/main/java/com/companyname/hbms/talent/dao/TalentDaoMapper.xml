@@ -4,37 +4,103 @@
 
 <mapper namespace="com.companyname.hbms.talent.dao.TalentDao">
 
-  <insert id="insert" parameterType="com.companyname.hbms.talent.domain.Talent">
+  <insert id="insert" parameterMap="domain.Talent">
     insert into Talent(
       name,
+      sex,
+      birthday,
+      workingYears,
+      papersTypeId,
+      papersNumber,
+      residence,
+      abroadStudyOrWork,
+      email,
+      currentAnnualSalary,
+      mobilePhone,
+      homePhone,
+      companyPhone,
+      jobHuntingStatusId,
+      householdRegister,
       keyword,
+      countryId,
+      high,
+      maritalStatus,
+      politicalStatusId,
+      postcode,
+      qq,
+      address,
+      selfHomepage,
       yn,
       createTime,
       createUser,
       updateTime,
       updateUser
     ) values (
-      #{name, jdbcType=VARCHAR},
-      #{keyword,jdbcType=VARCHAR},
+      #{name},
+      #{sex},
+      #{birthday},
+      #{workingYears},
+      #{papersTypeId},
+      #{papersNumber},
+      #{residence},
+      #{abroadStudyOrWork},
+      #{email},
+      #{currentAnnualSalary},
+      #{mobilePhone},
+      #{homePhone},
+      #{companyPhone},
+      #{jobHuntingStatusId},
+      #{householdRegister},
+      #{keyword},
+      #{countryId},
+      #{high},
+      #{maritalStatus},
+      #{politicalStatusId},
+      #{postcode},
+      #{qq},
+      #{address},
+      #{selfHomepage},
       1,
       now(),
-      #{createUser,jdbcType=VARCHAR},
+      #{createUser},
       now(),
-      #{updateUser,jdbcType=VARCHAR}
+      #{updateUser}
     )
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       select last_insert_id();
     </selectKey>
   </insert>
 
-  <update id="update" parameterType="com.companyname.hbms.talent.domain.Talent">
+  <update id="update" parameterMap="domain.Talent">
     update Talent set
       name = #{name},
-      keyword = #{keyword,jdbcType=VARCHAR},
+      sex = #{sex},
+      birthday = #{birthday},
+      workingYears = #{workingYears},
+      papersTypeId = #{papersTypeId},
+      papersNumber = #{papersNumber},
+      residence = #{residence},
+      abroadStudyOrWork = #{abroadStudyOrWork},
+      email = #{email},
+      currentAnnualSalary = #{currentAnnualSalary},
+      mobilePhone = #{mobilePhone},
+      homePhone = #{homePhone},
+      companyPhone = #{companyPhone},
+      jobHuntingStatusId = #{jobHuntingStatusId},
+      householdRegister = #{householdRegister},
+      keyword = #{keyword},
+      countryId = #{countryId},
+      high = #{high},
+      maritalStatus = #{maritalStatus},
+      politicalStatusId = #{politicalStatusId},
+      postcode = #{postcode},
+      qq = #{qq},
+      address = #{address},
+      selfHomepage = #{selfHomepage},
       createTime = now(),
-      createUser =  #{createUser,jdbcType=VARCHAR},
+      createUser =  #{createUser},
       updateTime = now(),
-      updateUser = #{updateUser,jdbcType=VARCHAR}
+      updateUser = #{updateUser}
     where
       id = #{id}
   </update>
@@ -48,7 +114,7 @@
   </delete>
   
   <select id="findByBean"
-          parameterType="com.companyname.hbms.talent.domain.Talent"
+          parameterMap="domain.Talent"
           resultMap="domain.Talent">
     select
       t.*,
@@ -67,24 +133,39 @@
       originalR.type as RES_REP_type,
       originalR.yn as RES_REP_yn
     from
-      (select * from Talent where 1=1
+      (select
+        t.*,
+        lt1.id as PAP_id,
+        lt1.value as PAP_value,
+        lt2.id as JOB_id,
+        lt2.value as JOB_value,
+        lt3.id as COU_id,
+        lt3.value as COU_value,
+        lt4.id as POL_id,
+        lt4.value as POL_value
+        from Talent t
+        left join ListItem lt1 on t.papersTypeId = lt1.id
+        left join ListItem lt2 on t.jobHuntingStatusId = lt2.id
+        left join ListItem lt3 on t.countryId = lt3.id
+        left join ListItem lt4 on t.politicalStatusId = lt4.id
+        where 1=1
         <if test="id != null">
-          and id = #{id}
+          and t.id = #{id}
         </if>
         <if test="name != null">
-          and name = #{name}
+          and t.name = #{name}
         </if>
         <if test="keyword != null">
-          and keyword = #{keyword}
+          and t.keyword = #{keyword}
         </if>
         <if test="yn != null">
-          and yn = #{yn}
+          and t.yn = #{yn}
         </if>
         <if test="createUser != null">
-          and createUser = #{createUser}
+          and t.createUser = #{createUser}
         </if>
         <if test="updateUser != null">
-          and updateUser = #{updateUser}
+          and t.updateUser = #{updateUser}
         </if>
       ) t
       left join (

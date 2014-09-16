@@ -71,13 +71,14 @@
     <property name="dataSource" ref="dataSource" />
     <property name="mapperLocations">
       <list>
+        <value>classpath:com/companyname/hbms/basedata/dao/*.xml</value>
         <value>classpath:com/companyname/hbms/talent/dao/*.xml</value>
       </list>
     </property>
   </bean>
 
-  <bean id="personalInfoDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.companyname.hbms.talent.dao.PersonalInfoDao"/>
+  <bean id="listItemDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.basedata.dao.ListItemDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
@@ -91,17 +92,16 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
+  <bean id="listItemService" class="com.companyname.hbms.basedata.service.impl.ListItemServiceImpl">
+    <property name="listItemDao" ref="listItemDao"/>
+  </bean>
+
   <bean id="talentService" class="com.companyname.hbms.talent.service.impl.TalentServiceImpl">
     <property name="talentDao" ref="talentDao"/>
   </bean>
 
-
   <bean id="resumeService" class="com.companyname.hbms.talent.service.impl.ResumeServiceImpl">
     <property name="resumeDao" ref="resumeDao"/>
-  </bean>
-
-  <bean id="personalInfoService" class="com.companyname.hbms.talent.service.impl.PersonalInfoServiceImpl">
-    <property name="personalInfoDao" ref="personalInfoDao"/>
   </bean>
 
   <!--web-->
@@ -111,6 +111,10 @@
   </bean>
 
   <bean id="exceptionResolver" class="com.companyname.hbms.mvc.LoggerHandlerExceptionResolver"/>
+
+  <bean id="listItemController" class="com.companyname.hbms.basedata.web.controller.ListItemController">
+    <property name="listItemService" ref="listItemService"/>
+  </bean>
 
   <bean id="talentController" class="com.companyname.hbms.talent.web.controller.TalentController">
     <property name="talentService" ref="talentService"/>

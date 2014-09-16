@@ -73,12 +73,12 @@ var workPanelFactoryConfig = [
       ]
     },
   {
-    name: "查询机",
+    name: "基础资料",
     children:
       [
         {
-          name : "查询机",
-          url : contextPath + "/pages/queryMachine.html"
+          name : "下拉列表",
+          url : contextPath + "/page/listItem.html"
         }
       ]
   }
