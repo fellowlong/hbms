@@ -1,6 +1,8 @@
 package com.companyname.hbms.basedata.dao;
 
 import com.companyname.hbms.basedata.domain.ListItem;
+import com.companyname.hbms.utils.paging.PageRange;
+import com.companyname.hbms.utils.paging.PagingResult;
 
 import java.util.List;
 
@@ -15,8 +17,8 @@ public interface ListItemDao {
 
   public int deleteById(Long[] ids);
 
-  public List<ListItem> findByBean(ListItem listItem);
+  public PagingResult<ListItem> findByBean(ListItem listItem, PageRange pageRange);
 
-  public List<ListItem> findAllCategory();
+  public PagingResult<ListItem> findAllCategory(PageRange pageRange);
 
 }

@@ -3,6 +3,8 @@ package com.companyname.hbms.basedata.service.impl;
 import com.companyname.hbms.basedata.dao.ListItemDao;
 import com.companyname.hbms.basedata.domain.ListItem;
 import com.companyname.hbms.basedata.service.ListItemService;
+import com.companyname.hbms.utils.paging.PageRange;
+import com.companyname.hbms.utils.paging.PagingResult;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,12 +45,12 @@ public class ListItemServiceImpl implements ListItemService {
   }
 
   @Override
-  public List<ListItem> findByBean(ListItem listItem) {
-    return listItemDao.findByBean(listItem);
+  public PagingResult<ListItem> findByBean(ListItem listItem, PageRange pageRange) {
+    return listItemDao.findByBean(listItem, pageRange);
   }
 
   @Override
-  public List<ListItem> findAllCategory() {
-    return listItemDao.findAllCategory();
+  public PagingResult<ListItem> findAllCategory(PageRange pageRange) {
+    return listItemDao.findAllCategory(pageRange);
   }
 }

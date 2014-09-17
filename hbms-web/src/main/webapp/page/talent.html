@@ -1,18 +1,98 @@
 <div id="talentList"></div>
 <div id="talentTb">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-add">新增</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-remove">删除</a>
+  <a href="#" class="easyui-linkbutton" iconCls="icon-add">新增</a>
+  <a href="#" class="easyui-linkbutton" iconCls="icon-remove">删除</a>
 </div>
 
-<form id="talentForm" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input class="easyui-validatebox" type="text" name="name" data-options="required:true" />
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input class="easyui-validatebox" type="text" name="email" data-options="validType:'email'" />
-    </div>
-</form>
+<div id="talentEditWin" class="easyui-dialog">
+  <form id="talentForm" method="post">
+    <table border="0" cellspacing="2" cellpadding="2" valign="middle" style="margin: 10px">
+      <tr>
+        <td align="right"><label for="name">姓名:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="name" data-options="required:true"/></td>
+        <td align="right"><label for="sex">性别:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="sex" data-options="required:true"/></td>
+      </tr>
+      <tr>
+        <td align="right"><label for="birthday">出生日期:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="birthday" data-options="validType:'email'"/></td>
+        <td align="right"><label for="workingYears">工作年限:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="workingYears" data-options="validType:'email'"/></td>
+      </tr>
+      <tr>
+        <td align="right"><label for="papersTypeId">证件类型:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="papersTypeId" data-options="validType:'email'"/></td>
+        <td align="right"><label for="papersNumber">证件编号:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="papersNumber" data-options="validType:'email'"/></td>
+      </tr>
+      <tr>
+        <td align="right"><label for="residence">居住地:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="residence" data-options="validType:'email'"/></td>
+        <td align="right"><label for="abroadStudyOrWork">海外工作经历:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="abroadStudyOrWork" data-options="validType:'email'"/>
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><label for="email">邮箱:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="email" data-options="validType:'email'"/></td>
+        <td align="right"><label for="currentAnnualSalary">当前年薪:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="currentAnnualSalary" data-options="validType:'email'"/>
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><label for="mobilePhone">手机:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="mobilePhone" data-options="validType:'email'"/></td>
+        <td align="right"><label for="homePhone">家庭电话:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="homePhone" data-options="validType:'email'"/></td>
+      </tr>
+      <tr>
+        <td align="right"><label for="companyPhone">公司电话:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="companyPhone" data-options="validType:'email'"/></td>
+        <td align="right"><label for="jobHuntingStatusId">求职状态:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="jobHuntingStatusId" data-options="validType:'email'"/>
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><label for="householdRegister">户籍:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="householdRegister" data-options="validType:'email'"/></td>
+        <td align="right"><label for="keyword">搜索关键字:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="keyword" data-options="validType:'email'"/></td>
+      </tr>
+      <tr>
+        <td align="right"><label for="countryId">国籍:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="countryId" data-options="validType:'email'"/></td>
+        <td align="right"><label for="high">身高:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="high" data-options="validType:'email'"/></td>
+      </tr>
+      <tr>
+        <td align="right"><label for="maritalStatus">婚姻状况:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="maritalStatus" data-options="validType:'email'"/></td>
+        <td align="right"><label for="politicalStatusId">政治面貌:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="politicalStatusId" data-options="validType:'email'"/>
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><label for="postcode">邮编:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="postcode" data-options="validType:'email'"/></td>
+        <td align="right"><label for="qq">QQ号码:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="qq" data-options="validType:'email'"/></td>
+      </tr>
+      <tr>
+        <td align="right"><label for="address">联系地址:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="address" data-options="validType:'email'"/></td>
+        <td align="right"><label for="selfHomepage">个人主页:</label></td>
+        <td align="left"><input class="easyui-validatebox" type="text" name="selfHomepage" data-options="validType:'email'"/></td>
+      </tr>
+      <tr>
+        <td colspan="4" align="center" height="40" valign="bottom">
+          <div id="talentEditTb">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-save" type="save">保存</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" type="cancel">取消</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
 
 <script src="/js/business/talent.js"/>

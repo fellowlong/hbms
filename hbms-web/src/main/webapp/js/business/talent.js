@@ -27,8 +27,42 @@ $("#talentList").datagrid({
     })
     param.columnFields = columnFieldNames;
     return true;
+  },
+  onLoadSuccess: function(){
+    $('#talentTb a').linkbutton();
+    createTalentEditWin("人才编辑", false);
   }
 });
-$('#talentTb a').linkbutton();
+
+function createTalentEditWin(title, closed) {
+  var width = 550, height = 450;
+  var westWidth = $("#layout").layout("panel", "west").outerWidth();
+  var northHeight = $("#layout").layout("panel", "north").outerHeight();
+  var left = ($(document.body).width() - width)/2 - westWidth;
+  var top = ($(document.body).height() - height)/2 - northHeight;
+  $("#talentEditWin").dialog({
+    title: title,
+    width: width,
+    height: height,
+    left: left,
+    top: top,
+    closed: closed,
+    cache: false,
+    modal: false,
+    inline : true,
+    onOpen : function(){
+      $("#talentEditTb a[type='save']").unbind();
+      $("#talentEditTb a[type='save']").linkbutton({disabled : false});
+      $("#talentEditTb a[type='save']").bind('click', function(event){
+        $("#talentEditTb a[type='save']").linkbutton("disable");
+      });
+      $("#talentEditTb a[type='cancel']").unbind();
+      $("#talentEditTb a[type='cancel']").linkbutton();
+      $("#talentEditTb a[type='cancel']").bind('click', function(event){
+        $("#talentEditWin").dialog({closed : true});
+      });
+    }
+  });
+}
 
 

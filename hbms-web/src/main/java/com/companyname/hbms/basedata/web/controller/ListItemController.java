@@ -5,6 +5,8 @@ import com.companyname.hbms.basedata.domain.ListItem;
 import com.companyname.hbms.basedata.service.ListItemService;
 import com.companyname.hbms.mvc.MessageCollector;
 import com.companyname.hbms.utils.WebUtils;
+import com.companyname.hbms.utils.paging.PageRange;
+import com.companyname.hbms.utils.paging.PagingResult;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,19 +47,15 @@ public class ListItemController extends MultiActionController {
 
 
   public void findAllCategory(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-    List<ListItem> listItems = listItemService.findAllCategory();
-
-    WebUtils.writeWithJson(response, listItems);
+    PagingResult<ListItem> pagingResult = listItemService.findAllCategory(WebUtils.getPageRange(request));
+    WebUtils.writeForEasyUIDataGrid(request, response, pagingResult);
 
   }
   public void findByBean(HttpServletRequest request,
                          HttpServletResponse response,
                          ListItem listItem) throws Exception {
-
-    List<ListItem> listItems = listItemService.findByBean(listItem);
-
-    WebUtils.writeWithJson(response, listItems);
+    PagingResult<ListItem> pagingResult = listItemService.findByBean(listItem, WebUtils.getPageRange(request));
+    WebUtils.writeForEasyUIDataGrid(request, response, pagingResult);
 
   }
 

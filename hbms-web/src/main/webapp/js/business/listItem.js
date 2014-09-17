@@ -5,50 +5,65 @@ $("#listItemCategoryGd").datagrid({
   fitColumns : true,
   ctrlSelect:true,
   toolbar:"#listItemCategoryTb",
+  pagination:true,
   columns:[[
     {field:'id',checkbox:true,align:'right'},
     {field:'value',title:'值',width:100, align:'left'}
   ]],
   onSelect:function(rowIndex, rowData) {
-    initListItemsOfCategoryDg();
     refreshListItemsOfCategoryDg();
   },
   onUnselect : function(rowIndex, rowData) {
-    initListItemsOfCategoryDg();
     refreshListItemsOfCategoryDg();
   },
+  onBeforeLoad : function(param) {
+    var columnFields = $('#listItemCategoryGd').datagrid('getColumnFields');
+    var columnFieldNames = "";
+    $.each(columnFields, function(i, item){
+      columnFieldNames += (i > 0 ? "," : "") + item;
+    })
+    param.columnFields = columnFieldNames;
+    return true;
+  },
   onLoadSuccess: function(){
-    initOperationBtn();
+    initDataGridToolbarBtn();
     initListItemsOfCategoryDg();
+    refreshListItemsOfCategoryDg();
     createListItemEditWin("listItemCategoryGd", "", true);
   }
 });
 
 function initListItemsOfCategoryDg() {
   $("#listItemsOfCategoryDg").datagrid({
+    url: null,
     title : '列表项',
     singleSelect: false,
     fitColumns : true,
     ctrlSelect:true,
     toolbar:"#listItemsOfCategoryTb",
+    pagination:true,
     columns:[[
       {field:'id',checkbox:true,align:'right'},
-      {field:'value',title:'值',width:100,align:'left'}
+      {field:'value',title:'值',width:100,align:'left'},
+      {field:'typeId',title:'类型编号',width:100,align:'left', hidden:true}
     ]],
-    data:[],
-    operationOptions: {
-      editFunction : editListItem,
-      deleteUrl : '/listItem/deleteById.do',
-      deletePromptField : 'value',
-      deleteSuccessFunction : function(){
-        $('#listItemsOfCategoryDg').datagrid('reload');
-      }
+    data:null,
+    onBeforeLoad : function(param) {
+      var columnFields = $('#listItemsOfCategoryDg').datagrid('getColumnFields');
+      var columnFieldNames = "";
+      $.each(columnFields, function(i, item){
+        columnFieldNames += (i > 0 ? "," : "") + item;
+      })
+      param.columnFields = columnFieldNames;
+      return true;
     }
+
   });
 }
 
-function initOperationBtn() {
+function initDataGridToolbarBtn() {
   $('#listItemCategoryTb a').linkbutton();
+  $('#listItemCategoryTb a').unbind();
   $('#listItemCategoryTb a').bind('click', function(event){
     addOrEditOrDeleteOrViewRecord({
       dataGridId:"listItemCategoryGd",
@@ -63,6 +78,7 @@ function initOperationBtn() {
     });
   });
   $('#listItemsOfCategoryTb a').linkbutton();
+  $('#listItemsOfCategoryTb a').unbind();
   $('#listItemsOfCategoryTb a').bind('click', function(event){
     addOrEditOrDeleteOrViewRecord({
       dataGridId:"listItemsOfCategoryDg",
@@ -87,14 +103,16 @@ function refreshListItemsOfCategoryDg() {
       queryParams:{typeId:selectedRows[0].id}
     });
   } else {
-    $("#listItemsOfCategoryDg").datagrid("loadData", []);
+    $("#listItemsOfCategoryDg").datagrid({url:null, data:[]});
   }
 }
 
 function createListItemEditWin(dataGridId, title, closed) {
-  var width = 250, height = 120;
-  var left = $(document.body).width()/2 - width;
-  var top = $(document.body).height()/2 - height;
+  var width = 280, height = 150;
+  var westWidth = $("#layout").layout("panel", "west").outerWidth();
+  var northHeight = $("#layout").layout("panel", "north").outerHeight();
+  var left = ($(document.body).width() - width)/2 - westWidth;
+  var top = ($(document.body).height() - height)/2 - northHeight;
   $("#listItemEditWin").dialog({
     title: title,
     width: width,
@@ -106,14 +124,14 @@ function createListItemEditWin(dataGridId, title, closed) {
     modal: false,
     inline : true,
     onOpen : function(){
-      $("#listItemEditTb a[type='save']").linkbutton({disabled : false});
       $("#listItemEditTb a[type='save']").unbind();
+      $("#listItemEditTb a[type='save']").linkbutton({disabled : false});
       $("#listItemEditTb a[type='save']").bind('click', function(event){
         $("#listItemEditTb a[type='save']").linkbutton("disable");
         insertOrUpdateListItem(dataGridId)
       });
-      $("#listItemEditTb a[type='cancel']").linkbutton();
       $("#listItemEditTb a[type='cancel']").unbind();
+      $("#listItemEditTb a[type='cancel']").linkbutton();
       $("#listItemEditTb a[type='cancel']").bind('click', function(event){
         $("#listItemEditWin").dialog({closed : true});
       });

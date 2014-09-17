@@ -18,8 +18,9 @@
     <script src="/js/framework/workPanel.js" type="text/javascript" lang="javascript"></script>
 
 </head>
-<body class="easyui-layout">
+<body >
 
+<div id="layout" class="easyui-layout" fit="true">
     <div data-options="region:'north',split:false,collapsible:false" style="height:50px;"></div>
     <div data-options="region:'west',title:'功能列表', split:true" style="width:200px;">
         <ul id="navTree"></ul>
@@ -27,6 +28,7 @@
     <div data-options="region:'center',title:'center title'">
         <div id="workPanel"/>
     </div>
+</div>
 
 </body>
 </html>
