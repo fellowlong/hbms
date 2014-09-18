@@ -1,13 +1,13 @@
 /**
  * Created by fellowlong on 2014-08-12.
  */
-$("#talentList").datagrid({
+$("#talentDg").datagrid({
   url:"/talent/list.do",
   pagination:true,
   title : "人才管理",
   singleSelect: false,
   fitColumns : true,
-  toolbar:"#talentTb",
+  toolbar:"#talentDgTb",
   ctrlSelect:true,
   columns:[[
     {field:'id',title:'选择',checkbox:true,align:'left'},
@@ -20,7 +20,7 @@ $("#talentList").datagrid({
     {field:'updateTime',title:'最后修改时间',width:100,align:'left'}
   ]],
   onBeforeLoad : function(param) {
-    var columnFields = $('#talentList').datagrid('getColumnFields');
+    var columnFields = $('#talentDg').datagrid('getColumnFields');
     var columnFieldNames = "";
     $.each(columnFields, function(i, item){
       columnFieldNames += (i > 0 ? "," : "") + item;
@@ -29,13 +29,31 @@ $("#talentList").datagrid({
     return true;
   },
   onLoadSuccess: function(){
-    $('#talentTb a').linkbutton();
-    createTalentEditWin("人才编辑", false);
+    initTalentDgToolbarBtn();
+    createTalentEditWin("人才编辑", true);
   }
 });
 
-function createTalentEditWin(title, closed) {
-  var width = 550, height = 450;
+function initTalentDgToolbarBtn() {
+  $('#talentDgTb a').unbind();
+  $('#talentDgTb a').linkbutton();
+  $('#talentDgTb a').bind('click', function(event){
+    addOrEditOrDeleteOrViewRecord({
+      dataGridId:"talentDg",
+      type: $(event.currentTarget).attr("type"),
+      add : addTalent,
+      edit : editTalent,
+      removeUrl : '/talent/deleteById.do',
+      removePromptField : ["name"],
+      deleteSuccess : function(){
+        $('#talentDg').datagrid('reload');
+      }
+    });
+  });
+}
+
+function createTalentEditWin(title, closed, maxZIndex) {
+  var width = 600, height = 460;
   var westWidth = $("#layout").layout("panel", "west").outerWidth();
   var northHeight = $("#layout").layout("panel", "north").outerHeight();
   var left = ($(document.body).width() - width)/2 - westWidth;
@@ -46,11 +64,20 @@ function createTalentEditWin(title, closed) {
     height: height,
     left: left,
     top: top,
+//    zIndex: maxZIndex + 1099999990,
     closed: closed,
-    cache: false,
-    modal: false,
-    inline : true,
     onOpen : function(){
+      $('#sexOfTalent').combo({
+        required:true,
+        multiple:false
+      });
+      $('#itemOfSexOfTalent').appendTo($('#sexOfTalent').combo('panel'));
+      $('#itemOfSexOfTalent input').click(function(){
+        var v = $(this).val();
+        var s = $(this).next().text();
+        $('#sexOfTalent').combo('setValue', v).combo('setText', s).combo('hidePanel');
+      });
+
       $("#talentEditTb a[type='save']").unbind();
       $("#talentEditTb a[type='save']").linkbutton({disabled : false});
       $("#talentEditTb a[type='save']").bind('click', function(event){
@@ -61,8 +88,20 @@ function createTalentEditWin(title, closed) {
       $("#talentEditTb a[type='cancel']").bind('click', function(event){
         $("#talentEditWin").dialog({closed : true});
       });
+    },
+    onClose : function() {
+      removeCoverLayer();
     }
   });
+}
+
+function addTalent(options) {
+  createTalentEditWin("新增人才", false, 99999);
+}
+
+
+function editTalent(options, row) {
+  createTalentEditWin("修改人才：" + row.name, false);
 }
 
 

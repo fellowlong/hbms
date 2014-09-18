@@ -108,6 +108,7 @@ function openFuncPanel(node) {
       {
         success: function (data, textStatus, jqXHR) {
           $("#workPanel").html(data);
+          $.parser.parse('#workPanel');
         },
         dataType: "html"
       });

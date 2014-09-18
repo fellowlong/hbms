@@ -217,3 +217,23 @@ function getValueFromJson(name, json) {
   var currentName = name.substring(0, name.indexOf("."));
   return getValueFromJson(name.substr(currentName.length + 1), json[currentName]);
 }
+
+function createCoverLayer() {
+  $(".mask-layer").detach();
+  var maxZIndex = getMaxZIndex();
+  $("<div class='mask-layer'></div>").appendTo("body").css({"z-index" : maxZIndex});
+  return maxZIndex;
+}
+function removeCoverLayer() {
+  $(".mask-layer").detach();
+}
+
+function getMaxZIndex() {
+  var maxZ = Math.max.apply(null, $.map($("*"), function (e, n) {
+      var position = $(e).css("position");
+      if (position == "absolute" || position == "relative" || position == "fixed")
+        return parseInt($(e).css('z-index')) || 1;
+    })
+  );
+  return maxZ;
+}

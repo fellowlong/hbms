@@ -29,7 +29,7 @@ $("#listItemCategoryGd").datagrid({
     initDataGridToolbarBtn();
     initListItemsOfCategoryDg();
     refreshListItemsOfCategoryDg();
-    createListItemEditWin("listItemCategoryGd", "", true);
+    createListItemEditWin("listItemCategoryGd", "", true, 0);
   }
 });
 
@@ -107,7 +107,7 @@ function refreshListItemsOfCategoryDg() {
   }
 }
 
-function createListItemEditWin(dataGridId, title, closed) {
+function createListItemEditWin(dataGridId, title, closed, maxZIndex) {
   var width = 280, height = 150;
   var westWidth = $("#layout").layout("panel", "west").outerWidth();
   var northHeight = $("#layout").layout("panel", "north").outerHeight();
@@ -135,6 +135,9 @@ function createListItemEditWin(dataGridId, title, closed) {
       $("#listItemEditTb a[type='cancel']").bind('click', function(event){
         $("#listItemEditWin").dialog({closed : true});
       });
+    },
+    onClose : function() {
+      removeCoverLayer();
     }
   });
 }
