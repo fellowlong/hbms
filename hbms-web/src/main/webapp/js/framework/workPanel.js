@@ -102,8 +102,11 @@ jQuery(document).ready(function () {
 
 function openFuncPanel(node) {
   if($("#navTree").tree("isLeaf", node.target)) {
-    $("#workPanel").empty();
-    $.ajax(
+//    $("#workPanel").empty();
+    $('body>div.menu-top').menu('destroy');
+    $('body>div.window>div.window-body').window('destroy');
+    $("#workPanel").panel('refresh',node.url);
+/*    $.ajax(
       getRandomUrl(node.url),
       {
         success: function (data, textStatus, jqXHR) {
@@ -111,6 +114,6 @@ function openFuncPanel(node) {
           $.parser.parse('#workPanel');
         },
         dataType: "html"
-      });
+      });*/
   }
 }

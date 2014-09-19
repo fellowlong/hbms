@@ -249,7 +249,7 @@ function getMaxZIndex() {
 
 function createListItemSelectWin(callback, listItem) {
   $("#listItemSelectWin").detach();
-  $("<div id='listItemSelectWin'></div>").appendTo("body");
+  $("<div id='listItemSelectWin'></div>").appendTo("#workPanel");
   $("<table cellspacing='0' cellpadding='0' width='600' align='center' valign='top'><tr><td width='50%' valign='top'><div id='listItemCategoryDgOfListItemSelectWin'></div></td><td width='50%' valign='top'><div id='listItemGdOfListItemSelectWin'></div></td></tr></table>").appendTo("#listItemSelectWin");
   $("#listItemCategoryDgOfListItemSelectWin").datagrid({
     url: '/listItem/findAllCategory.do',
@@ -347,7 +347,11 @@ function createListItemSelectWin(callback, listItem) {
         $("#listItemSelectWin").dialog("close");
         $("body").remove("#listItemSelectWin");
       }
-    }]
+    }],
+    onClose:function() {
+     /* $('body>div.menu-top').menu('destroy');
+      $('body>div.window>div.window-body').window('destroy');*/
+    }
   });
 
 }
