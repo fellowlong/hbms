@@ -78,6 +78,19 @@ function createTalentEditWin(title, closed, maxZIndex) {
         $('#sexOfTalent').combo('setValue', v).combo('setText', s).combo('hidePanel');
       });
 
+      $('#abroadStudyOrWorkOfTalent').combo({
+        required:true,
+        multiple:false
+      });
+      $('#itemOfAbroadStudyOrWorkOfTalent').appendTo($('#abroadStudyOrWorkOfTalent').combo('panel'));
+      $('#itemOfAbroadStudyOrWorkOfTalent input').click(function(){
+        var v = $(this).val();
+        var s = $(this).next().text();
+        $('#abroadStudyOrWorkOfTalent').combo('setValue', v).combo('setText', s).combo('hidePanel');
+      });
+
+
+
       $("#talentEditTb a[type='save']").unbind();
       $("#talentEditTb a[type='save']").linkbutton({disabled : false});
       $("#talentEditTb a[type='save']").bind('click', function(event){

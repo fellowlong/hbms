@@ -47,15 +47,15 @@ public class ListItemController extends MultiActionController {
 
 
   public void findAllCategory(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    PagingResult<ListItem> pagingResult = listItemService.findAllCategory(WebUtils.getPageRange(request));
-    WebUtils.writeForEasyUIDataGrid(request, response, pagingResult);
+    List<ListItem> listItems = listItemService.findAllCategory();
+    WebUtils.writeWithJson(response, listItems);
 
   }
   public void findByBean(HttpServletRequest request,
                          HttpServletResponse response,
                          ListItem listItem) throws Exception {
-    PagingResult<ListItem> pagingResult = listItemService.findByBean(listItem, WebUtils.getPageRange(request));
-    WebUtils.writeForEasyUIDataGrid(request, response, pagingResult);
+    List<ListItem> listItems = listItemService.findByBean(listItem);
+    WebUtils.writeWithJson(response, listItems);
 
   }
 

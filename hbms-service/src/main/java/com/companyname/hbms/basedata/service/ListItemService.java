@@ -18,8 +18,8 @@ public interface ListItemService {
 
   public int deleteById(Long[] ids);
 
-  public PagingResult<ListItem> findByBean(ListItem listItem, PageRange pageRange);
+  public List<ListItem> findByBean(ListItem listItem);
 
-  public PagingResult<ListItem> findAllCategory(PageRange pageRange);
+  public List<ListItem> findAllCategory();
 
 }

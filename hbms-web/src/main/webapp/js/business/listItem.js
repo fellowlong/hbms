@@ -5,7 +5,7 @@ $("#listItemCategoryGd").datagrid({
   fitColumns : true,
   ctrlSelect:true,
   toolbar:"#listItemCategoryTb",
-  pagination:true,
+//  pagination:true,
   columns:[[
     {field:'id',checkbox:true,align:'right'},
     {field:'value',title:'值',width:100, align:'left'}
@@ -41,7 +41,7 @@ function initListItemsOfCategoryDg() {
     fitColumns : true,
     ctrlSelect:true,
     toolbar:"#listItemsOfCategoryTb",
-    pagination:true,
+//    pagination:true,
     columns:[[
       {field:'id',checkbox:true,align:'right'},
       {field:'value',title:'值',width:100,align:'left'},
@@ -57,7 +57,6 @@ function initListItemsOfCategoryDg() {
       param.columnFields = columnFieldNames;
       return true;
     }
-
   });
 }
 

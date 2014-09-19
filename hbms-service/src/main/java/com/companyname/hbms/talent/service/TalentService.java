@@ -4,6 +4,8 @@ import com.companyname.hbms.talent.domain.Talent;
 import com.companyname.hbms.utils.paging.PageRange;
 import com.companyname.hbms.utils.paging.PagingResult;
 
+import java.util.List;
+
 /**
  * Created by fellowlong on 2014-05-27.
  *
@@ -19,7 +21,7 @@ public interface TalentService {
 
   public int enable(Long talentId);
 
-  public PagingResult<Talent> findByBean(Talent talent, PageRange pageRange);
+  public List<Talent> findByBean(Talent talent);
 
 
 }

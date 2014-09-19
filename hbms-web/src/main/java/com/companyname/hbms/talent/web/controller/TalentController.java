@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by fellowlong on 2014-08-07.
@@ -32,8 +33,8 @@ public class TalentController extends MultiActionController {
     if (talent.getLastReportResume() != null) {
       talent.getLastReportResume().setYn(Boolean.TRUE);
     }
-    PagingResult<Talent> talentPagingResult = talentService.findByBean(talent, WebUtils.getPageRange(request));
-    WebUtils.writeForEasyUIDataGrid(request, response, talentPagingResult);
+    List<Talent> talents = talentService.findByBean(talent);
+    WebUtils.writeWithJson(response, talents);
 
   }
 

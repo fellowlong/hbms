@@ -3,10 +3,11 @@ package com.companyname.hbms.talent.service.impl;
 import com.companyname.hbms.talent.domain.Talent;
 import com.companyname.hbms.talent.service.TalentService;
 import com.companyname.hbms.utils.paging.PageRange;
-import com.companyname.hbms.utils.paging.PagingResult;
 import common.TestUtils;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+
+import java.util.List;
 
 /**
  * Created by fellowlong on 14-5-29.
@@ -34,16 +35,16 @@ public class TalentServiceImplTest extends TestCase {
     talent.setId(talentId);
     talent.setName(updateAfter);
     talentService.update(talent);
-    PagingResult<Talent> pagingResult = talentService.findByBean(talent, new PageRange(1, 10));
-    Assert.assertNotSame(updateAfter, pagingResult.getRecords().get(0).getName());
+    List<Talent> talents = talentService.findByBean(talent);
+    Assert.assertNotSame(updateAfter, talents.get(0).getName());
   }
 
   public void testFindById() {
     TalentService talentService = TestUtils.getApplicationContext().getBean(TalentService.class);
     Talent talent = new Talent();
     talent.setId(talentId);
-    PagingResult<Talent> pagingResult = talentService.findByBean(talent, new PageRange(1, 10));
-    Assert.assertTrue(pagingResult.getRecords() != null && pagingResult.getRecords().size() == 1);
+    List<Talent> talents = talentService.findByBean(talent);
+    Assert.assertTrue(talents != null && talents.size() == 1);
   }
 
   public void testDisable() {
@@ -52,8 +53,8 @@ public class TalentServiceImplTest extends TestCase {
     Talent talent = new Talent();
     talent.setYn(Boolean.FALSE);
     talent.setId(talentId);
-    PagingResult<Talent> pagingResult = talentService.findByBean(talent, new PageRange(1, 10));
-    Assert.assertTrue(pagingResult.getRecords() != null || pagingResult.getRecords().size() == 1);
+    List<Talent> talents = talentService.findByBean(talent);
+    Assert.assertTrue(talents != null || talents.size() == 1);
   }
 
   public void testEnable() {
@@ -61,17 +62,17 @@ public class TalentServiceImplTest extends TestCase {
     talentService.enable(talentId);
     Talent talent = new Talent();
     talent.setId(talentId);
-    PagingResult<Talent> pagingResult = talentService.findByBean(talent, new PageRange(1, 10));
-    Assert.assertTrue(pagingResult.getRecords() != null && pagingResult.getRecords().size() == 1);
+    List<Talent> talents = talentService.findByBean(talent);
+    Assert.assertTrue(talents != null && talents.size() == 1);
   }
 
   public void testPagingQuery() {
     TalentService talentService = TestUtils.getApplicationContext().getBean(TalentService.class);
     Talent talent = new Talent();
     talent.setYn(Boolean.TRUE);
-    PagingResult<Talent> pagingResult = talentService.findByBean(talent, new PageRange(1, 10));
-    System.out.println(pagingResult);
-    Assert.assertTrue(pagingResult.getRecords() != null && pagingResult.getRecords().size() == 10);
+    List<Talent> talents = talentService.findByBean(talent);
+    System.out.println(talents);
+    Assert.assertTrue(talents != null && talents.size() == 10);
   }
 
 }

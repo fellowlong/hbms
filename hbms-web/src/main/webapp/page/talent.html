@@ -17,12 +17,11 @@
               <td align="left"><input class="easyui-validatebox" type="text" name="name" data-options="required:true"/></td>
               <td align="right"><label for="sex">性别:</label></td>
               <td align="left">
-                <select id="sexOfTalent" style="width:150px"></select>
+                <select id="sexOfTalent" name="sex" style="width:150px; display: inline-block"></select>
                 <div id="itemOfSexOfTalent">
-                  <div style="color:#99BBE8;background:#fafafa;padding:5px;">选择一种性别</div>
                   <div style="padding:10px">
-                    <input type="radio" name="lang" value="0"><span>男</span><br/>
-                    <input type="radio" name="lang" value="1"><span>女</span><br/>
+                    <input type="radio" name="lang" value="1"><span>男</span><br/>
+                    <input type="radio" name="lang" value="0"><span>女</span><br/>
                   </div>
                 </div>
               </td>
@@ -31,11 +30,11 @@
               <td align="right"><label for="birthday">出生日期:</label></td>
               <td align="left"><input id="birthdayOfTalent" class="easyui-datebox" type="text" name="birthday"/></td>
               <td align="right"><label for="workingYears">工作年限:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="workingYears" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-numberbox" type="text" name="workingYears" data-options="required:true,min:1"/></td>
             </tr>
             <tr>
               <td align="right"><label for="papersTypeId">证件类型:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="papersTypeId" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="papersTypeId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit'}]"/></td>
               <td align="right"><label for="papersNumber">证件编号:</label></td>
               <td align="left"><input class="easyui-validatebox" type="text" name="papersNumber" data-options="required:true"/></td>
             </tr>
@@ -43,19 +42,26 @@
               <td align="right"><label for="residence">居住地:</label></td>
               <td align="left"><input class="easyui-validatebox" type="text" name="residence" data-options="required:true"/></td>
               <td align="right"><label for="abroadStudyOrWork">海外工作经历:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="abroadStudyOrWork" data-options="required:true"/>
+              <td align="left">
+                <select id="abroadStudyOrWorkOfTalent" name="abroadStudyOrWork" style="width:150px"></select>
+                <div id="itemOfAbroadStudyOrWorkOfTalent" style="display: inline-block">
+                  <div style="padding:10px">
+                    <input type="radio" name="lang" value="0"><span>否</span><br/>
+                    <input type="radio" name="lang" value="1"><span>是</span><br/>
+                  </div>
+                </div>
               </td>
             </tr>
             <tr>
               <td align="right"><label for="email">邮箱:</label></td>
               <td align="left"><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'"/></td>
               <td align="right"><label for="currentAnnualSalary">当前年薪:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="currentAnnualSalary" data-options="required:true"/>
+              <td align="left"><input class="easyui-numberbox" type="text" name="currentAnnualSalary" data-options="required:true, precision:2, icons:[{iconCls:'icon-wan'}]"/>
               </td>
             </tr>
             <tr>
               <td align="right"><label for="mobilePhone">手机:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="mobilePhone" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-numberbox" type="text" name="mobilePhone" data-options="required:true"/></td>
               <td align="right"><label for="homePhone">家庭电话:</label></td>
               <td align="left"><input class="easyui-validatebox" type="text" name="homePhone" data-options="required:true"/></td>
             </tr>
@@ -63,7 +69,7 @@
               <td align="right"><label for="companyPhone">公司电话:</label></td>
               <td align="left"><input class="easyui-validatebox" type="text" name="companyPhone" data-options="required:true"/></td>
               <td align="right"><label for="jobHuntingStatusId">求职状态:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="jobHuntingStatusId" data-options="required:true"/>
+              <td align="left"><input class="easyui-textbox" type="text" name="jobHuntingStatusId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit'}]"/>
               </td>
             </tr>
             <tr>
@@ -74,22 +80,24 @@
             </tr>
             <tr>
               <td align="right"><label for="countryId">国籍:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="countryId" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="countryId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit'}]"/></td>
               <td align="right"><label for="high">身高:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="high" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-numberbox" type="text" name="high" data-options="required:true,icons:[{iconCls:'icon-cm'}]"/></td>
             </tr>
             <tr>
-              <td align="right"><label for="maritalStatus">婚姻状况:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="maritalStatus" data-options="required:true"/></td>
+              <td align="right"><label for="maritalStatusId">婚姻状况:</label></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="maritalStatusId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit'}]"/></td>
               <td align="right"><label for="politicalStatusId">政治面貌:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="politicalStatusId" data-options="required:true"/>
+              <td align="left"><input class="easyui-textbox" type="text" name="politicalStatusId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit',handler: function(e){
+			createListItemSelectWin(function(rowData){$(e.data.target).textbox('setValue', rowData.id).textbox('setText', rowData.value);},{id:175,typeId:3});
+		}}]"/>
               </td>
             </tr>
             <tr>
               <td align="right"><label for="postcode">邮编:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="postcode" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-numberbox" type="text" name="postcode" data-options="required:true"/></td>
               <td align="right"><label for="qq">QQ号码:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="qq" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-numberbox" type="text" name="qq" data-options="required:true"/></td>
             </tr>
             <tr>
               <td align="right"><label for="address">联系地址:</label></td>

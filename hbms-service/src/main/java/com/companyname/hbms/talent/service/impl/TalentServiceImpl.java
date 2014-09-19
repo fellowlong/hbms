@@ -7,6 +7,8 @@ import com.companyname.hbms.utils.paging.PageRange;
 import com.companyname.hbms.utils.paging.PagingResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by fellowlong on 14-5-29.
  */
@@ -40,8 +42,8 @@ public class TalentServiceImpl implements TalentService {
   }
 
   @Override
-  public PagingResult<Talent> findByBean(Talent talent, PageRange pageRange) {
-    return talentDao.findByBean(talent, pageRange);
+  public List<Talent> findByBean(Talent talent) {
+    return talentDao.findByBean(talent);
   }
 
 }

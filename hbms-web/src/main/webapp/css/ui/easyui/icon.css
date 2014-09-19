@@ -64,9 +64,14 @@
 .icon-lock{
 	background:url('icons/lock.png') no-repeat center center;
 }
-
 .icon-view{
 	background:url('icons/view.png') no-repeat center center;
+}
+.icon-wan{
+	background:url('icons/wan.png') no-repeat center center;
+}
+.icon-cm{
+	background:url('icons/cm.png') no-repeat center center;
 }
 
 

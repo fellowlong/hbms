@@ -24,7 +24,7 @@
     <parameter property="keyword" jdbcType="VARCHAR"/>
     <parameter property="countryId" jdbcType="INTEGER"/>
     <parameter property="high" jdbcType="INTEGER"/>
-    <parameter property="maritalStatus" jdbcType="INTEGER"/>
+    <parameter property="maritalStatusId" jdbcType="INTEGER"/>
     <parameter property="politicalStatusId" jdbcType="INTEGER"/>
     <parameter property="postcode" jdbcType="VARCHAR"/>
     <parameter property="qq" jdbcType="VARCHAR"/>
@@ -57,7 +57,7 @@
     <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
     <result property="countryId" column="countryId" jdbcType="INTEGER"/>
     <result property="high" column="high" jdbcType="INTEGER"/>
-    <result property="maritalStatus" column="maritalStatus" jdbcType="INTEGER"/>
+    <result property="maritalStatusId" column="maritalStatus" jdbcType="INTEGER"/>
     <result property="politicalStatusId" column="politicalStatusId" jdbcType="INTEGER"/>
     <result property="postcode" column="postcode" jdbcType="VARCHAR"/>
     <result property="qq" column="qq" jdbcType="VARCHAR"/>
@@ -71,6 +71,7 @@
     <association property="papersType" columnPrefix="PAP_" resultMap="ListItem"/>
     <association property="jobHuntingStatus" columnPrefix="JOB_" resultMap="ListItem"/>
     <association property="country" columnPrefix="COU_" resultMap="ListItem"/>
+    <association property="maritalStatus" columnPrefix="MAR_" resultMap="ListItem"/>
     <association property="politicalStatus" columnPrefix="POL_" resultMap="ListItem"/>
     <association property="lastOriginalResume" columnPrefix="RES_ORI_" resultMap="Resume"/>
     <association property="lastReportResume" columnPrefix="RES_REP_" resultMap="Resume"/>

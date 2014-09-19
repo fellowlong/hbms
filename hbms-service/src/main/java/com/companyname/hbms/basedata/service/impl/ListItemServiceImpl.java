@@ -45,12 +45,12 @@ public class ListItemServiceImpl implements ListItemService {
   }
 
   @Override
-  public PagingResult<ListItem> findByBean(ListItem listItem, PageRange pageRange) {
-    return listItemDao.findByBean(listItem, pageRange);
+  public List<ListItem> findByBean(ListItem listItem) {
+    return listItemDao.findByBean(listItem);
   }
 
   @Override
-  public PagingResult<ListItem> findAllCategory(PageRange pageRange) {
-    return listItemDao.findAllCategory(pageRange);
+  public List<ListItem> findAllCategory() {
+    return listItemDao.findAllCategory();
   }
 }

@@ -37,6 +37,9 @@
 
   <select id="findAllCategory" resultMap="domain.ListItem">
     select * from ListItem where typeId is null
+    <if test="id != null">
+      id = #{id}
+    </if>
   </select>
 
 </mapper>

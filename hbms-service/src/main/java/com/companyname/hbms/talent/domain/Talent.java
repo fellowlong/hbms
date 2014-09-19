@@ -121,9 +121,13 @@ public class Talent implements Serializable {
   private byte high;
 
   /**
+   * 婚姻状况编号
+   */
+  private Long maritalStatusId;
+  /**
    * 婚姻状况
    */
-  private Boolean maritalStatus;
+  private ListItem maritalStatus;
 
   /**
    * 政治面貌编号
@@ -366,11 +370,19 @@ public class Talent implements Serializable {
     this.high = high;
   }
 
-  public Boolean getMaritalStatus() {
+  public Long getMaritalStatusId() {
+    return maritalStatusId;
+  }
+
+  public void setMaritalStatusId(Long maritalStatusId) {
+    this.maritalStatusId = maritalStatusId;
+  }
+
+  public ListItem getMaritalStatus() {
     return maritalStatus;
   }
 
-  public void setMaritalStatus(Boolean maritalStatus) {
+  public void setMaritalStatus(ListItem maritalStatus) {
     this.maritalStatus = maritalStatus;
   }
 
