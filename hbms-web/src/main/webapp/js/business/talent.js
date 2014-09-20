@@ -41,8 +41,12 @@ function initTalentDgToolbarBtn() {
     addOrEditOrDeleteOrViewRecord({
       dataGridId:"talentDg",
       type: $(event.currentTarget).attr("type"),
-      add : addTalent,
-      edit : editTalent,
+      add : function(options){
+        createTalentEditWin("新增人才", false);
+      },
+      edit : function(options, row) {
+        createTalentEditWin("修改人才：" + row.name, false);
+      },
       removeUrl : '/talent/deleteById.do',
       removePromptField : ["name"],
       deleteSuccess : function(){
@@ -88,33 +92,35 @@ function createTalentEditWin(title, closed, maxZIndex) {
         var s = $(this).next().text();
         $('#abroadStudyOrWorkOfTalent').combo('setValue', v).combo('setText', s).combo('hidePanel');
       });
-
-
-
-      $("#talentEditTb a[type='save']").unbind();
-      $("#talentEditTb a[type='save']").linkbutton({disabled : false});
-      $("#talentEditTb a[type='save']").bind('click', function(event){
-        $("#talentEditTb a[type='save']").linkbutton("disable");
-      });
-      $("#talentEditTb a[type='cancel']").unbind();
-      $("#talentEditTb a[type='cancel']").linkbutton();
-      $("#talentEditTb a[type='cancel']").bind('click', function(event){
-        $("#talentEditWin").dialog({closed : true});
-      });
-    },
-    onClose : function() {
-      removeCoverLayer();
     }
   });
 }
 
-function addTalent(options) {
-  createTalentEditWin("新增人才", false, 99999);
+function listItemSelector(element) {
+  createListItemSelectWin(function(rowData){
+    $(element.data.target).textbox('setValue', rowData.id).textbox('setText', rowData.value);},
+    {id:175,typeId:3});
 }
 
-
-function editTalent(options, row) {
-  createTalentEditWin("修改人才：" + row.name, false);
+function insertOrUpdateTalent() {
+  $("#talentEditForm").form("submit",{
+    url: getRandomUrl(contextPath + "/talent/insertOrUpdate.do"),
+    onSubmit: function(param){
+      return $("#talentEditForm").form("validate");
+    },
+    success: function(message) {
+      try{
+        message =  $.parseJSON(message);
+      }catch(exception){
+        showHtmlMessage("错误", exception + "\n" + message);
+      }
+      if(showAjaxMessage(message)) {
+        $('#talentEditWin').dialog({closed:true});
+        $("#talentDg").datagrid("reload");
+      }
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+      showHtmlMessage(textStatus, XMLHttpRequest.responseText);
+    }
+  });
 }
-
-

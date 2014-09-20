@@ -47,6 +47,8 @@ create table Resume(
 drop table ListItem;
 create table ListItem(
   id int auto_increment not null primary key comment '列表项编号，主键',
+  code varchar(100) comment '值',
   value varchar(100) comment '值',
-  typeId int comment '列表项编号，外键'
-);
+  typeId int comment '列表项编号，外键',
+  UNIQUE KEY UK_ListItem_Code (code)
+) auto_increment = 100001;

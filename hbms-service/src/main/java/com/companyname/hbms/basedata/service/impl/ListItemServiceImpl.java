@@ -53,4 +53,8 @@ public class ListItemServiceImpl implements ListItemService {
   public List<ListItem> findAllCategory() {
     return listItemDao.findAllCategory();
   }
+
+  public List<ListItem> findListItemsOfCategoryByCode(String code) {
+    return listItemDao.findListItemsOfCategoryByCode(code);
+  }
 }

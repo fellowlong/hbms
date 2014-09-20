@@ -10,7 +10,7 @@
   <table width="100%" align="center" valign="middle">
     <tr>
       <td align="center" valign="middle">
-        <form id="talentForm" method="post">
+        <form id="talentEditForm" method="post">
           <table border="0" cellspacing="2px" cellpadding="2px" valign="middle">
             <tr>
               <td align="right"><label for="name">姓名:</label></td>
@@ -34,7 +34,9 @@
             </tr>
             <tr>
               <td align="right"><label for="papersTypeId">证件类型:</label></td>
-              <td align="left"><input class="easyui-textbox" type="text" name="papersTypeId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit'}]"/></td>
+              <td align="left">
+                <input class="easyui-combobox"  name="papersTypeId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=PapersType',valueField:'id',textField:'value'">
+              </td>
               <td align="right"><label for="papersNumber">证件编号:</label></td>
               <td align="left"><input class="easyui-validatebox" type="text" name="papersNumber" data-options="required:true"/></td>
             </tr>
@@ -69,7 +71,8 @@
               <td align="right"><label for="companyPhone">公司电话:</label></td>
               <td align="left"><input class="easyui-validatebox" type="text" name="companyPhone" data-options="required:true"/></td>
               <td align="right"><label for="jobHuntingStatusId">求职状态:</label></td>
-              <td align="left"><input class="easyui-textbox" type="text" name="jobHuntingStatusId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit'}]"/>
+              <td align="left">
+                <input class="easyui-combobox"  name="jobHuntingStatusId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=JobHuntingStatus',valueField:'id',textField:'value'">
               </td>
             </tr>
             <tr>
@@ -80,17 +83,20 @@
             </tr>
             <tr>
               <td align="right"><label for="countryId">国籍:</label></td>
-              <td align="left"><input class="easyui-textbox" type="text" name="countryId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit'}]"/></td>
+              <td align="left">
+                <input class="easyui-combobox"  name="countryId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=Country',valueField:'id',textField:'value'">
+              </td>
               <td align="right"><label for="high">身高:</label></td>
               <td align="left"><input class="easyui-numberbox" type="text" name="high" data-options="required:true,icons:[{iconCls:'icon-cm'}]"/></td>
             </tr>
             <tr>
               <td align="right"><label for="maritalStatusId">婚姻状况:</label></td>
-              <td align="left"><input class="easyui-textbox" type="text" name="maritalStatusId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit'}]"/></td>
+              <td align="left">
+                <input class="easyui-combobox"  name="maritalStatusId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=MaritalStatus',valueField:'id',textField:'value'">
+              </td>
               <td align="right"><label for="politicalStatusId">政治面貌:</label></td>
-              <td align="left"><input class="easyui-textbox" type="text" name="politicalStatusId" data-options="required:true,editable:false,icons:[{iconCls:'icon-edit',handler: function(e){
-			createListItemSelectWin(function(rowData){$(e.data.target).textbox('setValue', rowData.id).textbox('setText', rowData.value);},{id:175,typeId:3});
-		}}]"/>
+              <td align="left">
+                <input class="easyui-combobox"  name="politicalStatusId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=PoliticalStatus',valueField:'id',textField:'value'">
               </td>
             </tr>
             <tr>
@@ -108,8 +114,8 @@
             <tr>
               <td colspan="4" align="center" valign="bottom">
                 <div id="talentEditTb" style="margin-top: 10px">
-                  <a href="#" class="easyui-linkbutton" iconCls="icon-save" type="save">保存</a>
-                  <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" type="cancel">取消</a>
+                  <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="insertOrUpdateTalent()">保存</a>
+                  <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="$('#talentEditWin').dialog({closed : true})">取消</a>
                 </div>
               </td>
             </tr>

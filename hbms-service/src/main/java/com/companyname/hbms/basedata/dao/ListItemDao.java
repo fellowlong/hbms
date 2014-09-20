@@ -21,4 +21,8 @@ public interface ListItemDao {
 
   public List<ListItem> findAllCategory();
 
+  public List<ListItem> findListItemsOfCategoryByCode(String code);
+
+
+
 }

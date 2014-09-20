@@ -14,6 +14,11 @@ public class ListItem implements Serializable {
   private Long id;
 
   /**
+   * 编码
+   */
+  private String code;
+
+  /**
    * 值
    */
   private String value;
@@ -49,6 +54,14 @@ public class ListItem implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getValue() {

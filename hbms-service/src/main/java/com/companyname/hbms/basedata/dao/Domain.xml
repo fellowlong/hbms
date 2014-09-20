@@ -12,6 +12,7 @@
 
   <resultMap id="ListItem" type="com.companyname.hbms.basedata.domain.ListItem">
     <id property="id" column="id" jdbcType="INTEGER"/>
+    <result property="code" column="value" jdbcType="VARCHAR"/>
     <result property="value" column="value" jdbcType="VARCHAR"/>
     <result property="typeId" column="typeId" jdbcType="INTEGER"/>
     <!--<association property="type" columnPrefix="TYP_" resultMap="ListItem"/>-->

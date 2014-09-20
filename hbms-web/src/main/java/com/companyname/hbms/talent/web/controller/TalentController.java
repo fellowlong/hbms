@@ -1,5 +1,6 @@
 package com.companyname.hbms.talent.web.controller;
 
+import com.companyname.hbms.mvc.MessageCollector;
 import com.companyname.hbms.talent.domain.Talent;
 import com.companyname.hbms.talent.service.TalentService;
 import com.companyname.hbms.utils.WebUtils;
@@ -39,11 +40,22 @@ public class TalentController extends MultiActionController {
   }
 
 
-  public void insert(HttpServletRequest request,
+  public void insertOrUpdate(HttpServletRequest request,
                      HttpServletResponse response,
                      Talent talent) throws Exception {
-    int count = talentService.insert(talent);
-    WebUtils.writeWithJson(response, count);
+    int resultCount = 0;
+    if(talent.getId() == null)  {
+      resultCount = talentService.insert(talent);
+    } else {
+      resultCount = talentService.update(talent);
+    }
+    MessageCollector msgCollector = new MessageCollector();
+    if (resultCount == 1) {
+      msgCollector.addInfo(WebUtils.SUCCESS, Boolean.TRUE);
+    } else {
+      msgCollector.addError(WebUtils.ERROR, Boolean.TRUE);
+    }
+    WebUtils.writeWithJson(response, msgCollector);
   }
 
 }

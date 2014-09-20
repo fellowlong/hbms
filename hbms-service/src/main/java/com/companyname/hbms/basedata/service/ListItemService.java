@@ -22,4 +22,5 @@ public interface ListItemService {
 
   public List<ListItem> findAllCategory();
 
+  public List<ListItem> findListItemsOfCategoryByCode(String code);
 }
