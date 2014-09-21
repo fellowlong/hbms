@@ -1,121 +1,101 @@
-<div id="talentDg"></div>
-<div id="talentDgTb">
-  <a href="#" class="easyui-linkbutton" type="add" iconCls="icon-add">新增</a>
-  <a href="#" class="easyui-linkbutton" type="edit" iconCls="icon-edit">编辑</a>
-  <a href="#" class="easyui-linkbutton" type="remove" iconCls="icon-remove">删除</a>
-  <a href="#" class="easyui-linkbutton" type="view" iconCls="icon-view">详情</a>
+<div id="candidateDg"></div>
+<div id="candidateDgTb">
+  <a href="#" class="easyui-linkbutton" type="add" iconCls="icon-add">新增人才</a>
+  <a href="#" class="easyui-linkbutton" type="edit" iconCls="icon-edit">编辑人才</a>
+  <a href="#" class="easyui-linkbutton" type="remove" iconCls="icon-remove">删除人才</a>
+  <a href="#" class="easyui-linkbutton" type="view" iconCls="icon-view">人才详情</a>
+  <a href="#" class="easyui-linkbutton" type="add" iconCls="icon-add">原始简历管理</a>
 </div>
 
-<div id="talentEditWin" class="easyui-dialog" style="vertical-align: middle;" data-options="inline:true,closed:true">
-  <table width="100%" align="center" valign="middle">
+<div id="candidateEditWin" class="easyui-dialog" style="vertical-align: middle;overflow: hidden" data-options="inline:true,closed:true">
+  <table align="center" valign="top" cellpadding="0" cellspacing="0" border="0" width="100%">
     <tr>
-      <td align="center" valign="middle">
-        <form id="talentEditForm" method="post">
+      <td width="100%">
+        <form id="candidateEditForm" method="post">
           <table border="0" cellspacing="2px" cellpadding="2px" valign="middle">
             <tr>
               <td align="right"><label for="name">姓名:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="name" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="name" data-options="required:true"/></td>
               <td align="right"><label for="sex">性别:</label></td>
               <td align="left">
-                <select id="sexOfTalent" name="sex" style="width:150px; display: inline-block"></select>
-                <div id="itemOfSexOfTalent">
-                  <div style="padding:10px">
-                    <input type="radio" name="lang" value="1"><span>男</span><br/>
-                    <input type="radio" name="lang" value="0"><span>女</span><br/>
-                  </div>
-                </div>
+                <select id="sexOfCandidate" name="sex" class="easyui-combobox" data-options="required:true,panelWidth:50,panelHeight:60,editable:false">
+                  <option type="radio" name="lang" value="1">男</option>
+                  <option type="radio" name="lang" value="0">女</option>
+                </select>
               </td>
             </tr>
             <tr>
               <td align="right"><label for="birthday">出生日期:</label></td>
-              <td align="left"><input id="birthdayOfTalent" class="easyui-datebox" type="text" name="birthday"/></td>
+              <td align="left"><input id="birthdayOfCandidate" class="easyui-datebox" type="text" name="birthday" data-options="required:true,editable:false"/></td>
               <td align="right"><label for="workingYears">工作年限:</label></td>
               <td align="left"><input class="easyui-numberbox" type="text" name="workingYears" data-options="required:true,min:1"/></td>
             </tr>
             <tr>
-              <td align="right"><label for="papersTypeId">证件类型:</label></td>
-              <td align="left">
-                <input class="easyui-combobox"  name="papersTypeId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=PapersType',valueField:'id',textField:'value'">
-              </td>
-              <td align="right"><label for="papersNumber">证件编号:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="papersNumber" data-options="required:true"/></td>
+              <td align="right"><label for="industry">行业:</label></td>
+              <td align="left"><input class="easyui-combobox" type="text" name="industry" data-options="required:true,editable:false"/></td>
+              <td align="right"><label for="workingYears">职位:</label></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="position" data-options="required:true"/></td>
             </tr>
             <tr>
-              <td align="right"><label for="residence">居住地:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="residence" data-options="required:true"/></td>
-              <td align="right"><label for="abroadStudyOrWork">海外工作经历:</label></td>
-              <td align="left">
-                <select id="abroadStudyOrWorkOfTalent" name="abroadStudyOrWork" style="width:150px"></select>
-                <div id="itemOfAbroadStudyOrWorkOfTalent" style="display: inline-block">
-                  <div style="padding:10px">
-                    <input type="radio" name="lang" value="0"><span>否</span><br/>
-                    <input type="radio" name="lang" value="1"><span>是</span><br/>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td align="right"><label for="email">邮箱:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'"/></td>
-              <td align="right"><label for="currentAnnualSalary">当前年薪:</label></td>
-              <td align="left"><input class="easyui-numberbox" type="text" name="currentAnnualSalary" data-options="required:true, precision:2, icons:[{iconCls:'icon-wan'}]"/>
-              </td>
+              <td align="right"><label for="currentCompany">目前公司:</label></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="currentCompany" data-options="required:true"/></td>
+              <td align="right"><label for="currentAnnualSalary">目前年薪:</label></td>
+              <td align="left"><input class="easyui-numberbox" type="text" name="currentAnnualSalary" data-options="required:true, precision:2, icons:[{iconCls:'icon-wan'}]"/></td>
             </tr>
             <tr>
               <td align="right"><label for="mobilePhone">手机:</label></td>
               <td align="left"><input class="easyui-numberbox" type="text" name="mobilePhone" data-options="required:true"/></td>
-              <td align="right"><label for="homePhone">家庭电话:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="homePhone" data-options="required:true"/></td>
+              <td align="right"><label for="email">邮箱:</label></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email'"/></td>
             </tr>
             <tr>
+              <td align="right"><label for="homePhone">家庭电话:</label></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="homePhone" data-options="required:false"/></td>
               <td align="right"><label for="companyPhone">公司电话:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="companyPhone" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="companyPhone" data-options="required:false"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="qq">QQ/微信/其他:</label></td>
+              <td align="left"><input class="easyui-numberbox" type="text" name="qq" data-options="required:false"/></td>
+              <td align="right"><label for="residence">居住地:</label></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="residence" data-options="required:false"/></td>
+            </tr>
+            <tr>
               <td align="right"><label for="jobHuntingStatusId">求职状态:</label></td>
               <td align="left">
-                <input class="easyui-combobox"  name="jobHuntingStatusId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=JobHuntingStatus',valueField:'id',textField:'value'">
+                <input class="easyui-combobox"  name="jobHuntingStatusId" data-options="required:false,url:'/listItem/findListItemsOfCategoryByCode.do?code=JobHuntingStatus',valueField:'id',textField:'value',editable:false">
+              </td>
+              <td align="right"><label for="abroadStudyOrWork">海外工作经历:</label></td>
+              <td align="left">
+                <select id="abroadStudyOrWorkOfCandidate" name="abroadStudyOrWork" class="easyui-combobox" data-options="required:false,panelWidth:50,panelHeight:60,editable:false">
+                  <option type="radio" name="lang" value="0">否</option>
+                  <option type="radio" name="lang" value="1">是</option>
+                </select>
               </td>
             </tr>
             <tr>
-              <td align="right"><label for="householdRegister">户籍:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="householdRegister" data-options="required:true"/></td>
               <td align="right"><label for="keyword">搜索关键字:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="keyword" data-options="required:true"/></td>
-            </tr>
-            <tr>
+              <td align="left"><input class="easyui-textbox" type="text" name="keyword" data-options="required:false"/></td>
               <td align="right"><label for="countryId">国籍:</label></td>
               <td align="left">
-                <input class="easyui-combobox"  name="countryId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=Country',valueField:'id',textField:'value'">
+                <input class="easyui-combobox"  name="countryId" data-options="required:false,url:'/listItem/findListItemsOfCategoryByCode.do?code=Country',valueField:'id',textField:'value',editable:false">
               </td>
-              <td align="right"><label for="high">身高:</label></td>
-              <td align="left"><input class="easyui-numberbox" type="text" name="high" data-options="required:true,icons:[{iconCls:'icon-cm'}]"/></td>
             </tr>
             <tr>
               <td align="right"><label for="maritalStatusId">婚姻状况:</label></td>
               <td align="left">
-                <input class="easyui-combobox"  name="maritalStatusId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=MaritalStatus',valueField:'id',textField:'value'">
+                <input class="easyui-combobox"  name="maritalStatusId" data-options="required:false,url:'/listItem/findListItemsOfCategoryByCode.do?code=MaritalStatus',valueField:'id',textField:'value',editable:false">
               </td>
-              <td align="right"><label for="politicalStatusId">政治面貌:</label></td>
-              <td align="left">
-                <input class="easyui-combobox"  name="politicalStatusId" style="width:200px;" data-options="url:'/listItem/findListItemsOfCategoryByCode.do?code=PoliticalStatus',valueField:'id',textField:'value'">
-              </td>
+              <td align="right"><label for="high">身高:</label></td>
+              <td align="left"><input class="easyui-numberbox" type="text" name="high" data-options="required:false,icons:[{iconCls:'icon-cm'}]"/></td>
             </tr>
             <tr>
-              <td align="right"><label for="postcode">邮编:</label></td>
-              <td align="left"><input class="easyui-numberbox" type="text" name="postcode" data-options="required:true"/></td>
-              <td align="right"><label for="qq">QQ号码:</label></td>
-              <td align="left"><input class="easyui-numberbox" type="text" name="qq" data-options="required:true"/></td>
-            </tr>
-            <tr>
-              <td align="right"><label for="address">联系地址:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="address" data-options="required:true"/></td>
-              <td align="right"><label for="selfHomepage">个人主页:</label></td>
-              <td align="left"><input class="easyui-validatebox" type="text" name="selfHomepage" data-options="required:true"/></td>
             </tr>
             <tr>
               <td colspan="4" align="center" valign="bottom">
-                <div id="talentEditTb" style="margin-top: 10px">
-                  <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="insertOrUpdateTalent()">保存</a>
-                  <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="$('#talentEditWin').dialog({closed : true})">取消</a>
+                <div id="candidateEditTb" style="margin-top: 10px">
+                  <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="insertOrUpdateCandidate()">保存</a>
+                  <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="$('#candidateEditWin').dialog({closed : true})">取消</a>
                 </div>
               </td>
             </tr>
@@ -124,6 +104,64 @@
       </td>
     </tr>
   </table>
+
 </div>
 
-<script src="/js/business/talent.js"/>
+<div id="originalResumeDgWin" class="easyui-dialog" style="vertical-align: middle;overflow: hidden" data-options="inline:true,closed:true">
+  <div id="originalResumeDgTb">
+    <a href="#" class="easyui-linkbutton"  type="add" iconCls="icon-save">新增</a>
+    <a href="#" class="easyui-linkbutton"  type="edit" iconCls="icon-edit">编辑</a>
+    <a href="#" class="easyui-linkbutton"  type="remove" iconCls="icon-remove">删除</a>
+  </div>
+  <table id="originalResumeDg" class="easyui-datagrid" title="" data-options="fitColumns:true,singleSelect:true,toolbar:'#originalResumeDgTb'">
+    <thead>
+    <tr>
+      <th data-options="field:'id',width:80,checked:true">选择</th>
+      <th data-options="field:'name',width:100">名称</th>
+      <th data-options="field:'keyword',width:80,align:'right'">搜索关键字</th>
+      <th data-options="field:'languageId',width:80,align:'right'">语言</th>
+    </tr>
+    </thead>
+  </table>
+</div>
+
+<div id="resumeEditWin" class="easyui-dialog" style="vertical-align: middle;overflow: hidden" data-options="inline:true,closed:true">
+  <form id="resumeEditForm" method="post">
+    <table border="0" cellspacing="2px" cellpadding="2px" valign="middle">
+      <tr>
+        <td align="right"><label for="name">名称:</label></td>
+        <td align="left">
+          <input class="easyui-textbox"  name="name" data-options="required:true">
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><label for="name">搜索关键字:</label></td>
+        <td align="left">
+          <input class="easyui-textbox"  name="name" data-options="required:true">
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><label for="name">语言:</label></td>
+        <td align="left">
+          <input class="easyui-textbox"  name="name" data-options="required:true">
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><label for="name">附件:</label></td>
+        <td align="left">
+          <input class="easyui-filebox"  name="name" data-options="required:true">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center" valign="bottom">
+          <div id="resumeEditTb" style="margin-top: 10px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-save">保存</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="$('#resumeEditWin').dialog({closed : true})">取消</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<script src="/js/business/candidate.js"/>

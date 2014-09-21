@@ -12,7 +12,7 @@ var workPanelFactoryConfig = [
       [
         {
           name : "全局配置管理",
-          url : contextPath + "/page/talent.html"
+          url : contextPath + "/page/candidate.html"
         },
         {
           name : "环境管理",

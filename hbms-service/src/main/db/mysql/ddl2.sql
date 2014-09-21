@@ -1,5 +1,5 @@
-drop table Talent;
-create table Talent(
+drop table Candidate;
+create table Candidate(
   id int auto_increment not null primary key comment '人才编号，主键',
   name varchar(100) comment '姓名',
   sex int(1) comment '性别',
@@ -19,7 +19,7 @@ create table Talent(
   keyword varchar(200) comment '搜索关键字',
   countryId int comment '国家',
   high int comment '身高',
-  maritalStatus int (1) comment '婚姻状况',
+  maritalStatusId int comment '婚姻状况',
   politicalStatusId int comment '政治面貌',
   postcode varchar(10) comment '邮编',
   qq varchar(20) comment 'QQ号码',
@@ -35,7 +35,7 @@ create table Talent(
 drop table Resume;
 create table Resume(
   id int auto_increment not null primary key comment '简历编号，主键',
-  talentId int comment '人才编号，外键',
+  candidateId int comment '人才编号，外键',
   name varchar(100) comment '简历名称',
   keyword varchar(200) comment '简历搜索关键字',
   path varchar(200) comment '简历路径',

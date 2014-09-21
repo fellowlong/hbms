@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="domain">
+
+  <parameterMap id="Candidate" type="com.companyname.hbms.candidate.domain.Candidate">
+    <parameter property="id" jdbcType="INTEGER"/>
+    <parameter property="name" jdbcType="VARCHAR"/>
+    <parameter property="sex" jdbcType="INTEGER"/>
+    <parameter property="birthday" jdbcType="DATE"/>
+    <parameter property="workingYears" jdbcType="INTEGER"/>
+    <parameter property="papersTypeId" jdbcType="INTEGER"/>
+    <parameter property="papersNumber" jdbcType="VARCHAR"/>
+    <parameter property="residence" jdbcType="VARCHAR"/>
+    <parameter property="abroadStudyOrWork" jdbcType="INTEGER"/>
+    <parameter property="email" jdbcType="INTEGER"/>
+    <parameter property="currentAnnualSalary" jdbcType="VARCHAR"/>
+    <parameter property="mobilePhone" jdbcType="VARCHAR"/>
+    <parameter property="homePhone" jdbcType="VARCHAR"/>
+    <parameter property="companyPhone" jdbcType="VARCHAR"/>
+    <parameter property="jobHuntingStatusId" jdbcType="INTEGER"/>
+    <parameter property="householdRegister" jdbcType="VARCHAR"/>
+    <parameter property="keyword" jdbcType="VARCHAR"/>
+    <parameter property="countryId" jdbcType="INTEGER"/>
+    <parameter property="high" jdbcType="INTEGER"/>
+    <parameter property="maritalStatusId" jdbcType="INTEGER"/>
+    <parameter property="politicalStatusId" jdbcType="INTEGER"/>
+    <parameter property="postcode" jdbcType="VARCHAR"/>
+    <parameter property="qq" jdbcType="VARCHAR"/>
+    <parameter property="address" jdbcType="VARCHAR"/>
+    <parameter property="selfHomepage" jdbcType="VARCHAR"/>
+    <parameter property="yn" jdbcType="INTEGER"/>
+    <parameter property="createTime" jdbcType="DATE"/>
+    <parameter property="createUser" jdbcType="VARCHAR"/>
+    <parameter property="updateTime" jdbcType="DATE"/>
+    <parameter property="updateUser" jdbcType="VARCHAR"/>
+  </parameterMap>
+
+  <resultMap id="Candidate" type="com.companyname.hbms.candidate.domain.Candidate">
+    <id property="id" column="id" jdbcType="INTEGER"/>
+    <result property="name" column="name" jdbcType="VARCHAR"/>
+    <result property="sex" column="sex" jdbcType="INTEGER"/>
+    <result property="birthday" column="birthday" jdbcType="DATE"/>
+    <result property="workingYears" column="workingYears" jdbcType="INTEGER"/>
+    <result property="papersTypeId" column="papersTypeId" jdbcType="INTEGER"/>
+    <result property="papersNumber" column="papersNumber" jdbcType="VARCHAR"/>
+    <result property="residence" column="residence" jdbcType="VARCHAR"/>
+    <result property="abroadStudyOrWork" column="abroadStudyOrWork" jdbcType="INTEGER"/>
+    <result property="email" column="email" jdbcType="INTEGER"/>
+    <result property="currentAnnualSalary" column="currentAnnualSalary" jdbcType="VARCHAR"/>
+    <result property="mobilePhone" column="mobilePhone" jdbcType="VARCHAR"/>
+    <result property="homePhone" column="homePhone" jdbcType="VARCHAR"/>
+    <result property="companyPhone" column="companyPhone" jdbcType="VARCHAR"/>
+    <result property="jobHuntingStatusId" column="jobHuntingStatusId" jdbcType="INTEGER"/>
+    <result property="householdRegister" column="householdRegister" jdbcType="VARCHAR"/>
+    <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
+    <result property="countryId" column="countryId" jdbcType="INTEGER"/>
+    <result property="high" column="high" jdbcType="INTEGER"/>
+    <result property="maritalStatusId" column="maritalStatusId" jdbcType="INTEGER"/>
+    <result property="politicalStatusId" column="politicalStatusId" jdbcType="INTEGER"/>
+    <result property="postcode" column="postcode" jdbcType="VARCHAR"/>
+    <result property="qq" column="qq" jdbcType="VARCHAR"/>
+    <result property="address" column="address" jdbcType="VARCHAR"/>
+    <result property="selfHomepage" column="selfHomepage" jdbcType="VARCHAR"/>
+    <result property="yn" column="yn" jdbcType="INTEGER"/>
+    <result property="createTime" column="createTime" jdbcType="DATE"/>
+    <result property="createUser" column="createUser" jdbcType="VARCHAR"/>
+    <result property="updateTime" column="updateTime" jdbcType="DATE"/>
+    <result property="updateUser" column="updateUser" jdbcType="VARCHAR"/>
+    <association property="papersType" columnPrefix="PAP_" resultMap="ListItem"/>
+    <association property="jobHuntingStatus" columnPrefix="JOB_" resultMap="ListItem"/>
+    <association property="country" columnPrefix="COU_" resultMap="ListItem"/>
+    <association property="maritalStatus" columnPrefix="MAR_" resultMap="ListItem"/>
+    <association property="politicalStatus" columnPrefix="POL_" resultMap="ListItem"/>
+    <association property="lastOriginalResume" columnPrefix="RES_ORI_" resultMap="Resume"/>
+    <association property="lastReportResume" columnPrefix="RES_REP_" resultMap="Resume"/>
+  </resultMap>
+
+  <resultMap id="Resume" type="com.companyname.hbms.candidate.domain.Resume">
+    <id property="id" column="id" jdbcType="INTEGER"/>
+    <result property="candidateId" column="candidateId" jdbcType="INTEGER"/>
+    <result property="name" column="name" jdbcType="VARCHAR"/>
+    <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
+    <result property="path" column="path" jdbcType="VARCHAR"/>
+    <result property="languageId" column="languageId" jdbcType="INTEGER"/>
+    <result property="type" column="type" jdbcType="INTEGER"/>
+    <result property="yn" column="yn" jdbcType="INTEGER"/>
+    <association property="candidate" columnPrefix="TAL_" resultMap="Candidate"/>
+  </resultMap>
+
+</mapper>

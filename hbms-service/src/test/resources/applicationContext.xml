@@ -72,7 +72,7 @@
     <property name="mapperLocations">
       <list>
         <value>classpath:com/companyname/hbms/basedata/dao/*.xml</value>
-        <value>classpath:com/companyname/hbms/talent/dao/*.xml</value>
+        <value>classpath:com/companyname/hbms/candidate/dao/*.xml</value>
       </list>
     </property>
   </bean>
@@ -82,22 +82,22 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
-  <bean id="talentDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.companyname.hbms.talent.dao.TalentDao"/>
+  <bean id="candidateDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.candidate.dao.CandidateDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
   <bean id="resumeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.companyname.hbms.talent.dao.ResumeDao"/>
+    <property name="mapperInterface" value="com.companyname.hbms.candidate.dao.ResumeDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
-  <bean id="talentService" class="com.companyname.hbms.talent.service.impl.TalentServiceImpl">
-    <property name="talentDao" ref="talentDao"/>
+  <bean id="candidateService" class="com.companyname.hbms.candidate.service.impl.CandidateServiceImpl">
+    <property name="candidateDao" ref="candidateDao"/>
   </bean>
 
 
-  <bean id="resumeService" class="com.companyname.hbms.talent.service.impl.ResumeServiceImpl">
+  <bean id="resumeService" class="com.companyname.hbms.candidate.service.impl.ResumeServiceImpl">
     <property name="resumeDao" ref="resumeDao"/>
   </bean>
 

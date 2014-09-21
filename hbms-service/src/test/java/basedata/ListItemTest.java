@@ -2,7 +2,7 @@ package basedata;
 
 import com.companyname.hbms.basedata.domain.ListItem;
 import com.companyname.hbms.basedata.service.ListItemService;
-import com.companyname.hbms.talent.service.TalentService;
+import com.companyname.hbms.candidate.service.CandidateService;
 import com.companyname.hbms.utils.paging.PageRange;
 import com.companyname.hbms.utils.paging.PagingResult;
 import common.TestUtils;
