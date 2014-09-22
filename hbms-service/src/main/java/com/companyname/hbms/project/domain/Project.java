@@ -79,4 +79,116 @@ public class Project implements Serializable {
    * 计划备注
    */
   private String plantRemark;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Date getStartDate() {
+    return startDate;
+  }
+
+  public void setStartDate(Date startDate) {
+    this.startDate = startDate;
+  }
+
+  public Date getEndDate() {
+    return endDate;
+  }
+
+  public void setEndDate(Date endDate) {
+    this.endDate = endDate;
+  }
+
+  public String getContract() {
+    return contract;
+  }
+
+  public void setContract(String contract) {
+    this.contract = contract;
+  }
+
+  public String getConsultant() {
+    return consultant;
+  }
+
+  public void setConsultant(String consultant) {
+    this.consultant = consultant;
+  }
+
+  public String getAssistant() {
+    return assistant;
+  }
+
+  public void setAssistant(String assistant) {
+    this.assistant = assistant;
+  }
+
+  public String getLeader() {
+    return leader;
+  }
+
+  public void setLeader(String leader) {
+    this.leader = leader;
+  }
+
+  public String getSalesman() {
+    return salesman;
+  }
+
+  public void setSalesman(String salesman) {
+    this.salesman = salesman;
+  }
+
+  public String getLevel() {
+    return level;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
+  }
+
+  public String getIsKey() {
+    return isKey;
+  }
+
+  public void setIsKey(String isKey) {
+    this.isKey = isKey;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
+  }
+
+  public String getPlant() {
+    return plant;
+  }
+
+  public void setPlant(String plant) {
+    this.plant = plant;
+  }
+
+  public String getPlantRemark() {
+    return plantRemark;
+  }
+
+  public void setPlantRemark(String plantRemark) {
+    this.plantRemark = plantRemark;
+  }
 }

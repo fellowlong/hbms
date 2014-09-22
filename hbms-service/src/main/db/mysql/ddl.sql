@@ -46,7 +46,7 @@ create table PersonalInfo (
   maritalStatus int(1) comment '婚姻状况',
   politicalStatus int(1) comment '政治面貌',
   postcode varchar(10) comment '邮编',
-  qq varchar(20) comment 'QQ号码',
+  snsNo varchar(20) comment 'snsNo号码',
   address varchar(200) comment '联系地址',
   selfHomepage varchar(200) comment '个人主页',
   createTime datetime comment '创建时间',

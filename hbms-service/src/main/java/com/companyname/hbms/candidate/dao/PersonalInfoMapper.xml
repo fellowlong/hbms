@@ -30,7 +30,7 @@
       maritalStatus,
       politicalStatus,
       postcode,
-      qq,
+      snsNo,
       address,
       selfHomepage
     ) values (
@@ -56,7 +56,7 @@
       #{maritalStatus},
       #{politicalStatus},
       #{postcode},
-      #{qq},
+      #{snsNo},
       #{address},
       #{selfHomepage}
     )
@@ -86,7 +86,7 @@
       maritalStatus = #{maritalStatus},
       politicalStatus = #{politicalStatus},
       postcode = #{postcode},
-      qq = #{qq},
+      snsNo = #{snsNo},
       address = #{address},
       selfHomepage = #{selfHomepage}
     where resumeId = #{resumeId}

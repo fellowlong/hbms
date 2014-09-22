@@ -36,21 +36,6 @@ public class Candidate implements Serializable {
   private Integer workingYears;
 
   /**
-   * 证件类型编号
-   */
-  private Long papersTypeId;
-
-  /**
-   * 证件类型
-   */
-  private ListItem papersType;
-
-  /**
-   * 证件编号
-   */
-  private String papersNumber;
-
-  /**
    * 居住地
    */
   private String residence;
@@ -64,6 +49,26 @@ public class Candidate implements Serializable {
    * 电子邮箱
    */
   private String email;
+
+  /**
+   * 所属行业编号
+   */
+  private Long industryId;
+
+  /**
+   * 所属行业
+   */
+  private ListItem industry;
+
+  /**
+   * 目前公司
+   */
+  private String currentCompany;
+
+  /**
+   * 目前职务
+   */
+  private String currentPosition;
 
   /**
    * 目前年薪
@@ -96,11 +101,6 @@ public class Candidate implements Serializable {
   private ListItem jobHuntingStatus;
 
   /**
-   * 户籍
-   */
-  private String householdRegister;
-
-  /**
    * 关键词
    */
   private String keyword;
@@ -130,34 +130,9 @@ public class Candidate implements Serializable {
   private ListItem maritalStatus;
 
   /**
-   * 政治面貌编号
+   * 社交号码
    */
-  private Long politicalStatusId;
-
-  /**
-   * 政治面貌
-   */
-  private ListItem politicalStatus;
-
-  /**
-   * 邮编
-   */
-  private String postcode;
-
-  /**
-   * QQ号码
-   */
-  private String qq;
-
-  /**
-   * 联系地址
-   */
-  private String address;
-
-  /**
-   * 个人主页
-   */
-  private String selfHomepage;
+  private String snsNo;
 
   /**
    * 是否有效
@@ -234,30 +209,6 @@ public class Candidate implements Serializable {
     this.workingYears = workingYears;
   }
 
-  public Long getPapersTypeId() {
-    return papersTypeId;
-  }
-
-  public void setPapersTypeId(Long papersTypeId) {
-    this.papersTypeId = papersTypeId;
-  }
-
-  public ListItem getPapersType() {
-    return papersType;
-  }
-
-  public void setPapersType(ListItem papersType) {
-    this.papersType = papersType;
-  }
-
-  public String getPapersNumber() {
-    return papersNumber;
-  }
-
-  public void setPapersNumber(String papersNumber) {
-    this.papersNumber = papersNumber;
-  }
-
   public String getResidence() {
     return residence;
   }
@@ -330,14 +281,6 @@ public class Candidate implements Serializable {
     this.jobHuntingStatus = jobHuntingStatus;
   }
 
-  public String getHouseholdRegister() {
-    return householdRegister;
-  }
-
-  public void setHouseholdRegister(String householdRegister) {
-    this.householdRegister = householdRegister;
-  }
-
   public String getKeyword() {
     return keyword;
   }
@@ -386,52 +329,12 @@ public class Candidate implements Serializable {
     this.maritalStatus = maritalStatus;
   }
 
-  public Long getPoliticalStatusId() {
-    return politicalStatusId;
+  public String getSnsNo() {
+    return snsNo;
   }
 
-  public void setPoliticalStatusId(Long politicalStatusId) {
-    this.politicalStatusId = politicalStatusId;
-  }
-
-  public ListItem getPoliticalStatus() {
-    return politicalStatus;
-  }
-
-  public void setPoliticalStatus(ListItem politicalStatus) {
-    this.politicalStatus = politicalStatus;
-  }
-
-  public String getPostcode() {
-    return postcode;
-  }
-
-  public void setPostcode(String postcode) {
-    this.postcode = postcode;
-  }
-
-  public String getQq() {
-    return qq;
-  }
-
-  public void setQq(String qq) {
-    this.qq = qq;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getSelfHomepage() {
-    return selfHomepage;
-  }
-
-  public void setSelfHomepage(String selfHomepage) {
-    this.selfHomepage = selfHomepage;
+  public void setSnsNo(String snsNo) {
+    this.snsNo = snsNo;
   }
 
   public Boolean getYn() {
@@ -488,47 +391,5 @@ public class Candidate implements Serializable {
 
   public void setLastReportResume(Resume lastReportResume) {
     this.lastReportResume = lastReportResume;
-  }
-
-  @Override
-  public String toString() {
-    return "Candidate{" +
-      "id=" + id +
-      ", name='" + name + '\'' +
-      ", sex=" + sex +
-      ", birthday=" + birthday +
-      ", workingYears=" + workingYears +
-      ", papersTypeId=" + papersTypeId +
-      ", papersType=" + papersType +
-      ", papersNumber='" + papersNumber + '\'' +
-      ", residence='" + residence + '\'' +
-      ", abroadStudyOrWork=" + abroadStudyOrWork +
-      ", email='" + email + '\'' +
-      ", currentAnnualSalary=" + currentAnnualSalary +
-      ", mobilePhone='" + mobilePhone + '\'' +
-      ", homePhone='" + homePhone + '\'' +
-      ", companyPhone='" + companyPhone + '\'' +
-      ", jobHuntingStatusId=" + jobHuntingStatusId +
-      ", jobHuntingStatus=" + jobHuntingStatus +
-      ", householdRegister='" + householdRegister + '\'' +
-      ", keyword='" + keyword + '\'' +
-      ", countryId=" + countryId +
-      ", country=" + country +
-      ", high=" + high +
-      ", maritalStatus=" + maritalStatus +
-      ", politicalStatusId=" + politicalStatusId +
-      ", politicalStatus=" + politicalStatus +
-      ", postcode='" + postcode + '\'' +
-      ", qq='" + qq + '\'' +
-      ", address='" + address + '\'' +
-      ", selfHomepage='" + selfHomepage + '\'' +
-      ", yn=" + yn +
-      ", createTime=" + createTime +
-      ", createUser='" + createUser + '\'' +
-      ", updateTime=" + updateTime +
-      ", updateUser='" + updateUser + '\'' +
-      ", lastOriginalResume=" + lastOriginalResume +
-      ", lastReportResume=" + lastReportResume +
-      '}';
   }
 }

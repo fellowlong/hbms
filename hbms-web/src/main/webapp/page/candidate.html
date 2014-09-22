@@ -1,10 +1,9 @@
 <div id="candidateDg"></div>
 <div id="candidateDgTb">
-  <a href="#" class="easyui-linkbutton" type="add" iconCls="icon-add">新增人才</a>
-  <a href="#" class="easyui-linkbutton" type="edit" iconCls="icon-edit">编辑人才</a>
-  <a href="#" class="easyui-linkbutton" type="remove" iconCls="icon-remove">删除人才</a>
-  <a href="#" class="easyui-linkbutton" type="view" iconCls="icon-view">人才详情</a>
-  <a href="#" class="easyui-linkbutton" type="add" iconCls="icon-add">原始简历管理</a>
+  <a href="#" class="easyui-linkbutton" type="add" iconCls="icon-add">新增</a>
+  <a href="#" class="easyui-linkbutton" type="edit" iconCls="icon-edit">编辑</a>
+  <a href="#" class="easyui-linkbutton" type="remove" iconCls="icon-remove">删除</a>
+  <a href="#" class="easyui-linkbutton" type="view" iconCls="icon-view">查看</a>
 </div>
 
 <div id="candidateEditWin" class="easyui-dialog" style="vertical-align: middle;overflow: hidden" data-options="inline:true,closed:true">
@@ -37,9 +36,9 @@
               <td align="left"><input class="easyui-textbox" type="text" name="position" data-options="required:true"/></td>
             </tr>
             <tr>
-              <td align="right"><label for="currentCompany">目前公司:</label></td>
+              <td align="right"><label for="currentCompany">当前公司:</label></td>
               <td align="left"><input class="easyui-textbox" type="text" name="currentCompany" data-options="required:true"/></td>
-              <td align="right"><label for="currentAnnualSalary">目前年薪:</label></td>
+              <td align="right"><label for="currentAnnualSalary">当前年薪:</label></td>
               <td align="left"><input class="easyui-numberbox" type="text" name="currentAnnualSalary" data-options="required:true, precision:2, icons:[{iconCls:'icon-wan'}]"/></td>
             </tr>
             <tr>
@@ -55,8 +54,8 @@
               <td align="left"><input class="easyui-textbox" type="text" name="companyPhone" data-options="required:false"/></td>
             </tr>
             <tr>
-              <td align="right"><label for="qq">QQ/微信/其他:</label></td>
-              <td align="left"><input class="easyui-numberbox" type="text" name="qq" data-options="required:false"/></td>
+              <td align="right"><label for="snsNo">社交号码:</label></td>
+              <td align="left"><input class="easyui-numberbox" type="text" name="snsNo" data-options="required:false"/></td>
               <td align="right"><label for="residence">居住地:</label></td>
               <td align="left"><input class="easyui-textbox" type="text" name="residence" data-options="required:false"/></td>
             </tr>
@@ -107,61 +106,5 @@
 
 </div>
 
-<div id="originalResumeDgWin" class="easyui-dialog" style="vertical-align: middle;overflow: hidden" data-options="inline:true,closed:true">
-  <div id="originalResumeDgTb">
-    <a href="#" class="easyui-linkbutton"  type="add" iconCls="icon-save">新增</a>
-    <a href="#" class="easyui-linkbutton"  type="edit" iconCls="icon-edit">编辑</a>
-    <a href="#" class="easyui-linkbutton"  type="remove" iconCls="icon-remove">删除</a>
-  </div>
-  <table id="originalResumeDg" class="easyui-datagrid" title="" data-options="fitColumns:true,singleSelect:true,toolbar:'#originalResumeDgTb'">
-    <thead>
-    <tr>
-      <th data-options="field:'id',width:80,checked:true">选择</th>
-      <th data-options="field:'name',width:100">名称</th>
-      <th data-options="field:'keyword',width:80,align:'right'">搜索关键字</th>
-      <th data-options="field:'languageId',width:80,align:'right'">语言</th>
-    </tr>
-    </thead>
-  </table>
-</div>
-
-<div id="resumeEditWin" class="easyui-dialog" style="vertical-align: middle;overflow: hidden" data-options="inline:true,closed:true">
-  <form id="resumeEditForm" method="post">
-    <table border="0" cellspacing="2px" cellpadding="2px" valign="middle">
-      <tr>
-        <td align="right"><label for="name">名称:</label></td>
-        <td align="left">
-          <input class="easyui-textbox"  name="name" data-options="required:true">
-        </td>
-      </tr>
-      <tr>
-        <td align="right"><label for="name">搜索关键字:</label></td>
-        <td align="left">
-          <input class="easyui-textbox"  name="name" data-options="required:true">
-        </td>
-      </tr>
-      <tr>
-        <td align="right"><label for="name">语言:</label></td>
-        <td align="left">
-          <input class="easyui-textbox"  name="name" data-options="required:true">
-        </td>
-      </tr>
-      <tr>
-        <td align="right"><label for="name">附件:</label></td>
-        <td align="left">
-          <input class="easyui-filebox"  name="name" data-options="required:true">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2" align="center" valign="bottom">
-          <div id="resumeEditTb" style="margin-top: 10px">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-save">保存</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="$('#resumeEditWin').dialog({closed : true})">取消</a>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </form>
-</div>
 
 <script src="/js/business/candidate.js"/>

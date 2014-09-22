@@ -140,4 +140,211 @@ public class Company implements Serializable {
   private String keyword;
 
 
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getWebSite() {
+    return webSite;
+  }
+
+  public void setWebSite(String webSite) {
+    this.webSite = webSite;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public String getFax() {
+    return fax;
+  }
+
+  public void setFax(String fax) {
+    this.fax = fax;
+  }
+
+  public String getRegion() {
+    return region;
+  }
+
+  public void setRegion(String region) {
+    this.region = region;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getPostCode() {
+    return postCode;
+  }
+
+  public void setPostCode(String postCode) {
+    this.postCode = postCode;
+  }
+
+  public String getFloorSpace() {
+    return floorSpace;
+  }
+
+  public void setFloorSpace(String floorSpace) {
+    this.floorSpace = floorSpace;
+  }
+
+  public Integer getStaffCount() {
+    return staffCount;
+  }
+
+  public void setStaffCount(Integer staffCount) {
+    this.staffCount = staffCount;
+  }
+
+  public String getAnnuallyOutput() {
+    return annuallyOutput;
+  }
+
+  public void setAnnuallyOutput(String annuallyOutput) {
+    this.annuallyOutput = annuallyOutput;
+  }
+
+  public String getDomesticSaleRatio() {
+    return domesticSaleRatio;
+  }
+
+  public void setDomesticSaleRatio(String domesticSaleRatio) {
+    this.domesticSaleRatio = domesticSaleRatio;
+  }
+
+  public String getNumber() {
+    return number;
+  }
+
+  public void setNumber(String number) {
+    this.number = number;
+  }
+
+  public String getIndustry() {
+    return industry;
+  }
+
+  public void setIndustry(String industry) {
+    this.industry = industry;
+  }
+
+  public String getNature() {
+    return nature;
+  }
+
+  public void setNature(String nature) {
+    this.nature = nature;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public String getProducts() {
+    return products;
+  }
+
+  public void setProducts(String products) {
+    this.products = products;
+  }
+
+  public String getRegisteredCapital() {
+    return registeredCapital;
+  }
+
+  public void setRegisteredCapital(String registeredCapital) {
+    this.registeredCapital = registeredCapital;
+  }
+
+  public String getLegalPerson() {
+    return legalPerson;
+  }
+
+  public void setLegalPerson(String legalPerson) {
+    this.legalPerson = legalPerson;
+  }
+
+  public String getPropertyRightStructure() {
+    return propertyRightStructure;
+  }
+
+  public void setPropertyRightStructure(String propertyRightStructure) {
+    this.propertyRightStructure = propertyRightStructure;
+  }
+
+  public String getManagerialStaffCount() {
+    return managerialStaffCount;
+  }
+
+  public void setManagerialStaffCount(String managerialStaffCount) {
+    this.managerialStaffCount = managerialStaffCount;
+  }
+
+  public String getOutputValue() {
+    return outputValue;
+  }
+
+  public void setOutputValue(String outputValue) {
+    this.outputValue = outputValue;
+  }
+
+  public String getExportSaleRatio() {
+    return exportSaleRatio;
+  }
+
+  public void setExportSaleRatio(String exportSaleRatio) {
+    this.exportSaleRatio = exportSaleRatio;
+  }
+
+  public String getOtherInfo() {
+    return otherInfo;
+  }
+
+  public void setOtherInfo(String otherInfo) {
+    this.otherInfo = otherInfo;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
+  }
+
+  public String getKeyword() {
+    return keyword;
+  }
+
+  public void setKeyword(String keyword) {
+    this.keyword = keyword;
+  }
 }

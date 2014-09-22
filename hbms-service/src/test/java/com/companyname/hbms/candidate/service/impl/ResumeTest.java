@@ -58,7 +58,6 @@ public class ResumeTest extends TestCase {
     resume.setKeyword("my + 1");
     resume.setPath("my candidate attachment name + 1");
     resume.setLanguageId(2L);
-    resume.setType(2L);
     resumeService.update(resume);
     Resume resume2 = new Resume();
     resume2.setId(resumeId);

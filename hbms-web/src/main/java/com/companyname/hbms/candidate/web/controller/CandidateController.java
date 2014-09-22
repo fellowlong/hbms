@@ -33,7 +33,7 @@ public class CandidateController extends MultiActionController {
     this.dateEditor = dateEditor;
   }
 
-  public void list(HttpServletRequest request,
+  public void findByBean(HttpServletRequest request,
                    HttpServletResponse response,
                    Candidate candidate) throws Exception {
     candidate.setYn(Boolean.TRUE);

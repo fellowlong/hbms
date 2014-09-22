@@ -4,37 +4,38 @@
 $("#candidateDg").datagrid({
   url:"/candidate/list.do",
   pagination:true,
-  title : "人才管理",
+  title : "候选人管理",
   singleSelect: false,
   fitColumns : true,
   toolbar:"#candidateDgTb",
   ctrlSelect:true,
   columns:[[
     {field:'id',title:'选择',checkbox:true,align:'left'},
-    {field:'idForView',title:'编号',align:'left', formatter: function(value,row,index){return row.id}},
     {field:'name',title:'名称',width:100,align:'left'},
-    {field:'lastReportResume.name',title:'简历报告',width:100,align:'left'},
-    {field:'lastOriginalResume.name',title:'原始简历',width:100,align:'left'},
-    {field:'keyword',title:'关键字',width:100,align:'left'},
+    {field:'sex',title:'性别',width:100,align:'left'},
+    {field:'workingYears',title:'工作年限',width:100,align:'left'},
+    {field:'industry.value',title:'所属行业',width:100,align:'left'},
+    {field:'currentCompany',title:'目前公司',width:100,align:'left'},
+    {field:'currentPosition',title:'目前职位',width:100,align:'left'},
+    {field:'currentAnnualSalary',title:'目前年薪',width:100,align:'left'},
+    {field:'residence',title:'居住地',width:100,align:'left'},
+    {field:'jobHuntingStatus',title:'求职状态',width:100,align:'left'},
+    {field:'keyword',title:'搜索关键字',width:100,align:'left'},
+    {field:'createUser',title:'创建人',width:100,align:'left'},
+    {field:'createTime',title:'创建时间',width:100,align:'left'},
     {field:'updateUser',title:'最后修改人',width:100,align:'left'},
     {field:'updateTime',title:'最后修改时间',width:100,align:'left'}
   ]],
-  onBeforeLoad : function(param) {
-    var columnFields = $('#candidateDg').datagrid('getColumnFields');
-    var columnFieldNames = "";
-    $.each(columnFields, function(i, item){
-      columnFieldNames += (i > 0 ? "," : "") + item;
-    })
-    param.columnFields = columnFieldNames;
-    return true;
+  onBeforeLoad : function(param){
+    return postColumnFieldNames(param, "candidateDg");
   },
   onLoadSuccess: function(){
-    initCandidateDgToolbarBtn();
-    createCandidateEditWin("人才编辑", true);
+    initCandidateDgTb();
+    createCandidateEditWin("候选人编辑", true);
   }
 });
 
-function initCandidateDgToolbarBtn() {
+function initCandidateDgTb() {
   $('#candidateDgTb a').unbind();
   $('#candidateDgTb a').linkbutton();
   $('#candidateDgTb a').bind('click', function(event){
@@ -43,11 +44,11 @@ function initCandidateDgToolbarBtn() {
       type: $(event.currentTarget).attr("type"),
       add : function(options){
         $("#candidateEditForm").form("clear");
-        createCandidateEditWin("新增人才", false);
+        createCandidateEditWin("新增候选人", false);
       },
       edit : function(options, row) {
         $("#candidateEditForm").form("load", row);
-        createCandidateEditWin("修改人才：" + row.name, false);
+        createCandidateEditWin("修改候选人：" + row.name, false);
       },
       removeUrl : '/candidate/deleteById.do',
       removePromptField : ["name"],
@@ -72,11 +73,6 @@ function createCandidateEditWin(title, closed, maxZIndex) {
     top: top,
     closed: closed
   });
-  $("#candidateEditTabs").tabs({
-    width: width,
-    height: height - 20
-  }),
-  initResumeReportDgAndOriginalResumeDgToolbarBtn();
 }
 
 function insertOrUpdateCandidate() {

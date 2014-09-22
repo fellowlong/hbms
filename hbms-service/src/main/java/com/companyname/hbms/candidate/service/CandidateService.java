@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by fellowlong on 2014-05-27.
  *
- * 人才服务类
+ * 候选人服务类
  */
 public interface CandidateService {
 

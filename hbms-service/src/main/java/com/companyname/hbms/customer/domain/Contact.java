@@ -74,4 +74,108 @@ public class Contact implements Serializable {
    * 备注
    */
   private String remark;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Long getCustomerId() {
+    return customerId;
+  }
+
+  public void setCustomerId(Long customerId) {
+    this.customerId = customerId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getEnglishName() {
+    return englishName;
+  }
+
+  public void setEnglishName(String englishName) {
+    this.englishName = englishName;
+  }
+
+  public Date getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+  public String getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(String department) {
+    this.department = department;
+  }
+
+  public String getPosition() {
+    return position;
+  }
+
+  public void setPosition(String position) {
+    this.position = position;
+  }
+
+  public String getCompanyPhone() {
+    return companyPhone;
+  }
+
+  public void setCompanyPhone(String companyPhone) {
+    this.companyPhone = companyPhone;
+  }
+
+  public String getMobilePhone() {
+    return mobilePhone;
+  }
+
+  public void setMobilePhone(String mobilePhone) {
+    this.mobilePhone = mobilePhone;
+  }
+
+  public String getCompanyFax() {
+    return companyFax;
+  }
+
+  public void setCompanyFax(String companyFax) {
+    this.companyFax = companyFax;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public Boolean getIsKey() {
+    return isKey;
+  }
+
+  public void setIsKey(Boolean isKey) {
+    this.isKey = isKey;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
+  }
 }

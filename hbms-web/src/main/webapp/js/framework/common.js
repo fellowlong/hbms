@@ -353,5 +353,14 @@ function createListItemSelectWin(callback, listItem) {
       $('body>div.window>div.window-body').window('destroy');*/
     }
   });
+}
 
+function postColumnFieldNames(param, dataGridId) {
+  var columnFields = $('#' + dataGridId).datagrid('getColumnFields');
+  var columnFieldNames = "";
+  $.each(columnFields, function(i, item){
+    columnFieldNames += (i > 0 ? "," : "") + item;
+  })
+  param.columnFields = columnFieldNames;
+  return true;
 }

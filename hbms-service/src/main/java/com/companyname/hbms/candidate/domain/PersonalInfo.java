@@ -57,7 +57,7 @@ public class PersonalInfo implements Serializable {
   private String email;
 
   /**
-   * 目前年薪
+   * 当前年薪
    */
   private double currentAnnualSalary;
 
@@ -117,9 +117,9 @@ public class PersonalInfo implements Serializable {
   private String postcode;
 
   /**
-   * QQ号码
+   * snsNo号码
    */
-  private String qq;
+  private String snsNo;
 
   /**
    * 联系地址
@@ -307,12 +307,12 @@ public class PersonalInfo implements Serializable {
     this.postcode = postcode;
   }
 
-  public String getQq() {
-    return qq;
+  public String getsnsNo() {
+    return snsNo;
   }
 
-  public void setQq(String qq) {
-    this.qq = qq;
+  public void setsnsNo(String snsNo) {
+    this.snsNo = snsNo;
   }
 
   public String getAddress() {
@@ -356,7 +356,7 @@ public class PersonalInfo implements Serializable {
         ", maritalStatus='" + maritalStatus + '\'' +
         ", politicalStatus='" + politicalStatus + '\'' +
         ", postcode='" + postcode + '\'' +
-        ", qq='" + qq + '\'' +
+        ", snsNo='" + snsNo + '\'' +
         ", address='" + address + '\'' +
         ", selfHomepage='" + selfHomepage + '\'' +
         '}';
