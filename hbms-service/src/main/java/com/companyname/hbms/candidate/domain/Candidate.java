@@ -233,6 +233,38 @@ public class Candidate implements Serializable {
     this.email = email;
   }
 
+  public Long getIndustryId() {
+    return industryId;
+  }
+
+  public void setIndustryId(Long industryId) {
+    this.industryId = industryId;
+  }
+
+  public ListItem getIndustry() {
+    return industry;
+  }
+
+  public void setIndustry(ListItem industry) {
+    this.industry = industry;
+  }
+
+  public String getCurrentCompany() {
+    return currentCompany;
+  }
+
+  public void setCurrentCompany(String currentCompany) {
+    this.currentCompany = currentCompany;
+  }
+
+  public String getCurrentPosition() {
+    return currentPosition;
+  }
+
+  public void setCurrentPosition(String currentPosition) {
+    this.currentPosition = currentPosition;
+  }
+
   public double getCurrentAnnualSalary() {
     return currentAnnualSalary;
   }

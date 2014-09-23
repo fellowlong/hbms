@@ -2,7 +2,7 @@
  * Created by fellowlong on 2014-08-12.
  */
 $("#candidateDg").datagrid({
-  url:"/candidate/list.do",
+  url:"/candidate/findByBean.do",
   pagination:true,
   title : "候选人管理",
   singleSelect: false,
@@ -19,7 +19,7 @@ $("#candidateDg").datagrid({
     {field:'currentPosition',title:'目前职位',width:100,align:'left'},
     {field:'currentAnnualSalary',title:'目前年薪',width:100,align:'left'},
     {field:'residence',title:'居住地',width:100,align:'left'},
-    {field:'jobHuntingStatus',title:'求职状态',width:100,align:'left'},
+    {field:'jobHuntingStatus.value',title:'求职状态',width:100,align:'left'},
     {field:'keyword',title:'搜索关键字',width:100,align:'left'},
     {field:'createUser',title:'创建人',width:100,align:'left'},
     {field:'createTime',title:'创建时间',width:100,align:'left'},
@@ -47,6 +47,7 @@ function initCandidateDgTb() {
         createCandidateEditWin("新增候选人", false);
       },
       edit : function(options, row) {
+        $("#candidateEditForm").form("clear");
         $("#candidateEditForm").form("load", row);
         createCandidateEditWin("修改候选人：" + row.name, false);
       },

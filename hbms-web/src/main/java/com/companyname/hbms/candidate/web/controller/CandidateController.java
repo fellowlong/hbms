@@ -43,8 +43,8 @@ public class CandidateController extends MultiActionController {
     if (candidate.getLastReportResume() != null) {
       candidate.getLastReportResume().setYn(Boolean.TRUE);
     }
-    List<Candidate> candidates = candidateService.findByBean(candidate);
-    WebUtils.writeWithJson(response, candidates);
+    PagingResult<Candidate> candidates = candidateService.findByBean(candidate, WebUtils.getPageRange(request));
+    WebUtils.writeForEasyUIDataGrid(request, response, candidates);
 
   }
 

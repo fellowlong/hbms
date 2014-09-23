@@ -3,6 +3,7 @@ package com.companyname.hbms.candidate.service.impl;
 import com.companyname.hbms.candidate.domain.Candidate;
 import com.companyname.hbms.candidate.service.CandidateService;
 import com.companyname.hbms.utils.paging.PageRange;
+import com.companyname.hbms.utils.paging.PagingResult;
 import common.TestUtils;
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -35,16 +36,16 @@ public class CandidateServiceImplTest extends TestCase {
     candidate.setId(candidateId);
     candidate.setName(updateAfter);
     candidateService.update(candidate);
-    List<Candidate> candidates = candidateService.findByBean(candidate);
-    Assert.assertNotSame(updateAfter, candidates.get(0).getName());
+    PagingResult<Candidate> candidates = candidateService.findByBean(candidate, new PageRange(1, 10));
+    Assert.assertNotSame(updateAfter, candidates.getRecords().get(0).getName());
   }
 
   public void testFindById() {
     CandidateService candidateService = TestUtils.getApplicationContext().getBean(CandidateService.class);
     Candidate candidate = new Candidate();
     candidate.setId(candidateId);
-    List<Candidate> candidates = candidateService.findByBean(candidate);
-    Assert.assertTrue(candidates != null && candidates.size() == 1);
+    PagingResult<Candidate> candidates = candidateService.findByBean(candidate, new PageRange(1, 10));
+    Assert.assertTrue(candidates != null && candidates.getRecords().size() == 1);
   }
 
   public void testDisable() {
@@ -53,8 +54,8 @@ public class CandidateServiceImplTest extends TestCase {
     Candidate candidate = new Candidate();
     candidate.setYn(Boolean.FALSE);
     candidate.setId(candidateId);
-    List<Candidate> candidates = candidateService.findByBean(candidate);
-    Assert.assertTrue(candidates != null || candidates.size() == 1);
+    PagingResult<Candidate> candidates = candidateService.findByBean(candidate, new PageRange(1, 10));
+    Assert.assertTrue(candidates != null || candidates.getRecords().size() == 1);
   }
 
   public void testEnable() {
@@ -62,17 +63,17 @@ public class CandidateServiceImplTest extends TestCase {
     candidateService.enable(candidateId);
     Candidate candidate = new Candidate();
     candidate.setId(candidateId);
-    List<Candidate> candidates = candidateService.findByBean(candidate);
-    Assert.assertTrue(candidates != null && candidates.size() == 1);
+    PagingResult<Candidate> candidates = candidateService.findByBean(candidate, new PageRange(1, 10));
+    Assert.assertTrue(candidates != null && candidates.getRecords().size() == 1);
   }
 
   public void testPagingQuery() {
     CandidateService candidateService = TestUtils.getApplicationContext().getBean(CandidateService.class);
     Candidate candidate = new Candidate();
     candidate.setYn(Boolean.TRUE);
-    List<Candidate> candidates = candidateService.findByBean(candidate);
+    PagingResult<Candidate> candidates = candidateService.findByBean(candidate, new PageRange(1, 10));
     System.out.println(candidates);
-    Assert.assertTrue(candidates != null && candidates.size() == 10);
+    Assert.assertTrue(candidates != null && candidates.getRecords().size() == 10);
   }
 
 }

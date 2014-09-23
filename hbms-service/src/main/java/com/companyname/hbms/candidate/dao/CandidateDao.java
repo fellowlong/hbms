@@ -19,6 +19,6 @@ public interface CandidateDao {
 
   public int enable(Long candidateId);
 
-  public List<Candidate> findByBean(Candidate candidate);
+  public PagingResult<Candidate> findByBean(Candidate candidate, PageRange pageRange);
 
 }

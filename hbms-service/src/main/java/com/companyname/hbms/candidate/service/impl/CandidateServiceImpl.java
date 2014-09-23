@@ -42,8 +42,8 @@ public class CandidateServiceImpl implements CandidateService {
   }
 
   @Override
-  public List<Candidate> findByBean(Candidate candidate) {
-    return candidateDao.findByBean(candidate);
+  public PagingResult<Candidate> findByBean(Candidate candidate, PageRange pageRange) {
+    return candidateDao.findByBean(candidate, pageRange);
   }
 
 }

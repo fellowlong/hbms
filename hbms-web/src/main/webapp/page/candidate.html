@@ -11,6 +11,7 @@
     <tr>
       <td width="100%">
         <form id="candidateEditForm" method="post">
+          <input type="hidden" name="id" value="">
           <table border="0" cellspacing="2px" cellpadding="2px" valign="middle">
             <tr>
               <td align="right"><label for="name">姓名:</label></td>
@@ -31,9 +32,9 @@
             </tr>
             <tr>
               <td align="right"><label for="industry">行业:</label></td>
-              <td align="left"><input class="easyui-combobox" type="text" name="industry" data-options="required:true,editable:false"/></td>
-              <td align="right"><label for="workingYears">职位:</label></td>
-              <td align="left"><input class="easyui-textbox" type="text" name="position" data-options="required:true"/></td>
+              <td align="left"><input class="easyui-combobox" type="text" name="industryId" data-options="required:true,url:'/listItem/findListItemsOfCategoryByCode.do?code=Industry',valueField:'id',textField:'value',editable:false"</td>
+              <td align="right"><label for="currentPosition">职位:</label></td>
+              <td align="left"><input class="easyui-textbox" type="text" name="currentPosition" data-options="required:true"/></td>
             </tr>
             <tr>
               <td align="right"><label for="currentCompany">当前公司:</label></td>
