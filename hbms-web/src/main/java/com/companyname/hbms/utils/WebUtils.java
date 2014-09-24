@@ -99,25 +99,35 @@ public abstract class WebUtils {
 
   public static void writeForEasyUIDataGrid(HttpServletRequest request,
                                             HttpServletResponse response,
-                                            PagingResult<?> pagingResult) throws Exception{
+                                            PagingResult<?> pagingResult,
+                                            boolean ignoreColumnFields) throws Exception{
     StringBuilder data = new StringBuilder("{\"total\":\"" + pagingResult.getRecordTotal() + "\",\"rows\":[");
-    if (pagingResult.getRecords() != null && request.getParameter("columnFields") != null) {
+    if (pagingResult.getRecords() != null) {
       String[] columnFields = request.getParameter("columnFields").split(",");
-      for (int i = 0; columnFields.length > 0 && i < pagingResult.getRecords().size(); i++) {
-        MapContext jexlContext = new MapContext();
-        jexlContext.set("record", pagingResult.getRecords().get(i));
-        StringBuilder row = new StringBuilder("{");
-        for (int j = 0; j < columnFields.length; j++) {
-          if (columnFields[j] != null) {
-            Object value = jexlEngine.createExpression("record." + columnFields[j].trim()).evaluate(jexlContext);
-            if (value != null && value.toString().trim().length() > 0) {
-              value = "\"" + columnFields[j].trim() + "\":\"" + value + "\"";
-              row.append((j > 0 ? "," : "") + value);
+      for (int i = 0; i < pagingResult.getRecords().size(); i++) {
+        Object record = pagingResult.getRecords().get(i);
+        StringBuilder rowJson = new StringBuilder();
+        if (ignoreColumnFields) {
+          data.append(JsonUtils.beanToJson(record));
+        } else {
+          rowJson.append("{");
+          MapContext jexlContext = new MapContext();
+          jexlContext.set("record", record);
+          String columnField = null;
+          for (int j = 0; j < columnFields.length; j++) {
+            columnField = columnFields[j];
+            if (columnField != null) {
+              columnField = columnField.trim();
+              Object value = jexlEngine.createExpression("record." + columnField).evaluate(jexlContext);
+              if (value != null && value.toString().trim().length() > 0) {
+                value = "\"" + columnFields[j].trim() + "\":\"" + value + "\"";
+                rowJson.append((j > 0 ? "," : "") + value);
+              }
             }
           }
+          rowJson.append("}");
         }
-        row.append("}");
-        data.append((i > 0 ? "," : "") + row);
+        data.append((i > 0 ? "," : "") + rowJson);
       }
     }
     data.append("]}");
