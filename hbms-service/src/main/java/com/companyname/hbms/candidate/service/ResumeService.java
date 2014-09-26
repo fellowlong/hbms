@@ -11,9 +11,7 @@ import com.companyname.hbms.utils.paging.PagingResult;
  */
 public interface ResumeService {
 
-  public int insert(Resume resume);
-
-  public int update(Resume resume);
+  public int insertOrUpdate(Resume resume);
 
   public int delete(Long resumeId);
 

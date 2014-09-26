@@ -18,14 +18,14 @@ public class ResumeServiceImpl implements ResumeService {
   }
 
   @Override
-  public int insert(Resume resume) {
-    return resumeDao.insert(resume);
+  public int insertOrUpdate(Resume resume) {
+    if (resume.getId() != null) {
+      return resumeDao.update(resume);
+    } else {
+      return resumeDao.insert(resume);
+    }
   }
 
-  @Override
-  public int update(Resume resume) {
-    return resumeDao.update(resume);
-  }
 
   @Override
   public int delete(Long id) {
