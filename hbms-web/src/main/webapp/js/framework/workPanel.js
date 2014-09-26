@@ -16,7 +16,7 @@ var workPanelFactoryConfig = [
         },
         {
           name : "环境管理",
-          url : contextPath + "/pages/environmentManage.html"
+          url : contextPath + "/page/resume.html"
         },
         {
           name : "Destination管理",
@@ -84,7 +84,7 @@ var workPanelFactoryConfig = [
   }
 ];
 
-jQuery(document).ready(function () {
+$(document).ready(function () {
   var navTreeData = [];
   $.each(workPanelFactoryConfig, function(moduleIndex, module){
     var children = [];
@@ -101,19 +101,10 @@ jQuery(document).ready(function () {
 });
 
 function openFuncPanel(node) {
+  $("#workPanel").panel("clear");
   if($("#navTree").tree("isLeaf", node.target)) {
-//    $("#workPanel").empty();
-    $('body>div.menu-top').menu('destroy');
-    $('body>div.window>div.window-body').window('destroy');
     $("#workPanel").panel('refresh',node.url);
-/*    $.ajax(
-      getRandomUrl(node.url),
-      {
-        success: function (data, textStatus, jqXHR) {
-          $("#workPanel").html(data);
-          $.parser.parse('#workPanel');
-        },
-        dataType: "html"
-      });*/
+    var title = $("#navTree").tree("getParent", node.target).text + "<img src='/css/ui/easyui/icons/right2.png' width='40' height='20' style='vertical-align: middle'>" + node.text;
+    $("#layout").layout("panel", "center").panel("setTitle", title);
   }
 }

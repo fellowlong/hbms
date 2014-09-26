@@ -108,7 +108,7 @@ public abstract class WebUtils {
         Object record = pagingResult.getRecords().get(i);
         StringBuilder rowJson = new StringBuilder();
         if (ignoreColumnFields) {
-          data.append(JsonUtils.beanToJson(record));
+          rowJson.append(JsonUtils.beanToJson(record));
         } else {
           rowJson.append("{");
           MapContext jexlContext = new MapContext();

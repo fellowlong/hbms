@@ -93,7 +93,7 @@ function addOrEditOrDeleteOrViewRecord(options) {
     }
     setting.edit(setting, selectedRows[0]);
   } else if(setting.type == "view" && setting.view) {
-    if(!selectedRows ||selectedRows.length > 1) {
+    if(!selectedRows ||selectedRows.length != 1) {
       $.messager.alert('警告','请选择一条记录进行查看详情！','warning');
       return;
     }

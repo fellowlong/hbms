@@ -118,7 +118,7 @@ public class Candidate implements Serializable {
   /**
    * 身高
    */
-  private byte high;
+  private Long high;
 
   /**
    * 婚姻状况编号
@@ -337,11 +337,11 @@ public class Candidate implements Serializable {
     this.country = country;
   }
 
-  public byte getHigh() {
+  public Long getHigh() {
     return high;
   }
 
-  public void setHigh(byte high) {
+  public void setHigh(Long high) {
     this.high = high;
   }
 

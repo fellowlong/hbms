@@ -19,3 +19,15 @@ body {
     opacity:.10;
     filter: alpha(opacity=50);
 }
+
+.nav-bar{
+    background: url(/css/ui/easyui/icons/ybutton.png) no-repeat 100% 0;
+    color: #666;
+    display: inline-block;
+    font-size: 12px;
+    padding: 5px 15px 10px 20px;
+    margin-left: -17px;
+    position: relative;
+    text-decoration: none;
+    vertical-align: top;
+}

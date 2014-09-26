@@ -1,66 +1,38 @@
 /**
  * Created by fellowlong on 2014-08-12.
  */
-$("#candidateDg").datagrid({
-  url:"/candidate/findByBean.do",
-  pagination:true,
-  title : "候选人管理",
-  singleSelect: false,
-  fitColumns : true,
-  toolbar:"#candidateDgTb",
-  ctrlSelect:true,
-  columns:[[
-    {field:'id',title:'选择',checkbox:true,align:'left'},
-    {field:'name',title:'名称',width:100,align:'left'},
-    {field:'sex',title:'性别',width:100,align:'left'},
-    {field:'workingYears',title:'工作年限',width:100,align:'left'},
-    {field:'industry',title:'所属行业',width:100,align:'left',formatter: function(value,row,index){return value.value}},
-    {field:'currentCompany',title:'目前公司',width:100,align:'left'},
-    {field:'currentPosition',title:'目前职位',width:100,align:'left'},
-    {field:'currentAnnualSalary',title:'目前年薪',width:100,align:'left'},
-    {field:'residence',title:'居住地',width:100,align:'left'},
-    {field:'jobHuntingStatus',title:'求职状态',width:100,align:'left',formatter: function(value,row,index){return value.value}},
-    {field:'keyword',title:'搜索关键字',width:100,align:'left'},
-    {field:'createUser',title:'创建人',width:100,align:'left'},
-    {field:'createTime',title:'创建时间',width:100,align:'left'},
-    {field:'updateUser',title:'最后修改人',width:100,align:'left'},
-    {field:'updateTime',title:'最后修改时间',width:100,align:'left'}
-  ]],
-  onBeforeLoad : function(param){
-    return postColumnFieldNames(param, "candidateDg");
-  },
-  onLoadSuccess: function(){
-    initCandidateDgTb();
-    createCandidateEditWin("候选人编辑", true);
-  }
+$('#candidateDgTb a').unbind();
+$('#candidateDgTb a').linkbutton();
+$('#candidateDgTb a').bind('click', function(event){
+  addOrEditOrDeleteOrViewRecord({
+    dataGridId:"candidateDg",
+    type: $(event.currentTarget).attr("type"),
+    add : function(options){
+      enableCandidateEditForm();
+      $("#candidateEditForm").form("clear");
+      showCandidateEditWin("新增候选人", false);
+    },
+    edit : function(options, row) {
+      enableCandidateEditForm();
+      $("#candidateEditForm").form("clear");
+      $("#candidateEditForm").form("load", row);
+      showCandidateEditWin("修改候选人：" + row.name, false);
+    },
+    removeUrl : '/candidate/deleteById.do',
+    removePromptField : ["name"],
+    deleteSuccess : function(){
+      $('#candidateDg').datagrid('reload');
+    },
+    view : function(options, row) {
+      $("#candidateEditForm").form("clear");
+      $("#candidateEditForm").form("load", row);
+      disableCandidateEditForm();
+      showCandidateEditWin("查看候选人：" + row.name, false);
+    }
+  });
 });
 
-function initCandidateDgTb() {
-  $('#candidateDgTb a').unbind();
-  $('#candidateDgTb a').linkbutton();
-  $('#candidateDgTb a').bind('click', function(event){
-    addOrEditOrDeleteOrViewRecord({
-      dataGridId:"candidateDg",
-      type: $(event.currentTarget).attr("type"),
-      add : function(options){
-        $("#candidateEditForm").form("clear");
-        createCandidateEditWin("新增候选人", false);
-      },
-      edit : function(options, row) {
-        $("#candidateEditForm").form("clear");
-        $("#candidateEditForm").form("load", row);
-        createCandidateEditWin("修改候选人：" + row.name, false);
-      },
-      removeUrl : '/candidate/deleteById.do',
-      removePromptField : ["name"],
-      deleteSuccess : function(){
-        $('#candidateDg').datagrid('reload');
-      }
-    });
-  });
-}
-
-function createCandidateEditWin(title, closed, maxZIndex) {
+function showCandidateEditWin(title, closed, maxZIndex) {
   var width = 540, height = 370;
   var westWidth = $("#layout").layout("panel", "west").outerWidth();
   var northHeight = $("#layout").layout("panel", "north").outerHeight();
@@ -99,6 +71,17 @@ function insertOrUpdateCandidate() {
   });
 }
 
+function enableCandidateEditForm() {
+  $("#candidateEditForm input").removeAttr("disabled");
+  $("#candidateEditForm .easyui-combobox").combo("enable");
+  $("#candidateEditTb a[type=add]").linkbutton("enable");
+}
+function disableCandidateEditForm() {
+  $("#candidateEditForm input").attr("disabled", true);
+  $("#candidateEditForm .easyui-combobox").combo("disable");
+  $("#candidateEditTb a[type=add]").linkbutton("disable");
+}
+
 
 function initResumeReportDgAndOriginalResumeDgToolbarBtn() {
   $('#resumeReportDgTb a').unbind();
@@ -123,7 +106,6 @@ function initResumeReportDgAndOriginalResumeDgToolbarBtn() {
     });
   });
   $('#originalResumeDgTb a').unbind();
-  $('#originalResumeDgTb a').linkbutton();
   $('#originalResumeDgTb a').bind('click', function(event){
     addOrEditOrDeleteOrViewRecord({
       dataGridId:"originalResumeDg",

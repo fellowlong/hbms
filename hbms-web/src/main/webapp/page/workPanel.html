@@ -12,7 +12,7 @@
 
     <script src="/js/framework/json2.js" type="text/javascript" lang="javascript"></script>
     <script src="/js/framework/jquery-2.1.1.js" type="text/javascript" lang="javascript"></script>
-    <script src="/js/framework/easyui.min.js" type="text/javascript" lang="javascript"></script>
+    <script src="/js/framework/jquery.easyui.min.js" type="text/javascript" lang="javascript"></script>
     <script src="/js/framework/easyui-lang-zh_CN.js" type="text/javascript" lang="javascript"></script>
     <script src="/js/framework/common.js" type="text/javascript" lang="javascript"></script>
     <script src="/js/framework/workPanel.js" type="text/javascript" lang="javascript"></script>
@@ -26,7 +26,19 @@
         <ul id="navTree"></ul>
     </div>
     <div data-options="region:'center',title:'center title'">
-        <div id="workPanel" class="easyui-panel" data-options="href:'/page/listItem.html',border:false"/>
+      <div id="loadingOnOffLayer">
+        <div id="workPanel"
+             class="easyui-panel"
+             data-options="
+              href:'/page/listItem.html',
+              border:false,
+              onBeforeLoad:function(){
+                $('#loadingOnOffLayer').css('visible', 'false');
+              },
+              onLoad:function(){
+                $('#loadingOnOffLayer').css('visible', 'true');
+              }"/>
+      </div>
     </div>
 </div>
 

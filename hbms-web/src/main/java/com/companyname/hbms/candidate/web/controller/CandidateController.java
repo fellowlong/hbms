@@ -48,7 +48,6 @@ public class CandidateController extends MultiActionController {
 
   }
 
-
   public void insertOrUpdate(HttpServletRequest request,
                      HttpServletResponse response,
                      Candidate candidate) throws Exception {
@@ -57,6 +56,22 @@ public class CandidateController extends MultiActionController {
       resultCount = candidateService.insert(candidate);
     } else {
       resultCount = candidateService.update(candidate);
+    }
+    MessageCollector msgCollector = new MessageCollector();
+    if (resultCount == 1) {
+      msgCollector.addInfo(WebUtils.SUCCESS, Boolean.TRUE);
+    } else {
+      msgCollector.addError(WebUtils.ERROR, Boolean.TRUE);
+    }
+    WebUtils.writeWithJson(response, msgCollector);
+  }
+
+  public void deleteById(HttpServletRequest request,
+                         HttpServletResponse response) throws Exception {
+    int resultCount = 0;
+    Long id = WebUtils.getLong(request,WebUtils.ID);
+    if (id != null) {
+      resultCount = candidateService.disable(id);
     }
     MessageCollector msgCollector = new MessageCollector();
     if (resultCount == 1) {
