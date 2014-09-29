@@ -2,6 +2,7 @@ package com.companyname.hbms.candidate.domain;
 
 import com.companyname.hbms.basedata.domain.ListItem;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -35,7 +36,12 @@ public class Resume implements Serializable {
   /**
    * 存储路径
    */
-  private String path;
+  private String attachUri;
+
+  /**
+   * 简历附件输入流
+   */
+  private InputStream attachInputStream;
 
   /**
    * 语言编号
@@ -113,12 +119,20 @@ public class Resume implements Serializable {
     this.keyword = keyword;
   }
 
-  public String getPath() {
-    return path;
+  public String getAttachUri() {
+    return attachUri;
   }
 
-  public void setPath(String path) {
-    this.path = path;
+  public void setAttachUri(String attachUri) {
+    this.attachUri = attachUri;
+  }
+
+  public InputStream getAttachInputStream() {
+    return attachInputStream;
+  }
+
+  public void setAttachInputStream(InputStream attachInputStream) {
+    this.attachInputStream = attachInputStream;
   }
 
   public Long getLanguageId() {

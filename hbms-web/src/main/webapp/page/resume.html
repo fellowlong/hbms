@@ -2,7 +2,7 @@
        data-options="
        url:'/resume/findByBean.do',
        pagination:true,
-       title : '',//简历管理
+       title : '',
        singleSelect: false,
        fitColumns : true,
        toolbar:'#resumeDgTb',
@@ -14,11 +14,11 @@
   <thead>
   <tr>
     <th data-options="field:'id',title:'选择',checkbox:true,align:'left'"></th>
-    <th data-options="field:'candidateName',title:'候选人',width:100,align:'left'"></th>
-    <th data-options="field:'resumeName',title:'简历',width:100,align:'left'"></th>
+    <!--<th data-options="field:'candidateName',title:'候选人',width:100,align:'left',formatter: function(cell,row,index){return row..name}"></th>-->
     <th data-options="field:'name',title:'简历名称',width:100,align:'left'"></th>
     <th data-options="field:'keyword',title:'搜索关键字',width:100,align:'left'"></th>
-    <th data-options="field:'language',title:'语言',width:100,align:'left',formatter: function(value,row,index){return value.value}"></th>
+    <!--<th data-options="field:'language',title:'语言',width:100,align:'left',formatter: function(cell,row,index){return cell.value}"></th>-->
+    <th data-options="field:'attachUri',title:'附件',width:100,align:'left'"></th>
     <th data-options="field:'createUser',title:'创建人',width:100,align:'left'"></th>
     <th data-options="field:'createTime',title:'创建时间',width:100,align:'left'"></th>
     <th data-options="field:'updateUser',title:'最后修改人',width:100,align:'left'"></th>
@@ -44,20 +44,20 @@
           <input type="hidden" name="id" value="">
           <table border="0" cellspacing="2px" cellpadding="2px" valign="middle">
             <tr>
-              <td align="right"><label for="name">候选人:</label></td>
-              <td align="left"><input class="easyui-textbox" name="name" data-options="required:true,width:200"/></td>
+              <td align="right"><label for="candidateId">候选人:</label></td>
+              <td align="left"><input class="easyui-textbox" name="candidateId" data-options="required:true,width:200"/></td>
             </tr>
             <tr>
-              <td align="right"><label for="sex">简历名称:</label></td>
+              <td align="right"><label for="name">简历名称:</label></td>
               <td align="left"><input class="easyui-textbox" name="name" data-options="required:true,width:200"/></td>
             </tr>
             <tr>
               <td align="right"><label for="path">简历附件:</label></td>
-              <td align="left"><input class="easyui-filebox" name="path" data-options="required:true,width:200,buttonText:'选择',prompt:'选择简历文件'"/></td>
+              <td align="left"><input class="easyui-filebox" name="attachFile" data-options="required:true,width:200,buttonText:'选择',prompt:'选择简历文件'"/></td>
             </tr>
             <tr>
               <td align="right"><label for="birthday">搜索关键字:</label></td>
-              <td align="left"><input class="easyui-textbox" name="birthday" data-options="required:true,width:200"/></td>
+              <td align="left"><input class="easyui-textbox" name="keyword" data-options="required:true,width:200"/></td>
             </tr>
             <tr>
               <td align="right"><label for="languageId">语言:</label></td>

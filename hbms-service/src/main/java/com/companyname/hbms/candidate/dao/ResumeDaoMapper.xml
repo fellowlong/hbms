@@ -9,19 +9,25 @@
       candidateId,
       name,
       keyword,
-      path,
+      attachUri,
       languageId,
-      type,
-      yn
+      yn,
+      createTime,
+      createUser,
+      updateTime,
+      updateUser
     )
     values (
       #{candidateId},
       #{name, jdbcType=VARCHAR},
       #{keyword,jdbcType=VARCHAR},
-      #{path,jdbcType=VARCHAR},
+      #{attachUri,jdbcType=VARCHAR},
       #{languageId},
-      #{type},
-      1
+      1,
+      now(),
+      #{createUser,jdbcType=VARCHAR},
+      now(),
+      #{updateUser,jdbcType=VARCHAR}
     )
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       select last_insert_id();
@@ -33,9 +39,10 @@
       candidateId = #{candidateId},
       name = #{name, jdbcType=VARCHAR},
       keyword = #{keyword,jdbcType=VARCHAR},
-      path = #{path,jdbcType=VARCHAR},
+      attachUri = #{attachUri,jdbcType=VARCHAR},
       languageId = #{languageId},
-      type = #{type}
+      updateTime = now(),
+      updateUser = #{updateUser,jdbcType=VARCHAR}
     where
       id = #{id}
   </update>

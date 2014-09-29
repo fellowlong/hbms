@@ -1,6 +1,6 @@
-package com.companyname.hbms.common.impl;
+package com.companyname.hbms.common.service.impl;
 
-import com.companyname.hbms.common.FileService;
+import com.companyname.hbms.common.service.FileService;
 import com.companyname.hbms.utils.IOUtils;
 
 import java.io.*;

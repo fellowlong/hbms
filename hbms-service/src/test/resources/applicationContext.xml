@@ -27,6 +27,7 @@
   <bean id="placeholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
       <list>
+        <value>classpath:application.properties</value>
         <value>classpath:jdbc.properties</value>
       </list>
     </property>
@@ -71,10 +72,16 @@
     <property name="dataSource" ref="dataSource" />
     <property name="mapperLocations">
       <list>
+        <value>classpath:com/companyname/hbms/common/dao/*.xml</value>
         <value>classpath:com/companyname/hbms/basedata/dao/*.xml</value>
         <value>classpath:com/companyname/hbms/candidate/dao/*.xml</value>
       </list>
     </property>
+  </bean>
+
+  <bean id="commonDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.common.dao.CommonDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
   <bean id="listItemDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
@@ -92,13 +99,17 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
+  <bean id="fileService" class="com.companyname.hbms.common.service.impl.FileServiceImpl">
+    <property name="prefix" value="${resumeAttachPrefix}"/>
+  </bean>
+
   <bean id="candidateService" class="com.companyname.hbms.candidate.service.impl.CandidateServiceImpl">
     <property name="candidateDao" ref="candidateDao"/>
   </bean>
 
-
   <bean id="resumeService" class="com.companyname.hbms.candidate.service.impl.ResumeServiceImpl">
     <property name="resumeDao" ref="resumeDao"/>
+    <property name="fileService" ref="fileService"/>
   </bean>
 
   <bean id="listItemService" class="com.companyname.hbms.basedata.service.impl.ListItemServiceImpl">

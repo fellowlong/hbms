@@ -10,6 +10,8 @@ import common.TestUtils;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import java.io.IOException;
+
 /**
  * Created by fellowlong on 2014-08-07.
  */
@@ -27,15 +29,15 @@ public class ResumeTest extends TestCase {
     Assert.assertNotNull(candidateId);
   }
 
-  public void testInsertResume() {
+  public void testInsertResume() throws IOException {
     ResumeService resumeService = TestUtils.getApplicationContext().getBean(ResumeService.class);
     Resume resume = new Resume();
     resume.setName("my original candidate");
     resume.setCandidateId(candidateId);
     resume.setKeyword("my");
     resume.setLanguageId(1L);
-    resume.setPath("/resume/");
-    resumeService.insert(resume);
+    resume.setAttachUri("/resume/");
+    resumeService.insertOrUpdate(resume);
     resumeId = resume.getId();
     Assert.assertNotNull(resumeId);
   }
@@ -49,16 +51,16 @@ public class ResumeTest extends TestCase {
     Assert.assertEquals(resumeId, resumes.getRecords().get(0).getId());
   }
 
-  public void testUpdateResume() {
+  public void testUpdateResume() throws IOException {
     ResumeService resumeService = TestUtils.getApplicationContext().getBean(ResumeService.class);
     String name = "my original candidate " + System.currentTimeMillis();
     Resume resume = new Resume();
     resume.setId(resumeId);
     resume.setName(name);
     resume.setKeyword("my + 1");
-    resume.setPath("my candidate attachment name + 1");
+    resume.setAttachUri("my candidate attachment name + 1");
     resume.setLanguageId(2L);
-    resumeService.update(resume);
+    resumeService.insertOrUpdate(resume);
     Resume resume2 = new Resume();
     resume2.setId(resumeId);
     PagingResult<Resume> resumes = resumeService.findByBean(resume, new PageRange(1, 1));

@@ -73,9 +73,8 @@
     <result property="candidateId" column="candidateId" jdbcType="INTEGER"/>
     <result property="name" column="name" jdbcType="VARCHAR"/>
     <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
-    <result property="path" column="path" jdbcType="VARCHAR"/>
+    <result property="attacheUri" column="attacheUri" jdbcType="VARCHAR"/>
     <result property="languageId" column="languageId" jdbcType="INTEGER"/>
-    <result property="type" column="type" jdbcType="INTEGER"/>
     <result property="yn" column="yn" jdbcType="INTEGER"/>
     <result property="createTime" column="createTime" jdbcType="DATE"/>
     <result property="createUser" column="createUser" jdbcType="VARCHAR"/>
@@ -89,7 +88,7 @@
     <result property="candidateId" column="candidateId" jdbcType="INTEGER"/>
     <result property="name" column="name" jdbcType="VARCHAR"/>
     <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
-    <result property="path" column="path" jdbcType="VARCHAR"/>
+    <result property="attacheUri" column="path" jdbcType="VARCHAR"/>
     <result property="companyId" column="languageId" jdbcType="INTEGER"/>
     <result property="positionId" column="languageId" jdbcType="INTEGER"/>
     <result property="projectId" column="languageId" jdbcType="INTEGER"/>

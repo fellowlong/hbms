@@ -4,6 +4,8 @@ import com.companyname.hbms.candidate.domain.Resume;
 import com.companyname.hbms.utils.paging.PageRange;
 import com.companyname.hbms.utils.paging.PagingResult;
 
+import java.io.IOException;
+
 /**
  * Created by fellowlong on 2014-05-27.
  *
@@ -11,7 +13,7 @@ import com.companyname.hbms.utils.paging.PagingResult;
  */
 public interface ResumeService {
 
-  public int insertOrUpdate(Resume resume);
+  public int insertOrUpdate(Resume resume) throws IOException;
 
   public int delete(Long resumeId);
 

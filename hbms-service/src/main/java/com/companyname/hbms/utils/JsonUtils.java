@@ -1,5 +1,6 @@
 package com.companyname.hbms.utils;
 
+import com.companyname.hbms.common.Constants;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -29,7 +30,7 @@ public abstract class JsonUtils {
     objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
     objectMapper.configure(SerializationConfig.Feature.WRITE_DATE_KEYS_AS_TIMESTAMPS, false);
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_PATTERN);
     objectMapper.getSerializationConfig().setDateFormat(dateFormat);
     objectMapper.getDeserializationConfig().setDateFormat(dateFormat);
   }

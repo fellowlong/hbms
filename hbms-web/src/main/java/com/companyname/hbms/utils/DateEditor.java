@@ -1,5 +1,7 @@
 package com.companyname.hbms.utils;
 
+import com.companyname.hbms.common.Constants;
+
 import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,7 +9,7 @@ import java.util.Date;
 
 public class DateEditor extends PropertyEditorSupport {
 
-  private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+  private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_PATTERN);
 
   public void setDatePattern(String datePattern) {
     this.dateFormat = new SimpleDateFormat(datePattern);
