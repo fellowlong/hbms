@@ -1,6 +1,5 @@
 package com.companyname.hbms.utils;
 
-import com.companyname.hbms.common.Constants;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -11,6 +10,7 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.node.ValueNode;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /**
@@ -30,7 +30,7 @@ public abstract class JsonUtils {
     objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
     objectMapper.configure(SerializationConfig.Feature.WRITE_DATE_KEYS_AS_TIMESTAMPS, false);
-    SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_PATTERN);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     objectMapper.getSerializationConfig().setDateFormat(dateFormat);
     objectMapper.getDeserializationConfig().setDateFormat(dateFormat);
   }
@@ -79,17 +79,26 @@ public abstract class JsonUtils {
    * @param object
    * @return
    */
-  public static String beanToJson(Object object) {
+  public static String beanToJson(Object object, String...datePattern) {
     if (object == null) {
       return null;
     }
-
+    //保存原值
+    DateFormat oldDateFormat = objectMapper.getSerializationConfig().getDateFormat();
+    if (datePattern != null && datePattern.length == 1) {
+      SimpleDateFormat customerFormat = new SimpleDateFormat(datePattern[0]);
+      objectMapper.getSerializationConfig().setDateFormat(customerFormat);
+    }
+    String returnResult = null;
     try {
-      return objectMapper.writeValueAsString(object);
+      returnResult = objectMapper.writeValueAsString(object);
     } catch (IOException e) {
       throw new RuntimeException(
               "将对象[" + object.getClass().getName() + "]转换成JSON串异常,", e);
     }
+    //恢复原值
+    objectMapper.getSerializationConfig().setDateFormat(oldDateFormat);
+    return returnResult;
   }
 
   /**
@@ -99,13 +108,22 @@ public abstract class JsonUtils {
    * @param clazz
    * @return
    */
-  public static <T extends Object> T jsonToBean(String jsonContent, Class<T> clazz) {
-
+  public static <T extends Object> T jsonToBean(String jsonContent, Class<T> clazz, String...datePattern) {
+    //保存原值
+    DateFormat oldDateFormat = objectMapper.getDeserializationConfig().getDateFormat();
+    if (datePattern != null && datePattern.length == 1) {
+      SimpleDateFormat customerFormat = new SimpleDateFormat(datePattern[0]);
+      objectMapper.getDeserializationConfig().setDateFormat(customerFormat);
+    }
+    T returnResult = null;
     try {
-      return objectMapper.readValue(jsonContent, clazz);
+      returnResult = objectMapper.readValue(jsonContent, clazz);
     } catch (IOException e) {
       throw new RuntimeException("JSON转换成Bean异常", e);
     }
+    //恢复原值
+    objectMapper.getDeserializationConfig().setDateFormat(oldDateFormat);
+    return returnResult;
   }
 
 }

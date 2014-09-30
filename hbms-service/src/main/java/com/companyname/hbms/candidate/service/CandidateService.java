@@ -23,5 +23,7 @@ public interface CandidateService {
 
   public PagingResult<Candidate> findByBean(Candidate candidate, PageRange pageRange);
 
+  public List<Candidate> findByIds(Long[] ids);
+
 
 }

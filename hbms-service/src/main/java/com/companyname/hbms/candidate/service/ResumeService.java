@@ -15,7 +15,7 @@ public interface ResumeService {
 
   public int insertOrUpdate(Resume resume) throws IOException;
 
-  public int delete(Long resumeId);
+  public int deleteByIds(Long[] resumeIds);
 
   public PagingResult<Resume> findByBean(Resume resume, PageRange pageRange);
 

@@ -46,4 +46,10 @@ public class CandidateServiceImpl implements CandidateService {
     return candidateDao.findByBean(candidate, pageRange);
   }
 
+  @Override
+  public List<Candidate> findByIds(Long[] ids) {
+    return candidateDao.findByIds(ids);
+  }
+
+
 }

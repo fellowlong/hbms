@@ -247,114 +247,6 @@ function getMaxZIndex() {
   return maxZ;
 }
 
-function createListItemSelectWin(callback, listItem) {
-  $("#listItemSelectWin").detach();
-  $("<div id='listItemSelectWin'></div>").appendTo("#workPanel");
-  $("<table cellspacing='0' cellpadding='0' width='600' align='center' valign='top'><tr><td width='50%' valign='top'><div id='listItemCategoryDgOfListItemSelectWin'></div></td><td width='50%' valign='top'><div id='listItemGdOfListItemSelectWin'></div></td></tr></table>").appendTo("#listItemSelectWin");
-  $("#listItemCategoryDgOfListItemSelectWin").datagrid({
-    url: '/listItem/findAllCategory.do',
-    title : '类别',
-    singleSelect: true,
-    fitColumns : true,
-    ctrlSelect:false,
-//    pagination:true,
-    pagePosition:"top",
-    columns:[[
-      {field:'id',align:'right'},
-      {field:'value',title:'名称',width:100,align:'left'}
-    ]],
-    onBeforeLoad : function(param) {
-      var columnFields = $('#listItemCategoryDgOfListItemSelectWin').datagrid('getColumnFields');
-      var columnFieldNames = "";
-      $.each(columnFields, function(i, item){
-        columnFieldNames += (i > 0 ? "," : "") + item;
-      })
-      param.columnFields = columnFieldNames;
-      return true;
-    },
-    onSelect:function(rowIndex, rowData) {
-      $("#listItemGdOfListItemSelectWin").datagrid({
-        title:'<b>' +rowData.value + "</b> &nbsp; 列表项",
-        url: '/listItem/findByBean.do',
-        queryParams:{typeId:rowData.id}
-      });
-    },
-    onLoadSuccess:function(data) {
-      $.each(data.rows, function(index, item) {
-        if(item && listItem && item.id == listItem.typeId) {
-          $("#listItemCategoryDgOfListItemSelectWin").datagrid("selectRow", index);
-        }
-      });
-    }
-  });
-  $("#listItemGdOfListItemSelectWin").datagrid({
-    url: null,
-    title : '列表项',
-    singleSelect: true,
-    fitColumns : true,
-    ctrlSelect:false,
-    toolbar:"#listItemsOfCategoryTb",
-//    pagination:true,
-    pagePosition:"top",
-    columns:[[
-      {field:'id',align:'right',hidden:true},
-      {field:'value',title:'项目',width:100,align:'left'}
-    ]],
-    data:[],
-    onBeforeLoad : function(param) {
-      var columnFields = $('#listItemGdOfListItemSelectWin').datagrid('getColumnFields');
-      var columnFieldNames = "";
-      $.each(columnFields, function(i, item){
-        columnFieldNames += (i > 0 ? "," : "") + item;
-      })
-      param.columnFields = columnFieldNames;
-      return true;
-    },
-    onLoadSuccess:function(data) {
-      $.each(data.rows, function(index, item) {
-        if(item && listItem && item.id == listItem.id) {
-          $("#listItemGdOfListItemSelectWin").datagrid("selectRow", index);
-        }
-      });
-    }
-  });
-  var width = 650, height = 380;
-  var left = ($(document.body).width() - width)/2;
-  var top = ($(document.body).height() - height)/2;
-  $("#listItemSelectWin").dialog({
-    title: "列表项选择",
-    width: width,
-    height: height,
-    left: left,
-    top: top,
-    closed: false,
-    cache: false,
-    modal: false,
-    inline : true,
-    minimizable : true,
-    maximizable : true,
-    resizable : true,
-    toolbar:[{
-      text:'选择',
-      iconCls:'icon-ok',
-      handler:function(){
-        var rowData = $("#listItemGdOfListItemSelectWin").datagrid("getSelected");
-        if(!rowData) {
-          $.messager.alert("错误", "请选择一个列表项", 'error')
-          return;
-        }
-        callback(rowData);
-        $("#listItemSelectWin").dialog("close");
-        $("body").remove("#listItemSelectWin");
-      }
-    }],
-    onClose:function() {
-     /* $('body>div.menu-top').menu('destroy');
-      $('body>div.window>div.window-body').window('destroy');*/
-    }
-  });
-}
-
 function postColumnFieldNames(param, dataGridId) {
   var columnFields = $('#' + dataGridId).datagrid('getColumnFields');
   var columnFieldNames = "";
@@ -364,3 +256,52 @@ function postColumnFieldNames(param, dataGridId) {
   param.columnFields = columnFieldNames;
   return true;
 }
+
+function submitForm(options) {
+  $.messager.progress({title:'请等待', msg:'正在提交...'});
+  $(options.form).form("submit",{
+    url: getRandomUrl(contextPath + options.url),
+    onSubmit: function(param){
+      return $(options.form).form("validate");
+    },
+    success: function(message) {
+      $.messager.progress('close');
+      try{
+        message =  $.parseJSON(message);
+      }catch(exception){
+        showHtmlMessage("错误", exception + "\n" + message);
+      }
+      if(showAjaxMessage(message)) {
+        options.success();
+      }
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+      $.messager.progress('close');
+      showHtmlMessage(textStatus, XMLHttpRequest.responseText);
+    }
+  });
+}
+
+function showWin(winId, title, width, height, closed, isDialog, isInWorkPanel) {
+  var westWidth = 0,northHeight = 0;
+  if(isInWorkPanel) {
+    westWidth = $("#layout").layout("panel", "west").outerWidth();
+    northHeight = $("#layout").layout("panel", "north").outerHeight();
+  }
+  var left = ($(document.body).width() - width)/2 - westWidth;
+  var top = ($(document.body).height() - height)/2 - northHeight;
+  var options = {
+    title: title,
+    width: width,
+    height: height,
+    left: left,
+    top: top,
+    closed: closed
+  };
+  if(isDialog) {
+    $(winId).dialog(options);
+  } else {
+    $(winId).window(options);
+  }
+}
+

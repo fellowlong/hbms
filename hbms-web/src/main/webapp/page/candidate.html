@@ -17,12 +17,12 @@
     <th data-options="field:'name',title:'名称',width:100,align:'left'"></th>
     <th data-options="field:'sex',title:'性别',width:100,align:'left'"></th>
     <th data-options="field:'workingYears',title:'工作年限',width:100,align:'left'"></th>
-    <th data-options="field:'industry',title:'所属行业',width:100,align:'left',formatter: function(value,row,index){return value.value}"></th>
+    <th data-options="field:'industry',title:'所属行业',width:100,align:'left',formatter: function(cell,row,index){return cell ? cell.value : ''}"></th>
     <th data-options="field:'currentCompany',title:'目前公司',width:100,align:'left'"></th>
     <th data-options="field:'currentPosition',title:'目前职位',width:100,align:'left'"></th>
     <th data-options="field:'currentAnnualSalary',title:'目前年薪',width:100,align:'left'"></th>
     <th data-options="field:'residence',title:'居住地',width:100,align:'left'"></th>
-    <th data-options="field:'jobHuntingStatus',title:'求职状态',width:100,align:'left',formatter: function(value,row,index){return value.value}"></th>
+    <th data-options="field:'jobHuntingStatus',title:'求职状态',width:100,align:'left',formatter: function(cell,row,index){return cell ? cell.value : ''}"></th>
     <th data-options="field:'keyword',title:'搜索关键字',width:100,align:'left'"></th>
     <th data-options="field:'createUser',title:'创建人',width:100,align:'left'"></th>
     <th data-options="field:'createTime',title:'创建时间',width:100,align:'left'"></th>

@@ -8,24 +8,43 @@ $('#resumeDgTb a').bind('click', function(event){
     dataGridId:"resumeDg",
     type: $(event.currentTarget).attr("type"),
     add : function(options){
-//      enableResumeEditForm();
+      enableResumeEditForm();
       $("#resumeEditForm").form("clear");
       $.parser.parse("#resumeEditForm");
+      $("#attachUriContainer").empty();
+      $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">");
+      $('#attachUriContainer input').filebox({required:true,width:200,buttonText:'选择',prompt:'选择简历文件'});
       showResumeEditWin("新增简历", false);
     },
     edit : function(options, row) {
       enableResumeEditForm();
       $("#resumeEditForm").form("clear");
+      $("#attachUriContainer").empty();
+      $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">");
+      $('#attachUriContainer input').textbox({
+        required: false,
+        editable: false,
+        width: 200,
+        buttonText: '删除',
+        buttonIcon: 'icon-remove',
+        onClickButton: function () {
+          $("#attachUriContainer").empty();
+          $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">")
+          $('#attachUriContainer input').filebox({required: true, width: 200, buttonText: '选择', prompt: '选择简历文件'});
+      }});
       $("#resumeEditForm").form("load", row);
       showResumeEditWin("修改简历：" + row.name, false);
     },
-    removeUrl : '/resume/deleteById.do',
+    removeUrl : '/resume/deleteByIds.do',
     removePromptField : ["name"],
     deleteSuccess : function(){
       $('#resumeDg').datagrid('reload');
     },
     view : function(options, row) {
       $("#resumeEditForm").form("clear");
+      $("#attachUriContainer").empty();
+      $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">");
+      $('#attachUriContainer input').textbox({required: false, editable: false, width: 200});
       $("#resumeEditForm").form("load", row);
       disableResumeEditForm();
       showResumeEditWin("查看简历：" + row.name, false);
@@ -50,24 +69,12 @@ function showResumeEditWin(title, closed, maxZIndex) {
 }
 
 function insertOrUpdateResume() {
-  $("#resumeEditForm").form("submit",{
-    url: getRandomUrl(contextPath + "/resume/insertOrUpdate.do"),
-    onSubmit: function(param){
-      return $("#resumeEditForm").form("validate");
-    },
-    success: function(message) {
-      try{
-        message =  $.parseJSON(message);
-      }catch(exception){
-        showHtmlMessage("错误", exception + "\n" + message);
-      }
-      if(showAjaxMessage(message)) {
-        $('#resumeEditWin').dialog({closed:true});
-        $("#resumeDg").datagrid("reload");
-      }
-    },
-    error: function(XMLHttpRequest, textStatus, errorThrown) {
-      showHtmlMessage(textStatus, XMLHttpRequest.responseText);
+  submitForm({
+    form:"#resumeEditForm",
+    url:"/resume/insertOrUpdate.do",
+    success:function() {
+      $('#resumeEditWin').dialog({closed:true});
+      $("#resumeDg").datagrid("reload");
     }
   });
 }

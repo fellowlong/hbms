@@ -41,7 +41,7 @@ public class Resume implements Serializable {
   /**
    * 简历附件输入流
    */
-  private InputStream attachInputStream;
+  private InputStream attachUriInputStream;
 
   /**
    * 语言编号
@@ -127,12 +127,12 @@ public class Resume implements Serializable {
     this.attachUri = attachUri;
   }
 
-  public InputStream getAttachInputStream() {
-    return attachInputStream;
+  public InputStream getAttachUriInputStream() {
+    return attachUriInputStream;
   }
 
-  public void setAttachInputStream(InputStream attachInputStream) {
-    this.attachInputStream = attachInputStream;
+  public void setAttachUriInputStream(InputStream attachUriInputStream) {
+    this.attachUriInputStream = attachUriInputStream;
   }
 
   public Long getLanguageId() {

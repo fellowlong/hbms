@@ -45,18 +45,37 @@
           <table border="0" cellspacing="2px" cellpadding="2px" valign="middle">
             <tr>
               <td align="right"><label for="candidateId">候选人:</label></td>
-              <td align="left"><input class="easyui-textbox" name="candidateId" data-options="required:true,width:200"/></td>
+              <td align="left">
+                <input
+                    id="candidateId"
+                    class="easyui-textbox"
+                    name="candidateId"
+                    data-options="
+                      required:true,
+                      width:200,
+                      buttonText: '选择',
+                      buttonIcon: 'icon-ok',
+                      onClickButton: function () {
+                        showCandidateSelectWin({
+                          selectCompleted:function(row){
+                            $('#resumeEditWin #candidateId').textbox('setValue', row.id).textbox('setText', row.name);
+                          }
+                        });
+                      }"/>
+              </td>
             </tr>
             <tr>
               <td align="right"><label for="name">简历名称:</label></td>
               <td align="left"><input class="easyui-textbox" name="name" data-options="required:true,width:200"/></td>
             </tr>
             <tr>
-              <td align="right"><label for="path">简历附件:</label></td>
-              <td align="left"><input class="easyui-filebox" name="attachFile" data-options="required:true,width:200,buttonText:'选择',prompt:'选择简历文件'"/></td>
+              <td align="right"><label for="attachUri">简历附件:</label></td>
+              <td align="left">
+                <div id="attachUriContainer"></div>
+              </td>
             </tr>
             <tr>
-              <td align="right"><label for="birthday">搜索关键字:</label></td>
+              <td align="right"><label for="keyword">搜索关键字:</label></td>
               <td align="left"><input class="easyui-textbox" name="keyword" data-options="required:true,width:200"/></td>
             </tr>
             <tr>

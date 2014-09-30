@@ -69,7 +69,7 @@ public class ResumeTest extends TestCase {
 
   public void testDeleteResume() {
     ResumeService resumeService = TestUtils.getApplicationContext().getBean(ResumeService.class);
-    resumeService.delete(resumeId);
+    resumeService.deleteByIds(new Long[]{resumeId});
     Resume resume = new Resume();
     resume.setId(resumeId);
     PagingResult<Resume> resumes = resumeService.findByBean(resume, new PageRange(1, 1));

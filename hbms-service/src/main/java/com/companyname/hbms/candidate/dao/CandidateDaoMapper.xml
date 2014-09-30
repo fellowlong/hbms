@@ -142,4 +142,11 @@
       ) t
   </select>
 
+  <select id="findByIds" parameterType="com.companyname.hbms.candidate.domain.Candidate">
+    select * from Candidate where id in
+    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
+      #{candidateId}
+    </foreach>
+  </select>
+
 </mapper>

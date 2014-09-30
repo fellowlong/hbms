@@ -13,7 +13,7 @@ public interface ResumeDao {
 
   public int update(Resume resume);
 
-  public int delete(Long resumeId);
+  public int deleteByIds(Long[] resumeIds);
 
   public PagingResult<Resume> findByBean(Resume resume, PageRange pageRange);
 

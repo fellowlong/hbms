@@ -1,9 +1,14 @@
 package com.companyname.hbms.utils;
 
+import com.companyname.hbms.common.Constants;
 import com.companyname.hbms.utils.paging.PageRange;
 import com.companyname.hbms.utils.paging.PagingResult;
 import org.apache.commons.beanutils.*;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.jexl2.Expression;
 import org.apache.commons.jexl2.JexlEngine;
 import org.apache.commons.jexl2.MapContext;
@@ -12,7 +17,13 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyDescriptor;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * User: fellowlong
@@ -75,7 +86,7 @@ public abstract class WebUtils {
     if (value == null) {
       return;
     }
-    String json = value instanceof String ? (String) value : JsonUtils.beanToJson(value);
+    String json = value instanceof String ? (String) value : JsonUtils.beanToJson(value, Constants.DATE_PATTERN);
     response.setContentType("application/json;charset=UTF-8");
     response.getWriter().write(json);
   }
@@ -86,7 +97,7 @@ public abstract class WebUtils {
     if (value == null) {
       return;
     }
-    response.getWriter().write(JsonUtils.beanToJson(value));
+    response.getWriter().write(JsonUtils.beanToJson(value, Constants.DATE_PATTERN));
   }
 
   public static PageRange getPageRange(HttpServletRequest request) {
@@ -103,12 +114,13 @@ public abstract class WebUtils {
                                             boolean ignoreColumnFields) throws Exception{
     StringBuilder data = new StringBuilder("{\"total\":\"" + pagingResult.getRecordTotal() + "\",\"rows\":[");
     if (pagingResult.getRecords() != null) {
-      String[] columnFields = request.getParameter("columnFields").split(",");
+      String columnFieldsStr = request.getParameter("columnFields");
+      String[] columnFields = (columnFieldsStr != null ? columnFieldsStr.split(",") : new String[]{});
       for (int i = 0; i < pagingResult.getRecords().size(); i++) {
         Object record = pagingResult.getRecords().get(i);
         StringBuilder rowJson = new StringBuilder();
         if (ignoreColumnFields) {
-          rowJson.append(JsonUtils.beanToJson(record));
+          rowJson.append(JsonUtils.beanToJson(record, Constants.DATE_PATTERN));
         } else {
           rowJson.append("{");
           MapContext jexlContext = new MapContext();
@@ -165,6 +177,25 @@ public abstract class WebUtils {
     }
     content.append("]}");
     writeWithJson(response, content.toString());
+  }
+
+  public static void bindParameterWithFile(HttpServletRequest request, Object bean) throws Exception {
+    DiskFileItemFactory factory = new DiskFileItemFactory();
+    ServletFileUpload upload = new ServletFileUpload(factory);
+    List items = upload.parseRequest(request);// 上传文件解析
+    Iterator itr = items.iterator();// 枚举方法
+    Map<String, Object> parameters = new HashMap<String, Object>();
+    while (itr.hasNext()) {
+      FileItem item = (FileItem) itr.next();
+      if (item.isFormField()) {// 判断是文件还是文本信息
+        parameters.put(item.getFieldName(), item.getString("UTF-8"));
+      } else {
+        parameters.put(item.getFieldName() + "InputStream", item.getInputStream());
+        parameters.put(item.getFieldName(), item.getName());
+
+      }
+    }
+    com.companyname.hbms.utils.BeanUtils.bindProperties(bean, parameters);
   }
 
 

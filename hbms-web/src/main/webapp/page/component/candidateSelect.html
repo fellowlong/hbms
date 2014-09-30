@@ -1,0 +1,43 @@
+
+<div id="candidateSelectWin"
+     class="easyui-dialog"
+     style="vertical-align: middle;overflow: hidden"
+     data-options="inline:true,closed:true">
+
+  <table id="candidateSelectDg" class="easyui-datagrid"
+         data-options="
+         url:'/candidate/findByBean.do',
+         pagination:true,
+         singleSelect: true,
+         fitColumns : true,
+         toolbar:'#candidateSelectDgTb',
+         ctrlSelect:false,
+         rownumbers:true">
+    <thead>
+    <tr>
+      <th data-options="field:'id',title:'选择',checkbox:true,align:'left'"></th>
+      <th data-options="field:'name',title:'名称',width:100,align:'left'"></th>
+      <th data-options="field:'sex',title:'性别',width:100,align:'left'"></th>
+      <th data-options="field:'industry',title:'所属行业',width:100,align:'left',formatter: function(cell,row,index){return cell ? cell.value : ''}"></th>
+      <th data-options="field:'currentCompany',title:'目前公司',width:100,align:'left'"></th>
+      <th data-options="field:'currentPosition',title:'目前职位',width:100,align:'left'"></th>
+      <th data-options="field:'keyword',title:'搜索关键字',width:100,align:'left'"></th>
+    </tr>
+    </thead>
+  </table>
+
+  <div id="candidateSelectDgTb">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok">选择</a>
+  </div>
+</div>
+<script>
+  function showCandidateSelectWin(options) {
+    showWin("#candidateSelectWin", "候选人选择", 500, 400, false, true, false);
+    $.parser.parse("#businessComponent");
+    $("#candidateSelectDgTb a").unbind();
+    $("#candidateSelectDgTb a").bind("click", function() {
+      options.selectCompleted($("#candidateSelectDg").datagrid("getSelected"));
+      $("#candidateSelectWin").dialog({closed:true});
+    });
+  }
+</script>

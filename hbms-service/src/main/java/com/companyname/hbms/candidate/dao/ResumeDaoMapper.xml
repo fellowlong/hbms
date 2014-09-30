@@ -47,14 +47,20 @@
       id = #{id}
   </update>
 
-  <delete id="delete" parameterType="java.lang.Long">
-    update Resume set yn = 0 where id = #{id}
+  <delete id="deleteByIds" parameterType="java.lang.Long">
+    update Resume set yn = 0 where id in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
+    </foreach>
   </delete>
   
   <select id="findByBean"
           parameterType="com.companyname.hbms.candidate.domain.Resume"
           resultType="com.companyname.hbms.candidate.domain.Resume">
-    select * from Resume
+    select
+      r.*,
+      c.
+    from Resume r left join Candidate c on r.candidateId = c.id
     where 1 = 1
     <if test="id != null">
       and id = #{id}
