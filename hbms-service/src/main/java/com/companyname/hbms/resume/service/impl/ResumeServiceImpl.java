@@ -1,4 +1,4 @@
-package com.companyname.hbms.candidate.service.impl;
+package com.companyname.hbms.resume.service.impl;
 
 import com.companyname.hbms.basedata.dao.ListItemDao;
 import com.companyname.hbms.candidate.dao.CandidateDao;

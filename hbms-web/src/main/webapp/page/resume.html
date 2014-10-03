@@ -14,10 +14,10 @@
   <thead>
   <tr>
     <th data-options="field:'id',title:'选择',checkbox:true,align:'left'"></th>
-    <!--<th data-options="field:'candidateName',title:'候选人',width:100,align:'left',formatter: function(cell,row,index){return row..name}"></th>-->
+    <th data-options="field:'candidateName',title:'候选人',width:100,align:'left',formatter: function(cell,row,index){return row.candidate.name}"></th>
     <th data-options="field:'name',title:'简历名称',width:100,align:'left'"></th>
     <th data-options="field:'keyword',title:'搜索关键字',width:100,align:'left'"></th>
-    <!--<th data-options="field:'language',title:'语言',width:100,align:'left',formatter: function(cell,row,index){return cell.value}"></th>-->
+    <th data-options="field:'language',title:'语言',width:100,align:'left',formatter: function(cell,row,index){return cell.value}"></th>
     <th data-options="field:'attachUri',title:'附件',width:100,align:'left'"></th>
     <th data-options="field:'createUser',title:'创建人',width:100,align:'left'"></th>
     <th data-options="field:'createTime',title:'创建时间',width:100,align:'left'"></th>

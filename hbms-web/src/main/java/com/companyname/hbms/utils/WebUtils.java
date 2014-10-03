@@ -43,11 +43,11 @@ public abstract class WebUtils {
     jexlEngine.setSilent(Boolean.TRUE);
   }
 
-  public static Long[] getLongArrayBySpearator(HttpServletRequest request, String name, String spearator) {
+  public static Long[] getLongArrayBySeparator(HttpServletRequest request, String name, String separator) {
     String strValue = request.getParameter(name);
     Long[] longArray = null;
     if (strValue != null) {
-      String[] strArray = strValue.split(spearator);
+      String[] strArray = strValue.split(separator);
       longArray = new Long[strArray.length];
       for (int i = 0 ; i < longArray.length ;i ++) {
         longArray[i] = new Long(strArray[i].trim());

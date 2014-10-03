@@ -61,7 +61,7 @@ public class ResumeController extends MultiActionController {
   }
 
   public void deleteByIds(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    int resultCount = resumeService.deleteByIds(WebUtils.getLongArrayBySpearator(request, "id", ","));
+    int resultCount = resumeService.deleteByIds(WebUtils.getLongArrayBySeparator(request, "id", ","));
     MessageCollector msgCollector = new MessageCollector();
     msgCollector.addInfo(WebUtils.SUCCESS, Boolean.TRUE);
     WebUtils.writeWithJson(response, msgCollector);

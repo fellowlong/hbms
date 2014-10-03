@@ -23,6 +23,8 @@ public interface ListItemDao {
 
   public List<ListItem> findListItemsOfCategoryByCode(String code);
 
+  public List<ListItem> findByIds(Long[] ids);
+
 
 
 }

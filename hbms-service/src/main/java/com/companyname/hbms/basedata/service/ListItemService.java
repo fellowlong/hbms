@@ -11,7 +11,6 @@ import java.util.List;
  */
 public interface ListItemService {
 
-
   public int insert(ListItem listItem);
 
   public int update(ListItem listItem);
@@ -23,4 +22,6 @@ public interface ListItemService {
   public List<ListItem> findAllCategory();
 
   public List<ListItem> findListItemsOfCategoryByCode(String code);
+
+  public List<ListItem> findByIds(Long[] ids);
 }

@@ -228,13 +228,13 @@ function getValueFromJson(name, json) {
 }
 
 function createCoverLayer() {
-  $(".mask-layer").detach();
+  $(".mask-layer").destroy();
   var maxZIndex = getMaxZIndex();
   $("<div class='mask-layer'></div>").appendTo("body").css({"z-index" : maxZIndex});
   return maxZIndex;
 }
 function removeCoverLayer() {
-  $(".mask-layer").detach();
+  $(".mask-layer").destroy();
 }
 
 function getMaxZIndex() {

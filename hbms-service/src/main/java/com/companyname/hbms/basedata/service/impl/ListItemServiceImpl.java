@@ -57,4 +57,9 @@ public class ListItemServiceImpl implements ListItemService {
   public List<ListItem> findListItemsOfCategoryByCode(String code) {
     return listItemDao.findListItemsOfCategoryByCode(code);
   }
+
+  @Override
+  public List<ListItem> findByIds(Long[] ids) {
+    return listItemDao.findByIds(ids);
+  }
 }

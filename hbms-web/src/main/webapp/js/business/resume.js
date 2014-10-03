@@ -19,6 +19,7 @@ $('#resumeDgTb a').bind('click', function(event){
     edit : function(options, row) {
       enableResumeEditForm();
       $("#resumeEditForm").form("clear");
+      $('#resumeEditWin #candidateId').textbox('enable');
       $("#attachUriContainer").empty();
       $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">");
       $('#attachUriContainer input').textbox({
@@ -33,6 +34,7 @@ $('#resumeDgTb a').bind('click', function(event){
           $('#attachUriContainer input').filebox({required: true, width: 200, buttonText: '选择', prompt: '选择简历文件'});
       }});
       $("#resumeEditForm").form("load", row);
+      $('#resumeEditWin #candidateId').textbox('setValue', row.candidate.id).textbox('setText', row.candidate.name);
       showResumeEditWin("修改简历：" + row.name, false);
     },
     removeUrl : '/resume/deleteByIds.do',
@@ -46,6 +48,8 @@ $('#resumeDgTb a').bind('click', function(event){
       $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">");
       $('#attachUriContainer input').textbox({required: false, editable: false, width: 200});
       $("#resumeEditForm").form("load", row);
+      $('#resumeEditWin #candidateId').textbox('setValue', row.candidate.id).textbox('setText', row.candidate.name);
+      $('#resumeEditWin #candidateId').textbox('disable');
       disableResumeEditForm();
       showResumeEditWin("查看简历：" + row.name, false);
     }

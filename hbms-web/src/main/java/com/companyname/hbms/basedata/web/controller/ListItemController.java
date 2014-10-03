@@ -46,7 +46,7 @@ public class ListItemController extends MultiActionController {
 
   public void deleteById(HttpServletRequest request,
                          HttpServletResponse response) throws Exception {
-    int resultCount = listItemService.deleteById(WebUtils.getLongArrayBySpearator(request, "id", ","));
+    int resultCount = listItemService.deleteById(WebUtils.getLongArrayBySeparator(request, "id", ","));
     MessageCollector msgCollector = new MessageCollector();
     msgCollector.addInfo(WebUtils.SUCCESS, Boolean.TRUE);
     WebUtils.writeWithJson(response, msgCollector);

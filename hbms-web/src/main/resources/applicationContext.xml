@@ -117,6 +117,8 @@
 
   <bean id="resumeService" class="com.companyname.hbms.candidate.service.impl.ResumeServiceImpl">
     <property name="resumeDao" ref="resumeDao"/>
+    <property name="candidateDao" ref="candidateDao"/>
+    <property name="listItemDao" ref="listItemDao"/>
     <property name="fileService" ref="fileService"/>
   </bean>
 

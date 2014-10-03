@@ -33,7 +33,9 @@ public class PagingPlugin implements Interceptor {
       pageRange = (PageRange) allParams;
     } else if (allParams instanceof Map) {
       Map paramMap = (Map)allParams;
-      String lastMethodArgKey = String.valueOf(paramMap.keySet().size()/2 - 1);
+      String lastMethodArgKey = paramMap.keySet().size() > 1
+                                ? String.valueOf(paramMap.keySet().size()/2 - 1)
+                                : paramMap.keySet().iterator().next().toString();
       Object lastMethodArgValue = paramMap.get(lastMethodArgKey);
       if (lastMethodArgValue instanceof PageRange) {
         pageRange = (PageRange) lastMethodArgValue;

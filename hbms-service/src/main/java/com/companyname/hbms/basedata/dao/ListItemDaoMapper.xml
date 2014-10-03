@@ -49,4 +49,13 @@
     </if>
   </select>
 
+    <select id="findByIds"
+            parameterType="com.companyname.hbms.basedata.domain.ListItem"
+            resultMap="domain.ListItem">
+        select * from ListItem where id in
+        <foreach collection="array" open="(" close=")" separator="," item="listItemId">
+            #{listItemId}
+        </foreach>
+    </select>
+
 </mapper>

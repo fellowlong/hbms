@@ -7,15 +7,15 @@ var contextPath = "";
 
 var workPanelFactoryConfig = [
     {
-      name: "配置管理",
+      name: "候选人管理",
       children:
       [
         {
-          name : "全局配置管理",
+          name : "候选人管理",
           url : contextPath + "/page/candidate.html"
         },
         {
-          name : "环境管理",
+          name : "简历管理",
           url : contextPath + "/page/resume.html"
         },
         {

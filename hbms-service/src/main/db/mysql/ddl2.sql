@@ -36,7 +36,6 @@ create table Resume(
   keyword varchar(200) comment '简历搜索关键字',
   attachUri varchar(200) comment '简历路径',
   languageId int(2) comment '简历语言',
-  type int(1) comment '类型，原始：0,报告：1',
   yn int(1) comment '是否有效',
   createTime datetime comment '创建时间',
   createUser varchar(50) comment '创建人账户',
