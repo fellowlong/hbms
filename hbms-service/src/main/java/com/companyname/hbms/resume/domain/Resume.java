@@ -1,6 +1,10 @@
 package com.companyname.hbms.resume.domain;
 
+import com.companyname.hbms.basedata.domain.ListItem;
+
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class Resume implements Serializable {
@@ -18,7 +22,7 @@ public class Resume implements Serializable {
   /**
    * 性别
    */
-  private Boolean sex;
+  private String sex;
 
   /**
    * 手机号码
@@ -43,7 +47,7 @@ public class Resume implements Serializable {
   /**
    * 工作年限
    */
-  private String workTime;
+  private String workYears;
 
   /**
    * 婚姻状况
@@ -111,6 +115,58 @@ public class Resume implements Serializable {
    */
   private List<ProjectExperience> projectExperiences;
 
+
+  /**
+   * 搜索关键字
+   */
+  private String keyword;
+
+  /**
+   * 原始简历存储路径
+   */
+  private String originalResumeUri;
+
+  /**
+   * 原始简历输入流
+   */
+  private InputStream originalResumeInputStream;
+
+  /**
+   * 原始简历文本
+   */
+  private String originalResumeText;
+
+  /**
+   * 语言
+   */
+  private String language;
+
+  /**
+   *
+   */
+  private Boolean yn;
+
+
+  /**
+   * 创建时间
+   */
+  private Date createTime;
+
+  /**
+   * 创建人
+   */
+  private String createUser;
+
+  /**
+   * 修改时间
+   */
+  private Date updateTime;
+
+  /**
+   * 修改人
+   */
+  private String updateUser;
+
   public Long getId() {
     return id;
   }
@@ -127,11 +183,11 @@ public class Resume implements Serializable {
     this.name = name;
   }
 
-  public Boolean getSex() {
+  public String getSex() {
     return sex;
   }
 
-  public void setSex(Boolean sex) {
+  public void setSex(String sex) {
     this.sex = sex;
   }
 
@@ -167,12 +223,12 @@ public class Resume implements Serializable {
     this.education = education;
   }
 
-  public String getWorkTime() {
-    return workTime;
+  public String getWorkYears() {
+    return workYears;
   }
 
-  public void setWorkTime(String workTime) {
-    this.workTime = workTime;
+  public void setWorkYears(String workYears) {
+    this.workYears = workYears;
   }
 
   public String getMarital() {
@@ -277,5 +333,86 @@ public class Resume implements Serializable {
 
   public void setProjectExperiences(List<ProjectExperience> projectExperiences) {
     this.projectExperiences = projectExperiences;
+  }
+
+  public String getKeyword() {
+    return keyword;
+  }
+
+  public void setKeyword(String keyword) {
+    this.keyword = keyword;
+  }
+
+  public String getOriginalResumeUri() {
+    return originalResumeUri;
+  }
+
+  public void setOriginalResumeUri(String originalResumeUri) {
+    this.originalResumeUri = originalResumeUri;
+  }
+
+  public InputStream getOriginalResumeInputStream() {
+    return originalResumeInputStream;
+  }
+
+  public void setOriginalResumeInputStream(InputStream originalResumeInputStream) {
+    this.originalResumeInputStream = originalResumeInputStream;
+  }
+
+  public String getOriginalResumeText() {
+    return originalResumeText;
+  }
+
+  public void setOriginalResumeText(String originalResumeText) {
+    this.originalResumeText = originalResumeText;
+  }
+
+
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+
+  public Boolean getYn() {
+    return yn;
+  }
+
+  public void setYn(Boolean yn) {
+    this.yn = yn;
+  }
+
+  public Date getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
+
+  public String getCreateUser() {
+    return createUser;
+  }
+
+  public void setCreateUser(String createUser) {
+    this.createUser = createUser;
+  }
+
+  public Date getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
+
+  public String getUpdateUser() {
+    return updateUser;
+  }
+
+  public void setUpdateUser(String updateUser) {
+    this.updateUser = updateUser;
   }
 }

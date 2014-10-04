@@ -1,6 +1,6 @@
 package com.companyname.hbms.candidate.web.controller;
 
-import com.companyname.hbms.candidate.domain.Resume;
+import com.companyname.hbms.resume.domain.Resume;
 import com.companyname.hbms.candidate.service.ResumeService;
 import com.companyname.hbms.common.service.CommonService;
 import com.companyname.hbms.mvc.MessageCollector;

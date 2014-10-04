@@ -1,6 +1,6 @@
 package com.companyname.hbms.utils.business;
 
-import com.companyname.hbms.candidate.domain.Resume;
+import com.companyname.hbms.resume.domain.Resume;
 import com.companyname.hbms.utils.BeanUtils;
 import org.apache.commons.jexl2.Expression;
 import org.apache.commons.jexl2.JexlEngine;

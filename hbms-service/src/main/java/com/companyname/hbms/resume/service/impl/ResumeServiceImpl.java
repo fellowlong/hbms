@@ -2,17 +2,16 @@ package com.companyname.hbms.resume.service.impl;
 
 import com.companyname.hbms.basedata.dao.ListItemDao;
 import com.companyname.hbms.candidate.dao.CandidateDao;
-import com.companyname.hbms.candidate.dao.ResumeDao;
-import com.companyname.hbms.candidate.domain.Resume;
-import com.companyname.hbms.candidate.service.ResumeService;
 import com.companyname.hbms.common.service.FileService;
+import com.companyname.hbms.resume.dao.ResumeDao;
+import com.companyname.hbms.resume.domain.Resume;
+import com.companyname.hbms.resume.service.ResumeService;
 import com.companyname.hbms.utils.business.ObjectUtils;
 import com.companyname.hbms.utils.paging.PageRange;
 import com.companyname.hbms.utils.paging.PagingResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,8 +48,8 @@ public class ResumeServiceImpl implements ResumeService {
   @Override
   public int insertOrUpdate(Resume resume) throws IOException {
     int resultCount = (resume.getId() != null) ? resumeDao.update(resume) : resumeDao.insert(resume);
-    if (resume.getAttachUriInputStream() != null && resume.getAttachUriInputStream() != null) {
-      fileService.save(resume.getAttachUriInputStream(), resume.getAttachUri());
+    if (resume.getOriginalResumeInputStream() != null && resume.getOriginalResumeInputStream() != null) {
+      fileService.save(resume.getOriginalResumeInputStream(), resume.getOriginalResumeUri());
     }
     return resultCount;
   }
@@ -87,5 +86,10 @@ public class ResumeServiceImpl implements ResumeService {
          }
        });
     return resumes;
+  }
+
+  @Override
+  public List<Resume> findByIds(Long[] ids) {
+    return null;
   }
 }

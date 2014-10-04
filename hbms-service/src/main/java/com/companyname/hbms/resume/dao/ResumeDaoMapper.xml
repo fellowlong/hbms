@@ -4,7 +4,7 @@
 
 <mapper namespace="com.companyname.hbms.candidate.dao.ResumeDao">
 
-  <insert id="insert" parameterType="com.companyname.hbms.candidate.domain.Resume">
+  <insert id="insert" parameterType="com.companyname.hbms.resume.domain.Resume">
     insert into Resume(
       candidateId,
       name,
@@ -34,7 +34,7 @@
     </selectKey>
   </insert>
 
-  <update id="update" parameterType="com.companyname.hbms.candidate.domain.Resume">
+  <update id="update" parameterType="com.companyname.hbms.resume.domain.Resume">
     update Resume set
       candidateId = #{candidateId},
       name = #{name, jdbcType=VARCHAR},
@@ -55,8 +55,8 @@
   </delete>
   
   <select id="findByBean"
-          parameterType="com.companyname.hbms.candidate.domain.Resume"
-          resultType="com.companyname.hbms.candidate.domain.Resume">
+          parameterType="com.companyname.hbms.resume.domain.Resume"
+          resultType="com.companyname.hbms.resume.domain.Resume">
     select
       r.*
     from Resume r
@@ -83,11 +83,11 @@
 
 
     <select id="findByIds"
-            parameterType="com.companyname.hbms.candidate.domain.Candidate"
-            resultMap="domain.Candidate">
-        select * from Candidate where id in
-        <foreach collection="array" open="(" close=")" separator="," item="candidateId">
-            #{candidateId}
+            parameterType="com.companyname.hbms.resume.domain.Resume"
+            resultMap="domain.Resume">
+        select * from Resume where id in
+        <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+            #{resumeId}
         </foreach>
     </select>
 

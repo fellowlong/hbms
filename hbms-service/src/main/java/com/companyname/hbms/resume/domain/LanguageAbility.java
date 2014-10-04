@@ -18,6 +18,11 @@ public class LanguageAbility implements Serializable {
   private Long resumeId;
 
   /**
+   * 简历
+   */
+  private Resume resume;
+
+  /**
    * 语言名称
    */
   private String name;
@@ -46,6 +51,14 @@ public class LanguageAbility implements Serializable {
 
   public void setResumeId(Long resumeId) {
     this.resumeId = resumeId;
+  }
+
+  public Resume getResume() {
+    return resume;
+  }
+
+  public void setResume(Resume resume) {
+    this.resume = resume;
   }
 
   public String getName() {

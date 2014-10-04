@@ -68,7 +68,7 @@
     <association property="lastReportResume" columnPrefix="RES_REP_" resultMap="Resume"/>
   </resultMap>
 
-  <resultMap id="Resume" type="com.companyname.hbms.candidate.domain.Resume">
+  <resultMap id="Resume" type="com.companyname.hbms.resume.domain.Resume">
     <id property="id" column="id" jdbcType="INTEGER"/>
     <result property="candidateId" column="candidateId" jdbcType="INTEGER"/>
     <result property="name" column="name" jdbcType="VARCHAR"/>
@@ -83,7 +83,7 @@
     <association property="candidate" columnPrefix="TAL_" resultMap="Candidate"/>
   </resultMap>
 
-  <resultMap id="ResumeReport" type="com.companyname.hbms.candidate.domain.ResumeReport">
+  <resultMap id="ResumeReport" type="com.companyname.hbms.resume.domain.ResumeReport">
     <id property="id" column="id" jdbcType="INTEGER"/>
     <result property="candidateId" column="candidateId" jdbcType="INTEGER"/>
     <result property="name" column="name" jdbcType="VARCHAR"/>
