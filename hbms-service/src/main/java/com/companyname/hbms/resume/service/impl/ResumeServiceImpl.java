@@ -3,7 +3,7 @@ package com.companyname.hbms.resume.service.impl;
 import com.companyname.hbms.basedata.dao.ListItemDao;
 import com.companyname.hbms.candidate.dao.CandidateDao;
 import com.companyname.hbms.common.service.FileService;
-import com.companyname.hbms.resume.dao.ResumeDao;
+import com.companyname.hbms.resume.dao.*;
 import com.companyname.hbms.resume.domain.Resume;
 import com.companyname.hbms.resume.service.ResumeService;
 import com.companyname.hbms.utils.business.ObjectUtils;
@@ -22,9 +22,15 @@ public class ResumeServiceImpl implements ResumeService {
 
   private ResumeDao resumeDao;
 
-  private CandidateDao candidateDao;
+  private CertificateDao certificateDao;
 
-  private ListItemDao listItemDao;
+  private EducationExperienceDao educationExperienceDao;
+
+  private LanguageAbilityDao languageAbilityDao;
+
+  private ProjectExperienceDao projectExperienceDao;
+
+  private WorkExperienceDao workExperienceDao;
 
   private FileService fileService;
 
@@ -32,12 +38,24 @@ public class ResumeServiceImpl implements ResumeService {
     this.resumeDao = resumeDao;
   }
 
-  public void setCandidateDao(CandidateDao candidateDao) {
-    this.candidateDao = candidateDao;
+  public void setCertificateDao(CertificateDao certificateDao) {
+    this.certificateDao = certificateDao;
   }
 
-  public void setListItemDao(ListItemDao listItemDao) {
-    this.listItemDao = listItemDao;
+  public void setEducationExperienceDao(EducationExperienceDao educationExperienceDao) {
+    this.educationExperienceDao = educationExperienceDao;
+  }
+
+  public void setLanguageAbilityDao(LanguageAbilityDao languageAbilityDao) {
+    this.languageAbilityDao = languageAbilityDao;
+  }
+
+  public void setProjectExperienceDao(ProjectExperienceDao projectExperienceDao) {
+    this.projectExperienceDao = projectExperienceDao;
+  }
+
+  public void setWorkExperienceDao(WorkExperienceDao workExperienceDao) {
+    this.workExperienceDao = workExperienceDao;
   }
 
   public void setFileService(FileService fileService) {
@@ -63,25 +81,25 @@ public class ResumeServiceImpl implements ResumeService {
   @Override
   public PagingResult<Resume> findByBean(Resume resume, PageRange pageRange) {
     PagingResult<Resume> resumes = resumeDao.findByBean(resume, pageRange);
-    ObjectUtils.fillSubObjectByKey(
+    ObjectUtils.fillAssociationByKey(
        resumes.getRecords(),
        "candidateId",
        "candidate",
        "id",
-       new ObjectUtils.SubObjectsGetter() {
+       new ObjectUtils.AssociationFetcher() {
          @Override
-         public List getSubObjects(Object[] keys) {
+         public List fetch(Object[] associationKeys) {
            return candidateDao.findByIds(Arrays.asList(keys).toArray(new Long[keys.length]));
          }
        });
-    ObjectUtils.fillSubObjectByKey(
+    ObjectUtils.fillAssociationByKey(
        resumes.getRecords(),
        "languageId",
        "language",
        "id",
-       new ObjectUtils.SubObjectsGetter() {
+       new ObjectUtils.AssociationFetcher() {
          @Override
-         public List getSubObjects(Object[] keys) {
+         public List fetch(Object[] associationKeys) {
            return listItemDao.findByIds(Arrays.asList(keys).toArray(new Long[keys.length]));
          }
        });
