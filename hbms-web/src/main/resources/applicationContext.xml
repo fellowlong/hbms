@@ -75,6 +75,7 @@
         <value>classpath:com/companyname/hbms/common/dao/*.xml</value>
         <value>classpath:com/companyname/hbms/basedata/dao/*.xml</value>
         <value>classpath:com/companyname/hbms/candidate/dao/*.xml</value>
+        <value>classpath:com/companyname/hbms/resume/dao/*.xml</value>
       </list>
     </property>
   </bean>
@@ -95,10 +96,35 @@
   </bean>
 
   <bean id="resumeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.companyname.hbms.candidate.dao.ResumeDao"/>
+    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.ResumeDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
-  
+
+  <bean id="workExperienceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.WorkExperienceDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
+  <bean id="educationExperienceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.EducationExperienceDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
+  <bean id="languageAbilityDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.LanguageAbilityDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
+  <bean id="certificateDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.CertificateDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
+  <bean id="projectExperienceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.ProjectExperienceDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
   <bean id="commonService" class="com.companyname.hbms.common.service.impl.CommonServiceImpl">
     <property name="commonDao" ref="commonDao"/>
   </bean>
@@ -115,10 +141,13 @@
     <property name="candidateDao" ref="candidateDao"/>
   </bean>
 
-  <bean id="resumeService" class="com.companyname.hbms.candidate.service.impl.ResumeServiceImpl">
+  <bean id="resumeService" class="com.companyname.hbms.resume.service.impl.ResumeServiceImpl">
     <property name="resumeDao" ref="resumeDao"/>
-    <property name="candidateDao" ref="candidateDao"/>
-    <property name="listItemDao" ref="listItemDao"/>
+    <property name="workExperienceDao" ref="workExperienceDao"/>
+    <property name="educationExperienceDao" ref="educationExperienceDao"/>
+    <property name="languageAbilityDao" ref="languageAbilityDao"/>
+    <property name="certificateDao" ref="certificateDao"/>
+    <property name="projectExperienceDao" ref="projectExperienceDao"/>
     <property name="fileService" ref="fileService"/>
   </bean>
 
@@ -143,7 +172,7 @@
     <property name="dateEditor" ref="dateEditor"/>
   </bean>
 
-  <bean id="resumeController" class="com.companyname.hbms.candidate.web.controller.ResumeController">
+  <bean id="resumeController" class="com.companyname.hbms.resume.web.controller.ResumeController">
     <property name="resumeService" ref="resumeService"/>
     <property name="commonService" ref="commonService"/>
   </bean>

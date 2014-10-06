@@ -37,12 +37,6 @@ public class CandidateController extends MultiActionController {
                    HttpServletResponse response,
                    Candidate candidate) throws Exception {
     candidate.setYn(Boolean.TRUE);
-    if(candidate.getLastOriginalResume() != null) {
-      candidate.getLastOriginalResume().setYn(Boolean.TRUE);
-    }
-    if (candidate.getLastReportResume() != null) {
-      candidate.getLastReportResume().setYn(Boolean.TRUE);
-    }
     PagingResult<Candidate> candidates = candidateService.findByBean(candidate, WebUtils.getPageRange(request));
     WebUtils.writeForEasyUIDataGrid(request, response, candidates, true);
 

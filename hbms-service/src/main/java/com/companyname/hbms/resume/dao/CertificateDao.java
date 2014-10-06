@@ -21,6 +21,8 @@ public interface CertificateDao {
 
   public List<Certificate> findByIds(Long[] ids);
 
+  public List<Certificate> findByResumeIds(Long[] ids);
+
   public PagingResult<Certificate> findMaxByCandidateIdsAndBean(Certificate certificate, PageRange pageRange);
 
 }

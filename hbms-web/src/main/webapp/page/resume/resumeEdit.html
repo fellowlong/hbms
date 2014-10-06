@@ -1,0 +1,60 @@
+<table align="center" valign="top" cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tr>
+    <td width="100%">
+      <form id="resumeEditForm" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="">
+        <table border="0" cellspacing="2px" cellpadding="2px" valign="middle">
+          <tr>
+            <td align="right"><label for="candidateId">候选人:</label></td>
+            <td align="left">
+              <input
+                  id="candidateId"
+                  class="easyui-textbox"
+                  name="candidateId"
+                  data-options="
+                    required:true,
+                    width:200,
+                    buttonText: '选择',
+                    buttonIcon: 'icon-ok',
+                    onClickButton: function () {
+                      showCandidateSelectWin({
+                        selectCompleted:function(row){
+                          $('#resumeEditWin #candidateId').textbox('setValue', row.id).textbox('setText', row.name);
+                        }
+                      });
+                    }"/>
+            </td>
+          </tr>
+          <tr>
+            <td align="right"><label for="name">简历名称:</label></td>
+            <td align="left"><input class="easyui-textbox" name="name" data-options="required:true,width:200"/></td>
+          </tr>
+          <tr>
+            <td align="right"><label for="attachUri">简历附件:</label></td>
+            <td align="left">
+              <div id="attachUriContainer"></div>
+            </td>
+          </tr>
+          <tr>
+            <td align="right"><label for="keyword">搜索关键字:</label></td>
+            <td align="left"><input class="easyui-textbox" name="keyword" data-options="required:true,width:200"/></td>
+          </tr>
+          <tr>
+            <td align="right"><label for="languageId">语言:</label></td>
+            <td align="left"><input class="easyui-combobox" name="languageId" data-options="required:true,url:'/listItem/findListItemsOfCategoryByCode.do?code=Language',valueField:'id',textField:'value',editable:false,width:200"></td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center" valign="bottom">
+              <div id="resumeEditTb" style="margin-top: 10px">
+                <a href="#" class="easyui-linkbutton" type="add" iconCls="icon-save" onclick="insertOrUpdateResume()">保存</a>
+                <a href="#" class="easyui-linkbutton" type="cancel" iconCls="icon-cancel" onclick="$('#resumeEditWin').dialog({closed : true})">取消</a>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+</table>
+
+<script src="/js/business/resume.js"/>

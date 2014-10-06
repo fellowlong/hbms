@@ -21,6 +21,8 @@ public interface LanguageAbilityDao {
 
   public List<LanguageAbility> findByIds(Long[] ids);
 
+  public List<LanguageAbility> findByResumeIds(Long[] ids);
+
   public PagingResult<LanguageAbility> findMaxByCandidateIdsAndBean(LanguageAbility languageAbility, PageRange pageRange);
 
 }

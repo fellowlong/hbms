@@ -17,7 +17,8 @@ $('#resumeDgTb a').bind('click', function(event){
       showResumeEditWin("新增简历", false);
     },
     edit : function(options, row) {
-      enableResumeEditForm();
+      $("#resumeTabs").tabs("add", {title:"New Resume", href:"page/resume/resumeEdit.html"});
+     /* enableResumeEditForm();
       $("#resumeEditForm").form("clear");
       $('#resumeEditWin #candidateId').textbox('enable');
       $("#attachUriContainer").empty();
@@ -35,7 +36,7 @@ $('#resumeDgTb a').bind('click', function(event){
       }});
       $("#resumeEditForm").form("load", row);
       $('#resumeEditWin #candidateId').textbox('setValue', row.candidate.id).textbox('setText', row.candidate.name);
-      showResumeEditWin("修改简历：" + row.name, false);
+      showResumeEditWin("修改简历：" + row.name, false);*/
     },
     removeUrl : '/resume/deleteByIds.do',
     removePromptField : ["name"],

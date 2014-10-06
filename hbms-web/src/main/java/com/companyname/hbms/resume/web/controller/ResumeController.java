@@ -1,7 +1,7 @@
-package com.companyname.hbms.candidate.web.controller;
+package com.companyname.hbms.resume.web.controller;
 
 import com.companyname.hbms.resume.domain.Resume;
-import com.companyname.hbms.candidate.service.ResumeService;
+import com.companyname.hbms.resume.service.ResumeService;
 import com.companyname.hbms.common.service.CommonService;
 import com.companyname.hbms.mvc.MessageCollector;
 import com.companyname.hbms.utils.FileUtils;
@@ -39,7 +39,7 @@ public class ResumeController extends MultiActionController {
     PagingResult<Resume> resumePagingResult = resumeService.findByBean(resume, WebUtils.getPageRange(request));
     if (resumePagingResult != null && resumePagingResult.getRecords() != null) {
       for (Resume perResume : resumePagingResult.getRecords()) {
-        perResume.setAttachUri(FileUtils.decodeFileName(perResume.getAttachUri().substring(1)));
+        perResume.setOriginalResumeUri(FileUtils.decodeFileName(perResume.getOriginalResumeUri().substring(1)));
       }
     }
     WebUtils.writeForEasyUIDataGrid(request, response, resumePagingResult, true);
@@ -49,7 +49,7 @@ public class ResumeController extends MultiActionController {
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
     Resume resume = new Resume();
     WebUtils.bindParameterWithFile(request, resume);
-    resume.setAttachUri("/" + FileUtils.encodeFileName(resume.getAttachUri(), commonService.getCurrentDate()));
+    resume.setOriginalResumeUri("/" + FileUtils.encodeFileName(resume.getOriginalResumeUri(), commonService.getCurrentDate()));
     int resultCount = resumeService.insertOrUpdate(resume);
     MessageCollector msgCollector = new MessageCollector();
     if (resultCount == 1) {

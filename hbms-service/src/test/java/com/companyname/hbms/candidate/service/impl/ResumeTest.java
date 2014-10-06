@@ -20,17 +20,16 @@ import java.util.List;
  */
 public class ResumeTest extends TestCase {
 
-  private static Long candidateId = null;
   private static Long resumeId = null;
-
-  public void testInsertCandidate() {
-    CandidateService candidateService = TestUtils.getApplicationContext().getBean(CandidateService.class);
-    Candidate candidate = new Candidate();
-    candidate.setName("Zhangsan's Resume");
-    candidateService.insert(candidate);
-    candidateId = candidate.getId();
-    Assert.assertNotNull(candidateId);
-  }
+//
+//  public void testInsertCandidate() {
+//    CandidateService candidateService = TestUtils.getApplicationContext().getBean(CandidateService.class);
+//    Candidate candidate = new Candidate();
+//    candidate.setName("Zhangsan's Resume");
+//    candidateService.insert(candidate);
+//    candidateId = candidate.getId();
+//    Assert.assertNotNull(candidateId);
+//  }
 
   public void testInsertResume() throws IOException {
     ResumeService resumeService = TestUtils.getApplicationContext().getBean(ResumeService.class);
@@ -163,13 +162,13 @@ public class ResumeTest extends TestCase {
   public void testUpdateResume() throws IOException {
     ResumeService resumeService = TestUtils.getApplicationContext().getBean(ResumeService.class);
     Resume resume = resumeService.findByIds(new Long[]{resumeId}).get(0);
-    String oldName = resume.getName();
-    resume.setName(resume.getName() + System.currentTimeMillis());
+    String newName = resume.getName() + System.currentTimeMillis();
+    resume.setName(newName);
     resumeService.insertOrUpdate(resume);
     Resume resume2 = new Resume();
     resume2.setId(resumeId);
     resume = resumeService.findByIds(new Long[]{resumeId}).get(0);
-    Assert.assertEquals(oldName, resume.getName());
+    Assert.assertEquals(newName, resume.getName());
   }
 
   public void testDeleteResume() {

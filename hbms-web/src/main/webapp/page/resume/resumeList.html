@@ -1,0 +1,39 @@
+<div id="resumeTabs" class="easyui-tabs" data-options="fit:true">
+  <div title="简历管理">
+    <table id="resumeDg" class="easyui-datagrid"
+         data-options="
+         url:'/resume/findByBean.do',
+         pagination:true,
+         title : '',
+         singleSelect: false,
+         fitColumns : true,
+         toolbar:'#resumeDgTb',
+         ctrlSelect:true,
+         rownumbers:true,
+         onBeforeLoad : function(param){
+           return postColumnFieldNames(param, 'resumeDg');
+         }">
+      <thead>
+      <tr>
+        <th data-options="field:'id',title:'选择',checkbox:true,align:'left'"></th>
+        <th data-options="field:'candidateName',title:'候选人',width:100,align:'left',formatter: function(cell,row,index){return row.candidate.name}"></th>
+        <th data-options="field:'name',title:'简历名称',width:100,align:'left'"></th>
+        <th data-options="field:'keyword',title:'搜索关键字',width:100,align:'left'"></th>
+        <th data-options="field:'language',title:'语言',width:100,align:'left',formatter: function(cell,row,index){return cell.value}"></th>
+        <th data-options="field:'attachUri',title:'附件',width:100,align:'left'"></th>
+        <th data-options="field:'createUser',title:'创建人',width:100,align:'left'"></th>
+        <th data-options="field:'createTime',title:'创建时间',width:100,align:'left'"></th>
+        <th data-options="field:'updateUser',title:'最后修改人',width:100,align:'left'"></th>
+        <th data-options="field:'updateTime',title:'最后修改时间',width:100,align:'left'"></th>
+      </tr>
+      </thead>
+    </table>
+    <div id="resumeDgTb">
+      <a href="#" class="easyui-linkbutton" type="add" iconCls="icon-add">新增</a>
+      <a href="#" class="easyui-linkbutton" type="edit" iconCls="icon-edit">编辑</a>
+      <a href="#" class="easyui-linkbutton" type="remove" iconCls="icon-remove">删除</a>
+      <a href="#" class="easyui-linkbutton" type="view" iconCls="icon-view">查看</a>
+    </div>
+  </div>
+</div>
+<script src="/js/business/resume.js"/>

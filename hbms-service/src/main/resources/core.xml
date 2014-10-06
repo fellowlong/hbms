@@ -100,8 +100,8 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
-  <bean id="certificateDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.CertificateDao"/>
+  <bean id="workExperienceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.WorkExperienceDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
@@ -115,6 +115,11 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
+  <bean id="certificateDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.CertificateDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
   <bean id="projectExperienceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface" value="com.companyname.hbms.resume.dao.ProjectExperienceDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
@@ -122,11 +127,6 @@
 
   <bean id="fileService" class="com.companyname.hbms.common.service.impl.FileServiceImpl">
     <property name="prefix" value="${resumeAttachPrefix}"/>
-  </bean>
-
-  <bean id="workExperienceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.companyname.hbms.resume.dao.WorkExperienceDao"/>
-    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
   <bean id="candidateService" class="com.companyname.hbms.candidate.service.impl.CandidateServiceImpl">

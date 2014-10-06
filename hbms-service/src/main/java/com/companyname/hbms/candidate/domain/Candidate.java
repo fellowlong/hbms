@@ -159,16 +159,6 @@ public class Candidate implements Serializable {
    */
   private String updateUser;
 
-  /**
-   * 最近原始简历
-   */
-  private Resume lastOriginalResume;
-
-  /**
-   * 最近简历报告
-   */
-  private Resume lastReportResume;
-
   public Long getId() {
     return id;
   }
@@ -409,19 +399,4 @@ public class Candidate implements Serializable {
     this.updateUser = updateUser;
   }
 
-  public Resume getLastOriginalResume() {
-    return lastOriginalResume;
-  }
-
-  public void setLastOriginalResume(Resume lastOriginalResume) {
-    this.lastOriginalResume = lastOriginalResume;
-  }
-
-  public Resume getLastReportResume() {
-    return lastReportResume;
-  }
-
-  public void setLastReportResume(Resume lastReportResume) {
-    this.lastReportResume = lastReportResume;
-  }
 }

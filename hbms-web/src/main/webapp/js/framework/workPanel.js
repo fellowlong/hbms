@@ -16,7 +16,7 @@ var workPanelFactoryConfig = [
         },
         {
           name : "简历管理",
-          url : contextPath + "/page/resume.html"
+          url : contextPath + "/page/resume/resumeList.html"
         },
         {
           name : "Destination管理",

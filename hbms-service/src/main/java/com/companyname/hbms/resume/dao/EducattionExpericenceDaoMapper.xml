@@ -4,27 +4,27 @@
 
 <mapper namespace="com.companyname.hbms.resume.dao.EducationExperienceDao">
 
-  <insert id="insert" parameterType="com.companyname.hbms.resume.domain.EducationExperience">
+  <insert id="insert" parameterMap="domain.EducationExperience">
     insert into EducationExperience(
-      resumeId,
-      school,
-      startDate,
-      endDate,
-      degree
+    resumeId,
+    school,
+    startDate,
+    endDate,
+    degree
     )
     values (
-      #{resumeId},
-      #{school, jdbcType=VARCHAR},
-      #{startDate,jdbcType=VARCHAR},
-      #{endDate,jdbcType=VARCHAR},
-      #{degree}
+    #{resumeId},
+    #{school, jdbcType=VARCHAR},
+    #{startDate,jdbcType=VARCHAR},
+    #{endDate,jdbcType=VARCHAR},
+    #{degree}
     )
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       select last_insert_id();
     </selectKey>
   </insert>
 
-  <update id="update" parameterType="com.companyname.hbms.resume.domain.EducationExperience">
+  <update id="update" parameterMap="domain.EducationExperience">
     update EducationExperience set
       school = #{school, jdbcType=VARCHAR},
       startDate = #{startDate,jdbcType=VARCHAR},
@@ -40,12 +40,12 @@
       #{educationExperienceId}
     </foreach>
   </delete>
-  
+
   <select id="findByBean"
-          parameterType="com.companyname.hbms.resume.domain.EducationExperience"
-          resultType="com.companyname.hbms.resume.domain.EducationExperience">
+          parameterMap="domain.EducationExperience"
+          resultMap="domain.EducationExperience">
     select
-      e.*
+    e.*
     from EducationExperience e
     where 1 = 1
     <if test="id != null">
@@ -69,13 +69,20 @@
   </select>
 
 
-    <select id="findByIds"
-            parameterType="com.companyname.hbms.resume.domain.EducationExperience"
-            resultMap="domain.Resume">
-        select * from EducationExperience where id in
-        <foreach collection="array" open="(" close=")" separator="," item="educationExperienceId">
-            #{educationExperienceId}
-        </foreach>
-    </select>
+  <select id="findByIds"
+          parameterMap="domain.EducationExperience"
+          resultMap="domain.EducationExperience">
+    select * from EducationExperience where id in
+    <foreach collection="array" open="(" close=")" separator="," item="educationExperienceId">
+      #{educationExperienceId}
+    </foreach>
+  </select>
+
+  <select id="findByResumeIds" resultMap="domain.EducationExperience">
+    select * from EducationExperience where resumeId in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
+    </foreach>
+  </select>
 
 </mapper>

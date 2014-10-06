@@ -21,6 +21,8 @@ public interface WorkExperienceDao {
 
   public List<WorkExperience> findByIds(Long[] ids);
 
+  public List<WorkExperience> findByResumeIds(Long[] ids);
+
   public PagingResult<WorkExperience> findMaxByCandidateIdsAndBean(WorkExperience workExperience, PageRange pageRange);
 
 }

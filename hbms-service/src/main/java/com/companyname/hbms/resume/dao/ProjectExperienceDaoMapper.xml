@@ -4,49 +4,49 @@
 
 <mapper namespace="com.companyname.hbms.resume.dao.ProjectExperienceDao">
 
-  <insert id="insert" parameterType="com.companyname.hbms.resume.domain.ProjectExperience">
+  <insert id="insert" parameterMap="domain.ProjectExperience">
     insert into ProjectExperience(
-      resumeId,
-      name,
-      startDate,
-      endDate,
-      isIt,
-      softwareEnvironment,
-      hardwareEnvironment,
-      developTool,
-      responsibility,
-      projectDescription
+    resumeId,
+    name,
+    startDate,
+    endDate,
+    isIt,
+    softwareEnvironment,
+    hardwareEnvironment,
+    developTool,
+    responsibility,
+    projectDescription
     )
     values (
-      #{resumeId},
-      #{name, jdbcType=VARCHAR},
-      #{startDate,jdbcType=VARCHAR},
-      #{endDate,jdbcType=VARCHAR},
-      #{isIt,jdbcType=INTEGER},
-      #{softwareEnvironment,jdbcType=VARCHAR},
-      #{hardwareEnvironment,jdbcType=VARCHAR},
-      #{developTool,jdbcType=VARCHAR},
-      #{responsibility,jdbcType=VARCHAR},
-      #{projectDescription,jdbcType=VARCHAR},
+    #{resumeId},
+    #{name, jdbcType=VARCHAR},
+    #{startDate,jdbcType=VARCHAR},
+    #{endDate,jdbcType=VARCHAR},
+    #{isIt,jdbcType=INTEGER},
+    #{softwareEnvironment,jdbcType=VARCHAR},
+    #{hardwareEnvironment,jdbcType=VARCHAR},
+    #{developTool,jdbcType=VARCHAR},
+    #{responsibility,jdbcType=VARCHAR},
+    #{projectDescription,jdbcType=VARCHAR}
     )
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       select last_insert_id();
     </selectKey>
   </insert>
 
-  <update id="update" parameterType="com.companyname.hbms.resume.domain.ProjectExperience">
+  <update id="update" parameterMap="domain.ProjectExperience">
     update ProjectExperience set
-      name = #{name, jdbcType=VARCHAR},
-      startDate = #{startDate,jdbcType=VARCHAR},
-      endDate = #{endDate,jdbcType=VARCHAR},
-      isIt = #{isIt,jdbcType=INTEGER},
-      softwareEnvironment = #{softwareEnvironment,jdbcType=VARCHAR},
-      hardwareEnvironment = #{hardwareEnvironment,jdbcType=VARCHAR},
-      developTool = #{developTool,jdbcType=VARCHAR},
-      responsibility = #{responsibility,jdbcType=VARCHAR},
-      projectDescription = #{projectDescription,jdbcType=VARCHAR}
+    name = #{name, jdbcType=VARCHAR},
+    startDate = #{startDate,jdbcType=VARCHAR},
+    endDate = #{endDate,jdbcType=VARCHAR},
+    isIt = #{isIt,jdbcType=INTEGER},
+    softwareEnvironment = #{softwareEnvironment,jdbcType=VARCHAR},
+    hardwareEnvironment = #{hardwareEnvironment,jdbcType=VARCHAR},
+    developTool = #{developTool,jdbcType=VARCHAR},
+    responsibility = #{responsibility,jdbcType=VARCHAR},
+    projectDescription = #{projectDescription,jdbcType=VARCHAR}
     where
-      id = #{id}
+    id = #{id}
   </update>
 
   <delete id="deleteByIds" parameterType="java.lang.Long">
@@ -55,12 +55,12 @@
       #{projectExperienceId}
     </foreach>
   </delete>
-  
+
   <select id="findByBean"
-          parameterType="com.companyname.hbms.resume.domain.ProjectExperience"
-          resultType="com.companyname.hbms.resume.domain.ProjectExperience">
+          parameterMap="domain.ProjectExperience"
+          resultMap="domain.ProjectExperience">
     select
-      *
+    *
     from ProjectExperience
     where 1 = 1
     <if test="id != null">
@@ -99,13 +99,20 @@
   </select>
 
 
-    <select id="findByIds"
-            parameterType="com.companyname.hbms.resume.domain.ProjectExperience"
-            resultType="com.companyname.hbms.resume.domain.ProjectExperience">
-        select * from ProjectExperience where id in
-        <foreach collection="array" open="(" close=")" separator="," item="projectExperienceId">
-            #{projectExperienceId}
-        </foreach>
-    </select>
+  <select id="findByIds"
+          parameterMap="domain.ProjectExperience"
+          resultMap="domain.ProjectExperience">
+    select * from ProjectExperience where id in
+    <foreach collection="array" open="(" close=")" separator="," item="projectExperienceId">
+      #{projectExperienceId}
+    </foreach>
+  </select>
+
+  <select id="findByResumeIds" resultMap="domain.ProjectExperience">
+    select * from ProjectExperience where resumeId in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
+    </foreach>
+  </select>
 
 </mapper>

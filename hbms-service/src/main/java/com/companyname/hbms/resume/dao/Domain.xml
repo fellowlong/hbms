@@ -4,19 +4,158 @@
 
 <mapper namespace="domain">
 
+  <parameterMap id="Resume" type="com.companyname.hbms.resume.domain.Resume">
+    <parameter property="id" jdbcType="BIGINT"/>
+    <parameter property="name" jdbcType="VARCHAR"/>
+    <parameter property="sex" jdbcType="VARCHAR"/>
+    <parameter property="telephone" jdbcType="VARCHAR"/>
+    <parameter property="age" jdbcType="INTEGER"/>
+    <parameter property="email" jdbcType="VARCHAR"/>
+    <parameter property="education" jdbcType="VARCHAR"/>
+    <parameter property="workYears" jdbcType="VARCHAR"/>
+    <parameter property="marital" jdbcType="VARCHAR"/>
+    <parameter property="location" jdbcType="VARCHAR"/>
+    <parameter property="industry" jdbcType="VARCHAR"/>
+    <parameter property="company" jdbcType="VARCHAR"/>
+    <parameter property="position" jdbcType="VARCHAR"/>
+    <parameter property="salary" jdbcType="VARCHAR"/>
+    <parameter property="selfEvaluation" jdbcType="VARCHAR"/>
+    <parameter property="other" jdbcType="VARCHAR"/>
+    <parameter property="keyword" jdbcType="VARCHAR"/>
+    <parameter property="originalResumeUri" jdbcType="VARCHAR"/>
+    <parameter property="originalResumeText" jdbcType="VARCHAR"/>
+    <parameter property="language" jdbcType="VARCHAR"/>
+    <parameter property="yn" jdbcType="INTEGER"/>
+    <parameter property="createTime" jdbcType="DATE"/>
+    <parameter property="createUser" jdbcType="VARCHAR"/>
+    <parameter property="updateTime" jdbcType="DATE"/>
+    <parameter property="updateUser" jdbcType="VARCHAR"/>
+  </parameterMap>
+
   <resultMap id="Resume" type="com.companyname.hbms.resume.domain.Resume">
-    <id property="id" column="id" jdbcType="INTEGER"/>
-    <result property="candidateId" column="candidateId" jdbcType="INTEGER"/>
+    <id property="id" column="id" jdbcType="BIGINT"/>
     <result property="name" column="name" jdbcType="VARCHAR"/>
+    <result property="sex" column="sex" jdbcType="VARCHAR"/>
+    <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
+    <result property="age" column="age" jdbcType="INTEGER"/>
+    <result property="email" column="email" jdbcType="VARCHAR"/>
+    <result property="education" column="education" jdbcType="VARCHAR"/>
+    <result property="workYears" column="workYears" jdbcType="VARCHAR"/>
+    <result property="marital" column="marital" jdbcType="VARCHAR"/>
+    <result property="location" column="location" jdbcType="VARCHAR"/>
+    <result property="industry" column="industry" jdbcType="VARCHAR"/>
+    <result property="company" column="company" jdbcType="VARCHAR"/>
+    <result property="position" column="position" jdbcType="VARCHAR"/>
+    <result property="salary" column="salary" jdbcType="VARCHAR"/>
+    <result property="selfEvaluation" column="selfEvaluation" jdbcType="VARCHAR"/>
+    <result property="other" column="other" jdbcType="VARCHAR"/>
     <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
-    <result property="attacheUri" column="attacheUri" jdbcType="VARCHAR"/>
-    <result property="languageId" column="languageId" jdbcType="INTEGER"/>
+    <result property="originalResumeUri" column="originalResumeUri" jdbcType="VARCHAR"/>
+    <result property="originalResumeText" column="originalResumeText" jdbcType="VARCHAR"/>
+    <result property="language" column="language" jdbcType="VARCHAR"/>
     <result property="yn" column="yn" jdbcType="INTEGER"/>
     <result property="createTime" column="createTime" jdbcType="DATE"/>
     <result property="createUser" column="createUser" jdbcType="VARCHAR"/>
     <result property="updateTime" column="updateTime" jdbcType="DATE"/>
     <result property="updateUser" column="updateUser" jdbcType="VARCHAR"/>
-    <association property="candidate" columnPrefix="TAL_" resultMap="Candidate"/>
+  </resultMap>
+
+  <parameterMap id="WorkExperience" type="com.companyname.hbms.resume.domain.WorkExperience">
+    <parameter property="id" jdbcType="BIGINT"/>
+    <parameter property="resumeId" jdbcType="BIGINT"/>
+    <parameter property="company" jdbcType="VARCHAR"/>
+    <parameter property="startDate" jdbcType="VARCHAR"/>
+    <parameter property="endDate" jdbcType="VARCHAR"/>
+    <parameter property="industry" jdbcType="VARCHAR"/>
+    <parameter property="position" jdbcType="VARCHAR"/>
+    <parameter property="responsibility" jdbcType="VARCHAR"/>
+  </parameterMap>
+
+  <resultMap id="WorkExperience" type="com.companyname.hbms.resume.domain.WorkExperience">
+    <id property="id" column="id" jdbcType="BIGINT"/>
+    <result property="resumeId" column="resumeId" jdbcType="BIGINT"/>
+    <result property="company" column="company" jdbcType="VARCHAR"/>
+    <result property="startDate" column="startDate" jdbcType="VARCHAR"/>
+    <result property="endDate" column="endDate" jdbcType="VARCHAR"/>
+    <result property="industry" column="industry" jdbcType="VARCHAR"/>
+    <result property="position" column="position" jdbcType="VARCHAR"/>
+    <result property="responsibility" column="responsibility" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <parameterMap id="EducationExperience" type="com.companyname.hbms.resume.domain.EducationExperience">
+    <parameter property="id" jdbcType="BIGINT"/>
+    <parameter property="resumeId" jdbcType="BIGINT"/>
+    <parameter property="startDate" jdbcType="VARCHAR"/>
+    <parameter property="endDate" jdbcType="VARCHAR"/>
+    <parameter property="school" jdbcType="VARCHAR"/>
+    <parameter property="degree" jdbcType="VARCHAR"/>
+  </parameterMap>
+
+  <resultMap id="EducationExperience" type="com.companyname.hbms.resume.domain.EducationExperience">
+    <id property="id" column="id" jdbcType="BIGINT"/>
+    <result property="resumeId" column="resumeId" jdbcType="BIGINT"/>
+    <result property="startDate" column="startDate" jdbcType="VARCHAR"/>
+    <result property="endDate" column="endDate" jdbcType="VARCHAR"/>
+    <result property="school" column="school" jdbcType="VARCHAR"/>
+    <result property="degree" column="degree" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <parameterMap id="LanguageAbility" type="com.companyname.hbms.resume.domain.LanguageAbility">
+    <parameter property="id" jdbcType="BIGINT"/>
+    <parameter property="resumeId" jdbcType="BIGINT"/>
+    <parameter property="name" jdbcType="VARCHAR"/>
+    <parameter property="readAndWrite" jdbcType="VARCHAR"/>
+    <parameter property="listenAndSpeaking" jdbcType="VARCHAR"/>
+  </parameterMap>
+
+  <resultMap id="LanguageAbility" type="com.companyname.hbms.resume.domain.LanguageAbility">
+    <id property="id" column="id" jdbcType="BIGINT"/>
+    <result property="resumeId" column="resumeId" jdbcType="BIGINT"/>
+    <result property="name" column="name" jdbcType="VARCHAR"/>
+    <result property="readAndWrite" column="readAndWrite" jdbcType="VARCHAR"/>
+    <result property="listenAndSpeaking" column="listenAndSpeaking" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <parameterMap id="Certificate" type="com.companyname.hbms.resume.domain.Certificate">
+    <parameter property="id" jdbcType="BIGINT"/>
+    <parameter property="resumeId" jdbcType="BIGINT"/>
+    <parameter property="name" jdbcType="VARCHAR"/>
+    <parameter property="acquireDate" jdbcType="VARCHAR"/>
+  </parameterMap>
+
+  <resultMap id="Certificate" type="com.companyname.hbms.resume.domain.Certificate">
+    <result property="id" column="id" jdbcType="BIGINT"/>
+    <result property="resumeId" column="resumeId" jdbcType="BIGINT"/>
+    <result property="name" column="name" jdbcType="VARCHAR"/>
+    <result property="acquireDate" column="acquireDate" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <parameterMap id="ProjectExperience" type="com.companyname.hbms.resume.domain.ProjectExperience">
+    <parameter property="id" jdbcType="BIGINT"/>
+    <parameter property="resumeId" jdbcType="BIGINT"/>
+    <parameter property="name" jdbcType="VARCHAR"/>
+    <parameter property="startDate" jdbcType="VARCHAR"/>
+    <parameter property="endDate" jdbcType="VARCHAR"/>
+    <parameter property="isIt" jdbcType="INTEGER"/>
+    <parameter property="softwareEnvironment" jdbcType="VARCHAR"/>
+    <parameter property="hardwareEnvironment" jdbcType="VARCHAR"/>
+    <parameter property="developTool" jdbcType="VARCHAR"/>
+    <parameter property="responsibility" jdbcType="VARCHAR"/>
+    <parameter property="projectDescription" jdbcType="VARCHAR"/>
+  </parameterMap>
+
+  <resultMap id="ProjectExperience" type="com.companyname.hbms.resume.domain.ProjectExperience">
+    <id property="id" column="id" jdbcType="BIGINT"/>
+    <result property="resumeId" column="resumeId" jdbcType="BIGINT"/>
+    <result property="name" column="name" jdbcType="VARCHAR"/>
+    <result property="startDate" column="startDate" jdbcType="VARCHAR"/>
+    <result property="endDate" column="endDate" jdbcType="VARCHAR"/>
+    <result property="isIt" column="isIt" jdbcType="INTEGER"/>
+    <result property="softwareEnvironment" column="softwareEnvironment" jdbcType="VARCHAR"/>
+    <result property="hardwareEnvironment" column="hardwareEnvironment" jdbcType="VARCHAR"/>
+    <result property="developTool" column="developTool" jdbcType="VARCHAR"/>
+    <result property="responsibility" column="responsibility" jdbcType="VARCHAR"/>
+    <result property="projectDescription" column="projectDescription" jdbcType="VARCHAR"/>
   </resultMap>
 
   <resultMap id="ResumeReport" type="com.companyname.hbms.resume.domain.ResumeReport">
