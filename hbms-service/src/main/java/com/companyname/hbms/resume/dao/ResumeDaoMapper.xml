@@ -22,6 +22,7 @@
       selfEvaluation,
       other,
       keyword,
+      originalResumeName,
       originalResumeUri,
       originalResumeText,
       language,
@@ -47,6 +48,7 @@
       #{selfEvaluation},
       #{other},
       #{keyword},
+      #{originalResumeName},
       #{originalResumeUri},
       #{originalResumeText},
       #{language},
@@ -79,8 +81,11 @@
       selfEvaluation = #{selfEvaluation},
       other = #{other},
       keyword = #{keyword},
-      originalResumeUri = #{originalResumeUri},
-      originalResumeText = #{originalResumeText},
+      <if test="originalResumeName != null and !originalResumeName.isEmpty() and originalResumeInputStream != null">
+        originalResumeName = #{originalResumeName},
+        originalResumeUri = #{originalResumeUri},
+        originalResumeText = #{originalResumeText},
+      </if>
       language = #{language},
       updateTime = now(),
       updateUser = #{updateUser}

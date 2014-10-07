@@ -5,6 +5,7 @@ import com.companyname.hbms.resume.service.ResumeService;
 import com.companyname.hbms.common.service.CommonService;
 import com.companyname.hbms.mvc.MessageCollector;
 import com.companyname.hbms.utils.FileUtils;
+import com.companyname.hbms.utils.IOUtils;
 import com.companyname.hbms.utils.WebUtils;
 import com.companyname.hbms.utils.paging.PagingResult;
 import org.apache.log4j.Logger;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by fellowlong on 2014-08-07.
@@ -37,11 +40,6 @@ public class ResumeController extends MultiActionController {
                    Resume resume) throws Exception {
     resume.setYn(Boolean.TRUE);
     PagingResult<Resume> resumePagingResult = resumeService.findByBean(resume, WebUtils.getPageRange(request));
-    if (resumePagingResult != null && resumePagingResult.getRecords() != null) {
-      for (Resume perResume : resumePagingResult.getRecords()) {
-        perResume.setOriginalResumeUri(FileUtils.decodeFileName(perResume.getOriginalResumeUri().substring(1)));
-      }
-    }
     WebUtils.writeForEasyUIDataGrid(request, response, resumePagingResult, true);
   }
 
@@ -49,7 +47,6 @@ public class ResumeController extends MultiActionController {
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
     Resume resume = new Resume();
     WebUtils.bindParameterWithFile(request, resume);
-    resume.setOriginalResumeUri("/" + FileUtils.encodeFileName(resume.getOriginalResumeUri(), commonService.getCurrentDate()));
     int resultCount = resumeService.insertOrUpdate(resume);
     MessageCollector msgCollector = new MessageCollector();
     if (resultCount == 1) {

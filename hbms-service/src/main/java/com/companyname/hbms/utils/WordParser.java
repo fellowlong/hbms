@@ -19,17 +19,18 @@ import java.io.InputStream;
  */
 public abstract class WordParser {
 
-  public static final String VERSION_97TO2003 = "doc";
+  public static enum Version {
+    DOC_97TO2003,
+    DOCX_2007ABOVE;
+  }
 
-  public static final String VERSION_2007ABOVE = "docx";
-
-  public static String getText(InputStream inputStream, String version) {
+  public static String getText(InputStream inputStream, Version version) {
     String text = null;
     try {
-      if (version.equals(VERSION_97TO2003)) {
+      if (version.equals(Version.DOC_97TO2003)) {
         WordExtractor extractor = new WordExtractor(inputStream);
         text = extractor.getText();
-      } else if (version.equals(VERSION_2007ABOVE)) {
+      } else if (version.equals(Version.DOCX_2007ABOVE)) {
         POIXMLTextExtractor extractor = new XWPFWordExtractor(new XWPFDocument(inputStream));
         text = extractor.getText();
       } else {
@@ -39,5 +40,17 @@ public abstract class WordParser {
       throw new RuntimeException("从word中解析文件出错", t);
     }
     return text;
+  }
+
+  public static Version getVersion(String fileName) {
+    Version version = null;
+    if (fileName == null) {
+      version = null;
+    } else if (fileName.toLowerCase().endsWith(".doc")){
+      version = Version.DOC_97TO2003;
+    } else if (fileName.toLowerCase().endsWith(".docx")){
+      version = Version.DOCX_2007ABOVE;
+    }
+    return version;
   }
 }

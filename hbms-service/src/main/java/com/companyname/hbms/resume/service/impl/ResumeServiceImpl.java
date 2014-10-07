@@ -1,14 +1,20 @@
 package com.companyname.hbms.resume.service.impl;
 
+import com.companyname.hbms.common.service.CommonService;
 import com.companyname.hbms.common.service.FileService;
 import com.companyname.hbms.resume.dao.*;
 import com.companyname.hbms.resume.domain.*;
 import com.companyname.hbms.resume.service.ResumeService;
+import com.companyname.hbms.utils.FileUtils;
+import com.companyname.hbms.utils.IOUtils;
+import com.companyname.hbms.utils.WordParser;
 import com.companyname.hbms.utils.business.ObjectUtils;
 import com.companyname.hbms.utils.paging.PageRange;
 import com.companyname.hbms.utils.paging.PagingResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,7 +38,11 @@ public class ResumeServiceImpl implements ResumeService {
 
   private ProjectExperienceDao projectExperienceDao;
 
+  private CommonService commonService;
+
   private FileService fileService;
+
+  private String originalResumeSavePathPrefix;
 
   public void setResumeDao(ResumeDao resumeDao) {
     this.resumeDao = resumeDao;
@@ -58,14 +68,46 @@ public class ResumeServiceImpl implements ResumeService {
     this.workExperienceDao = workExperienceDao;
   }
 
+  public void setCommonService(CommonService commonService) {
+    this.commonService = commonService;
+  }
+
   public void setFileService(FileService fileService) {
     this.fileService = fileService;
+  }
+
+  public void setOriginalResumeSavePathPrefix(String originalResumeSavePathPrefix) {
+    this.originalResumeSavePathPrefix = originalResumeSavePathPrefix;
   }
 
   @Transactional(rollbackFor = Throwable.class)
   @Override
   public int insertOrUpdate(Resume resume) throws IOException {
+    if (resume.getOriginalResumeName() != null
+        && !resume.getOriginalResumeName().isEmpty()
+        && resume.getOriginalResumeInputStream() != null) {
+      String encodedFileName = FileUtils.encodeFileName(
+         resume.getOriginalResumeName(), commonService.getCurrentDate());
+      resume.setOriginalResumeUri(originalResumeSavePathPrefix + encodedFileName);
+      if (!resume.getOriginalResumeInputStream().markSupported()) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        IOUtils.copy(resume.getOriginalResumeInputStream(), byteArrayOutputStream);
+        resume.setOriginalResumeInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+      }
+      resume.setOriginalResumeText(
+         WordParser.getText(resume.getOriginalResumeInputStream(), WordParser.getVersion(resume.getOriginalResumeName())));
+      resume.getOriginalResumeInputStream().reset();
+    }
     int resultCount = (resume.getId() != null) ? resumeDao.update(resume) : resumeDao.insert(resume);
+    //保存原始附件
+    if (resume.getOriginalResumeName() != null
+       && !resume.getOriginalResumeName().isEmpty()
+       && resume.getOriginalResumeInputStream() != null) {
+      fileService.save(
+         resume.getOriginalResumeInputStream(),
+         resume.getOriginalResumeUri());
+      resume.getOriginalResumeInputStream().reset();
+    }
     //保存工作经历
     List<WorkExperience> workExperiences = resume.getWorkExperiences();
     if (workExperiences != null && workExperiences.size() > 0) {
@@ -156,10 +198,7 @@ public class ResumeServiceImpl implements ResumeService {
         }
       }
     }
-    //保存原始附件
-    if (resume.getOriginalResumeInputStream() != null && resume.getOriginalResumeInputStream() != null) {
-      fileService.save(resume.getOriginalResumeInputStream(), resume.getOriginalResumeUri());
-    }
+
     return resultCount;
   }
 

@@ -130,7 +130,7 @@
   </bean>
 
   <bean id="fileService" class="com.companyname.hbms.common.service.impl.FileServiceImpl">
-    <property name="prefix" value="${resumeAttachPrefix}"/>
+    <property name="prefix" value="${fileSaveRootPath}"/>
   </bean>
 
   <bean id="listItemService" class="com.companyname.hbms.basedata.service.impl.ListItemServiceImpl">
@@ -149,6 +149,7 @@
     <property name="certificateDao" ref="certificateDao"/>
     <property name="projectExperienceDao" ref="projectExperienceDao"/>
     <property name="fileService" ref="fileService"/>
+    <property name="originalResumeSavePathPrefix" value="${originalResumeSavePathPrefix}"/>
   </bean>
 
   <!--web-->

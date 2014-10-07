@@ -122,6 +122,11 @@ public class Resume implements Serializable {
   private String keyword;
 
   /**
+   * 原始简历名称
+   */
+  private String originalResumeName;
+
+  /**
    * 原始简历存储路径
    */
   private String originalResumeUri;
@@ -341,6 +346,14 @@ public class Resume implements Serializable {
 
   public void setKeyword(String keyword) {
     this.keyword = keyword;
+  }
+
+  public String getOriginalResumeName() {
+    return originalResumeName;
+  }
+
+  public void setOriginalResumeName(String originalResumeName) {
+    this.originalResumeName = originalResumeName;
   }
 
   public String getOriginalResumeUri() {

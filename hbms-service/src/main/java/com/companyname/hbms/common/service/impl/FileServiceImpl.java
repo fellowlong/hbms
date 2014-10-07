@@ -1,9 +1,11 @@
 package com.companyname.hbms.common.service.impl;
 
 import com.companyname.hbms.common.service.FileService;
+import com.companyname.hbms.utils.FileUtils;
 import com.companyname.hbms.utils.IOUtils;
 
 import java.io.*;
+import java.util.Date;
 
 /**
  * Created by fellowlong on 2014-09-26.
@@ -17,12 +19,16 @@ public class FileServiceImpl implements FileService {
   }
 
   @Override
-  public void save(InputStream inputStream, String uri) throws IOException {
+  public String save(InputStream inputStream, String uri) throws IOException {
     File file = new File(prefix + uri);
+    if (!file.getParentFile().exists()) {
+      file.getParentFile().mkdirs();
+    }
     OutputStream out = new FileOutputStream(file);
     IOUtils.copy(inputStream, out);
     out.flush();
     out.close();
+    return uri;
   }
 
   @Override

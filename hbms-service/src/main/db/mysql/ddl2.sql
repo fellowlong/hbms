@@ -47,6 +47,7 @@ create table Resume(
   selfEvaluation  varchar(500) comment '个人评价',
   other  varchar(500) comment '其他',
   keyword  varchar(100) comment '搜索关键字',
+  OriginalResumeName varchar(100) comment '原始简历名称',
   originalResumeUri varchar(100) comment '原始简历存储路径',
   originalResumeText  text(100) comment '原始简历文本',
   language  varchar(50) comment '简历语言',
@@ -89,8 +90,6 @@ create table LanguageAbility (
   listenAndSpeaking varchar(50) comment '听说能力'
 ) comment='语言能力';
 
-
-
 drop table Certificate;
 create table Certificate (
   id bigint auto_increment not null primary key comment '证书编号,主键',
@@ -113,7 +112,7 @@ create table ProjectExperience (
   responsibility varchar(500) comment '工作职责',
   projectDescription varchar(500) comment '项目介绍'
 
-) comment='项目';
+) comment='项目经历';
 
 drop table ResumeReport;
 create table ResumeReport(

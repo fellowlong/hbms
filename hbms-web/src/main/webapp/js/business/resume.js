@@ -8,13 +8,22 @@ $('#resumeDgTb a').bind('click', function(event){
     dataGridId:"resumeDg",
     type: $(event.currentTarget).attr("type"),
     add : function(options){
-      enableResumeEditForm();
+      if($("#resumeTabs").tabs("getTab", "新增简历")) {
+        $("#resumeTabs").tabs("select", "新增简历");
+      } else {
+        $("#resumeTabs").tabs("add", {
+          title: '新增简历',
+          href: '/page/resume/resumeEdit.html',
+          selected: true
+        });
+      }
+     /* enableResumeEditForm();
       $("#resumeEditForm").form("clear");
       $.parser.parse("#resumeEditForm");
       $("#attachUriContainer").empty();
       $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">");
       $('#attachUriContainer input').filebox({required:true,width:200,buttonText:'选择',prompt:'选择简历文件'});
-      showResumeEditWin("新增简历", false);
+      showResumeEditWin("新增简历", false);*/
     },
     edit : function(options, row) {
       $("#resumeTabs").tabs("add", {title:"New Resume", href:"page/resume/resumeEdit.html"});

@@ -136,7 +136,7 @@ public class ResumeTest extends TestCase {
     projectExperiences.add(projectExperience2);
     resume.setProjectExperiences(projectExperiences);
     resume.setKeyword("XXX");
-    resume.setOriginalResumeUri("/xx.doc");
+    resume.setOriginalResumeName("黄奇.docx");
     resume.setOriginalResumeInputStream(new FileInputStream("c:\\cd\\黄奇.docx"));
     //resume.setOriginalResumeText();
     resume.setLanguage("中文");

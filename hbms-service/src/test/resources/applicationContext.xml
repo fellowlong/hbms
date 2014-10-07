@@ -120,8 +120,12 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
+  <bean id="commonService" class="com.companyname.hbms.common.service.impl.CommonServiceImpl">
+    <property name="commonDao" ref="commonDao"/>
+  </bean>
+
   <bean id="fileService" class="com.companyname.hbms.common.service.impl.FileServiceImpl">
-    <property name="prefix" value="${resumeAttachPrefix}"/>
+    <property name="prefix" value="${fileSaveRootPath}"/>
   </bean>
 
   <bean id="workExperienceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
@@ -140,7 +144,9 @@
     <property name="languageAbilityDao" ref="languageAbilityDao"/>
     <property name="certificateDao" ref="certificateDao"/>
     <property name="projectExperienceDao" ref="projectExperienceDao"/>
+    <property name="commonService" ref="commonService"/>
     <property name="fileService" ref="fileService"/>
+    <property name="originalResumeSavePathPrefix" value="${originalResumeSavePathPrefix}"/>
   </bean>
 
   <bean id="listItemService" class="com.companyname.hbms.basedata.service.impl.ListItemServiceImpl">
