@@ -6,21 +6,25 @@
 var contextPath = "";
 
 var workPanelFactoryConfig = [
-    {
-      name: "候选人管理",
-      children:
-      [
+  {
+    name: "候选人管理",
+    children: [
+      {
+        name: "候选人管理",
+        url: contextPath + "/page/candidate.html"
+      }
+    ]
+  },
+  {
+    name:"简历管理",
+    children:[
         {
-          name : "候选人管理",
-          url : contextPath + "/page/candidate.html"
-        },
-        {
-          name : "简历管理",
+          name : "简历维护",
           url : contextPath + "/page/resume/resumeList.html"
         },
         {
-          name : "Destination管理",
-          url : contextPath + "/pages/destinationManage.html"
+          name : "简历入库",
+          url : contextPath + "/page/resume/resumeAdd.html"
         },
         {
           name : "应用管理",
