@@ -131,7 +131,7 @@ create table ResumeReport(
   createUser varchar(50) comment '创建人账户',
   updateTime datetime comment '修改时间',
   updateUser varchar(50) comment '修改人账户'
-);
+) comment='简历报告';
 
 drop table ListItem;
 create table ListItem(

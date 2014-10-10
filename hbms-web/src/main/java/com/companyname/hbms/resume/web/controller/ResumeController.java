@@ -47,6 +47,7 @@ public class ResumeController extends MultiActionController {
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
     Resume resume = new Resume();
     WebUtils.bindParameterWithFile(request, resume);
+    boolean isNew = (resume.getId() == null ? true : false);
     int resultCount = resumeService.insertOrUpdate(resume);
     MessageCollector msgCollector = new MessageCollector();
     if (resultCount == 1) {
@@ -54,7 +55,13 @@ public class ResumeController extends MultiActionController {
     } else {
       msgCollector.addError(WebUtils.ERROR, Boolean.TRUE);
     }
-    WebUtils.writeWithJson(response, msgCollector);
+    if (isNew) {
+      Resume resumeForResult = new Resume();
+      resumeForResult.setId(resume.getId());
+      WebUtils.writeWithJson(response, resumeForResult);
+    } else {
+      WebUtils.writeWithJson(response, msgCollector);
+    }
   }
 
   public void deleteByIds(HttpServletRequest request, HttpServletResponse response) throws Exception {

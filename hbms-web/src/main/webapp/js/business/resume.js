@@ -14,38 +14,13 @@ $('#resumeDgTb a').bind('click', function(event){
         $("#resumeTabs").tabs("add", {
           title: '新增简历',
           href: '/page/resume/resumeEdit.html',
-          selected: true
+          selected: true,
+          closable:true
         });
       }
-     /* enableResumeEditForm();
-      $("#resumeEditForm").form("clear");
-      $.parser.parse("#resumeEditForm");
-      $("#attachUriContainer").empty();
-      $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">");
-      $('#attachUriContainer input').filebox({required:true,width:200,buttonText:'选择',prompt:'选择简历文件'});
-      showResumeEditWin("新增简历", false);*/
     },
     edit : function(options, row) {
-      $("#resumeTabs").tabs("add", {title:"New Resume", href:"page/resume/resumeEdit.html"});
-     /* enableResumeEditForm();
-      $("#resumeEditForm").form("clear");
-      $('#resumeEditWin #candidateId').textbox('enable');
-      $("#attachUriContainer").empty();
-      $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">");
-      $('#attachUriContainer input').textbox({
-        required: false,
-        editable: false,
-        width: 200,
-        buttonText: '删除',
-        buttonIcon: 'icon-remove',
-        onClickButton: function () {
-          $("#attachUriContainer").empty();
-          $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">")
-          $('#attachUriContainer input').filebox({required: true, width: 200, buttonText: '选择', prompt: '选择简历文件'});
-      }});
-      $("#resumeEditForm").form("load", row);
-      $('#resumeEditWin #candidateId').textbox('setValue', row.candidate.id).textbox('setText', row.candidate.name);
-      showResumeEditWin("修改简历：" + row.name, false);*/
+      $("#resumeTabs").tabs("add", {title:"编辑简历"});
     },
     removeUrl : '/resume/deleteByIds.do',
     removePromptField : ["name"],
@@ -82,16 +57,6 @@ function showResumeEditWin(title, closed, maxZIndex) {
   });
 }
 
-function insertOrUpdateResume() {
-  submitForm({
-    form:"#resumeEditForm",
-    url:"/resume/insertOrUpdate.do",
-    success:function() {
-      $('#resumeEditWin').dialog({closed:true});
-      $("#resumeDg").datagrid("reload");
-    }
-  });
-}
 
 function enableResumeEditForm() {
   $("#resumeEditForm input").removeAttr("disabled");

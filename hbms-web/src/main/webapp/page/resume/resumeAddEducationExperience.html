@@ -1,16 +1,18 @@
-
-
-<div id="workExperienceEditWin"
+<div id="educationExperienceEditWin"
      class="easyui-dialog"
      style="vertical-align: middle;overflow: hidden"
      data-options="inline:true,closed:true">
   <table align="center" valign="top" cellpadding="0" cellspacing="0" border="0" width="100%">
     <tr>
       <td width="100%">
-        <form id="workExperienceEditForm" method="post">
+        <form id="educationExperienceEditForm" method="post">
           <input type="hidden" name="id" value="">
           <input type="hidden" name="operationType" value="">
           <table border="0" cellspacing="2px" cellpadding="2px" valign="middle">
+            <tr>
+              <td align="right"><label for="school">学校:</label></td>
+              <td align="left"><input id="fieldSchool" class="easyui-textbox" type="text" name="school" data-options="required:true,width:200"/></td>
+            </tr>
             <tr>
               <td align="right"><label for="startDate">开始时间:</label></td>
               <td align="left"><input id="fieldStartDate" class="easyui-datebox" type="text" name="startDate" data-options="required:true,editable:false,width:200"/></td>
@@ -20,24 +22,12 @@
               <td align="left"><input id="fieldEndDate" class="easyui-datebox" type="text" name="endDate" data-options="required:true,editable:false,width:200"/></td>
             </tr>
             <tr>
-              <td align="right"><label for="company">公司:</label></td>
-              <td align="left"><input id="fieldCompany" class="easyui-textbox" type="text" name="company" data-options="required:true,width:200"/></td>
-            </tr>
-            <tr>
-              <td align="right"><label for="industry">行业:</label></td>
-              <td align="left"><input id="fieldIndustry" class="easyui-textbox" type="text" name="industry" data-options="required:true,width:200"/></td>
-            </tr>
-            <tr>
-              <td align="right"><label for="position">职位:</label></td>
-              <td align="left"><input id="fieldPosition" class="easyui-textbox" type="text" name="position" data-options="required:true,width:200"/></td>
-            </tr>
-            <tr>
-              <td align="right"><label for="responsibility">职责:</label></td>
-              <td align="left"><input id="fieldResponsibility" class="easyui-textbox" type="text" name="responsibility" data-options="required:true,multiline:true,width:200,height:100"/></td>
+              <td align="right"><label for="degree">学历:</label></td>
+              <td align="left"><input id="fieldDegree" class="easyui-textbox" type="text" name="degree" data-options="required:true,width:200"/></td>
             </tr>
             <tr>
               <td colspan="2" align="center" valign="bottom">
-                <div id="workExperienceEditWinTb">
+                <div id="educationExperienceEditWinTb">
                   <a href="#" class="easyui-linkbutton" iconCls="icon-save" type="save">保存</a>
                   <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" type="cancel">取消</a>
                 </div>
@@ -50,12 +40,12 @@
   </table>
 </div>
 
-<table id="workExperienceDg" class="easyui-datagrid"
+<table id="educationExperienceDg" class="easyui-datagrid"
        data-options="
          title : '',
          singleSelect: true,
          fitColumns : true,
-         toolbar:'#workExperienceDgTb',
+         toolbar:'#educationExperienceDgTb',
          ctrlSelect:false,
          rownumbers:true,
          onBeforeLoad : function(param){
@@ -63,20 +53,18 @@
          }">
   <thead>
   <tr>
+    <th data-options="field:'school',title:'学校',width:100,align:'left'"></th>
     <th data-options="field:'startDate',title:'开始时间',width:100,align:'left'"></th>
     <th data-options="field:'endDate',title:'结束时间',width:100,align:'left'"></th>
-    <th data-options="field:'company',title:'公司',width:100,align:'left'"></th>
-    <th data-options="field:'industry',title:'行业',width:100,align:'left'"></th>
-    <th data-options="field:'position',title:'职位',width:100,align:'left'"></th>
-    <th data-options="field:'responsibility',title:'职责',width:100,align:'left'"></th>
+    <th data-options="field:'degree',title:'学历',width:100,align:'left'"></th>
   </tr>
   </thead>
 </table>
-<div id="workExperienceDgTb">
+<div id="educationExperienceDgTb">
   <a href="#" class="easyui-linkbutton" type="add" iconCls="icon-add">新增</a>
   <a href="#" class="easyui-linkbutton" type="edit" iconCls="icon-edit">编辑</a>
   <a href="#" class="easyui-linkbutton" type="remove" iconCls="icon-remove">删除</a>
   <a href="#" class="easyui-linkbutton" type="view" iconCls="icon-view">查看</a>
 </div>
 
-<script src="/js/business/resumeAddWorkExperience.js"></script>
+<script src="/js/business/resumeAddEducationExperience.js"></script>

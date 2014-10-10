@@ -258,11 +258,14 @@ function postColumnFieldNames(param, dataGridId) {
 }
 
 function submitForm(options) {
-  $.messager.progress({title:'请等待', msg:'正在提交...'});
   $(options.form).form("submit",{
     url: getRandomUrl(contextPath + options.url),
     onSubmit: function(param){
-      return $(options.form).form("validate");
+      var validResult = $(options.form).form("validate");
+      if(validResult) {
+        $.messager.progress({title:'请等待', msg:'正在提交...'});
+      }
+      return validResult;
     },
     success: function(message) {
       $.messager.progress('close');
@@ -271,8 +274,10 @@ function submitForm(options) {
       }catch(exception){
         showHtmlMessage("错误", exception + "\n" + message);
       }
-      if(showAjaxMessage(message)) {
-        options.success();
+      if(options.successHandler) {
+        options.successHandler(message);
+      } else if(showAjaxMessage(message)) {
+        options.success(message);
       }
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -305,3 +310,97 @@ function showWin(winId, title, width, height, closed, isDialog, isInWorkPanel) {
   }
 }
 
+function dataGridEdit(options) {
+  var defaults = {
+    dataGridId:undefined,
+    dataGridTbId:undefined,
+    editWinId: undefined,
+    editWinWidth:undefined,
+    editWinHeight:undefined,
+    editWinBaseTitle:undefined,
+    editWinFormId: undefined,
+    editWinTbId: undefined,
+    add : undefined,
+    edit : undefined,
+    remove : undefined,
+    view : undefined
+  };
+  var setting = $.extend(defaults, options);
+  var editWinVisible = function(isDisplay, title) {
+    showWin(
+      setting.editWinId,
+      (title ? setting.editWinBaseTitle + title : null),
+      setting.editWinWidth,
+      setting.editWinHeight,
+      !isDisplay,
+      true,
+      true);
+  }
+  var editWinFormEnable = function(flag) {
+    $.each($(setting.editWinFormId + " input[id^='field']"), function(index, component) {
+      $(component).textbox(flag ? "enable" : "disable");
+    });
+    $(setting.editWinTbId + " a:first-child").linkbutton(flag ? "enable" : "disable");
+  }
+
+  $(setting.dataGridTbId + " a").unbind();
+  $(setting.dataGridTbId + " a[type='add']").bind('click', function(event){
+    $(setting.editWinFormId).form("clear");
+    $(setting.editWinFormId + " input[name='operationType']").attr("value", "add");
+    editWinVisible(true, "新增");
+    editWinFormEnable(true);
+  });
+  $(setting.dataGridTbId + " a[type='edit']").bind('click', function(event){
+    var row = $(setting.dataGridId).datagrid("getSelected")
+    if(row == null) {
+      $.messager.alert("提示", "请选择一条需要编辑的记录", "info");
+    } else {
+      $(setting.editWinFormId).form("load", row);
+      $(setting.editWinFormId +" input[name='operationType']").attr("value", "edit");
+      editWinVisible(true, "编辑");
+      editWinFormEnable(true);
+    }
+  });
+  $(setting.dataGridTbId + " a[type='remove']").bind('click', function(event){
+    var row = $(setting.dataGridId).datagrid("getSelected")
+    if(row == null) {
+      $.messager.alert("提示", "请选择一条需要删除的记录", "info");
+    } else {
+      $.each($(setting.dataGridId).datagrid("getSelections"), function(index, row) {
+        $(setting.dataGridId).datagrid("deleteRow",$(setting.dataGridId).datagrid("getRowIndex", row));
+      });
+    }
+  });
+  $(setting.dataGridTbId + " a[type='view']").bind('click', function(event){
+    var row = $(setting.dataGridId).datagrid("getSelected");
+    if(row == null) {
+      $.messager.alert("提示", "请选择一条需要查看的记录", "info");
+    } else {
+      editWinFormEnable(false);
+      editWinVisible(true, "查看");
+    }
+  });
+
+  $(setting.editWinTbId + " a").unbind();
+  $(setting.editWinTbId + " a[type='save']").bind('click', function(event){
+    if(!$(setting.editWinFormId).form("validate")) {
+      return;
+    }
+    var row = {};
+    $.each($(setting.editWinFormId + " input"), function(index, item) {
+      row[$(item).attr("name")] = $(item).attr("value");
+    });
+    var operationType = $(setting.editWinFormId + " input[name='operationType']").attr("value");
+    if(operationType == "add") {
+      $(setting.dataGridId).datagrid("appendRow", row);
+    } else if(operationType == "edit") {
+      var oldRow = $(setting.dataGridId).datagrid("getSelected")
+      var index = $(setting.dataGridId).datagrid("getRowIndex", oldRow);
+      $(setting.dataGridId).datagrid("updateRow", {index:index,row:row});
+    }
+    editWinVisible(false);;
+  });
+  $(setting.editWinTbId + " a[type='cancel']").bind('click', function(event){
+    $(setting.editWinId).dialog('close');
+  });
+}
