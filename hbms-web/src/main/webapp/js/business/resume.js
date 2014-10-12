@@ -20,8 +20,25 @@ $('#resumeDgTb a').bind('click', function(event){
       }
     },
     edit : function(options, row) {
-      $("#resumeTabs").tabs("add", {title:"编辑简历"});
-    },
+      if($("#resumeTabs").tabs("getTab","编辑简历")){
+        $("#resumeTabs").tabs("select", "编辑简历");
+      } else {
+        $("#resumeTabs").tabs(
+          "add",
+          {
+            title: "编辑简历",
+            href: "/page/resume/resumeAdd.html",
+            selected: true,
+            closable:true
+          });
+      }
+      $('#resumeBasicInfoForm').form('load', row);
+      $('#workExperienceDg').datagrid("loadData", row.workExperiences ?  row.workExperiences : []);
+      $('#educationExperienceDg').datagrid("loadData", row.educationExperiences ?  row.educationExperiences : []);
+      $('#languageAbilityDg').datagrid("loadData", row.languageAbilities ?  row.languageAbilities : []);
+      $('#certificateDg').datagrid("loadData", row.certificates ?  row.certificates : []);
+      $('#projectExperienceDg').datagrid("loadData", row.projectExperiences ?  row.projectExperiences : []);
+      },
     removeUrl : '/resume/deleteByIds.do',
     removePromptField : ["name"],
     deleteSuccess : function(){

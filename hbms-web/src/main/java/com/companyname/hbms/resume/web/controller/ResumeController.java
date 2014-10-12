@@ -1,20 +1,21 @@
 package com.companyname.hbms.resume.web.controller;
 
-import com.companyname.hbms.resume.domain.Resume;
-import com.companyname.hbms.resume.service.ResumeService;
 import com.companyname.hbms.common.service.CommonService;
 import com.companyname.hbms.mvc.MessageCollector;
-import com.companyname.hbms.utils.FileUtils;
-import com.companyname.hbms.utils.IOUtils;
+import com.companyname.hbms.resume.domain.Resume;
+import com.companyname.hbms.resume.service.ResumeService;
 import com.companyname.hbms.utils.WebUtils;
 import com.companyname.hbms.utils.paging.PagingResult;
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
 /**
  * Created by fellowlong on 2014-08-07.
@@ -44,9 +45,16 @@ public class ResumeController extends MultiActionController {
   }
 
 
-  public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response,Resume resume2) throws Exception {
     Resume resume = new Resume();
-    WebUtils.bindParameterWithFile(request, resume);
+    CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+    MultipartHttpServletRequest multipartHttpServletRequest = resolver.resolveMultipart(request);
+    ServletRequestDataBinder servletRequestDataBinder = new ServletRequestDataBinder(resume);
+    servletRequestDataBinder.bind(multipartHttpServletRequest);
+    if (resume.getOriginalResumeFile() != null) {
+      resume.setOriginalResumeInputStream(new ByteArrayInputStream(resume.getOriginalResumeFile().getBytes()));
+      resume.setOriginalResumeName(resume.getOriginalResumeFile().getOriginalFilename());
+    }
     boolean isNew = (resume.getId() == null ? true : false);
     int resultCount = resumeService.insertOrUpdate(resume);
     MessageCollector msgCollector = new MessageCollector();

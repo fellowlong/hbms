@@ -2,6 +2,7 @@ package com.companyname.hbms.resume.domain;
 
 import com.companyname.hbms.basedata.domain.ListItem;
 import com.companyname.hbms.candidate.domain.*;
+import com.companyname.hbms.common.domain.Domain;
 import com.companyname.hbms.customer.domain.Company;
 import com.companyname.hbms.customer.domain.Position;
 import com.companyname.hbms.project.domain.Project;
@@ -9,7 +10,7 @@ import com.companyname.hbms.project.domain.Project;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ResumeReport implements Serializable {
+public class ResumeReport extends Domain {
 
   /**
    * 主键，编号

@@ -1,11 +1,13 @@
 package com.companyname.hbms.resume.domain;
 
+import com.companyname.hbms.common.domain.Domain;
+
 import java.io.Serializable;
 
 /**
  * Created by fellowlong on 2014-05-27.
  */
-public class Certificate implements Serializable {
+public class Certificate extends Domain {
 
   /**
    * 编号，主键

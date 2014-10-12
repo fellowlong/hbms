@@ -1,17 +1,10 @@
-<style>
-.resume-panel-headerCls {
-  background-color: #003147;
-}
-</style>
-
-
-<form id="resumeAddForm" method="post" enctype="multipart/form-data">
+<!--<form id="resumeAddForm" method="post" enctype="multipart/form-data">-->
 
   <div class="easyui-panel" title=""
        style="width:802px;height:auto;padding:0px;text-align: center"
        data-options="collapsible:true,minimizable:false,maximizable:false">
 
-    <a href="#" class="easyui-linkbutton" iconCls="icon-save">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="insertOrUpdateResume()">保存</a>
     <a href="#" class="easyui-linkbutton" iconCls="panel-tool-collapse"
        onclick="
        $('#basicInfo').panel('collapse');
@@ -62,4 +55,7 @@
 
     </div>
   </div>
-</form>
+<!--</form>-->
+<script src="/js/business/resume/resumeAdd.js">
+
+</script>

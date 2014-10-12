@@ -1,6 +1,7 @@
 package com.companyname.hbms.resume.domain;
 
 import com.companyname.hbms.basedata.domain.ListItem;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -122,6 +123,11 @@ public class Resume implements Serializable {
   private String keyword;
 
   /**
+   * 原始简历文件，用来临时存储
+   */
+  private MultipartFile originalResumeFile;
+
+  /**
    * 原始简历名称
    */
   private String originalResumeName;
@@ -135,6 +141,7 @@ public class Resume implements Serializable {
    * 原始简历输入流
    */
   private InputStream originalResumeInputStream;
+
 
   /**
    * 原始简历文本
@@ -346,6 +353,14 @@ public class Resume implements Serializable {
 
   public void setKeyword(String keyword) {
     this.keyword = keyword;
+  }
+
+  public MultipartFile getOriginalResumeFile() {
+    return originalResumeFile;
+  }
+
+  public void setOriginalResumeFile(MultipartFile originalResumeFile) {
+    this.originalResumeFile = originalResumeFile;
   }
 
   public String getOriginalResumeName() {

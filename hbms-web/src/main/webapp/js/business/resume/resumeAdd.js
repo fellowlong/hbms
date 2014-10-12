@@ -37,19 +37,22 @@ $('#workExperienceOfResumeDgTb a').bind('click', function(event){
 function insertOrUpdateResume() {
   var isNew = ($("#resumeEditForm input[name='id']").val() == null || $("#resumeEditForm input[name='id']").val().length == 0)
   submitForm({
-    form:"#resumeAddForm",
+    form:"#resumeBasicInfoForm",
     url:"/resume/insertOrUpdate.do",
+    dataGrids:[
+      {id:"#workExperienceDg",property:"workExperiences"},
+      {id:"#educationExperienceDg",property:"educationExperiences"},
+      {id:"#languageAbilityDg",property:"languageAbilities"},
+      {id:"#certificateDg",property:"certificates"},
+      {id:"#projectExperienceDg",property:"projectExperiences"}
+    ],
     successHandler:function(message) {
       if(isNew && message.id && message.id != null) {
-        $.messager.alert("新增简历成功", "新增简历成功，请添加其他信息", "info")
-        $("#resumeEditForm input[name='id']").val(message.id);
-        var tabs = $("#resumeEditTabs").tabs("tabs");
-        $.each(tabs, function(index, item) {
-          $("#resumeEditTabs").tabs("enableTab", index);
-        });
+        $.messager.alert("新增简历成功", "新增简历成功，可以到简历维护列表中查看", "info")
       } else {
         $.messager.alert("新增简历失败", "请联系管理员", "error");
       }
     }
   });
 }
+

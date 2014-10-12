@@ -3,6 +3,15 @@
  */
 dataGridEdit({
     dataGridId:"#workExperienceDg",
+    dataGridInitData:function() {
+      if($('#resumeDg')) {
+        var editingResume = $('#resumeDg').datagrid('getSelected');
+        if(editingResume && editingResume.workExperiences) {
+          return editingResume.workExperiences;
+        }
+      }
+      return null;
+    },
     dataGridTbId:"#workExperienceDgTb",
     editWinId: "#workExperienceEditWin",
     editWinWidth:300,

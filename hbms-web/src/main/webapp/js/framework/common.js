@@ -258,12 +258,65 @@ function postColumnFieldNames(param, dataGridId) {
 }
 
 function submitForm(options) {
-  $(options.form).form("submit",{
+  var defaults = {
+    form:undefined,
+    url:undefined,
+    dataGridIds: [],
+    successHandler:undefined
+  };
+  var setting = $.extend(defaults, options);
+
+  $(setting.form).form("submit",{
     url: getRandomUrl(contextPath + options.url),
     onSubmit: function(param){
-      var validResult = $(options.form).form("validate");
+      var validResult = true;
+      if(setting.onSubmit) {
+        validResult = setting.onSubmit(param);
+      }
+      if(!($(setting.form).form("validate"))) {
+        validResult = false;
+      }
+      for(var i = 0;setting.dataGrids && i < setting.dataGrids.length; i++) {
+        var dataGrid = setting.dataGrids[i];
+        var currentRows = $(dataGrid.id).datagrid("getRows");
+        if ((!currentRows || currentRows.length == 0) && dataGrid.notEmpty) {
+          validResult = false;
+          break;
+        }
+        param[dataGrid.property] = [];
+        var globalIndex = 0;
+        var insertedRows = [];
+        var updatedRows = [];
+        var allRows = $(dataGrid.id).datagrid("getRows");
+        for(var j = 0 ; allRows && j < allRows.length; j++) {
+          if(allRows[j].crud && allRows[j].crud == "CREATE") {
+            insertedRows.push(allRows[j]);
+          } else if(allRows[j].crud && allRows[j].crud == "UPDATE") {
+            updatedRows.push(allRows[j]);
+          }
+        }
+        for(var j = 0;insertedRows && j < insertedRows.length; j++) {
+          insertedRows[j].crud = "CREATE";
+          param[dataGrid.property][globalIndex++] = insertedRows[j];
+        }
+        for(var j = 0;updatedRows && j < updatedRows.length; j++) {
+          updatedRows[j].crud = "UPDATE";
+          param[dataGrid.property][globalIndex++] = updatedRows[j];
+        }
+        var deletedRows = $(dataGrid.id).datagrid("getChanges", "deleted");
+        for(var j = 0;deletedRows && j < deletedRows.length; j++) {
+          deletedRows[j].crud = "DELETE";
+          param[dataGrid.property][globalIndex++] = deletedRows[j];
+        }
+        $.each(param[dataGrid.property], function(index, row) {
+          for(var key in row) {
+            param[dataGrid.property + "[" + index + "]." + key] = row[key];
+          }
+        });
+        param[dataGrid.property] = undefined;
+      }
       if(validResult) {
-        $.messager.progress({title:'请等待', msg:'正在提交...'});
+        $.messager.progress({title: '请等待', msg: '正在提交...'});
       }
       return validResult;
     },
@@ -274,10 +327,10 @@ function submitForm(options) {
       }catch(exception){
         showHtmlMessage("错误", exception + "\n" + message);
       }
-      if(options.successHandler) {
-        options.successHandler(message);
+      if(setting.successHandler) {
+        setting.successHandler(message);
       } else if(showAjaxMessage(message)) {
-        options.success(message);
+        setting.success(message);
       }
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -326,6 +379,15 @@ function dataGridEdit(options) {
     view : undefined
   };
   var setting = $.extend(defaults, options);
+  if(setting.dataGridInitData) {
+    $(setting.dataGridId).datagrid(
+      {
+        onBeforeLoad:function(){
+          $(setting.dataGridId).datagrid("loadData", setting.dataGridInitData());
+          $(setting.dataGridId).datagrid("acceptChanges");
+        }
+      });
+  }
   var editWinVisible = function(isDisplay, title) {
     showWin(
       setting.editWinId,
@@ -392,10 +454,14 @@ function dataGridEdit(options) {
     });
     var operationType = $(setting.editWinFormId + " input[name='operationType']").attr("value");
     if(operationType == "add") {
+      row.crud = "CREATE";
       $(setting.dataGridId).datagrid("appendRow", row);
     } else if(operationType == "edit") {
       var oldRow = $(setting.dataGridId).datagrid("getSelected")
       var index = $(setting.dataGridId).datagrid("getRowIndex", oldRow);
+      if(!oldRow.crud || oldRow.crud == "UPDATE") {
+        row.crud = "UPDATE";
+      }
       $(setting.dataGridId).datagrid("updateRow", {index:index,row:row});
     }
     editWinVisible(false);;

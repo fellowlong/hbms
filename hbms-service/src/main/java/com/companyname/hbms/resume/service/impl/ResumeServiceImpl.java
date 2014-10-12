@@ -1,5 +1,6 @@
 package com.companyname.hbms.resume.service.impl;
 
+import com.companyname.hbms.common.domain.Domain;
 import com.companyname.hbms.common.service.CommonService;
 import com.companyname.hbms.common.service.FileService;
 import com.companyname.hbms.resume.dao.*;
@@ -119,10 +120,15 @@ public class ResumeServiceImpl implements ResumeService {
       });
       for (WorkExperience perWorkExperience : workExperiences) {
         perWorkExperience.setResumeId(resume.getId());
-        if (perWorkExperience.getId() == null) {
+        if (perWorkExperience.getId() == null
+           && perWorkExperience.getCrud() != null && perWorkExperience.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += workExperienceDao.insert(perWorkExperience);
-        } else {
+        } else if (perWorkExperience.getId() != null
+           && perWorkExperience.getCrud() != null && perWorkExperience.getCrud().equals(Domain.CRUD.UPDATE)){
           resultCount += workExperienceDao.update(perWorkExperience);
+        }else if (perWorkExperience.getId() != null
+           && perWorkExperience.getCrud() != null && perWorkExperience.getCrud().equals(Domain.CRUD.DELETE)){
+          resultCount += workExperienceDao.deleteByIds(new Long[]{perWorkExperience.getId()});
         }
       }
     }
@@ -137,10 +143,15 @@ public class ResumeServiceImpl implements ResumeService {
       });
       for (EducationExperience perEducationExperience : educationExperiences) {
         perEducationExperience.setResumeId(resume.getId());
-        if (perEducationExperience.getId() == null) {
+        if (perEducationExperience.getId() == null
+           && perEducationExperience.getCrud() != null && perEducationExperience.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += educationExperienceDao.insert(perEducationExperience);
-        } else {
+        } else if (perEducationExperience.getId() != null
+           && perEducationExperience.getCrud() != null && perEducationExperience.getCrud().equals(Domain.CRUD.UPDATE)){
           resultCount += educationExperienceDao.update(perEducationExperience);
+        } else if (perEducationExperience.getId() != null
+           && perEducationExperience.getCrud() != null && perEducationExperience.getCrud().equals(Domain.CRUD.DELETE)){
+          resultCount += educationExperienceDao.deleteByIds(new Long[]{perEducationExperience.getId()});
         }
       }
     }
@@ -155,10 +166,15 @@ public class ResumeServiceImpl implements ResumeService {
       });
       for (LanguageAbility perLanguageAbility : languageAbilities) {
         perLanguageAbility.setResumeId(resume.getId());
-        if (perLanguageAbility.getId() == null) {
+        if (perLanguageAbility.getId() == null
+           && perLanguageAbility.getCrud() != null && perLanguageAbility.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += languageAbilityDao.insert(perLanguageAbility);
-        } else {
+        } else if (perLanguageAbility.getId() != null
+           && perLanguageAbility.getCrud() != null && perLanguageAbility.getCrud().equals(Domain.CRUD.UPDATE)){
           resultCount += languageAbilityDao.update(perLanguageAbility);
+        } else if (perLanguageAbility.getId() != null
+           && perLanguageAbility.getCrud() != null && perLanguageAbility.getCrud().equals(Domain.CRUD.DELETE)){
+          resultCount += languageAbilityDao.deleteByIds(new Long[]{perLanguageAbility.getId()});
         }
       }
     }
@@ -173,10 +189,15 @@ public class ResumeServiceImpl implements ResumeService {
       });
       for (Certificate perCertificate : certificates) {
         perCertificate.setResumeId(resume.getId());
-        if (perCertificate.getId() == null) {
+        if (perCertificate.getId() == null
+           && perCertificate.getCrud() != null && perCertificate.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += certificateDao.insert(perCertificate);
-        } else {
+        } else if (perCertificate.getId() != null
+           && perCertificate.getCrud() != null && perCertificate.getCrud().equals(Domain.CRUD.UPDATE)) {
           resultCount += certificateDao.update(perCertificate);
+        } else if (perCertificate.getId() != null
+           && perCertificate.getCrud() != null && perCertificate.getCrud().equals(Domain.CRUD.DELETE)) {
+          resultCount += certificateDao.deleteByIds(new Long[]{perCertificate.getId()});
         }
       }
     }
@@ -191,14 +212,18 @@ public class ResumeServiceImpl implements ResumeService {
       });
       for (ProjectExperience perProjectExperience : projectExperiences) {
         perProjectExperience.setResumeId(resume.getId());
-        if (perProjectExperience.getId() == null) {
+        if (perProjectExperience.getId() == null
+           && perProjectExperience.getCrud() != null && perProjectExperience.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += projectExperienceDao.insert(perProjectExperience);
-        } else {
+        } else if (perProjectExperience.getId() != null
+           && perProjectExperience.getCrud() != null && perProjectExperience.getCrud().equals(Domain.CRUD.UPDATE)) {
           resultCount += projectExperienceDao.update(perProjectExperience);
+        } else if (perProjectExperience.getId() != null
+           && perProjectExperience.getCrud() != null && perProjectExperience.getCrud().equals(Domain.CRUD.DELETE)) {
+          resultCount += projectExperienceDao.deleteByIds(new Long[]{perProjectExperience.getId()});
         }
       }
     }
-
     return resultCount;
   }
 

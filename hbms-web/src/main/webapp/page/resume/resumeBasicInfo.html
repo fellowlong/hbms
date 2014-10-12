@@ -1,16 +1,16 @@
 <table align="center" valign="top" cellpadding="0" cellspacing="0" border="0" width="100%">
   <tr>
     <td width="100%">
-      <form id="resumeEditForm" method="post" enctype="multipart/form-data">
+      <form id="resumeBasicInfoForm" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="">
         <table border="0" align="center">
           <tr>
             <td>
               <table border="0" cellspacing="5px" cellpadding="2px" valign="middle">
                 <tr>
-                  <td align="right"><label for="originalResumeName">原始简历:</label></td>
+                  <td align="right"><label for="originalResumeFile">原始简历:</label></td>
                   <td align="left" colspan="5">
-                    <input class="easyui-filebox" name="originalResumeName" data-options="width:400,buttonText:'选择简历',prompt:'请选择一份简历点击解析'"/>
+                    <input class="easyui-filebox" name="originalResumeFile" data-options="width:400,buttonText:'选择简历',prompt:'请选择一份简历点击解析'"/>
                     <a href="#" class="easyui-linkbutton" iconCls="icon-save" type="save">解析</a>
                   </td>
                 </tr>
@@ -20,8 +20,8 @@
                   <td align="right"><label for="sex">性别:</label></td>
                   <td align="left">
                     <select id="sexOfCandidate" name="sex" class="easyui-combobox" data-options="required:true,panelWidth:50,panelHeight:60,editable:false">
-                      <option type="radio" name="lang" value="1">男</option>
-                      <option type="radio" name="lang" value="0">女</option>
+                      <option type="radio" name="lang" value="男">男</option>
+                      <option type="radio" name="lang" value="女">女</option>
                     </select>
                   </td>
                   <td align="right"><label for="age">年龄:</label></td>
@@ -39,7 +39,7 @@
                   <td align="right"><label for="telephone">电话:</label></td>
                   <td align="left"><input class="easyui-textbox" name="telephone" data-options="required:true"/></td>
                   <td align="right"><label for="email">邮箱:</label></td>
-                  <td align="left"><input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:['email','length[4,50]']"/></td>
+                  <td align="left"><input class="easyui-textbox" type="text" name="email" data-options="required:true"/></td>
                   <td align="right"><label for="workYears">工作年限:</label></td>
                   <td align="left"><input class="easyui-textbox" type="text" name="workYears" data-options="required:true"/></td>
                 </tr>
@@ -68,8 +68,8 @@
                   <td align="left"><input class="easyui-textbox" name="keyword" data-options="required:true"/></td>
                 </tr>
                 <tr>
-                  <td align="right"><label for="languageId">语言:</label></td>
-                  <td align="left" colspan="2"><input class="easyui-combobox" name="languageId" data-options="required:true,url:'/listItem/findListItemsOfCategoryByCode.do?code=Language',valueField:'id',textField:'value',editable:false"></td>
+                  <td align="right"><label for="language">语言:</label></td>
+                  <td align="left" colspan="2"><input class="easyui-combobox" name="language" data-options="required:true,url:'/listItem/findListItemsOfCategoryByCode.do?code=Language',valueField:'value',textField:'value',editable:false"></td>
                 </tr>
               </table>
             </td>
@@ -79,3 +79,11 @@
     </td>
   </tr>
 </table>
+<script>
+  try {
+    var row = $("#resumeDg").datagrid("getSelected");
+    $('#resumeBasicInfoForm').form('load', row);
+  } catch (t) {
+
+  }
+</script>
