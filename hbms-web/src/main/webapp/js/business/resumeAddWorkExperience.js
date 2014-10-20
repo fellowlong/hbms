@@ -4,12 +4,14 @@
 dataGridEdit({
     dataGridId:"#workExperienceDg",
     dataGridInitData:function() {
-      if($('#resumeDg')) {
-        var editingResume = $('#resumeDg').datagrid('getSelected');
-        if(editingResume && editingResume.workExperiences) {
-          return editingResume.workExperiences;
+      try {
+        if($('#resumeDg')) {
+          var editingResume = $('#resumeDg').datagrid('getSelected');
+          if(editingResume && editingResume.workExperiences) {
+            return editingResume.workExperiences;
+          }
         }
-      }
+      } catch(e) {}
       return null;
     },
     dataGridTbId:"#workExperienceDgTb",

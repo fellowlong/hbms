@@ -383,8 +383,13 @@ function dataGridEdit(options) {
     $(setting.dataGridId).datagrid(
       {
         onBeforeLoad:function(){
-          $(setting.dataGridId).datagrid("loadData", setting.dataGridInitData());
-          $(setting.dataGridId).datagrid("acceptChanges");
+          try {
+            $(setting.dataGridId).datagrid("loadData", setting.dataGridInitData());
+            $(setting.dataGridId).datagrid("acceptChanges");
+          } catch (ex) {
+
+          }
+          return false;
         }
       });
   }

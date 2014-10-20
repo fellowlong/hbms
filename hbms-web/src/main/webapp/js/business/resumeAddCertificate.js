@@ -4,12 +4,12 @@
 dataGridEdit({
   dataGridId: "#certificateDg",
   dataGridInitData: function () {
-    if ($('#resumeDg')) {
+    try {
       var editingResume = $('#resumeDg').datagrid('getSelected');
       if (editingResume && editingResume.certificates) {
         return editingResume.certificates;
       }
-    }
+    } catch(e) {}
     return null;
   },
   dataGridTbId: "#certificateDgTb",

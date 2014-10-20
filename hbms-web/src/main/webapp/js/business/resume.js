@@ -13,7 +13,7 @@ $('#resumeDgTb a').bind('click', function(event){
       } else {
         $("#resumeTabs").tabs("add", {
           title: '新增简历',
-          href: '/page/resume/resumeEdit.html',
+          href: '/page/resume/resumeAdd.html',
           selected: true,
           closable:true
         });
@@ -45,15 +45,28 @@ $('#resumeDgTb a').bind('click', function(event){
       $('#resumeDg').datagrid('reload');
     },
     view : function(options, row) {
-      $("#resumeEditForm").form("clear");
-      $("#attachUriContainer").empty();
-      $("#attachUriContainer").append("<input name=\"attachUri\" type=\"text\" style=\"width:200px\">");
-      $('#attachUriContainer input').textbox({required: false, editable: false, width: 200});
-      $("#resumeEditForm").form("load", row);
-      $('#resumeEditWin #candidateId').textbox('setValue', row.candidate.id).textbox('setText', row.candidate.name);
-      $('#resumeEditWin #candidateId').textbox('disable');
-      disableResumeEditForm();
-      showResumeEditWin("查看简历：" + row.name, false);
+      if($("#resumeTabs").tabs("getTab","查看简历")){
+        $("#resumeTabs").tabs("select", "查看简历");
+      } else {
+        $("#resumeTabs").tabs(
+          "add",
+          {
+            title: "查看简历",
+            href: "/page/resume/resumeAdd.html",
+            selected: true,
+            closable:true
+          });
+      }
+      var panel = $("#resumeTabs").tabs("getTab", "查看简历");
+      $('#resumeBasicInfoForm').form('load', row);
+      $('#workExperienceDg').datagrid("loadData", row.workExperiences ?  row.workExperiences : []);
+      $('#educationExperienceDg').datagrid("loadData", row.educationExperiences ?  row.educationExperiences : []);
+      $('#languageAbilityDg').datagrid("loadData", row.languageAbilities ?  row.languageAbilities : []);
+      $('#certificateDg').datagrid("loadData", row.certificates ?  row.certificates : []);
+      $('#projectExperienceDg').datagrid("loadData", row.projectExperiences ?  row.projectExperiences : []);
+      $.each($(panel).find("[id$='DgTb']"), function(index, item){
+        $(item).find("a").linkbutton("disable");
+      });
     }
   });
 });

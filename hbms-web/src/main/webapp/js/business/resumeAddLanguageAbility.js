@@ -4,12 +4,14 @@
 dataGridEdit({
   dataGridId: "#languageAbilityDg",
   dataGridInitData: function () {
-    if ($('#resumeDg')) {
-      var editingResume = $('#resumeDg').datagrid('getSelected');
-      if (editingResume && editingResume.languageAbilities) {
-        return editingResume.languageAbilities;
+    try {
+      if ($('#resumeDg')) {
+        var editingResume = $('#resumeDg').datagrid('getSelected');
+        if (editingResume && editingResume.languageAbilities) {
+          return editingResume.languageAbilities;
+        }
       }
-    }
+    } catch(e) {}
     return null;
   },
   dataGridTbId: "#languageAbilityDgTb",
