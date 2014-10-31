@@ -20,7 +20,7 @@ var workPanelFactoryConfig = [
     children:[
         {
           name : "简历维护",
-          url : contextPath + "/page/resume/resumeList.html"
+          url : contextPath + "/resume/findByBean.do"
         },
         {
           name : "简历入库",

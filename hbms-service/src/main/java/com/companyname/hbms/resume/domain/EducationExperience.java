@@ -44,6 +44,16 @@ public class EducationExperience extends Domain {
    */
   private String degree;
 
+  /**
+   * 专业
+   */
+  private String major;
+
+  /**
+   * 类型：统招、自考、成人、远程
+   */
+  private String type;
+
 
   public Long getId() {
     return id;
@@ -101,5 +111,19 @@ public class EducationExperience extends Domain {
     this.degree = degree;
   }
 
+  public String getMajor() {
+    return major;
+  }
 
+  public void setMajor(String major) {
+    this.major = major;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
 }

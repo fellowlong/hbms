@@ -10,12 +10,15 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fellowlong on 2014-08-07.
@@ -36,14 +39,24 @@ public class ResumeController extends MultiActionController {
     this.commonService = commonService;
   }
 
-  public void findByBean(HttpServletRequest request,
-                   HttpServletResponse response,
-                   Resume resume) throws Exception {
+  public ModelAndView findByBean(HttpServletRequest request,
+                                 HttpServletResponse response,
+                                 Resume resume) throws Exception {
     resume.setYn(Boolean.TRUE);
     PagingResult<Resume> resumePagingResult = resumeService.findByBean(resume, WebUtils.getPageRange(request));
-    WebUtils.writeForEasyUIDataGrid(request, response, resumePagingResult, true);
+    Map<String, Object> model = new HashMap<String, Object>();
+    model.put("resumePagingResult", resumePagingResult);
+    return new ModelAndView("/resume/resumeList.ftl", model);
   }
 
+  public ModelAndView findById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    List<Resume> resumes = resumeService.findByIds(new Long[]{WebUtils.getLong(request, WebUtils.ID)});
+    ModelAndView modelAndView = new ModelAndView("/resume/resumeDetail.ftl");
+    if (resumes != null && !resumes.isEmpty()) {
+      modelAndView.getModel().put("resume", resumes.get(0));
+    }
+    return modelAndView;
+  }
 
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response,Resume resume2) throws Exception {
     Resume resume = new Resume();

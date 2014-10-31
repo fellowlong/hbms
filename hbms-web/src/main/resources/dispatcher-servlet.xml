@@ -37,19 +37,6 @@
       <property name="datePattern" value="${datePattern}"/>
   </bean>
 
-  <bean id="listItemController" class="com.companyname.hbms.basedata.web.controller.ListItemController">
-    <property name="listItemService" ref="listItemService"/>
-  </bean>
-
-  <bean id="candidateController" class="com.companyname.hbms.candidate.web.controller.CandidateController">
-    <property name="candidateService" ref="candidateService"/>
-    <property name="dateEditor" ref="dateEditor"/>
-  </bean>
-
-  <bean id="resumeController" class="com.companyname.hbms.resume.web.controller.ResumeController">
-    <property name="resumeService" ref="resumeService"/>
-    <property name="commonService" ref="commonService"/>
-  </bean>
 
   <!-- 配置freeMarker的模板路径 -->
   <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -59,7 +46,7 @@
       </bean>
     </property>
     <property name="templateLoaderPath">
-      <value>/WEB-INF/</value>
+      <value>/WEB-INF/pages/</value>
     </property>
     <property name="freemarkerVariables">
       <map>
@@ -80,4 +67,22 @@
     <property name="suffix" value="" />
     <property name="order" value="2"/>
   </bean>
+
+  <bean id="listItemController" class="com.companyname.hbms.basedata.web.controller.ListItemController">
+    <property name="listItemService" ref="listItemService"/>
+  </bean>
+
+  <bean id="candidateController" class="com.companyname.hbms.candidate.web.controller.CandidateController">
+    <property name="candidateService" ref="candidateService"/>
+    <property name="dateEditor" ref="dateEditor"/>
+  </bean>
+
+  <bean id="resumeController" class="com.companyname.hbms.resume.web.controller.ResumeController">
+    <property name="resumeService" ref="resumeService"/>
+    <property name="commonService" ref="commonService"/>
+  </bean>
+
+  <bean id="workPanelController" class="com.companyname.hbms.system.web.controller.WorkPanelController">
+  </bean>
+
 </beans>

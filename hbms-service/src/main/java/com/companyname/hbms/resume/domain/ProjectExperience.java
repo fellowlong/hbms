@@ -69,6 +69,11 @@ public class ProjectExperience extends Domain {
    */
   private String projectDescription;
 
+  /**
+   * 项目职务
+   */
+  private String position;
+
   public Long getId() {
     return id;
   }
@@ -163,5 +168,13 @@ public class ProjectExperience extends Domain {
 
   public void setProjectDescription(String projectDescription) {
     this.projectDescription = projectDescription;
+  }
+
+  public String getPosition() {
+    return position;
+  }
+
+  public void setPosition(String position) {
+    this.position = position;
   }
 }
