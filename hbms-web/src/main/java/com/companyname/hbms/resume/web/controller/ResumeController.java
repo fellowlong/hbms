@@ -58,6 +58,10 @@ public class ResumeController extends MultiActionController {
     return modelAndView;
   }
 
+  public ModelAndView resumeAddView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    return new ModelAndView("/resume/resumeAdd.ftl");
+  }
+
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response,Resume resume2) throws Exception {
     Resume resume = new Resume();
     CommonsMultipartResolver resolver = new CommonsMultipartResolver();
