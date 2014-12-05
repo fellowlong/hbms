@@ -475,3 +475,35 @@ function dataGridEdit(options) {
     $(setting.editWinId).dialog('close');
   });
 }
+
+function workPanelReload(workPanelId, url, parameter, callback) {
+  $(workPanelId).empty();
+  if(!url || url.length == 0) {
+    return;
+  }
+  $(workPanelId).html("<img src='/assets/css/images/loading.gif'>正在玩命加载...");
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: parameter,
+    dataType: "html",
+    timeout: 3000,
+    success: function(data, textStatus, jqXHR){
+      $(workPanelId).empty();
+      $(workPanelId).html(data);
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+      var tipHtml = "<h5 class='red'><i class=\"icon-warning-sign red bigger-130\"></i>加载失败</h5>";
+      $(workPanelId).html(tipHtml);
+      bootbox.dialog({
+        message: tipHtml,
+        buttons: {
+          "danger" : {
+            "label" : "关闭",
+            "className" : "btn-sm btn-danger"
+          }
+        }
+      });
+    }
+  });
+}

@@ -1,4 +1,3 @@
-
 <form id="resumeAddForm"
       method="post"
       enctype="multipart/form-data"
@@ -91,15 +90,15 @@
     </tr>
   </table>
   <div class="clearfix form-actions" align="center">
-      <button class="btn btn-info" type="submit">
-        <i class="icon-ok bigger-110"></i>
-        保存
-      </button>
+    <button class="btn btn-info" type="submit">
+      <i class="icon-ok bigger-110"></i>
+      保存
+    </button>
 
-      &nbsp; &nbsp; &nbsp;
-      <button class="btn" type="reset">
-        <i class="icon-undo bigger-110"></i>
-        重置
-      </button>
+    &nbsp; &nbsp; &nbsp;
+    <button class="btn" type="reset">
+      <i class="icon-undo bigger-110"></i>
+      重置
+    </button>
   </div>
 </form>

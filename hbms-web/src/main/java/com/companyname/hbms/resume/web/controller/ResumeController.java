@@ -62,6 +62,20 @@ public class ResumeController extends MultiActionController {
     return new ModelAndView("/resume/resumeAdd.ftl");
   }
 
+
+  public ModelAndView preInsertOrUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Long id = WebUtils.getLong(request, WebUtils.ID);
+    String view = request.getParameter("view");
+    ModelAndView modelAndView = new ModelAndView(view);
+    if (id != null) {
+      List<Resume> resumes = resumeService.findByIds(new Long[]{id});
+      if (resumes != null && !resumes.isEmpty()) {
+        modelAndView.getModel().put("resume", resumes.get(0));
+      }
+    }
+    return modelAndView;
+  }
+
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response,Resume resume2) throws Exception {
     Resume resume = new Resume();
     CommonsMultipartResolver resolver = new CommonsMultipartResolver();
