@@ -4,6 +4,19 @@
 
 <mapper namespace="domain">
 
+  <parameterMap id="SourceResume" type="com.companyname.hbms.resume.domain.SourceResume">
+    <parameter property="id" jdbcType="BIGINT"/>
+    <parameter property="name" jdbcType="VARCHAR"/>
+    <parameter property="binaryResume" jdbcType="BLOB"/>
+    <parameter property="textResume" jdbcType="VARCHAR"/>
+    <parameter property="yn" jdbcType="INTEGER"/>
+    <parameter property="createTime" jdbcType="DATE"/>
+    <parameter property="createUser" jdbcType="VARCHAR"/>
+    <parameter property="updateTime" jdbcType="DATE"/>
+    <parameter property="updateUser" jdbcType="VARCHAR"/>
+  </parameterMap>
+
+
   <parameterMap id="Resume" type="com.companyname.hbms.resume.domain.Resume">
     <parameter property="id" jdbcType="BIGINT"/>
     <parameter property="name" jdbcType="VARCHAR"/>

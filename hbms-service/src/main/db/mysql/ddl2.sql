@@ -1,3 +1,16 @@
+drop table SourceResume;
+create table SourceResume(
+  id bigint auto_increment not null primary key comment '主键',
+  name varchar(100) comment '名称',
+  binaryResume MEDIUMBLOB comment '二进制简历',
+  textResume  MEDIUMTEXT comment '文本简历',
+  yn  int(1) comment '是否有效',
+  createTime datetime comment '创建时间',
+  createUser varchar(50) comment '创建人账户',
+  updateTime datetime comment '修改时间',
+  updateUser varchar(50) comment '修改人账户'
+);
+
 drop table Candidate;
 create table Candidate(
   id bigint auto_increment not null primary key comment '候选人编号,主键',
