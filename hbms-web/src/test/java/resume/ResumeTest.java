@@ -1,18 +1,13 @@
 package resume;
 
-import com.companyname.hbms.resume.domain.Resume;
-import com.companyname.hbms.resume.service.ResumeService;
-import com.companyname.hbms.resume.web.controller.ResumeController;
+import com.newstar.hbms.resume.domain.Resume;
+import com.newstar.hbms.resume.web.controller.ResumeController;
 import common.TestUtils;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by fellowlong on 2014-10-27.

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="domain">
+
+  <parameterMap id="ListItem" type="com.newstar.hbms.basedata.domain.ListItem">
+    <parameter property="id" jdbcType="INTEGER"/>
+    <parameter property="value" jdbcType="VARCHAR"/>
+    <parameter property="typeId" jdbcType="INTEGER"/>
+  </parameterMap>
+
+  <resultMap id="ListItem" type="com.newstar.hbms.basedata.domain.ListItem">
+    <id property="id" column="id" jdbcType="INTEGER"/>
+    <result property="code" column="value" jdbcType="VARCHAR"/>
+    <result property="value" column="value" jdbcType="VARCHAR"/>
+    <result property="typeId" column="typeId" jdbcType="INTEGER"/>
+    <!--<association property="type" columnPrefix="TYP_" resultMap="ListItem"/>-->
+    <!--<collection property="items" columnPrefix="ITE_" resultMap="ListItem"/>-->
+  </resultMap>
+
+</mapper>

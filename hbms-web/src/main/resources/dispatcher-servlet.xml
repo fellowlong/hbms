@@ -31,9 +31,9 @@
     <property name="caseSensitive" value="true"/>
   </bean>
 
-  <bean id="exceptionResolver" class="com.companyname.hbms.mvc.LoggerHandlerExceptionResolver"/>
+  <bean id="exceptionResolver" class="com.newstar.hbms.mvc.LoggerHandlerExceptionResolver"/>
 
-  <bean id="dateEditor" class="com.companyname.hbms.utils.DateEditor">
+  <bean id="dateEditor" class="com.newstar.hbms.utils.DateEditor">
       <property name="datePattern" value="${datePattern}"/>
   </bean>
 
@@ -68,21 +68,21 @@
     <property name="order" value="2"/>
   </bean>
 
-  <bean id="listItemController" class="com.companyname.hbms.basedata.web.controller.ListItemController">
+  <bean id="listItemController" class="com.newstar.hbms.basedata.web.controller.ListItemController">
     <property name="listItemService" ref="listItemService"/>
   </bean>
 
-  <bean id="candidateController" class="com.companyname.hbms.candidate.web.controller.CandidateController">
+  <bean id="candidateController" class="com.newstar.hbms.candidate.web.controller.CandidateController">
     <property name="candidateService" ref="candidateService"/>
     <property name="dateEditor" ref="dateEditor"/>
   </bean>
 
-  <bean id="resumeController" class="com.companyname.hbms.resume.web.controller.ResumeController">
+  <bean id="resumeController" class="com.newstar.hbms.resume.web.controller.ResumeController">
     <property name="resumeService" ref="resumeService"/>
     <property name="commonService" ref="commonService"/>
   </bean>
 
-  <bean id="workPanelController" class="com.companyname.hbms.system.web.controller.WorkPanelController">
+  <bean id="workPanelController" class="com.newstar.hbms.system.web.controller.WorkPanelController">
   </bean>
 
 </beans>

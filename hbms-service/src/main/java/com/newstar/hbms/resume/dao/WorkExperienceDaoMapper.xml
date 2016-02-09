@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newstar.hbms.resume.dao.WorkExperienceDao">
+
+  <insert id="insert" parameterMap="domain.WorkExperience">
+    insert into WorkExperience(
+    resumeId,
+    company,
+    startDate,
+    endDate,
+    industry,
+    position,
+    responsibility
+    )
+    values (
+    #{resumeId},
+    #{company, jdbcType=VARCHAR},
+    #{startDate,jdbcType=VARCHAR},
+    #{endDate,jdbcType=VARCHAR},
+    #{industry,jdbcType=VARCHAR},
+    #{position,jdbcType=VARCHAR},
+    #{responsibility,jdbcType=VARCHAR}
+    )
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select last_insert_id();
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterMap="domain.WorkExperience">
+    update WorkExperience set
+    company = #{company, jdbcType=VARCHAR},
+    startDate = #{startDate, jdbcType=VARCHAR},
+    endDate = #{endDate,jdbcType=VARCHAR},
+    industry = #{industry,jdbcType=VARCHAR},
+    position = #{position,jdbcType=VARCHAR},
+    responsibility = #{responsibility,jdbcType=VARCHAR}
+    where
+    id = #{id}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Long">
+    delete from WorkExperience where id in
+    <foreach collection="array" open="(" close=")" separator="," item="workExperienceId">
+      #{workExperienceId}
+    </foreach>
+  </delete>
+
+  <select id="findByBean"
+          parameterMap="domain.WorkExperience"
+          resultMap="domain.WorkExperience">
+    select
+    *
+    from WorkExperience
+    where 1 = 1
+    <if test="id != null">
+      and id = #{id}
+    </if>
+    <if test="resumeId != null">
+      and resumeId = #{resumeId}
+    </if>
+    <if test="company != null">
+      and company = #{company}
+    </if>
+    <if test="startDate != null">
+      and startDate = #{startDate}
+    </if>
+    <if test="endDate != null">
+      and endDate = #{endDate}
+    </if>
+    <if test="languageId != null">
+      and industry = #{industry}
+    </if>
+    <if test="position != null">
+      and position = #{position}
+    </if>
+    <if test="responsibility != null">
+      and responsibility = #{responsibility}
+    </if>
+  </select>
+
+  <select id="findByIds"
+          parameterMap="domain.WorkExperience"
+          resultMap="domain.WorkExperience">
+    select * from WorkExperience where id in
+    <foreach collection="array" open="(" close=")" separator="," item="workExperienceId">
+      #{workExperienceId}
+    </foreach>
+  </select>
+
+  <select id="findByResumeIds" resultMap="domain.WorkExperience">
+    select * from WorkExperience where resumeId in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
+    </foreach>
+  </select>
+
+</mapper>

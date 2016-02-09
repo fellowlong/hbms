@@ -1,6 +1,6 @@
 package utils;
 
-import com.companyname.hbms.utils.WordParser;
+import com.newstar.hbms.utils.WordParser;
 import junit.framework.TestCase;
 
 import java.io.File;

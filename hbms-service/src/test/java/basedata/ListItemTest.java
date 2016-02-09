@@ -1,10 +1,7 @@
 package basedata;
 
-import com.companyname.hbms.basedata.domain.ListItem;
-import com.companyname.hbms.basedata.service.ListItemService;
-import com.companyname.hbms.candidate.service.CandidateService;
-import com.companyname.hbms.utils.paging.PageRange;
-import com.companyname.hbms.utils.paging.PagingResult;
+import com.newstar.hbms.basedata.domain.ListItem;
+import com.newstar.hbms.basedata.service.ListItemService;
 import common.TestUtils;
 import junit.framework.Assert;
 import junit.framework.TestCase;
