@@ -7,8 +7,8 @@
   <insert id="insert" parameterMap="domain.Resume">
     insert into SourceResume(
       name,
-      binaryResume;
-      textResume;
+      binaryResume,
+      textResume,
       yn,
       createTime,
       createUser,

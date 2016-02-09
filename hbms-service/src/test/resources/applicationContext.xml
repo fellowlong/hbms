@@ -100,6 +100,11 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
+  <bean id="sourceResumeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.newstar.hbms.resume.dao.SourceResumeDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
   <bean id="certificateDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface" value="com.newstar.hbms.resume.dao.CertificateDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
@@ -135,6 +140,11 @@
 
   <bean id="candidateService" class="com.newstar.hbms.candidate.service.impl.CandidateServiceImpl">
     <property name="candidateDao" ref="candidateDao"/>
+  </bean>
+
+
+  <bean id="sourceResumeService" class="com.newstar.hbms.resume.service.impl.SourceResumeServiceImpl">
+    <property name="sourceResumeDao" ref="sourceResumeDao"/>
   </bean>
 
   <bean id="resumeService" class="com.newstar.hbms.resume.service.impl.ResumeServiceImpl">
