@@ -30,16 +30,16 @@
       </script>
 
 <ul class="nav nav-list">
-  <#list models as model>
+  <#list models as module>
     <li>
       <a href="#" class="dropdown-toggle">
         <i class="icon-list"></i>
-        <span class="menu-text">${model.name}</span>
+        <span class="menu-text">${module.name}</span>
 
         <b class="arrow icon-angle-down"></b>
       </a>
       <ul class="submenu">
-        <#list model.authorities as authority>
+        <#list module.authorities as authority>
           <li <#if authority_index == 1>class="active"></#if>>
             <a href="${authority.uri}">
               <i class="icon-double-angle-right"></i>

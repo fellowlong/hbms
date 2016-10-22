@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+  <!-- bootstrap & fontawesome -->
+  <link rel="stylesheet" href="/ace/css/bootstrap.css" />
+  <link rel="stylesheet" href="/ace/css/font-awesome.css" />
+
+  <!-- page specific plugin styles -->
+  <link rel="stylesheet" href="/ace/css/jquery-ui.css"/>
+  <link rel="stylesheet" href="/ace/css/datepicker.css"/>
+  <link rel="stylesheet" href="/ace/css/ui.jqgrid.css"/>
+
+  <!-- text fonts -->
+  <link rel="stylesheet" href="/ace/css/ace-fonts.css" />
+
+  <!-- ace styles -->
+  <link rel="stylesheet" href="/ace/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+  <!--[if lte IE 9]>
+  <link rel="stylesheet" href="/ace/css/ace-part2.css" class="ace-main-stylesheet" />
+  <![endif]-->
+
+  <!--[if lte IE 9]>
+  <link rel="stylesheet" href="/ace/css/ace-ie.css" />
+  <![endif]-->
+
+  <!-- inline styles related to this page -->
+
+  <script src="/ace/js/jquery.js"></script>
+  <script src="/ace/js/bootstrap.js"></script>
+  <script src="/ace/js/ace/ace.js"></script>
+
+  <!-- ace settings handler -->
+  <script src="/ace/js/ace-extra.js"></script>
+
+  <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+  <!--[if lte IE 8]>
+  <script src="/ace/js/html5shiv.js"></script>
+  <script src="/ace/js/respond.js"></script>
+  <![endif]-->
+
+  <!--bootstrap-->
+  <script src="/ace/js/bootstrap.js"></script>
+
+  <!--jqGrid-->
+  <!--<link rel="stylesheet" href="/jqGrid/css/ui.jqgrid.css"/>-->
+  <!--<link rel="stylesheet" href="/jqGrid/css/ui.jqgrid-bootstrap.css"/>-->
+  <!--<link rel="stylesheet" href="/jqGrid/css/ui.jqgrid-bootstrap-ui.css"/>-->
+  <!--<script src="/jqGrid/js/jquery.jqGrid.min.js"></script>-->
+
+  <script src="/ace/js/jqGrid/i18n/grid.locale-cn.js"></script>
+  <script src="/ace/js/jqGrid/jquery.jqGrid.src.js"></script>
+
+</head>
+<body class="no-skin">
+<div class="navbar" id="navbar">
+  <!-- navbar goes here -->
+</div>
+
+<div class="main-container" id="main-container">
+  <div class="sidebar responsive" id="sidebar">
+    <script type="text/javascript">
+      try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+    </script>
+    <!-- sidebar goes here -->
+    <ul class="nav nav-list">
+      #foeach
+
+      <li class="open">
+        <a href="#" class="dropdown-toggle">
+          <i class="menu-icon fa fa-desktop"></i>
+							<span class="menu-text">UI &amp; Elements</span>
+          <b class="arrow fa fa-angle-down"></b>
+        </a>
+        <b class="arrow"></b>
+
+        <ul class="submenu active">
+          <li class="">
+            <a href="#">afasfd</a>
+          </li>
+          <li class="">
+            <a href="#">afasfd</a>
+          </li>
+          <li class="">
+            <a href="#" class="dropdown-toggle">
+              <i class="menu-icon fa fa-desktop"></i>
+              <span class="menu-text">三级</span>
+              <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+              <li class="active" onclick="setToActive(this)">
+                <script>
+                  function setToActive(item) {
+                    $('.nav-list li.active').removeClass('active');
+                    $(item).addClass('active').parents('.nav-list li').addClass('active');
+                  }
+                </script>
+                <a href="#">afasfd</a>
+              </li>
+              <li class="">
+                <a href="#">afasfd</a>
+              </li>
+              <li class="">
+                <a href="#">afasfd</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="">
+        <a href="#" class="dropdown-toggle">
+          <i class="menu-icon fa fa-desktop"></i>
+							<span class="menu-text">UI &amp; Elements</span>
+          <b class="arrow fa fa-angle-down"></b>
+        </a>
+        <b class="arrow"></b>
+
+        <ul class="submenu active">
+          <li class="">
+            <a href="#">afasfd</a>
+          </li>
+          <li class="">
+            <a href="#">afasfd</a>
+          </li>
+          <li class="">
+            <a href="#" class="dropdown-toggle">
+              <i class="menu-icon fa fa-desktop"></i>
+              <span class="menu-text">三级</span>
+              <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+              <li class="active" onclick="setToActive(this)">
+                <script>
+                  function setToActive(item) {
+                    $('.nav-list li.active').removeClass('active');
+                    $(item).addClass('active').parents('.nav-list li').addClass('active');
+                  }
+                </script>
+                <a href="#">afasfd</a>
+              </li>
+              <li class="">
+                <a href="#">afasfd</a>
+              </li>
+              <li class="">
+                <a href="#">afasfd</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="breadcrumbs">
+      aa
+      <!-- breadcrumbs goes here -->
+    </div>
+    <!--style="height:100% ; width:100%; position:fixed;"-->
+    <div class="page-content" style="margin: 0;padding-bottom: 0;padding-top: 3">
+      <!-- setting box goes here if needed -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div id="table-div">
+            <!-- page content goes here -->
+            <table id="jqGrid"></table>
+            <div id="jqGridPager"></div>
+          </div>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+
+    </div><!-- /.page-content -->
+
+
+
+  </div><!-- /.main-content -->
+
+  <!-- footer area -->
+
+</div><!-- /.main-container -->
+
+<!-- list of script files -->
+
+<![endif]-->
+<script type="text/javascript">
+  if('ontouchstart' in document.documentElement) document.write("<script src='/ace/js/jquery.mobile.custom.js'>"+"<"+"/script>");
+</script>
+
+
+<!-- page specific plugin scripts -->
+<script src="/ace/js/fuelux/fuelux.tree.js"></script>
+
+<!-- ace scripts -->
+<script src="/ace/js/ace/elements.scroller.js"></script>
+<script src="/ace/js/ace/elements.colorpicker.js"></script>
+<script src="/ace/js/ace/elements.fileinput.js"></script>
+<script src="/ace/js/ace/elements.typeahead.js"></script>
+<script src="/ace/js/ace/elements.wysiwyg.js"></script>
+<script src="/ace/js/ace/elements.spinner.js"></script>
+<script src="/ace/js/ace/elements.treeview.js"></script>
+<script src="/ace/js/ace/elements.wizard.js"></script>
+<script src="/ace/js/ace/elements.aside.js"></script>
+<script src="/ace/js/ace/ace.js"></script>
+<script src="/ace/js/ace/ace.ajax-content.js"></script>
+<script src="/ace/js/ace/ace.touch-drag.js"></script>
+<script src="/ace/js/ace/ace.sidebar.js"></script>
+<script src="/ace/js/ace/ace.sidebar-scroll-1.js"></script>
+<script src="/ace/js/ace/ace.submenu-hover.js"></script>
+<script src="/ace/js/ace/ace.widget-box.js"></script>
+<script src="/ace/js/ace/ace.settings.js"></script>
+<script src="/ace/js/ace/ace.settings-rtl.js"></script>
+<script src="/ace/js/ace/ace.settings-skin.js"></script>
+<script src="/ace/js/ace/ace.widget-on-reload.js"></script>
+<script src="/ace/js/ace/ace.searchbox-autocomplete.js"></script>
+
+<script src="/ace/js/ace/ace.sidebar.js"></script>
+<script src="/ace/js/ace/ace.sidebar-scroll-1.js"></script>
+<script src="/ace/js/ace/ace.submenu-hover.js"></script>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    var grid_selector = "#jqGrid";
+    var pager_selector = "#jqGridPager";
+    $("#jqGrid").jqGrid({
+      url: 'data.json',
+      editurl: 'clientArray',
+      mtype: "GET",
+      datatype: "json",
+      page: 1,
+      colModel: [
+        { label: 'Order ID', name: 'OrderID', key: true, width: 75 },
+        {
+          label: 'Order Date',
+          name: 'OrderDate',
+          width: 150,
+          editable: true,
+          edittype:"text",
+          editoptions: {
+            // dataInit is the client-side event that fires upon initializing the toolbar search field for a column
+            // use it to place a third party control to customize the toolbar
+            dataInit: function (element) {
+              $(element).datepicker({
+                id: 'orderDate_datePicker',
+                dateFormat: 'M/d/yy',
+                //minDate: new Date(2010, 0, 1),
+                maxDate: new Date(2020, 0, 1),
+                showOn: 'focus'
+              });
+            }
+          }
+        },
+        {
+          label: 'Customer ID',
+          name: 'CustomerID',
+          width: 150,
+          editable: true,
+          edittype: "select",
+          editoptions: {
+            value: "ALFKI:ALFKI;ANATR:ANATR;ANTON:ANTON;AROUT:AROUT;BERGS:BERGS;BLAUS:BLAUS;BLONP:BLONP;BOLID:BOLID;BONAP:BONAP;BOTTM:BOTTM;BSBEV:BSBEV;CACTU:CACTU;CENTC:CENTC;CHOPS:CHOPS;COMMI:COMMI;CONSH:CONSH;DRACD:DRACD;DUMON:DUMON;EASTC:EASTC;ERNSH:ERNSH;FAMIA:FAMIA;FISSA:FISSA;FOLIG:FOLIG;FOLKO:FOLKO;FRANK:FRANK;FRANR:FRANR;FRANS:FRANS;FURIB:FURIB;GALED:GALED;GODOS:GODOS;GOURL:GOURL;GREAL:GREAL;GROSR:GROSR;HANAR:HANAR;HILAA:HILAA;HUNGC:HUNGC;HUNGO:HUNGO;ISLAT:ISLAT;KOENE:KOENE;LACOR:LACOR;LAMAI:LAMAI;LAUGB:LAUGB;LAZYK:LAZYK;LEHMS:LEHMS;LETSS:LETSS;LILAS:LILAS;LINOD:LINOD;LONEP:LONEP;MAGAA:MAGAA;MAISD:MAISD;MEREP:MEREP;MORGK:MORGK;NORTS:NORTS;OCEAN:OCEAN;OLDWO:OLDWO;OTTIK:OTTIK;PARIS:PARIS;PERIC:PERIC;PICCO:PICCO;PRINI:PRINI;QUEDE:QUEDE;QUEEN:QUEEN;QUICK:QUICK;RANCH:RANCH;RATTC:RATTC;REGGC:REGGC;RICAR:RICAR;RICSU:RICSU;ROMEY:ROMEY;SANTG:SANTG;SAVEA:SAVEA;SEVES:SEVES;SIMOB:SIMOB;SPECD:SPECD;SPLIR:SPLIR;SUPRD:SUPRD;THEBI:THEBI;THECR:THECR;TOMSP:TOMSP;TORTU:TORTU;TRADH:TRADH;TRAIH:TRAIH;VAFFE:VAFFE;VICTE:VICTE;VINET:VINET;WANDK:WANDK;WARTH:WARTH;WELLI:WELLI;WHITC:WHITC;WILMK:WILMK;WOLZA:WOLZA"
+          }
+        },
+        {
+          label: 'Freigh',
+          name: 'Freight',
+          width: 150,
+          editable: true,
+          edittype: "custom",
+          editoptions: {
+            custom_value: getFreightElementValue,
+            custom_element: createFreightEditElement
+          }
+        },
+        {
+          label: 'Ship Name',
+          name: 'ShipName',
+          width: 150,
+          editable: true,
+          edittype: "text",
+          editoptions: {
+            // dataInit is the client-side event that fires upon initializing the toolbar search field for a column
+            // use it to place a third party control to customize the toolbar
+            dataInit: function (element) {
+              window.setTimeout(function () {
+                $(element).autocomplete({
+                  id: 'AutoComplete',
+                  source: function(request, response){
+                    this.xhr = $.ajax({
+                      url: 'http://trirand.com/blog/phpjqgrid/examples/jsonp/autocompletep.php?callback=?&acelem=ShipName',
+                      data: request,
+                      dataType: "jsonp",
+                      success: function( data ) {
+                        response( data );
+                      },
+                      error: function(model, response, options) {
+                        response([]);
+                      }
+                    });
+                  },
+                  autoFocus: true
+                });
+              }, 100);
+            }
+          }
+        }
+      ],
+      shrinkToFit:true,
+//      loadonce : true,
+//      viewrecords: true,
+//      autowidth:true,
+      shrinkToFit:true,
+//      height:600,
+//      width: '100%',
+//      height: '100%',
+//      rowNum: 20,
+      pager: "#jqGridPager"
+    });
+
+    $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width());
+    $(grid_selector).jqGrid( 'setGridHeight', $(document).height() - $("#table-div").offset().top - 100);
+
+    $(window).on('resize.jqGrid', function () {
+      $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width());
+      $(grid_selector).jqGrid( 'setGridHeight', $(document).height() - $("#table-div").offset().top - 100);
+    })
+
+    $("#jqGrid").navGrid("#jqGridPager",
+        { edit: true, add: true, del: true, search: true, refresh: true, view: true, align: "left" },
+        { closeAfterEdit: true }
+    );
+
+    function createFreightEditElement(value, editOptions) {
+
+      var span = $("<span />");
+      var label = $("<span />", { html: "0" });
+      var radio = $("<input>", { type: "radio", value: "0", name: "freight", id: "zero", checked: (value != 25 && value != 50 && value != 100) });
+      var label1 = $("<span />", { html: "25" });
+      var radio1 = $("<input>", { type: "radio", value: "25", name: "freight", id: "fifty", checked: value == 25 });
+      var label2 = $("<span />", { html: "50" });
+      var radio2 = $("<input>", { type: "radio", value: "50", name: "freight", id: "fifty", checked: value == 50 });
+      var label3 = $("<span />", { html: "100" });
+      var radio3 = $("<input>", { type: "radio", value: "100", name: "freight", id: "hundred", checked: value == 100 });
+
+      span.append(label).append(radio).append(label1).append(radio1).append(label2).append(radio2).append(label3).append(radio3);
+
+      return span;
+    }
+
+    // The javascript executed specified by JQGridColumn.EditTypeCustomGetValue when EditType = EditType.Custom
+    // One parameter passed - the custom element created in JQGridColumn.EditTypeCustomCreateElement
+    function getFreightElementValue(elem, oper, value) {
+      if (oper === "set") {
+        var radioButton = $(elem).find("input:radio[value='" + value + "']");
+        if (radioButton.length > 0) {
+          radioButton.prop("checked", true);
+        }
+      }
+
+      if (oper === "get") {
+        return $(elem).find("input:radio:checked").val();
+      }
+    }
+
+  });
+
+</script>
+</body>
+</html>
+
+

@@ -2,7 +2,7 @@ package com.newstar.hbms.resume.domain;
 
 import com.newstar.hbms.basedata.domain.ListItem;
 import com.newstar.hbms.common.domain.Domain;
-import com.newstar.hbms.customer.domain.Company;
+import com.newstar.hbms.customer.domain.Customer;
 import com.newstar.hbms.customer.domain.Position;
 import com.newstar.hbms.project.domain.Project;
 
@@ -48,7 +48,7 @@ public class ResumeReport extends Domain {
   /**
    * 公司
    */
-  private Company company;
+  private Customer company;
 
   /**
    * 职位编号

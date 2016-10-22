@@ -4,7 +4,7 @@
 
 <mapper namespace="com.newstar.hbms.resume.dao.ResumeDao">
 
-  <insert id="insert" parameterMap="domain.Resume">
+  <insert id="insert" parameterType="com.newstar.hbms.resume.domain.Resume">
     insert into Resume(
       name,
       sex,
@@ -22,9 +22,7 @@
       selfEvaluation,
       other,
       keyword,
-      originalResumeName,
-      originalResumeUri,
-      originalResumeText,
+      remark,
       language,
       yn,
       createTime,
@@ -48,9 +46,7 @@
       #{selfEvaluation},
       #{other},
       #{keyword},
-      #{originalResumeName},
-      #{originalResumeUri},
-      #{originalResumeText},
+      #{remark},
       #{language},
       1,
       now(),
@@ -81,12 +77,8 @@
       selfEvaluation = #{selfEvaluation},
       other = #{other},
       keyword = #{keyword},
-      <if test="originalResumeName != null and !originalResumeName.isEmpty() and originalResumeInputStream != null">
-        originalResumeName = #{originalResumeName},
-        originalResumeUri = #{originalResumeUri},
-        originalResumeText = #{originalResumeText},
-      </if>
       language = #{language},
+      remark = #{remark},
       updateTime = now(),
       updateUser = #{updateUser}
     where

@@ -127,25 +127,9 @@ public class Resume implements Serializable {
   private MultipartFile originalResumeFile;
 
   /**
-   * 原始简历名称
+   * 原始简历
    */
-  private String originalResumeName;
-
-  /**
-   * 原始简历存储路径
-   */
-  private String originalResumeUri;
-
-  /**
-   * 原始简历输入流
-   */
-  private InputStream originalResumeInputStream;
-
-
-  /**
-   * 原始简历文本
-   */
-  private String originalResumeText;
+  private SourceResume sourceResume;
 
   /**
    * 语言
@@ -177,6 +161,11 @@ public class Resume implements Serializable {
    * 修改人
    */
   private String updateUser;
+
+  /**
+   * 备注
+   */
+  private String remark;
 
   public Long getId() {
     return id;
@@ -362,38 +351,13 @@ public class Resume implements Serializable {
     this.originalResumeFile = originalResumeFile;
   }
 
-  public String getOriginalResumeName() {
-    return originalResumeName;
+  public SourceResume getSourceResume() {
+    return sourceResume;
   }
 
-  public void setOriginalResumeName(String originalResumeName) {
-    this.originalResumeName = originalResumeName;
+  public void setSourceResume(SourceResume sourceResume) {
+    this.sourceResume = sourceResume;
   }
-
-  public String getOriginalResumeUri() {
-    return originalResumeUri;
-  }
-
-  public void setOriginalResumeUri(String originalResumeUri) {
-    this.originalResumeUri = originalResumeUri;
-  }
-
-  public InputStream getOriginalResumeInputStream() {
-    return originalResumeInputStream;
-  }
-
-  public void setOriginalResumeInputStream(InputStream originalResumeInputStream) {
-    this.originalResumeInputStream = originalResumeInputStream;
-  }
-
-  public String getOriginalResumeText() {
-    return originalResumeText;
-  }
-
-  public void setOriginalResumeText(String originalResumeText) {
-    this.originalResumeText = originalResumeText;
-  }
-
 
   public String getLanguage() {
     return language;
@@ -441,5 +405,13 @@ public class Resume implements Serializable {
 
   public void setUpdateUser(String updateUser) {
     this.updateUser = updateUser;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
   }
 }

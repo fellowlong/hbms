@@ -1,26 +1,17 @@
 package com.newstar.hbms.resume.service.impl;
 
 import com.newstar.hbms.common.domain.Domain;
-import com.newstar.hbms.common.service.CommonService;
-import com.newstar.hbms.common.service.FileService;
 import com.newstar.hbms.resume.dao.*;
 import com.newstar.hbms.resume.domain.*;
 import com.newstar.hbms.resume.service.ResumeService;
-import com.newstar.hbms.utils.FileUtils;
-import com.newstar.hbms.utils.IOUtils;
 import com.newstar.hbms.utils.WordParser;
 import com.newstar.hbms.utils.business.ObjectUtils;
 import com.newstar.hbms.utils.paging.PageRange;
 import com.newstar.hbms.utils.paging.PagingResult;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by fellowlong on 2014-08-07.
@@ -28,6 +19,8 @@ import java.util.List;
 public class ResumeServiceImpl implements ResumeService {
 
   private ResumeDao resumeDao;
+
+  private SourceResumeDao sourceResumeDao;
 
   private WorkExperienceDao workExperienceDao;
 
@@ -39,14 +32,14 @@ public class ResumeServiceImpl implements ResumeService {
 
   private ProjectExperienceDao projectExperienceDao;
 
-  private CommonService commonService;
-
-  private FileService fileService;
-
-  private String originalResumeSavePathPrefix;
+  private ResumeIndexTaskDao resumeIndexTaskDao;
 
   public void setResumeDao(ResumeDao resumeDao) {
     this.resumeDao = resumeDao;
+  }
+
+  public void setSourceResumeDao(SourceResumeDao sourceResumeDao) {
+    this.sourceResumeDao = sourceResumeDao;
   }
 
   public void setCertificateDao(CertificateDao certificateDao) {
@@ -69,46 +62,28 @@ public class ResumeServiceImpl implements ResumeService {
     this.workExperienceDao = workExperienceDao;
   }
 
-  public void setCommonService(CommonService commonService) {
-    this.commonService = commonService;
-  }
-
-  public void setFileService(FileService fileService) {
-    this.fileService = fileService;
-  }
-
-  public void setOriginalResumeSavePathPrefix(String originalResumeSavePathPrefix) {
-    this.originalResumeSavePathPrefix = originalResumeSavePathPrefix;
+  public void setResumeIndexTaskDao(ResumeIndexTaskDao resumeIndexTaskDao) {
+    this.resumeIndexTaskDao = resumeIndexTaskDao;
   }
 
   @Transactional(rollbackFor = Throwable.class)
   @Override
   public int insertOrUpdate(Resume resume) throws IOException {
-    if (resume.getOriginalResumeName() != null
-        && !resume.getOriginalResumeName().isEmpty()
-        && resume.getOriginalResumeInputStream() != null) {
-      String encodedFileName = FileUtils.encodeFileName(
-         resume.getOriginalResumeName(), commonService.getCurrentDate());
-      resume.setOriginalResumeUri(originalResumeSavePathPrefix + encodedFileName);
-      if (!resume.getOriginalResumeInputStream().markSupported()) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        IOUtils.copy(resume.getOriginalResumeInputStream(), byteArrayOutputStream);
-        resume.setOriginalResumeInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
-      }
-      resume.setOriginalResumeText(
-         WordParser.getText(resume.getOriginalResumeInputStream(), WordParser.getVersion(resume.getOriginalResumeName())));
-      resume.getOriginalResumeInputStream().reset();
+    if (resume.getOriginalResumeFile() != null) {
+      SourceResume sourceResume = new SourceResume();
+      sourceResume.setName(resume.getOriginalResumeFile().getOriginalFilename());
+      sourceResume.setBinaryResume(resume.getOriginalResumeFile().getBytes());
+      String textResume = WordParser.getText(
+          resume.getOriginalResumeFile().getInputStream(),
+          WordParser.getVersion(sourceResume.getName()));
+      sourceResume.setTextResume(textResume);
+      sourceResume.setCreateUser(resume.getCreateUser());
+      sourceResume.setUpdateUser(resume.getUpdateUser());
+      resume.setSourceResume(sourceResume);
+      sourceResumeDao.insert(sourceResume);
     }
     int resultCount = (resume.getId() != null) ? resumeDao.update(resume) : resumeDao.insert(resume);
-    //保存原始附件
-    if (resume.getOriginalResumeName() != null
-       && !resume.getOriginalResumeName().isEmpty()
-       && resume.getOriginalResumeInputStream() != null) {
-      fileService.save(
-         resume.getOriginalResumeInputStream(),
-         resume.getOriginalResumeUri());
-      resume.getOriginalResumeInputStream().reset();
-    }
+
     //保存工作经历
     List<WorkExperience> workExperiences = resume.getWorkExperiences();
     if (workExperiences != null && workExperiences.size() > 0) {
@@ -224,6 +199,12 @@ public class ResumeServiceImpl implements ResumeService {
         }
       }
     }
+    //添加创建索引任务
+    ResumeIndexTask resumeIndexTask = new ResumeIndexTask();
+    resumeIndexTask.setResumeId(resume.getId());
+    resumeIndexTask.setStatus(1);
+    resumeIndexTask.setYn(Boolean.TRUE);
+    resultCount += resumeIndexTaskDao.insert(resumeIndexTask);
     return resultCount;
   }
 
@@ -243,6 +224,22 @@ public class ResumeServiceImpl implements ResumeService {
   @Override
   public List<Resume> findByIds(Long[] ids) {
     List<Resume> resumes = resumeDao.findByIds(ids);
+    if (resumes != null) {
+      List<Long> resumeIds = new ArrayList<Long>(resumes.size());
+      Map<Long, Resume> resumeMap = new HashMap<Long, Resume>();
+      for (Resume resume : resumes) {
+        resumeIds.add(resume.getId());
+        resumeMap.put(resume.getId(), resume);
+      }
+      List<SourceResume> sourceResumes = sourceResumeDao.findByIds(
+          resumeIds.toArray(new Long[resumeIds.size()]));
+      for (SourceResume sourceResume : sourceResumes) {
+        Resume resume = resumeMap.get(sourceResume.getId());
+        if (resume != null) {
+          resume.setSourceResume(sourceResume);
+        }
+      }
+    }
     fillSubObjects(resumes);
     return resumes;
   }
@@ -304,4 +301,5 @@ public class ResumeServiceImpl implements ResumeService {
          }
        });
   }
+
 }

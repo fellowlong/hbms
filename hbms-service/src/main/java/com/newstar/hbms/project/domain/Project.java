@@ -43,7 +43,7 @@ public class Project implements Serializable {
   /**
    * 项目负责人
    */
-  private String leader;
+  private String manager;
 
   /**
    * 销售员
@@ -128,12 +128,12 @@ public class Project implements Serializable {
     this.assistant = assistant;
   }
 
-  public String getLeader() {
-    return leader;
+  public String getManager() {
+    return manager;
   }
 
-  public void setLeader(String leader) {
-    this.leader = leader;
+  public void setManager(String manager) {
+    this.manager = manager;
   }
 
   public String getSalesman() {

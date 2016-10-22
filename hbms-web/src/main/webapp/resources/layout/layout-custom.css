@@ -1,0 +1,20 @@
+/* remove padding and scrolling from elements that contain an Accordion OR a content-div */
+.ui-layout-center, /* has content-div */
+.ui-layout-west, /* has Accordion */
+.ui-layout-east, /* has content-div ... */
+.ui-layout-east .ui-layout-content {
+    /* content-div has Accordion */
+    padding: 0;
+    overflow: hidden;
+}
+
+.ui-layout-center P.ui-layout-content {
+    line-height: 1.4em;
+    margin: 0; /* remove top/bottom margins from <P> used as content-div */
+}
+
+.ui-layout-north-custom {
+    height: 100px;
+    background-color: #00458a;
+    border: 0px
+}

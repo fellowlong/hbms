@@ -16,14 +16,14 @@ public class Contact implements Serializable {
   private Long id;
 
   /**
-   * 客户编号，外键
-   */
-  private Long customerId;
-
-  /**
    * 姓名
    */
   private String name;
+
+  /**
+   * 客户编号，外键
+   */
+  private Long customerId;
 
   /**
    * 英文姓名

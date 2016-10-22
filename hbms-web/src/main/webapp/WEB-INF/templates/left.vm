@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HBMS</title>
+<link rel="stylesheet" href="/resources/layout/layout-default-latest.css" />
+<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css"/>
+<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap-theme.css"/>
+<link rel="stylesheet" href="/resources/validator/jquery.validator.css" />
+
+<script src="/resources/jquery/jquery-2.1.4.min.js"></script>
+<script src="/resources/jquery/jquery-ui.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.js"></script>
+<script src="/resources/layout/jquery.layout.js"></script>
+<script src="/resources/validator/jquery.validator.js"></script>
+<script src="/resources/validator/zh_CN.js"></script>
+<script src="/resources/jquery.form.js"></script>
+<script src="/resources/jquery.blockUI.js"></script>
+<script src="/resources/common.js"></script>
+<script src="/resources/crud.js"></script>
+
+  <style>
+    .header {
+      background: #F6F6F6;
+      padding: 0;
+      margin: 0;
+    }
+    .list-group-item:first-child {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+    .list-group-item:last-child {
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+    .panel {
+      border: 0px;
+    }
+    .panel-body {
+      padding: 0px;
+    }
+    .panel-group .panel + .panel {
+      margin-top: 0px;
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="ui-layout-north header" style="padding: 0px;margin: 0px;overflow: hidden;background: #F6F6F6">
+  <h4>HBMS</h4>
+</div>
+
+<div class="ui-layout-west" style="background-color: #f2f2f2;padding: 0px">
+
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#canalManageItems">
+            <strong>Canal管理</strong>
+          </a>
+        </h3>
+      </div>
+      <div id="canalManageItems" class="panel-collapse collapse in">
+        <div class="panel-body text-left">
+          <a href="#" class="list-group-item" url="/pages/config/parserConfigManage.html">事件解析器管理</a>
+          <a href="#" class="list-group-item" url="/pages/config/storeConfigManage.html">事件存储管理</a>
+          <a href="#" class="list-group-item" url="/pages/config/positionManage.html">日志位置管理</a>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#scheduleMangeItems">
+            <strong>调度管理</strong>
+          </a>
+        </h3>
+      </div>
+      <div id="scheduleMangeItems" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <a href="#" class="list-group-item" url="/pages/config/scheduleTaskTypeManage.html">调度类型管理</a>
+          <a href="#" class="list-group-item" url="/pages/config/scheduleQueueManage.html">调度队列管理</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="layoutCenter" class="ui-layout-center">
+  <div id="mainWorkPanel"></div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+                $('body').layout({
+                    slidable: true,
+                    resizable: true,
+                    livePaneResizing:true,
+                    north__slidable:false,
+                    north__resizable:false,
+                    north__livePaneResizing:false,
+                    north__closable:false,
+                    north__showOverflowOnHover:false,
+                    north__hideTogglerOnSlide:true,
+                    north__spacing_open:0,
+                    north__size:50,
+                    west__size:200
+                });
+
+                $("#accordion a").bind("click", function(eventObject) {
+                    $("#accordion a").removeClass("active");
+                    $(this).addClass("active");
+                    mainWorkPanelReload($(eventObject.target).attr("url"));
+                });
+            }
+    );
+    function mainWorkPanelReload(url, parameter, callback) {
+        workPanelReload("#mainWorkPanel", url, parameter, callback);
+    }
+</script>
+
+
+</body>
+</html>

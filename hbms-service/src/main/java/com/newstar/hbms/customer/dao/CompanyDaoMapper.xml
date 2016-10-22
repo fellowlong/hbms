@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newstar.hbms.customer.dao.CustomerDao">
+
+  <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Customer">
+    insert into Customer(
+      name,
+      webSite,
+      phone,
+      fax,
+      region,
+      address,
+      postCode,
+      floorSpace,
+      staffCount,
+      annuallyOutput,
+      domesticSaleRatio,
+      number,
+      industry,
+      nature,
+      type,
+      products,
+      registeredCapital,
+      legalPerson,
+      propertyRightStructure,
+      managerialStaffCount,
+      outputValue,
+      exportSaleRatio,
+      otherInfo,
+      remark,
+      keyword,
+      yn,
+      updateUser,
+      updateTime,
+      createUser,
+      createTime
+    ) values (
+      #{name},
+      #{webSite},
+      #{phone},
+      #{fax},
+      #{region},
+      #{address},
+      #{postCode},
+      #{floorSpace},
+      #{staffCount},
+      #{annuallyOutput},
+      #{domesticSaleRatio},
+      #{number},
+      #{industry},
+      #{nature},
+      #{type},
+      #{products},
+      #{registeredCapital},
+      #{legalPerson},
+      #{propertyRightStructure},
+      #{managerialStaffCount},
+      #{outputValue},
+      #{exportSaleRatio},
+      #{otherInfo},
+      #{remark},
+      #{keyword}
+      1,
+      #{updateUser},
+      now(),
+      #{createUser},
+      now()
+    )
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select last_insert_id();
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterType="com.newstar.hbms.customer.domain.Customer">
+    update Customer set
+      name = #{name},
+      webSite = #{webSite},
+      phone = #{phone},
+      fax = #{fax},
+      region = #{region},
+      address = #{address},
+      postCode = #{postCode},
+      floorSpace = #{floorSpace},
+      staffCount = #{staffCount},
+      annuallyOutput = #{annuallyOutput},
+      domesticSaleRatio = #{domesticSaleRatio},
+      number = #{number},
+      industry = #{industry},
+      nature = #{nature},
+      type = #{type},
+      products = #{products},
+      registeredCapital = #{registeredCapital},
+      legalPerson = #{legalPerson},
+      propertyRightStructure = #{propertyRightStructure},
+      managerialStaffCount = #{managerialStaffCount},
+      outputValue = #{outputValue},
+      exportSaleRatio = #{exportSaleRatio},
+      otherInfo = #{otherInfo},
+      remark = #{remark},
+      keyword = #{keyword},
+      updateTime = now()
+    where
+      id = #{id}
+  </update>
+
+  <delete id="disable" parameterType="java.lang.Long">
+    update Customer set yn = 0, updateTime = now() where id = #{id}
+  </delete>
+
+  <delete id="enable" parameterType="java.lang.Long">
+    update Customer set yn = 1 , updateTime = now() where id = #{id}
+  </delete>
+  
+  <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Customer"
+          resultType="com.newstar.hbms.customer.domain.Customer">
+    select * from Customer order by createTime desc
+  </select>
+
+  <select id="findByIds" parameterType="com.newstar.hbms.customer.domain.Customer"
+          resultType="com.newstar.hbms.customer.domain.Customer">
+    select * from Customer where id in
+    <foreach collection="array" open="(" close=")" separator="," item="customerId">
+      #{customerId}
+    </foreach>
+  </select>
+
+</mapper>

@@ -32,8 +32,8 @@
   <update id="update" parameterMap="domain.SourceResume">
     update SourceResume set
       name = #{name},
-      binaryResume = #{sex},
-      textResume = #{telephone},
+      binaryResume = #{binaryResume},
+      textResume = #{textResume},
       updateTime = now(),
       updateUser = #{updateUser}
     where
@@ -48,8 +48,8 @@
   </delete>
 
   <select id="findByIds"
-          parameterMap="domain.Resume"
-          resultMap="domain.Resume">
+          parameterMap="domain.SourceResume"
+          resultMap="domain.SourceResume">
     select * from SourceResume where id in
     <foreach collection="array" open="(" close=")" separator="," item="sourceResumeId">
       #{sourceResumeId}

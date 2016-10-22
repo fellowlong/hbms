@@ -154,3 +154,15 @@ create table ListItem(
   typeId int comment '列表项编号,外键',
   UNIQUE KEY UK_ListItem_Code (code)
 ) auto_increment = 100001, comment='下拉列表';
+
+
+drop table ResumeIndexTask;
+create table ResumeIndexTask(
+  id bigint auto_increment not null primary key comment '简历索引任务编号,主键',
+  resumeId bigint comment '简历编号',
+  status int comment '任务状态',
+  yn int comment '任务是否有效',
+  createTime datetime comment '任务创建时间',
+  updateTime datetime comment '任务修改时间'
+) comment='创建简历索引的任务表';
+

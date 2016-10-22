@@ -1,0 +1,65 @@
+<!-- PAGE CONTENT BEGINS -->
+<form class="form-horizontal" role="form">
+  <input type="hidden" value="$!customer.id" name="id">
+  <table class="table table-bordered table-striped">
+    <tr>
+      <td><label class="control-label no-padding-right" for="form-field-1">名称</label></td>
+      <td><input type="text" id="form-field-1" placeholder="name"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">网址</label></td>
+      <td><input type="text" id="form-field-1" placeholder="webSite"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">电话</label></td>
+      <td><input type="text" id="form-field-1" placeholder="phone"/></td>
+
+    </tr>
+    <tr>
+      <td><label class="control-label no-padding-right" for="form-field-1">传真</label></td>
+      <td><input type="text" id="form-field-1" placeholder="fax"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">地区</label></td>
+      <td><input type="text" id="form-field-1" placeholder="region"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">地址</label></td>
+      <td><input type="text" id="form-field-1" placeholder="address"/></td>
+    </tr>
+    <tr>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">邮编</label></td>
+      <td><input type="text" id="form-field-1" placeholder="postCode"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">员工人数</label></td>
+      <td><input type="text" id="form-field-1" placeholder="staffCount"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">所属行业</label></td>
+      <td><input type="text" id="form-field-1" placeholder="industry"/></td>
+
+    </tr>
+    <tr>
+      <td><label class="control-label no-padding-right" for="form-field-1">企业性质</label></td>
+      <td><input type="text" id="form-field-1" placeholder="nature"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">产品</label></td>
+      <td><input type="text" id="form-field-1" placeholder="products"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">注册资金</label></td>
+      <td><input type="text" id="form-field-1" placeholder="registeredCapital"/></td>
+    </tr>
+    <tr>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">法人</label></td>
+      <td><input type="text" id="form-field-1" placeholder="legalPerson"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">产权结构</label></td>
+      <td><input type="text" id="form-field-1" placeholder="propertyRightStructure"/></td>
+
+      <td><label class="control-label no-padding-right" for="form-field-1">备注</label></td>
+      <td><input type="text" id="form-field-1" placeholder="remark"/></td>
+
+   </tr>
+    <tr>
+      <td><label class="control-label no-padding-right" for="form-field-1">关键字</label></td>
+      <td><input type="text" id="form-field-1" placeholder="keyword"/></td>
+    </tr>
+  </table>
+</form>

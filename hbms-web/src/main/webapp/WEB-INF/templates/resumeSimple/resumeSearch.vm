@@ -1,0 +1,261 @@
+<style>
+  em {
+    color: red;
+    font-style: normal;
+  }
+</style>
+
+
+<div style="margin:10px">
+
+  <form action="/resume/resumeSearch.do" method="post">
+    <input type="hidden" name="moduleId" value="$param['moduleId']">
+      <div class="row" style="margin-top: 10px;margin-bottom: 5px;">
+        <div class="col-xs-12">
+          <div class="input-group">
+            <input type="text" class="form-control" name="searchKeyword" value="$!param['searchKeyword']" placeholder="默认搜索全部"/>
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit">搜索</button>
+                </span
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2">
+          <div class="checkbox">
+            <label>
+              搜索范围
+            </label>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="searchFields" value="name" #if($paramValues['searchFields'].contains('name')) checked #end>姓名
+            </label>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="searchFields" value="sourceName" #if($paramValues['searchFields'].contains('sourceName')) checked #end>简历名称
+            </label>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="searchFields" value="keyword" #if($paramValues['searchFields'].contains('keyword')) checked #end>关键字
+            </label>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="searchFields" value="remark" #if($paramValues['searchFields'].contains('remark')) checked #end>备注
+            </label>
+          </div>
+        </div>
+      </div>
+  </form>
+
+  <div class="row" style="margin: 3px">
+    <div class="col-xs-12">
+      <div class="panel panel-default" style="border: 1px;text-align: center">
+        <div class="panel-heading" style="text-align: center"><label>简历搜索结果</label></div>
+  #if($documents)
+
+    <table id="resumeList" border="0" class="table table-bordered table-striped table-hover">
+      <thead>
+      <th style="text-align: center">编号</th>
+      #if($paramValues['searchFields'].contains('name'))
+        <th style="text-align: center">姓名匹配结果</th>
+      #else
+        <th style="text-align: center">姓名</th>
+      #end
+      #if($paramValues['searchFields'])
+        #foreach($searchField in $paramValues['searchFields'])
+          #if($searchField == 'sourceName')
+          <th style="text-align: center">简历名称匹配情况</th>
+          #end
+          #if($searchField == 'keyword')
+          <th style="text-align: center">关键字匹配情况</th>
+          #end
+          #if($searchField == 'remark')
+          <th style="text-align: center">备注匹配情况</th>
+          #end
+        #end
+      #else
+        <th style="text-align: center">全文匹配情况</th>
+      #end
+      </thead>
+      <tbody>
+
+
+
+        #foreach($document in $documents)
+        <tr style="cursor: hand">
+          <td align="center">$!document.id</td>
+          <td align="center">
+            <a href="/resume/findById.do?id=$!document.id&moduleId=$module.id" target="_blank" style="text-decoration: underline">
+              #if($highlights.get($!document.id).get("name"))
+                #foreach($matchedFragment in $!highlights.get($!document.id).get("name"))
+                  #if($foreach.count > 1)
+                    ,
+                  #end
+                  $matchedFragment
+                #end
+              #else
+                $!document.name[0]
+              #end
+            </a>
+          </td>
+
+          #if($paramValues['searchFields'] and $paramValues['searchFields'].size() > 0)
+            #foreach($searchField in $paramValues['searchFields'])
+              #if($searchField == 'sourceName')
+                <td align="center">
+                  #if($highlights.get($!document.id).get("sourceName"))
+                    #foreach($matchedFragment in $!highlights.get($!document.id).get("sourceName"))
+                      #if($foreach.count > 1)
+                        ,
+                      #end
+                      $matchedFragment
+                    #end
+                  #end
+                </td>
+              #end
+              #if($searchField == 'keyword')
+                <td align="center">
+                  #if($highlights.get($!document.id).get("keyword"))
+                    #foreach($matchedFragment in $!highlights.get($!document.id).get("keyword"))
+                      #if($foreach.count > 1)
+                        ,
+                      #end
+                      $matchedFragment
+                    #end
+                  #end
+                </td>
+              #end
+              #if($searchField == 'remark')
+                <td align="center">
+                  #if($highlights.get($!document.id).get("remark"))
+                    #foreach($matchedFragment in $!highlights.get($!document.id).get("remark"))
+                      #if($foreach.count > 1)
+                        ,
+                      #end
+                      $matchedFragment
+                    #end
+                  #end
+                </td>
+              #end
+            #end
+          #else
+            <td align="center">
+              #if($highlights.get($!document.id).get("all"))
+                #foreach($matchedFragment in $!highlights.get($!document.id).get("all"))
+                  #if($foreach.count > 1)
+                    ,
+                  #end
+                  $matchedFragment
+                #end
+              #end
+            </td>
+          #end
+        </tr>
+        #end
+      </tbody>
+    </table>
+  #else
+    <h4>
+    #if($param['searchKeyword'])
+      没有找到简历
+    #else
+      请输入关键字搜索
+    #end
+    </h4>
+  #end
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="dialog" data-backdrop="static" role="dialog" aria-labelledby="dialogTitle"
+     style="z-index: 9999">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="dialogTitle">
+          <div id="dialogTitleContent"></div>
+        </h3>
+      </div>
+      <div class="modal-body">
+        <div id="dialogBodyContent"></div>
+      </div>
+      <div class="modal-footer">
+        <div id="dialogFootContent">
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-action="close">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('#resumeList th input:checkbox').on('click', function () {
+    var that = this;
+    $('#resumeList').find('tr > td:first-child input:checkbox')
+        .each(function () {
+          this.checked = that.checked;
+          $(this).closest('tr').toggleClass('selected');
+        });
+  });
+  $("#resumeEit").on(ace.click_event, function () {
+    var checkedItems = [];
+    $('#resumeList').find('tr > td:first-child input:checkbox')
+        .each(function () {
+          if (this.checked) {
+            checkedItems.push(this.value);
+          }
+        });
+    if (checkedItems.length == 1) {
+      mainWorkPanelReload('/resume/preInsertOrUpdate.do?id=' + checkedItems[0] + '&view=/resume/resumeEdit.ftl');
+    } else {
+      bootbox.dialog({
+        message: "<span class='bigger-110'>请选择一条记录</span>",
+        buttons: {
+          "click": {
+            "label": "关闭",
+            "className": "btn-sm btn-primary"
+          }
+        }
+      });
+    }
+  });
+
+  function openResumeDetail(resumeId) {
+
+    $.ajax({
+      type: "post",
+      dataType: "json",
+      url: "/resume/findById.do",
+      traditional: true,
+      data: {id: resumeId, moduleId:$module.id},
+      timeout: 3000,
+      success: function (result, textStatus, jqXHR) {
+        $("#dialogBodyContent").html(jqXHR.responseText);
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        $("#dialogBodyContent").html(jqXHR.responseText);
+      }
+    });
+    $("#dialog").modal("show");
+  }
+
+</script>

@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css"/>
+<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap-theme.css"/>
+
+<div class="container" style="border: 1px solid #ddd;margin-top: 5px;padding-top: 15px">
+
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">基本信息</div>
+    <div class="panel-body" style="padding: 0px;margin: 0px;">
+
+      <div class="row">
+        <div class="col-xs-2" style="text-align: right">
+          <label>姓名:</label>
+        </div>
+        <div class="col-xs-4">
+          <span align="left">$!resume.name</span>
+        </div>
+        <div class="col-xs-2" style="text-align: right">
+          <label>简历名称:</label>
+        </div>
+        <div class="col-xs-4">
+          <span align="left" width="30%">$!resume.sourceResume.name</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2" style="text-align: right">
+          <label>关键字:</label>
+        </div>
+        <div class="col-xs-10">
+          <span align="left">$!resume.keyword</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2" style="text-align: right">
+          <label>备注:</label>
+        </div>
+        <div class="col-xs-10">
+          $!resume.remark
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">详细简历</div>
+  <div class="panel-body" style="padding: 0px;margin: 0px;">
+    <pre style="background-color: #fff;border-radius: 0px;border: 0px;white-space: pre-wrap;word-wrap: break-word;">$resume.sourceResume.textResume</pre>
+  </div>
+</div>
+
+
+</div>

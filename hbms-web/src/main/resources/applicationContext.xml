@@ -76,6 +76,8 @@
         <value>classpath:com/newstar/hbms/basedata/dao/*.xml</value>
         <value>classpath:com/newstar/hbms/candidate/dao/*.xml</value>
         <value>classpath:com/newstar/hbms/resume/dao/*.xml</value>
+        <value>classpath:com/newstar/hbms/customer/dao/*.xml</value>
+        <value>classpath:com/newstar/hbms/system/dao/*.xml</value>
       </list>
     </property>
   </bean>
@@ -97,6 +99,26 @@
 
   <bean id="resumeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface" value="com.newstar.hbms.resume.dao.ResumeDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
+  <bean id="sourceResumeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.newstar.hbms.resume.dao.SourceResumeDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
+  <bean id="customerDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.newstar.hbms.customer.dao.CustomerDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
+  <bean id="contactDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.newstar.hbms.customer.dao.ContactDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
+  <bean id="resumeIndexTaskDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.newstar.hbms.resume.dao.ResumeIndexTaskDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
@@ -148,8 +170,27 @@
     <property name="languageAbilityDao" ref="languageAbilityDao"/>
     <property name="certificateDao" ref="certificateDao"/>
     <property name="projectExperienceDao" ref="projectExperienceDao"/>
-    <property name="fileService" ref="fileService"/>
-    <property name="originalResumeSavePathPrefix" value="${originalResumeSavePathPrefix}"/>
+    <property name="sourceResumeDao" ref="sourceResumeDao"/>
+    <property name="resumeIndexTaskDao" ref="resumeIndexTaskDao"/>
+  </bean>
+
+  <bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+    <constructor-arg index="0" value="${solr.url}"/>
+  </bean>
+
+<!--  <bean class="com.newstar.hbms.resume.service.ResumeIndexScheduler" init-method="init">
+    <property name="httpServer" ref="httpSolrServer"/>
+    <property name="periodMillisecond" value="${indexScheduler.periodMillisecond}"/>
+    <property name="resumeIndexTaskDao" ref="resumeIndexTaskDao"/>
+    <property name="resumeService" ref="resumeService"/>
+  </bean>-->
+
+  <bean id="customerService" class="com.newstar.hbms.customer.service.impl.CustomerServiceImpl">
+    <property name="customerDao" ref="customerDao"/>
+  </bean>
+
+  <bean id="contactService" class="com.newstar.hbms.customer.service.impl.ContactServiceImpl">
+    <property name="contactDao" ref="contactDao"/>
   </bean>
 
   <!--web-->
