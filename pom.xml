@@ -251,7 +251,7 @@
             <version>1.7.9</version>
         </dependency>
         <dependency>
-            <groupId>com.jacob</groupId>
+            <groupId>com.hynnet</groupId>
             <artifactId>jacob</artifactId>
             <version>1.18</version>
         </dependency>

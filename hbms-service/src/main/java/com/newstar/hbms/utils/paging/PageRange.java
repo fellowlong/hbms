@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class PageRange implements Serializable {
 
-  private int pageSize;
+  private int pageSize = 10;
 
-  private int pageNum;
+  private int pageNum = 1;
 
   public PageRange(){}
 

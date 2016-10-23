@@ -1,65 +1,124 @@
-<!-- PAGE CONTENT BEGINS -->
-<form class="form-horizontal" role="form">
-  <input type="hidden" value="$!customer.id" name="id">
-  <table class="table table-bordered table-striped">
-    <tr>
-      <td><label class="control-label no-padding-right" for="form-field-1">名称</label></td>
-      <td><input type="text" id="form-field-1" placeholder="name"/></td>
 
-      <td><label class="control-label no-padding-right" for="form-field-1">网址</label></td>
-      <td><input type="text" id="form-field-1" placeholder="webSite"/></td>
+<div id="customerListDiv">
+<table id="customerList"></table>
+<div id="customerListPager"></div>
+</div>
 
-      <td><label class="control-label no-padding-right" for="form-field-1">电话</label></td>
-      <td><input type="text" id="form-field-1" placeholder="phone"/></td>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#customerList").jqGrid({
+            url:'/customer/findByBean.do',
+            datatype: "json",
+            colNames:['编号','名称', '网址', '电话', '行业', '法人','注册资金','员工人数'],
+            colModel:[
+                {name:'id', width: 75},
+                {name:'name', width: 150},
+                {name:'webSite', width: 150},
+                {name:'phone', width: 150},
+            {name:'industry', width: 150},
+            {name:'legalPerson', width: 150},
+            {name:'registeredCapital', width: 150},
+            {name:'staffCount', width: 150}
+            ],
+        rowNum:10,
+        rowList:[10,30,50,100],
+        pager: '#customerListPager',
+        caption:"客户列表",
+        shrinkToFit:true
+        });
+        $("#customerList").jqGrid( 'setGridWidth', $(".page-content").width());
+        $("#customerList").jqGrid( 'setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
+        $(window).on('resize', function () {
+            $("#customerList").jqGrid( 'setGridWidth', $(".page-content").width());
+            $("#customerList").jqGrid( 'setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
+        });
+    });
+</script>
 
-    </tr>
-    <tr>
-      <td><label class="control-label no-padding-right" for="form-field-1">传真</label></td>
-      <td><input type="text" id="form-field-1" placeholder="fax"/></td>
 
-      <td><label class="control-label no-padding-right" for="form-field-1">地区</label></td>
-      <td><input type="text" id="form-field-1" placeholder="region"/></td>
+##$('#customerAddOrEditDialog').modal('show')
 
-      <td><label class="control-label no-padding-right" for="form-field-1">地址</label></td>
-      <td><input type="text" id="form-field-1" placeholder="address"/></td>
-    </tr>
-    <tr>
+<div class="modal fade" id="customerAddOrEditDialog" >
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+            <h4 class="modal-title" id="customerAddOrEditDialogTitle">客户信息</h4>
+        </div>
+        <div class="modal-body">
 
-      <td><label class="control-label no-padding-right" for="form-field-1">邮编</label></td>
-      <td><input type="text" id="form-field-1" placeholder="postCode"/></td>
+            <form class="form-horizontal" role="form">
+                <input type="hidden" value="$!customer.id" name="id">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td align="right"><label class="control-label no-padding-right">名称</label></td>
+                        <td><input type="text"  class="form-control" name="name"/></td>
+                        <td align="right"><label class="control-label no-padding-right">网址</label></td>
+                        <td><input type="text"  class="form-control" name="webSite"/></td>
+                    </tr>
+                    <tr>
+                        <td align="right"><label class="control-label no-padding-right">电话</label></td>
+                        <td><input type="text"  class="form-control" name="phone"/></td>
+                        <td align="right"><label class="control-label no-padding-right">传真</label></td>
+                        <td><input type="text"  class="form-control" name="fax"/></td>
+                    </tr>
+                    <tr>
+                        <td  align="right"><label class="control-label no-padding-right">地区</label></td>
+                        <td><input type="text"  class="form-control" name="region"/></td>
 
-      <td><label class="control-label no-padding-right" for="form-field-1">员工人数</label></td>
-      <td><input type="text" id="form-field-1" placeholder="staffCount"/></td>
+                        <td  align="right"><label class="control-label no-padding-right">地址</label></td>
+                        <td><input type="text"  class="form-control" name="address"/></td>
+                    </tr>
+                    <tr>
+                        <td  align="right"><label class="control-label no-padding-right">邮编</label></td>
+                        <td><input type="text"  class="form-control" name="postCode"/></td>
+                        <td  align="right"><label class="control-label no-padding-right">员工人数</label></td>
+                        <td><input type="text"  class="form-control" name="staffCount"/></td>
+                    </tr>
+                    <tr>
+                        <td  align="right"><label class="control-label no-padding-right">所属行业</label></td>
+                        <td><input type="text"  class="form-control" name="industry"/></td>
 
-      <td><label class="control-label no-padding-right" for="form-field-1">所属行业</label></td>
-      <td><input type="text" id="form-field-1" placeholder="industry"/></td>
+                        <td  align="right"><label class="control-label no-padding-right">企业性质</label></td>
+                        <td><input type="text"  class="form-control" name="nature"/></td>
+                    </tr>
+                    <tr>
+                        <td  align="right"><label class="control-label no-padding-right">产品</label></td>
+                        <td><input type="text"  class="form-control" name="products"/></td>
 
-    </tr>
-    <tr>
-      <td><label class="control-label no-padding-right" for="form-field-1">企业性质</label></td>
-      <td><input type="text" id="form-field-1" placeholder="nature"/></td>
+                        <td  align="right"><label class="control-label no-padding-right">注册资金</label></td>
+                        <td><input type="text"  class="form-control" name="registeredCapital"/></td>
+                    </tr>
+                    <tr>
+                        <td  align="right"><label class="control-label no-padding-right">法人</label></td>
+                        <td><input type="text"  class="form-control" name="legalPerson"/></td>
 
-      <td><label class="control-label no-padding-right" for="form-field-1">产品</label></td>
-      <td><input type="text" id="form-field-1" placeholder="products"/></td>
+                        <td  align="right"><label class="control-label no-padding-right">产权结构</label></td>
+                        <td><input type="text"  class="form-control" class="form-control" name="propertyRightStructure"/></td>
+                    </tr>
+                    <tr>
 
-      <td><label class="control-label no-padding-right" for="form-field-1">注册资金</label></td>
-      <td><input type="text" id="form-field-1" placeholder="registeredCapital"/></td>
-    </tr>
-    <tr>
+                        <td  align="right"><label class="control-label no-padding-right">备注</label></td>
+                        <td><input type="text" class="form-control" name="remark"/></td>
 
-      <td><label class="control-label no-padding-right" for="form-field-1">法人</label></td>
-      <td><input type="text" id="form-field-1" placeholder="legalPerson"/></td>
+                        <td  align="right"><label class="control-label no-padding-right">关键字</label></td>
+                        <td><input type="text"  class="form-control"name="keyword"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" align="center">
 
-      <td><label class="control-label no-padding-right" for="form-field-1">产权结构</label></td>
-      <td><input type="text" id="form-field-1" placeholder="propertyRightStructure"/></td>
+                        </td>
+                    </tr>
+                </table>
+            </form>
 
-      <td><label class="control-label no-padding-right" for="form-field-1">备注</label></td>
-      <td><input type="text" id="form-field-1" placeholder="remark"/></td>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary"><i class="ace-icon fa fa-check bigger-110"></i>保存</button>
+            <button class="btn"><i class="ace-icon fa fa-undo bigger-110"></i>重置</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div>
+</div>
 
-   </tr>
-    <tr>
-      <td><label class="control-label no-padding-right" for="form-field-1">关键字</label></td>
-      <td><input type="text" id="form-field-1" placeholder="keyword"/></td>
-    </tr>
-  </table>
-</form>
+

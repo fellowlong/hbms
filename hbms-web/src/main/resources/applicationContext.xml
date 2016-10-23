@@ -174,9 +174,9 @@
     <property name="resumeIndexTaskDao" ref="resumeIndexTaskDao"/>
   </bean>
 
-  <bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+<!--  <bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
     <constructor-arg index="0" value="${solr.url}"/>
-  </bean>
+  </bean>-->
 
 <!--  <bean class="com.newstar.hbms.resume.service.ResumeIndexScheduler" init-method="init">
     <property name="httpServer" ref="httpSolrServer"/>

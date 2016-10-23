@@ -166,3 +166,31 @@ create table ResumeIndexTask(
   updateTime datetime comment '任务修改时间'
 ) comment='创建简历索引的任务表';
 
+
+
+drop table Customer;
+create table Customer(
+  id bigint auto_increment not null primary key comment '客户编号,主键',
+  name  varchar(100) comment '名称',
+  webSite varchar(100) comment '网址',
+  phone varchar(20) comment '电话',
+  fax varchar(20) comment '传真',
+  region varchar(50) comment '地区',
+  address varchar(100) comment '地址',
+  postCode varchar(20) comment '邮编',
+  staffCount int comment '员工数量',
+  industry varchar(100) comment '所属行业',
+  nature varchar(50) comment '企业性质',
+  products varchar(100) comment '产品',
+  registeredCapital varchar(50) comment '注册资金',
+  legalPerson varchar(50) comment '法人',
+  propertyRightStructure varchar(50) comment '产权结构',
+  remark varchar(500) comment '企业备注',
+  keyword varchar(100) comment 'keyword',
+  yn  int(1) comment '是否有效',
+  createTime datetime comment '创建时间',
+  createUser varchar(50) comment '创建人账户',
+  updateTime datetime comment '修改时间',
+  updateUser varchar(50) comment '修改人账户'
+) comment='客户表';
+

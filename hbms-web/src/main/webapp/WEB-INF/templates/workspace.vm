@@ -148,7 +148,7 @@
 
 <!-- list of script files -->
 
-<![endif]-->
+##<![endif]-->
 <script type="text/javascript">
   if('ontouchstart' in document.documentElement) document.write("<script src='/ace/js/jquery.mobile.custom.js'>"+"<"+"/script>");
  /* $('.nav-list li').bind("click", function(){
@@ -157,8 +157,8 @@
   });*/
 //  function setToActive(item) {
     $('.nav-list li.active').removeClass('active');
-    $("#$currentAuthority.id").parents().toggleClass('open');
-    $("#$currentAuthority.id").addClass('active').parents('.nav-list li').addClass('active');
+    $("#$!currentAuthority.id").parents().toggleClass('open');
+    $("#$!currentAuthority.id").addClass('active').parents('.nav-list li').addClass('active');
 //  }
 </script>
 
@@ -296,9 +296,9 @@
     $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width());
     $(grid_selector).jqGrid( 'setGridHeight', $(document).height() - $("#table-div").offset().top - 100);
 
-    $(window).on('resize.jqGrid', function () {
+  $(window).resize(function () {
       $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width());
-      $(grid_selector).jqGrid( 'setGridHeight', $(document).height() - $("#table-div").offset().top - 100);
+      $(grid_selector).jqGrid( 'setGridHeight', $(window).height() - $("#table-div").offset().top - 100);
     })
 
     $("#jqGrid").navGrid("#jqGridPager",

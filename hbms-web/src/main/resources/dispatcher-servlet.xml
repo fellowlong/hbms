@@ -95,7 +95,7 @@
   <bean id="resumeController" class="com.newstar.hbms.resume.web.controller.ResumeController">
     <property name="resumeService" ref="resumeService"/>
     <property name="commonService" ref="commonService"/>
-    <property name="httpSolrServer" ref="httpSolrServer"/>
+    <!--<property name="httpSolrServer" ref="httpSolrServer"/>-->
   </bean>
 
   <bean id="customerController" class="com.newstar.hbms.customer.CustomerController">

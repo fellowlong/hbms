@@ -38,7 +38,7 @@ public class FrameworkControllerHandlerAdapter extends SimpleControllerHandlerAd
     ModelAndView resultMav = null;
     ModelAndView workMav = super.handle(request, response, handler);
     String uri = request.getRequestURI();
-    if (workUris != null && workUris.contains(uri)) {
+    if (workMav != null && workUris != null && workUris.contains(uri)) {
       resultMav = workPanelController.handleRequest(request, response);
       if (workMav != null) {
         resultMav.addAllObjects(workMav.getModel());
@@ -47,7 +47,9 @@ public class FrameworkControllerHandlerAdapter extends SimpleControllerHandlerAd
     } else {
       resultMav = workMav;
     }
-    putContextVariables(request, resultMav.getModel());
+    if (resultMav != null && resultMav.getModel() != null ) {
+      putContextVariables(request, resultMav.getModel());
+    }
     return resultMav;
   }
 
