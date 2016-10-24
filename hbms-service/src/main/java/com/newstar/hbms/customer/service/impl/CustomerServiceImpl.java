@@ -20,13 +20,8 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public int insert(Customer customer) {
-    return customerDao.insert(customer);
-  }
-
-  @Override
-  public int update(Customer customer) {
-    return customerDao.update(customer);
+  public int insertOrUpdate(Customer customer) {
+    return customer.getId() != null ? customerDao.update(customer) : customerDao.insert(customer);
   }
 
   @Override

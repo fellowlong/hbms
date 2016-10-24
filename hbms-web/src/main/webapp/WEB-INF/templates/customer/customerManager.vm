@@ -1,3 +1,33 @@
+<div style="padding-bottom: 10px">
+  <form id="searchCustomerForm" class="form-inline" role="form" action="" method="post">
+    <input type="hidden" name="id" value="$!customer.id">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">名称</div>
+        <input class="form-control" name="name" value="#if($param['name'])$param['name']#end">
+        <div class="input-group-addon">行业</div>
+        <input class="form-control" name="industry" value="#if($param['industry'])$param['industry']#end">
+        <div class="input-group-addon">电话</div>
+        <input class="form-control" name="phone" value="#if($param['phone'])$param['phone']#end">
+        <span class="input-group-btn">
+          <button class="btn btn-primary form-control no-radius" type="button" onclick="queryCustomer()">
+            <i class="ace-icon fa fa-search"></i>搜索
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group" style="padding-left: 20px">
+      <button id="addCustomer" type="button" class="btn btn-success form-control no-radius">
+        <i class="ace-icon fa fa-plus"></i>
+        新增
+      </button>
+      <button id="searchCustomer" type="button" class="btn btn-danger form-control no-radius">
+        <i class="ace-icon fa fa-trash-o"></i>
+        删除
+      </button>
+    </div>
+  </form>
+</div>
 
 <div id="customerListDiv">
 <table id="customerList"></table>
@@ -5,40 +35,97 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#customerList").jqGrid({
-            url:'/customer/findByBean.do',
-            datatype: "json",
-            colNames:['编号','名称', '网址', '电话', '行业', '法人','注册资金','员工人数'],
-            colModel:[
-                {name:'id', width: 75},
-                {name:'name', width: 150},
-                {name:'webSite', width: 150},
-                {name:'phone', width: 150},
-            {name:'industry', width: 150},
-            {name:'legalPerson', width: 150},
-            {name:'registeredCapital', width: 150},
-            {name:'staffCount', width: 150}
-            ],
-        rowNum:10,
-        rowList:[10,30,50,100],
-        pager: '#customerListPager',
-        caption:"客户列表",
-        shrinkToFit:true
-        });
-        $("#customerList").jqGrid( 'setGridWidth', $(".page-content").width());
-        $("#customerList").jqGrid( 'setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
-        $(window).on('resize', function () {
-            $("#customerList").jqGrid( 'setGridWidth', $(".page-content").width());
-            $("#customerList").jqGrid( 'setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
-        });
+  $(document).ready(function () {
+    $("#customerList").jqGrid({
+      url:'/customer/findByBean.do',
+      mtype: "POST",
+      datatype: "json",
+      colNames:['编号','名称', '网址', '电话', '行业', '法人','注册资金','员工人数'],
+      colModel:[
+        {name:'id', width: 75},
+        {name:'name', width: 150},
+        {name:'webSite', width: 150},
+        {name:'phone', width: 150},
+        {name:'industry', width: 150},
+        {name:'legalPerson', width: 150},
+        {name:'registeredCapital', width: 150},
+        {name:'staffCount', width: 150}
+      ],
+      rowNum:10,
+      rowList:[10,30,50,100],
+      pager: '#customerListPager',
+      caption:"客户列表",
+      shrinkToFit:true
     });
+    $("#customerList").jqGrid( 'setGridWidth', $(window).width() - $("#customerListDiv").offset().left - 10);
+    $("#customerList").jqGrid( 'setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
+    $(window).on('resize', function () {
+      $("#customerList").jqGrid( 'setGridWidth', $(window).width() - $("#customerListDiv").offset().left - 10);
+      $("#customerList").jqGrid( 'setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
+    });
+  });
+
+  function queryCustomer() {
+    $("#customerList").jqGrid('setGridParam',{
+      postData:{
+        name:$("#searchCustomerForm input[name='name']").val(),
+        industry:$("#searchCustomerForm input[name='industry']").val(),
+        phone:$("#searchCustomerForm input[name='phone']").val()},
+      page:1
+    }).trigger("reloadGrid");
+  }
+
+  $("#addCustomer").on("click", function () {
+        $('#customerAddOrEditDialog').modal('show')
+  });
+
+  function saveOrUpdateCustomer() {
+    $("#customerAddOrEditDialog").block({
+      message: '<h1>正在保存</h1>',
+      css: { border: '3px solid #a00' }
+    });
+    $("#customerAddOrEditDialog form").ajaxSubmit({
+      type:"post",
+      dataType:"json",
+      url:"/customer/insertOrUpdate.do",
+      beforeSubmit: function(arr, $form, options) {
+        var notEmptyData = [];
+        for(var i = 0 ; i < arr.length ; i++) {
+          if (arr[i].value && arr[i].value != null && arr[i].value != "") {
+            notEmptyData.push(arr[i]);
+          }
+        }
+        if (notEmptyData.length > 0) {
+          while (arr.length > 0) {
+            arr.pop();
+          }
+          for(var j = 0 ; j < notEmptyData.length ; j++) {
+            arr.push(notEmptyData[j]);
+          }
+        }
+        return true;
+      },
+      success: function(result, statusText, xhr) {
+        $("#customerAddOrEditDialog").unblock();
+        if(result && result.success) {
+          $("#customerAddOrEditDialog").modal("hide");
+          $("#searchCustomerForm").submit();
+        } else {
+          bootbox.alert("保存失败，请联系管理员");
+        }
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        $("#customerAddOrEditDialog").unblock();
+        bootbox.alert("保存失败，请联系管理员");
+      }
+    });
+  }
+
 </script>
 
 
-##$('#customerAddOrEditDialog').modal('show')
 
-<div class="modal fade" id="customerAddOrEditDialog" >
+<div class="modal fade" id="customerAddOrEditDialog"  tabindex="-1" role="dialog" aria-labelledby="customerAddOrEditDialogTitle" aria-hidden="true">
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -114,11 +201,14 @@
 
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary"><i class="ace-icon fa fa-check bigger-110"></i>保存</button>
-            <button class="btn"><i class="ace-icon fa fa-undo bigger-110"></i>重置</button>
+            <button type="button" class="btn btn-primary" onclick="saveOrUpdateCustomer()">
+              <i class="ace-icon fa fa-check bigger-110"></i>保存
+            </button>
+            <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i>重置</button>
         </div>
     </div><!-- /.modal-content -->
 </div>
 </div>
+
 
 

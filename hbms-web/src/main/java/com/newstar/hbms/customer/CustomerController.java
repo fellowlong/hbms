@@ -2,6 +2,8 @@ package com.newstar.hbms.customer;
 
 import com.newstar.hbms.customer.domain.Customer;
 import com.newstar.hbms.customer.service.CustomerService;
+import com.newstar.hbms.mvc.JsonResult;
+import com.newstar.hbms.utils.ExceptionUtils;
 import com.newstar.hbms.utils.JsonUtils;
 import com.newstar.hbms.utils.WebUtils;
 import com.newstar.hbms.utils.paging.PageRange;
@@ -29,6 +31,20 @@ public class CustomerController extends MultiActionController {
   public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
     return new ModelAndView("/customer/customerManager");
   }
+
+  public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Customer customer) throws Exception  {
+    JsonResult jsonResult = new JsonResult();
+    try {
+      int resultCount = customerService.insertOrUpdate(customer);
+      jsonResult.setSuccess(true);
+      jsonResult.setData(resultCount);
+    } catch (Throwable t) {
+      logger.error("新增EventParserConfig失败", t);
+      jsonResult.setErrorMessage(ExceptionUtils.getExceptionStack(t));
+    }
+    WebUtils.writeWithJson(response, jsonResult);
+  }
+
   public void findByBean(HttpServletRequest request, HttpServletResponse response, Customer customer)
           throws Exception {
     String pageSize = request.getParameter("rows");

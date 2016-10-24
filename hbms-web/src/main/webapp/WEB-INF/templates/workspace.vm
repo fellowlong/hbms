@@ -56,6 +56,11 @@
 
   <script src="/ace/js/jqGrid/i18n/grid.locale-cn.js"></script>
   <script src="/ace/js/jqGrid/jquery.jqGrid.src.js"></script>
+  <script src="../../js/jquery.form.js"></script>
+  <script src="/js/jquery.form.js"></script>
+  <script src="/js/jquery.blockUI.js"></script>
+  <script src="/js/jquery.blockUI.js"></script>
+  <script src="/ace/js/bootbox.js"></script>
 
 </head>
 <body class="no-skin">

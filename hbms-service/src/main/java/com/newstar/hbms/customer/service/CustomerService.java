@@ -12,9 +12,7 @@ import java.util.List;
 public interface CustomerService {
 
 
-  public int insert(Customer customer);
-
-  public int update(Customer customer);
+  public int insertOrUpdate(Customer customer);
 
   public int disable(Long customerId);
 

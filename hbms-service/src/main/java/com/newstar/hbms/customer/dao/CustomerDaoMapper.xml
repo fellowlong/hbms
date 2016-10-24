@@ -115,7 +115,17 @@
   
   <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Customer"
           resultType="com.newstar.hbms.customer.domain.Customer">
-    select * from Customer order by createTime desc
+    select * from Customer c where 1 = 1
+    <if test="name != null">
+      and c.name like "%"#{name}"%"
+    </if>
+    <if test="industry != null">
+      and c.industry like "%"#{industry}"%"
+    </if>
+    <if test="phone != null">
+      and c.phone like "%"#{phone}"%"
+    </if>
+    order by createTime desc
   </select>
 
   <select id="findByIds" parameterType="com.newstar.hbms.customer.domain.Customer"
