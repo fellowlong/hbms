@@ -1,0 +1,227 @@
+<div style="padding-bottom: 10px">
+  <form id="searchContactForm" class="form-inline" role="form" action="" method="post">
+    <input type="hidden" name="id" value="$!contact.id">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">中文名</div>
+        <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end>
+        <div class="input-group-addon">公司</div>
+        <input class="form-control" name="customer.name" #if($param['customer.name']) value="$param['customer.name']" #end>
+        <div class="input-group-addon">英文名</div>
+        <input class="form-control" name="englishName" #if($param['englishName']) value="$param['englishName']" #end>
+        <div class="input-group-addon">手机</div>
+        <input class="form-control" name="mobilePhone" #if($param['mobilePhone']) value="$param['mobilePhone']" #end>
+        <div class="input-group-addon">关键</div>
+        <input class="form-control" type="checkbox" name="isKey" #if($param['isKey'] and $param['isKey'] == true) checked #end>
+        <span class="input-group-btn">
+          <button id="searchContact" class="btn btn-primary form-control no-radius" type="button">
+            <i class="ace-icon fa fa-search"></i>搜索
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group" style="padding-left: 20px">
+      <button id="addContact" type="button" class="btn btn-success form-control no-radius">
+        <i class="ace-icon fa fa-plus"></i>
+        新增
+      </button>
+      <button id="editContact" type="button" class="btn btn-success form-control no-radius">
+        <i class="ace-icon fa fa-edit"></i>
+        编辑
+      </button>
+      <button id="deleteContact" type="button" class="btn btn-danger form-control no-radius">
+        <i class="ace-icon fa fa-trash-o"></i>
+        删除
+      </button>
+    </div>
+  </form>
+</div>
+
+<div id="contactListDiv">
+  <table id="contactList"></table>
+  <div id="contactListPager"></div>
+</div>
+
+<div class="modal fade" id="contactAddOrEditDialog" tabindex="-1" role="dialog"
+     aria-labelledby="contactAddOrEditDialogTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span>
+        </button>
+        <h4 class="modal-title" id="contactAddOrEditDialogTitle">客户</h4>
+      </div>
+      <div class="modal-body">
+
+        <form id="insertOrUpdateContactForm" class="form-horizontal" role="form" data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+          <input type="hidden" value="$!contact.id" name="id">
+          <table class="table table-bordered table-striped" style="margin: 0px">
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">公司</label></td>
+              <td>
+                <select name="customer.id" data-rule="网址:required;webSite">
+                  #foreach($customer in $customers)
+                  <option value="$customer.id">$customer.name</option>
+                  #end
+                </select>
+              </td>
+              <td align="right"><label class="control-label no-padding-right">名称</label><sup style="color:red">*</sup></td>
+              <td><input type="text" class="form-control" name="name" data-rule="名称:required;name"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">英文名</label></td>
+              <td><input type="text" class="form-control" name="englishName"/></td>
+              <td align="right"><label class="control-label no-padding-right">生日</label></td>
+              <td>
+                <div class="input-append date">
+                  <input type="text" class="span2 form-control" name="birthday"><span class="add-on"><i class="icon-th"></i></span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">部门</label></td>
+              <td><input type="text" class="form-control" name="department"/></td>
+
+              <td align="right"><label class="control-label no-padding-right">职位</label></td>
+              <td><input type="text" class="form-control" name="position"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">公司电话</label></td>
+              <td><input type="text" class="form-control" name="companyPhone"/></td>
+              <td align="right"><label class="control-label no-padding-right">移动电话</label></td>
+              <td><input type="text" class="form-control" name="mobilePhone"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">公司传真</label></td>
+              <td><input type="text" class="form-control" name="companyFax"/></td>
+
+              <td align="right"><label class="control-label no-padding-right">电子邮箱</label></td>
+              <td><input type="text" class="form-control" name="email"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">是否关键</label></td>
+              <td><input type="checkbox" class="form-control" name="isKey"/></td>
+
+              <td align="right"><label class="control-label no-padding-right">备注</label></td>
+              <td><input type="text" class="form-control" name="remark"/></td>
+            </tr>
+          </table>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button id="saveOrUpdateContact" type="button" class="btn btn-primary">
+          <i class="ace-icon fa fa-check bigger-110"></i>保存
+        </button>
+        <button id="closeContact" class="btn"><i class="ace-icon fa fa-undo bigger-110"></i>关闭</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#contactList").jqGrid({
+      url: '/contact/findByBean.do',
+      mtype: "POST",
+      datatype: "json",
+      colNames: ['名称', '网址', '电话', '行业', '法人', '注册资金', '员工人数'],
+      colModel: [
+        {name: 'name', width: 150},
+        {name: 'webSite', width: 150},
+        {name: 'phone', width: 150},
+        {name: 'industry', width: 150},
+        {name: 'legalPerson', width: 150},
+        {name: 'registeredCapital', width: 150},
+        {name: 'staffCount', width: 150}
+      ],
+      multiselect: true,
+      rowNum: 10,
+      rowList: [10, 30, 50, 100],
+      pager: '#contactListPager',
+      caption: "客户列表",
+      shrinkToFit: true
+    });
+    function resizeContactList() {
+      $("#contactList").jqGrid('setGridWidth', $(window).width() - $("#contactListDiv").offset().left - 10);
+      $("#contactList").jqGrid('setGridHeight', $(window).height() - $("#contactListDiv").offset().top - 140);
+    }
+    resizeContactList();
+    $(window).on('resize', function () {
+      resizeContactList();
+    });
+
+    $("#searchContact").on("click", function () {
+      $("#contactList").jqGrid('setGridParam', {
+        postData: {
+          name: $("#searchContactForm input[name='name']").val(),
+          industry: $("#searchContactForm input[name='industry']").val(),
+          phone: $("#searchContactForm input[name='phone']").val()
+        },
+        page: 1
+      }).trigger("reloadGrid");
+    });
+
+    $("#addContact").on("click", function () {
+      //清空表单
+      $("#insertOrUpdateContactForm").validator("cleanUp");
+      $("#insertOrUpdateContactForm input").val(null);
+      $("#insertOrUpdateContactForm select").val(null)
+      $("#insertOrUpdateContactForm textarea").text(null);
+      $("#contactAddOrEditDialogTitle").text("新增客户");
+      $('#contactAddOrEditDialog').modal('show')
+    });
+
+    $("#editContact").on("click", function () {
+      var rowIds = $("#contactList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length != 1) {
+        bootbox.alert("请选择要删除的记录");
+        return;
+      }
+      $("#contactListDiv").block({
+        message: '<h3>正在加载数据</h3>',
+        css: {border: '3px solid #a00'}
+      });
+      loadRecord("/contact/findById.do", {id: rowIds[0]}, "#insertOrUpdateContactForm", function () {
+        $("#contactListDiv").unblock();
+        $("#contactAddOrEditDialogTitle").text("编辑客户");
+        $('#contactAddOrEditDialog').modal('show')
+      });
+    });
+
+    $("#deleteContact").on("click", function () {
+      var rowIds = $("#contactList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length < 1) {
+        bootbox.alert("请选择一条进行编辑");
+        return;
+      }
+      bootbox.confirm("<h3>确定删除?</h3>", function (result) {
+        if (result) {
+          disableRecords(
+              "/contact/disableByIds.do",
+              {ids: rowIds},
+              function () {
+                $("#searchContactForm").submit();
+              },
+              function () {
+                $("#searchContactForm").submit();
+              });
+        }
+      })
+    });
+
+    $("#saveOrUpdateContact").on("click", function () {
+      saveOrUpdateRecord("/contact/insertOrUpdate.do", "#insertOrUpdateContactForm", function () {
+        $("#contactAddOrEditDialog").modal("hide");
+        $("#searchContactForm").submit();
+      });
+    })
+
+    $("#closeContact").on("click", function () {
+      $("#contactAddOrEditDialog").modal("hide");
+    })
+  });
+</script>
+
+

@@ -4,13 +4,13 @@
     <div class="form-group">
       <div class="input-group">
         <div class="input-group-addon">名称</div>
-        <input class="form-control" name="name" value="#if($param['name'])$param['name']#end">
+        <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end>
         <div class="input-group-addon">行业</div>
-        <input class="form-control" name="industry" value="#if($param['industry'])$param['industry']#end">
+        <input class="form-control" name="industry" #if($param['industry']) value="$param['industry']" #end>
         <div class="input-group-addon">电话</div>
-        <input class="form-control" name="phone" value="#if($param['phone'])$param['phone']#end">
+        <input class="form-control" name="phone" #if($param['phone']) value="$param['phone']" #end>
         <span class="input-group-btn">
-          <button class="btn btn-primary form-control no-radius" type="button" onclick="queryCustomer()">
+          <button id="searchCustomer" class="btn btn-primary form-control no-radius" type="button">
             <i class="ace-icon fa fa-search"></i>搜索
           </button>
         </span>
@@ -21,7 +21,11 @@
         <i class="ace-icon fa fa-plus"></i>
         新增
       </button>
-      <button id="searchCustomer" type="button" class="btn btn-danger form-control no-radius">
+      <button id="editCustomer" type="button" class="btn btn-success form-control no-radius">
+        <i class="ace-icon fa fa-edit"></i>
+        编辑
+      </button>
+      <button id="deleteCustomer" type="button" class="btn btn-danger form-control no-radius">
         <i class="ace-icon fa fa-trash-o"></i>
         删除
       </button>
@@ -30,185 +34,195 @@
 </div>
 
 <div id="customerListDiv">
-<table id="customerList"></table>
-<div id="customerListPager"></div>
+  <table id="customerList"></table>
+  <div id="customerListPager"></div>
 </div>
+
+<div class="modal fade" id="customerAddOrEditDialog" tabindex="-1" role="dialog"
+     aria-labelledby="customerAddOrEditDialogTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span>
+        </button>
+        <h4 class="modal-title" id="customerAddOrEditDialogTitle">客户</h4>
+      </div>
+      <div class="modal-body">
+
+        <form id="insertOrUpdateCustomerForm" class="form-horizontal" role="form" data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+          <input type="hidden" value="$!customer.id" name="id">
+          <table class="table table-bordered table-striped" style="margin: 0px">
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">名称</label><sup style="color:red">*</sup></td>
+              <td><input type="text" class="form-control" name="name" data-rule="名称:required;name"/></td>
+              <td align="right"><label class="control-label no-padding-right">网址</label></td>
+              <td><input type="text" class="form-control" name="webSite" data-rule="网址:required;webSite"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">电话</label></td>
+              <td><input type="text" class="form-control" name="phone"/></td>
+              <td align="right"><label class="control-label no-padding-right">传真</label></td>
+              <td><input type="text" class="form-control" name="fax"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">地区</label></td>
+              <td><input type="text" class="form-control" name="region"/></td>
+
+              <td align="right"><label class="control-label no-padding-right">地址</label></td>
+              <td><input type="text" class="form-control" name="address"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">邮编</label></td>
+              <td><input type="text" class="form-control" name="postCode"/></td>
+              <td align="right"><label class="control-label no-padding-right">员工人数</label></td>
+              <td><input type="text" class="form-control" name="staffCount"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">所属行业</label></td>
+              <td><input type="text" class="form-control" name="industry"/></td>
+
+              <td align="right"><label class="control-label no-padding-right">企业性质</label></td>
+              <td><input type="text" class="form-control" name="nature"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">产品</label></td>
+              <td><input type="text" class="form-control" name="products"/></td>
+
+              <td align="right"><label class="control-label no-padding-right">注册资金</label></td>
+              <td><input type="text" class="form-control" name="registeredCapital"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">法人</label></td>
+              <td><input type="text" class="form-control" name="legalPerson"/></td>
+
+              <td align="right"><label class="control-label no-padding-right">产权结构</label></td>
+              <td><input type="text" class="form-control" class="form-control" name="propertyRightStructure"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">关键字</label></td>
+              <td colspan="3"><input type="text" class="form-control" name="keyword"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">备注</label></td>
+              <td colspan="3"><textarea  class="form-control" name="remark"></textarea></td>
+            </tr>
+          </table>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button id="saveOrUpdateCustomer" type="button" class="btn btn-primary">
+          <i class="ace-icon fa fa-check bigger-110"></i>保存
+        </button>
+        <button id="closeCustomer" class="btn"><i class="ace-icon fa fa-undo bigger-110"></i>关闭</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div>
+
 
 <script type="text/javascript">
   $(document).ready(function () {
     $("#customerList").jqGrid({
-      url:'/customer/findByBean.do',
+      url: '/customer/findByBean.do',
       mtype: "POST",
       datatype: "json",
-      colNames:['编号','名称', '网址', '电话', '行业', '法人','注册资金','员工人数'],
-      colModel:[
-        {name:'id', width: 75},
-        {name:'name', width: 150},
-        {name:'webSite', width: 150},
-        {name:'phone', width: 150},
-        {name:'industry', width: 150},
-        {name:'legalPerson', width: 150},
-        {name:'registeredCapital', width: 150},
-        {name:'staffCount', width: 150}
+      colNames: ['名称', '网址', '电话', '行业', '法人', '注册资金', '员工人数'],
+      colModel: [
+        {name: 'name', width: 150},
+        {name: 'webSite', width: 150},
+        {name: 'phone', width: 150},
+        {name: 'industry', width: 150},
+        {name: 'legalPerson', width: 150},
+        {name: 'registeredCapital', width: 150},
+        {name: 'staffCount', width: 150}
       ],
-      rowNum:10,
-      rowList:[10,30,50,100],
+      multiselect: true,
+      rowNum: 10,
+      rowList: [10, 30, 50, 100],
       pager: '#customerListPager',
-      caption:"客户列表",
-      shrinkToFit:true
+      caption: "客户列表",
+      shrinkToFit: true
     });
-    $("#customerList").jqGrid( 'setGridWidth', $(window).width() - $("#customerListDiv").offset().left - 10);
-    $("#customerList").jqGrid( 'setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
+    function resizeCustomerList() {
+      $("#customerList").jqGrid('setGridWidth', $(window).width() - $("#customerListDiv").offset().left - 10);
+      $("#customerList").jqGrid('setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
+    }
+    resizeCustomerList();
     $(window).on('resize', function () {
-      $("#customerList").jqGrid( 'setGridWidth', $(window).width() - $("#customerListDiv").offset().left - 10);
-      $("#customerList").jqGrid( 'setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
+      resizeCustomerList();
     });
-  });
 
-  function queryCustomer() {
-    $("#customerList").jqGrid('setGridParam',{
-      postData:{
-        name:$("#searchCustomerForm input[name='name']").val(),
-        industry:$("#searchCustomerForm input[name='industry']").val(),
-        phone:$("#searchCustomerForm input[name='phone']").val()},
-      page:1
-    }).trigger("reloadGrid");
-  }
-
-  $("#addCustomer").on("click", function () {
-        $('#customerAddOrEditDialog').modal('show')
-  });
-
-  function saveOrUpdateCustomer() {
-    $("#customerAddOrEditDialog").block({
-      message: '<h1>正在保存</h1>',
-      css: { border: '3px solid #a00' }
+    $("#searchCustomer").on("click", function () {
+      $("#customerList").jqGrid('setGridParam', {
+        postData: {
+          name: $("#searchCustomerForm input[name='name']").val(),
+          industry: $("#searchCustomerForm input[name='industry']").val(),
+          phone: $("#searchCustomerForm input[name='phone']").val()
+        },
+        page: 1
+      }).trigger("reloadGrid");
     });
-    $("#customerAddOrEditDialog form").ajaxSubmit({
-      type:"post",
-      dataType:"json",
-      url:"/customer/insertOrUpdate.do",
-      beforeSubmit: function(arr, $form, options) {
-        var notEmptyData = [];
-        for(var i = 0 ; i < arr.length ; i++) {
-          if (arr[i].value && arr[i].value != null && arr[i].value != "") {
-            notEmptyData.push(arr[i]);
-          }
-        }
-        if (notEmptyData.length > 0) {
-          while (arr.length > 0) {
-            arr.pop();
-          }
-          for(var j = 0 ; j < notEmptyData.length ; j++) {
-            arr.push(notEmptyData[j]);
-          }
-        }
-        return true;
-      },
-      success: function(result, statusText, xhr) {
-        $("#customerAddOrEditDialog").unblock();
-        if(result && result.success) {
-          $("#customerAddOrEditDialog").modal("hide");
-          $("#searchCustomerForm").submit();
-        } else {
-          bootbox.alert("保存失败，请联系管理员");
-        }
-      },
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
-        $("#customerAddOrEditDialog").unblock();
-        bootbox.alert("保存失败，请联系管理员");
+
+    $("#addCustomer").on("click", function () {
+      //清空表单
+      $("#insertOrUpdateCustomerForm").validator("cleanUp");
+      $("#insertOrUpdateCustomerForm input").val(null);
+      $("#insertOrUpdateCustomerForm select").val(null)
+      $("#insertOrUpdateCustomerForm textarea").text(null);
+      $("#customerAddOrEditDialogTitle").text("新增客户");
+      $('#customerAddOrEditDialog').modal('show')
+    });
+
+    $("#editCustomer").on("click", function () {
+      var rowIds = $("#customerList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length != 1) {
+        bootbox.alert("请选择要删除的记录");
+        return;
       }
+      $("#customerListDiv").block({
+        message: '<h3>正在加载数据</h3>',
+        css: {border: '3px solid #a00'}
+      });
+      loadRecord("/customer/findById.do", {id: rowIds[0]}, "#insertOrUpdateCustomerForm", function () {
+        $("#customerListDiv").unblock();
+        $("#customerAddOrEditDialogTitle").text("编辑客户");
+        $('#customerAddOrEditDialog').modal('show')
+      });
     });
-  }
 
+    $("#deleteCustomer").on("click", function () {
+      var rowIds = $("#customerList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length < 1) {
+        bootbox.alert("请选择一条进行编辑");
+        return;
+      }
+      bootbox.confirm("<h3>确定删除?</h3>", function (result) {
+        if (result) {
+          disableRecords(
+              "/customer/disableByIds.do",
+              {ids: rowIds},
+              function () {
+                $("#searchCustomerForm").submit();
+              },
+              function () {
+                $("#searchCustomerForm").submit();
+              });
+        }
+      })
+    });
+
+    $("#saveOrUpdateCustomer").on("click", function () {
+      saveOrUpdateRecord("/customer/insertOrUpdate.do", "#insertOrUpdateCustomerForm", function () {
+        $("#customerAddOrEditDialog").modal("hide");
+        $("#searchCustomerForm").submit();
+      });
+    })
+
+    $("#closeCustomer").on("click", function () {
+      $("#customerAddOrEditDialog").modal("hide");
+    })
+  });
 </script>
-
-
-
-<div class="modal fade" id="customerAddOrEditDialog"  tabindex="-1" role="dialog" aria-labelledby="customerAddOrEditDialogTitle" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
-            <h4 class="modal-title" id="customerAddOrEditDialogTitle">客户信息</h4>
-        </div>
-        <div class="modal-body">
-
-            <form class="form-horizontal" role="form">
-                <input type="hidden" value="$!customer.id" name="id">
-                <table class="table table-bordered table-striped">
-                    <tr>
-                        <td align="right"><label class="control-label no-padding-right">名称</label></td>
-                        <td><input type="text"  class="form-control" name="name"/></td>
-                        <td align="right"><label class="control-label no-padding-right">网址</label></td>
-                        <td><input type="text"  class="form-control" name="webSite"/></td>
-                    </tr>
-                    <tr>
-                        <td align="right"><label class="control-label no-padding-right">电话</label></td>
-                        <td><input type="text"  class="form-control" name="phone"/></td>
-                        <td align="right"><label class="control-label no-padding-right">传真</label></td>
-                        <td><input type="text"  class="form-control" name="fax"/></td>
-                    </tr>
-                    <tr>
-                        <td  align="right"><label class="control-label no-padding-right">地区</label></td>
-                        <td><input type="text"  class="form-control" name="region"/></td>
-
-                        <td  align="right"><label class="control-label no-padding-right">地址</label></td>
-                        <td><input type="text"  class="form-control" name="address"/></td>
-                    </tr>
-                    <tr>
-                        <td  align="right"><label class="control-label no-padding-right">邮编</label></td>
-                        <td><input type="text"  class="form-control" name="postCode"/></td>
-                        <td  align="right"><label class="control-label no-padding-right">员工人数</label></td>
-                        <td><input type="text"  class="form-control" name="staffCount"/></td>
-                    </tr>
-                    <tr>
-                        <td  align="right"><label class="control-label no-padding-right">所属行业</label></td>
-                        <td><input type="text"  class="form-control" name="industry"/></td>
-
-                        <td  align="right"><label class="control-label no-padding-right">企业性质</label></td>
-                        <td><input type="text"  class="form-control" name="nature"/></td>
-                    </tr>
-                    <tr>
-                        <td  align="right"><label class="control-label no-padding-right">产品</label></td>
-                        <td><input type="text"  class="form-control" name="products"/></td>
-
-                        <td  align="right"><label class="control-label no-padding-right">注册资金</label></td>
-                        <td><input type="text"  class="form-control" name="registeredCapital"/></td>
-                    </tr>
-                    <tr>
-                        <td  align="right"><label class="control-label no-padding-right">法人</label></td>
-                        <td><input type="text"  class="form-control" name="legalPerson"/></td>
-
-                        <td  align="right"><label class="control-label no-padding-right">产权结构</label></td>
-                        <td><input type="text"  class="form-control" class="form-control" name="propertyRightStructure"/></td>
-                    </tr>
-                    <tr>
-
-                        <td  align="right"><label class="control-label no-padding-right">备注</label></td>
-                        <td><input type="text" class="form-control" name="remark"/></td>
-
-                        <td  align="right"><label class="control-label no-padding-right">关键字</label></td>
-                        <td><input type="text"  class="form-control"name="keyword"/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" align="center">
-
-                        </td>
-                    </tr>
-                </table>
-            </form>
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="saveOrUpdateCustomer()">
-              <i class="ace-icon fa fa-check bigger-110"></i>保存
-            </button>
-            <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i>重置</button>
-        </div>
-    </div><!-- /.modal-content -->
-</div>
-</div>
-
 
 

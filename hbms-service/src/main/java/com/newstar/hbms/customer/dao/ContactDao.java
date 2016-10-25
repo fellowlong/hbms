@@ -11,13 +11,14 @@ import java.util.List;
  */
 public interface ContactDao {
 
+
   public int insert(Contact contact);
 
   public int update(Contact contact);
 
-  public int disable(Long contactId);
+  public int disable(Long[] contactIds);
 
-  public int enable(Long contactId);
+  public int enable(Long[] contactIds);
 
   public PagingResult<Contact> findByBean(Contact contact, PageRange pageRange);
 

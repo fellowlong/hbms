@@ -2,45 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.newstar.hbms.customer.dao.ContactDao">
+<mapper namespace="com.newstar.hbms.customer.dao.CustomerDao">
 
   <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Contact">
     insert into Contact(
-      name,
-      customerId,
-      englishName,
-      birthday,
-      department,
-      position,
-      companyPhone,
-      mobilePhone,
-      companyFax,
-      email,
-      isKey,
-      remark,
-      yn,
-      updateUser,
-      updateTime,
-      createUser,
-      createTime
+    name,
+    customerId,
+    englishName,
+    birthday,
+    department,
+    position,
+    companyPhone,
+    mobilePhone,
+    companyFax,
+    email,
+    isKey,
+    remark,
+    yn,
+    updateUser,
+    updateTime,
+    createUser,
+    createTime
     ) values (
-      #{name},
-      #{customerId},
-      #{englishName},
-      #{birthday},
-      #{department},
-      #{position},
-      #{companyPhone},
-      #{mobilePhone},
-      #{companyFax},
-      #{email},
-      #{isKey},
-      #{remark},
-      1,
-      #{updateUser},
-      now(),
-      #{createUser},
-      now()
+    #{name, jdbcType=VARCHAR},
+    #{customerId, jdbcType=BIGINT},
+    #{englishName, jdbcType=VARCHAR},
+    #{birthday, jdbcType=DATE},
+    #{department, jdbcType=VARCHAR},
+    #{position, jdbcType=VARCHAR},
+    #{companyPhone, jdbcType=VARCHAR},
+    #{mobilePhone, jdbcType=VARCHAR},
+    #{companyFax, jdbcType=VARCHAR},
+    #{email, jdbcType=VARCHAR},
+    #{isKey, jdbcType=BOOLEAN},
+    #{remark, jdbcType=VARCHAR},
+    1,
+    #{updateUser, jdbcType=VARCHAR},
+    now(),
+    #{createUser, jdbcType=VARCHAR},
+    now()
     )
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       select last_insert_id();
@@ -49,34 +49,62 @@
 
   <update id="update" parameterType="com.newstar.hbms.customer.domain.Contact">
     update Contact set
-      name = #{name},
-      customerId = #{customerId},
-      englishName = #{englishName},
-      birthday = #{birthday},
-      department = #{department},
-      position = #{position},
-      companyPhone = #{companyPhone},
-      mobilePhone = #{mobilePhone},
-      companyFax = #{companyFax},
-      email = #{email},
-      isKey = #{isKey},
-      remark = #{remark},
+      name = #{name, jdbcType=VARCHAR},
+      customerId = #{customerId, jdbcType=BIGINT},
+      englishName = #{englishName, jdbcType=VARCHAR},
+      birthday = #{birthday, jdbcType=DATE},
+      department = #{department, jdbcType=VARCHAR},
+      position = #{position, jdbcType=VARCHAR},
+      companyPhone = #{companyPhone, jdbcType=VARCHAR},
+      mobilePhone = #{mobilePhone, jdbcType=VARCHAR},
+      companyFax = #{companyFax, jdbcType=VARCHAR},
+      email = #{email, jdbcType=VARCHAR},
+      isKey = #{isKey, jdbcType=BOOLEAN},
+      remark = #{remark, jdbcType=VARCHAR},
       updateTime = now()
     where
       id = #{id}
   </update>
 
-  <delete id="disable" parameterType="java.lang.Long">
-    update Contact set yn = 0, updateTime = now() where id = #{id}
-  </delete>
+  <update id="disable">
+    update Contact set yn = 0, updateTime = now() where id in
+    <foreach collection="array" open="(" close=")" separator="," item="customerId">
+      #{customerId}
+    </foreach>
+  </update>
 
-  <delete id="enable" parameterType="java.lang.Long">
-    update Contact set yn = 1 , updateTime = now() where id = #{id}
-  </delete>
-  
+  <update id="enable">
+    update Contact set yn = 1 , updateTime = now() where id in
+    <foreach collection="array" open="(" close=")" separator="," item="customerId">
+      #{customerId}
+    </foreach>
+  </update>
+
   <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Contact"
           resultType="com.newstar.hbms.customer.domain.Contact">
-    select * from Contact order by createTime desc
+    select co.*,cu.* from Contact co, Customer cu where co.yn = 1 and cu.yn = 1 and co.customerId = cu.id
+    <if test="id != null">
+      and co.id = #{id}
+    </if>
+    <if test="name != null and !name.isEmpty()">
+      and co.name like "%"#{name}"%"
+    </if>
+    <if test="englishName != null and !englishName.isEmpty()">
+      and co.englishName like "%"#{englishName}"%"
+    </if>
+    <if test="mobilePhone != null and !mobilePhone.isEmpty()">
+      and co.mobilePhone like "%"#{mobilePhone}"%"
+    </if>
+    <if test="isKey != null">
+      and co.isKey = #{isKey}
+    </if>
+    <if test="customer != null and customer.id != null">
+      and cu.id = #{customer.id}
+    </if>
+    <if test="customer != null and customer.name != null and !customer.name.isEmpty()">
+      and cu.name like "%"#{customer.name}"%"
+    </if>
+    order by createTime desc
   </select>
 
   <select id="findByIds" parameterType="com.newstar.hbms.customer.domain.Contact"

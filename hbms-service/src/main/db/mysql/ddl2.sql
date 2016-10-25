@@ -194,3 +194,26 @@ create table Customer(
   updateUser varchar(50) comment '修改人账户'
 ) comment='客户表';
 
+
+drop table Contact;
+create table Contact(
+  id bigint auto_increment not null primary key comment '客户编号,主键',
+  name  varchar(100) comment '名称',
+  englishName varchar(20) comment '英文姓名',
+  customerId bigint comment '外键，客户主键',
+  birthday DATE comment '生日',
+  department varchar(50) comment '部门',
+  position varchar(50) comment '职位',
+  companyPhone varchar(20) comment '公司电话',
+  mobilePhone varchar(20) comment '手机',
+  companyFax varchar(20) comment '公司传真',
+  email varchar(20) comment '邮箱',
+  isKey INT (1) comment '是否关键',
+  remark varchar(500) comment '备注',
+  yn  int(1) comment '是否有效',
+  createTime datetime comment '创建时间',
+  createUser varchar(50) comment '创建人账户',
+  updateTime datetime comment '修改时间',
+  updateUser varchar(50) comment '修改人账户'
+) comment='联系人表';
+

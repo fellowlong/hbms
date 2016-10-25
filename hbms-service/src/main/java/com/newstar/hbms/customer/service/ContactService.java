@@ -11,14 +11,11 @@ import java.util.List;
  */
 public interface ContactService {
 
+  public int insertOrUpdate(Contact contact);
 
-  public int insert(Contact contact);
+  public int disable(Long[] contactIds);
 
-  public int update(Contact contact);
-
-  public int disable(Long contactId);
-
-  public int enable(Long contactId);
+  public int enable(Long[] contactIds);
 
   public PagingResult<Contact> findByBean(Contact contact, PageRange pageRange);
 

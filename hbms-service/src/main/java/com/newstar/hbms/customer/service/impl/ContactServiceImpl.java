@@ -20,23 +20,18 @@ public class ContactServiceImpl implements ContactService {
   }
 
   @Override
-  public int insert(Contact contact) {
-    return contactDao.insert(contact);
+  public int insertOrUpdate(Contact contact) {
+    return contact.getId() != null ? contactDao.update(contact) : contactDao.insert(contact);
   }
 
   @Override
-  public int update(Contact contact) {
-    return contactDao.update(contact);
+  public int disable(Long[] contactIds) {
+    return contactDao.disable(contactIds);
   }
 
   @Override
-  public int disable(Long contactId) {
-    return contactDao.disable(contactId);
-  }
-
-  @Override
-  public int enable(Long contactId) {
-    return contactDao.enable(contactId);
+  public int enable(Long[] contactIds) {
+    return contactDao.enable(contactIds);
   }
 
   @Override

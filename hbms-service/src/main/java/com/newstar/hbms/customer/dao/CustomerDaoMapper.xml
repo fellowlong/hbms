@@ -78,24 +78,33 @@
       id = #{id}
   </update>
 
-  <delete id="disable" parameterType="java.lang.Long">
-    update Customer set yn = 0, updateTime = now() where id = #{id}
-  </delete>
+  <update id="disable">
+    update Customer set yn = 0, updateTime = now() where id in
+    <foreach collection="array" open="(" close=")" separator="," item="customerId">
+      #{customerId}
+    </foreach>
+  </update>
 
-  <delete id="enable" parameterType="java.lang.Long">
-    update Customer set yn = 1 , updateTime = now() where id = #{id}
-  </delete>
+  <update id="enable">
+    update Customer set yn = 1 , updateTime = now() where id in
+    <foreach collection="array" open="(" close=")" separator="," item="customerId">
+      #{customerId}
+    </foreach>
+  </update>
   
   <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Customer"
           resultType="com.newstar.hbms.customer.domain.Customer">
-    select * from Customer c where 1 = 1
-    <if test="name != null">
+    select * from Customer c where yn = 1
+    <if test="id != null">
+      and c.id = #{id}
+    </if>
+    <if test="name != null and !name.isEmpty()">
       and c.name like "%"#{name}"%"
     </if>
-    <if test="industry != null">
+    <if test="industry != null and !industry.isEmpty()">
       and c.industry like "%"#{industry}"%"
     </if>
-    <if test="phone != null">
+    <if test="phone != null and !phone.isEmpty()">
       and c.phone like "%"#{phone}"%"
     </if>
     order by createTime desc

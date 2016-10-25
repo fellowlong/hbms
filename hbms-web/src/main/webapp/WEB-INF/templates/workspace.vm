@@ -56,11 +56,21 @@
 
   <script src="/ace/js/jqGrid/i18n/grid.locale-cn.js"></script>
   <script src="/ace/js/jqGrid/jquery.jqGrid.src.js"></script>
-  <script src="../../js/jquery.form.js"></script>
+  <script src="/js/jquery.form.js"></script>
   <script src="/js/jquery.form.js"></script>
   <script src="/js/jquery.blockUI.js"></script>
-  <script src="/js/jquery.blockUI.js"></script>
   <script src="/ace/js/bootbox.js"></script>
+  <script src="/js/common.js"></script>
+
+  <link rel="stylesheet" href="/validator/jquery.validator.css" />
+  <script src="/validator/jquery.validator.js"></script>
+  <script src="/validator/zh_CN.js"></script>
+
+  <link rel="stylesheet" href="/bootstrap-datepicker/bootstrap-datepicker.css" />
+  <script src="/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
+
+  <
 
 </head>
 <body class="no-skin">

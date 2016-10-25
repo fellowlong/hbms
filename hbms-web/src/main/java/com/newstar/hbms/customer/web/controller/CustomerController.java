@@ -1,4 +1,4 @@
-package com.newstar.hbms.customer;
+package com.newstar.hbms.customer.web.controller;
 
 import com.newstar.hbms.customer.domain.Customer;
 import com.newstar.hbms.customer.service.CustomerService;
@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,49 @@ public class CustomerController extends MultiActionController {
       jsonResult.setSuccess(true);
       jsonResult.setData(resultCount);
     } catch (Throwable t) {
-      logger.error("新增EventParserConfig失败", t);
+      logger.error("新增Customer失败", t);
+      jsonResult.setErrorMessage(ExceptionUtils.getExceptionStack(t));
+    }
+    WebUtils.writeWithJson(response, jsonResult);
+  }
+
+  public void disableByIds(HttpServletRequest request, HttpServletResponse response)
+          throws Exception {
+    JsonResult jsonResult = new JsonResult();
+    try {
+      List<Long> ids = new ArrayList<Long>();
+      String[] idsStrArray = request.getParameterValues("ids[]");
+      if (idsStrArray != null && idsStrArray.length > 0) {
+        for (String idsStr : idsStrArray) {
+          ids.add(new Long(idsStr));
+        }
+        int result = customerService.disable(ids.toArray(new Long[ids.size()]));
+        if (result > 0) {
+          jsonResult.setSuccess(true);
+          jsonResult.setData(result);
+        }
+      }
+    } catch (Throwable t) {
+      logger.error("删除Customer失败", t);
+      jsonResult.setErrorMessage(ExceptionUtils.getExceptionStack(t));
+    }
+    WebUtils.writeWithJson(response, jsonResult);
+  }
+
+  public void findById(HttpServletRequest request, HttpServletResponse response, Customer customer)
+          throws Exception {
+    JsonResult jsonResult = new JsonResult();
+    try {
+      List<Customer> customers = customerService.findByIds(new Long[]{customer.getId()});
+      if (customers != null && customers.size() == 1) {
+        jsonResult.setSuccess(true);
+        jsonResult.setData(customers.get(0));
+      } else {
+        jsonResult.setSuccess(false);
+        jsonResult.setErrorMessage("没有找到客户");
+      }
+    } catch (Throwable t) {
+      logger.error("查询Customer失败", t);
       jsonResult.setErrorMessage(ExceptionUtils.getExceptionStack(t));
     }
     WebUtils.writeWithJson(response, jsonResult);

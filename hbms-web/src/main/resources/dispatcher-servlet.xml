@@ -37,6 +37,7 @@
         <value>/resume/preInsertOrUpdate.do</value>
         <value>/resume/insertOrUpdate.do</value>
         <value>/customer/workspace.do</value>
+        <value>/contact/workspace.do</value>
       </list>
     </property>
   </bean>
@@ -98,7 +99,12 @@
     <!--<property name="httpSolrServer" ref="httpSolrServer"/>-->
   </bean>
 
-  <bean id="customerController" class="com.newstar.hbms.customer.CustomerController">
+  <bean id="customerController" class="com.newstar.hbms.customer.web.controller.CustomerController">
+    <property name="customerService" ref="customerService"/>
+  </bean>
+
+  <bean id="contactController" class="com.newstar.hbms.customer.web.controller.ContactController">
+    <property name="contactService" ref="contactService"/>
     <property name="customerService" ref="customerService"/>
   </bean>
 

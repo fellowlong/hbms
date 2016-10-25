@@ -11,12 +11,11 @@ import java.util.List;
  */
 public interface CustomerService {
 
-
   public int insertOrUpdate(Customer customer);
 
-  public int disable(Long customerId);
+  public int disable(Long[] customerIds);
 
-  public int enable(Long customerId);
+  public int enable(Long[] customerIds);
 
   public PagingResult<Customer> findByBean(Customer customer, PageRange pageRange);
 

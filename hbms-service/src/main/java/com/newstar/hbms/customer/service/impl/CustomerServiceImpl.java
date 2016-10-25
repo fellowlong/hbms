@@ -25,13 +25,13 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public int disable(Long customerId) {
-    return customerDao.disable(customerId);
+  public int disable(Long[] customerIds) {
+    return customerDao.disable(customerIds);
   }
 
   @Override
-  public int enable(Long customerId) {
-    return customerDao.enable(customerId);
+  public int enable(Long[] customerIds) {
+    return customerDao.enable(customerIds);
   }
 
   @Override

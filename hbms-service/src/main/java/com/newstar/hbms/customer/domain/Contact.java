@@ -75,6 +75,8 @@ public class Contact implements Serializable {
    */
   private String remark;
 
+  private Customer customer;
+
   public Long getId() {
     return id;
   }
@@ -83,20 +85,20 @@ public class Contact implements Serializable {
     this.id = id;
   }
 
-  public Long getCustomerId() {
-    return customerId;
-  }
-
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
-  }
-
   public String getName() {
     return name;
   }
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Long getCustomerId() {
+    return customerId;
+  }
+
+  public void setCustomerId(Long customerId) {
+    this.customerId = customerId;
   }
 
   public String getEnglishName() {
@@ -163,12 +165,12 @@ public class Contact implements Serializable {
     this.email = email;
   }
 
-  public Boolean getIsKey() {
+  public Boolean getKey() {
     return isKey;
   }
 
-  public void setIsKey(Boolean isKey) {
-    this.isKey = isKey;
+  public void setKey(Boolean key) {
+    isKey = key;
   }
 
   public String getRemark() {
@@ -177,5 +179,13 @@ public class Contact implements Serializable {
 
   public void setRemark(String remark) {
     this.remark = remark;
+  }
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 }
