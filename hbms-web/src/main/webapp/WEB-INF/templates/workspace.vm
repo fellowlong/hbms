@@ -66,11 +66,26 @@
   <script src="/validator/jquery.validator.js"></script>
   <script src="/validator/zh_CN.js"></script>
 
-  <link rel="stylesheet" href="/bootstrap-datepicker/bootstrap-datepicker.css" />
-  <script src="/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-  <script src="/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
+##  <link rel="stylesheet" href="/bootstrap-datepicker/bootstrap-datepicker.css" />
+##  <script src="/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+##  <script src="/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
 
-  <
+  <link rel="stylesheet" href="/ace/css/chosen.css" />
+  <link rel="stylesheet" href="/ace/css/datepicker.css" />
+  <link rel="stylesheet" href="/ace/css/bootstrap-timepicker.css" />
+  <link rel="stylesheet" href="/ace/css/daterangepicker.css" />
+  <link rel="stylesheet" href="/ace/css/bootstrap-datetimepicker.css" />
+
+
+  <script src="/ace/js/chosen.jquery.js"></script>
+  <script src="/ace/js/date-time/bootstrap-datepicker.js"></script>
+  <script src="/ace/js/date-time/bootstrap-timepicker.js"></script>
+  <script src="/ace/js/date-time/moment.js"></script>
+  <script src="/ace/js/date-time/bootstrap-datetimepicker.js"></script>
+  <script src="/ace/js/date-time/bootstrap-datepicker.zh-CN.min.js"></script>
+
+
+
 
 </head>
 <body class="no-skin">

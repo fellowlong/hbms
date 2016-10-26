@@ -4,6 +4,33 @@
 
 <mapper namespace="com.newstar.hbms.customer.dao.ContactDao">
 
+
+  <resultMap id="Customer" type="com.newstar.hbms.customer.domain.Customer">
+    <id column="id" property="id" />
+    <result column="name" property="name"/>
+  </resultMap>
+  <resultMap id="Contact" type="com.newstar.hbms.customer.domain.Contact">
+    <id column="id" property="id" />
+    <result column="name" property="name"/>
+    <result column="customerId" property="customerId"/>
+    <result column="englishName" property="englishName"/>
+    <result column="birthday" property="birthday"/>
+    <result column="department" property="department"/>
+    <result column="position" property="position"/>
+    <result column="companyPhone" property="companyPhone"/>
+    <result column="mobilePhone" property="mobilePhone"/>
+    <result column="companyFax" property="companyFax"/>
+    <result column="email" property="email"/>
+    <result column="key" property="key"/>
+    <result column="remark" property="remark"/>
+    <result column="yn" property="yn"/>
+    <result column="updateUser" property="updateUser"/>
+    <result column="updateTime" property="updateTime"/>
+    <result column="createUser" property="createUser"/>
+    <result column="createTime" property="createTime"/>
+    <association property="customer" columnPrefix="CUS_" resultMap="Customer"/>
+  </resultMap>
+
   <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Contact">
     insert into Contact(
     name,
@@ -16,7 +43,7 @@
     mobilePhone,
     companyFax,
     email,
-    isKey,
+    key,
     remark,
     yn,
     updateUser,
@@ -34,7 +61,7 @@
     #{mobilePhone, jdbcType=VARCHAR},
     #{companyFax, jdbcType=VARCHAR},
     #{email, jdbcType=VARCHAR},
-    #{isKey, jdbcType=BOOLEAN},
+    #{key, jdbcType=BOOLEAN},
     #{remark, jdbcType=VARCHAR},
     1,
     #{updateUser, jdbcType=VARCHAR},
@@ -50,7 +77,6 @@
   <update id="update" parameterType="com.newstar.hbms.customer.domain.Contact">
     update Contact set
       name = #{name, jdbcType=VARCHAR},
-      customerId = #{customerId, jdbcType=BIGINT},
       englishName = #{englishName, jdbcType=VARCHAR},
       birthday = #{birthday, jdbcType=DATE},
       department = #{department, jdbcType=VARCHAR},
@@ -59,7 +85,7 @@
       mobilePhone = #{mobilePhone, jdbcType=VARCHAR},
       companyFax = #{companyFax, jdbcType=VARCHAR},
       email = #{email, jdbcType=VARCHAR},
-      isKey = #{isKey, jdbcType=BOOLEAN},
+      key = #{key, jdbcType=BOOLEAN},
       remark = #{remark, jdbcType=VARCHAR},
       updateTime = now()
     where
@@ -81,8 +107,8 @@
   </update>
 
   <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Contact"
-          resultType="com.newstar.hbms.customer.domain.Contact">
-    select co.*,cu.* from Contact co, Customer cu where co.yn = 1 and cu.yn = 1 and co.customerId = cu.id
+          resultMap="Contact">
+    select co.*,cu.id as CUS_id,cu.name CUS_name from Contact co, Customer cu where co.yn = 1 and cu.yn = 1 and co.customerId = cu.id
     <if test="id != null">
       and co.id = #{id}
     </if>
@@ -95,8 +121,8 @@
     <if test="mobilePhone != null and !mobilePhone.isEmpty()">
       and co.mobilePhone like "%"#{mobilePhone}"%"
     </if>
-    <if test="isKey != null">
-      and co.isKey = #{isKey}
+    <if test="key != null">
+      and co.key = #{key}
     </if>
     <if test="customer != null and customer.id != null">
       and cu.id = #{customer.id}
@@ -104,12 +130,12 @@
     <if test="customer != null and customer.name != null and !customer.name.isEmpty()">
       and cu.name like "%"#{customer.name}"%"
     </if>
-    order by createTime desc
+    order by co.createTime desc
   </select>
 
   <select id="findByIds" parameterType="com.newstar.hbms.customer.domain.Contact"
-          resultType="com.newstar.hbms.customer.domain.Contact">
-    select * from Contact where id in
+          resultMap="Contact">
+    select co.*,cu.id as CUS_id,cu.name CUS_name from Contact co, Customer cu where co.yn = 1 and cu.yn = 1 and co.customerId = cu.id and co.id in
     <foreach collection="array" open="(" close=")" separator="," item="customerId">
       #{customerId}
     </foreach>

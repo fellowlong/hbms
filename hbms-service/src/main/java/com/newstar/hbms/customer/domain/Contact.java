@@ -68,12 +68,39 @@ public class Contact implements Serializable {
   /**
    * 是否关键
    */
-  private Boolean isKey;
+  private boolean key;
 
   /**
    * 备注
    */
   private String remark;
+
+  /**
+   * 是否有效
+   * @return
+   */
+  private Boolean yn;
+
+
+  /**
+   * 创建时间
+   */
+  private Date createTime;
+
+  /**
+   * 创建人
+   */
+  private String createUser;
+
+  /**
+   * 修改时间
+   */
+  private Date updateTime;
+
+  /**
+   * 修改人
+   */
+  private String updateUser;
 
   private Customer customer;
 
@@ -165,12 +192,12 @@ public class Contact implements Serializable {
     this.email = email;
   }
 
-  public Boolean getKey() {
-    return isKey;
+  public boolean isKey() {
+    return key;
   }
 
-  public void setKey(Boolean key) {
-    isKey = key;
+  public void setKey(boolean key) {
+    this.key = key;
   }
 
   public String getRemark() {
@@ -179,6 +206,46 @@ public class Contact implements Serializable {
 
   public void setRemark(String remark) {
     this.remark = remark;
+  }
+
+  public Boolean getYn() {
+    return yn;
+  }
+
+  public void setYn(Boolean yn) {
+    this.yn = yn;
+  }
+
+  public Date getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
+
+  public String getCreateUser() {
+    return createUser;
+  }
+
+  public void setCreateUser(String createUser) {
+    this.createUser = createUser;
+  }
+
+  public Date getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
+
+  public String getUpdateUser() {
+    return updateUser;
+  }
+
+  public void setUpdateUser(String updateUser) {
+    this.updateUser = updateUser;
   }
 
   public Customer getCustomer() {

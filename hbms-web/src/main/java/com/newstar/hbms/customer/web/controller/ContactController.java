@@ -39,7 +39,7 @@ public class ContactController extends MultiActionController {
 
   public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
     PagingResult<Customer> customerPagingResult = customerService.findByBean(new Customer(), new PageRange(1, 100));
-    return new ModelAndView("/contact/contactManager", "customers", customerPagingResult.getRecords());
+    return new ModelAndView("/customer/contactManager", "customers", customerPagingResult.getRecords());
   }
 
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Contact contact) throws Exception  {

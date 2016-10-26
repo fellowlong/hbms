@@ -1,14 +1,17 @@
+
 function saveOrUpdateRecord(url, form, successFunction, errorFunction) {
-  $(form).isValid( function(result) {
+  $(form).isValid(function (result) {
     if (result) {
       $(form).ajaxSubmit({
-        type:"post",
-        dataType:"json",
-        url:url,
-        beforeSubmit: function(arr, $form, options) {
+        type: "post",
+        dataType: "json",
+        url: url,
+        beforeSubmit: function (arr, $form, options) {
           var notEmptyData = [];
-          for(var i = 0 ; i < arr.length ; i++) {
+          for (var i = 0; i < arr.length; i++) {
             if (arr[i].value && arr[i].value != null && arr[i].value != "") {
+              notEmptyData.push(arr[i]);
+            } else if ($(arr[i]).attr("type") == "checkbox" || $(arr[i]).attr("type") == "radio"){
               notEmptyData.push(arr[i]);
             }
           }
@@ -16,14 +19,14 @@ function saveOrUpdateRecord(url, form, successFunction, errorFunction) {
             while (arr.length > 0) {
               arr.pop();
             }
-            for(var j = 0 ; j < notEmptyData.length ; j++) {
+            for (var j = 0; j < notEmptyData.length; j++) {
               arr.push(notEmptyData[j]);
             }
           }
           return true;
         },
-        success: function(result, statusText, xhr) {
-          if(result && result.success) {
+        success: function (result, statusText, xhr) {
+          if (result && result.success) {
             if (successFunction) {
               successFunction();
             }
@@ -34,7 +37,7 @@ function saveOrUpdateRecord(url, form, successFunction, errorFunction) {
             bootbox.alert("<div class='alert alert-danger'>保存失败，请联系管理员</div>");
           }
         },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
           if (errorFunction) {
             errorFunction();
           }
@@ -56,43 +59,11 @@ function loadRecord(url, postData, form, successFunction, errorFunction) {
     success: function (result, textStatus, jqXHR) {
       $(form).validator("cleanUp");
       if (result && result.success && result.data) {
-        var formFields = $(form + " input," + form + " select," + form + " textarea");
+        var formFields = $(form + " input," + form + " select," + form + " textarea, "+ form + " span[type='formFieldValue']");
         formFields.val(null);
-        formFields.text(null);
         formFields.removeAttr("checked");
         if (formFields && formFields.length > 0) {
-          for (property in result.data) {
-            for (i = 0; i < formFields.length; i++) {
-              var formField = formFields[i];
-              if (property == $(formField).attr("name")) {
-                if ($(formField).is("input")) {
-                  if ($(formField).attr("type") == "checkbox") {
-                    if (result.data[property] == true) {
-                      $(formField).attr("checked", "checked");
-                    } else {
-                      $(formField).removeAttr("checked");
-                    }
-                  } else if ($(formField) instanceof Array && $(formField[0]).attr("type") == "radio") {
-                    for (radioFormField in $(formField)) {
-                      if ($(radioFormField).val() == result.data[property]) {
-                        $(radioFormField).attr("checked", "checked");
-                      } else {
-                        $(radioFormField).removeAttr("checked");
-                      }
-                    }
-                  } else {
-                    $(formField).val(result.data[property]);
-                  }
-                } else if ($(formField).is("select")) {
-                  $(formField).val(result.data[property]);
-                } else if ($(formField).is("textarea")) {
-                  $(formField).val(result.data[property]);
-                } else {
-                  bootbox.alert("<div class='alert alert-danger'>无效的类型：" + $(formField).attr("name") + "<br></div>");
-                }
-              }
-            }
-          }
+          fillFormFields(result.data, formFields);
         }
         if (successFunction) {
           successFunction();
@@ -112,6 +83,65 @@ function loadRecord(url, postData, form, successFunction, errorFunction) {
     }
   });
 }
+
+function fillFormFields(data, formFields, parent) {
+  for (property in data) {
+    var itemData = data[property];
+    if (itemData instanceof Object) {
+      fillFormFields(itemData, formFields, property);
+    } else {
+      for (i = 0; i < formFields.length; i++) {
+        var formField = formFields[i];
+        var itemName = (parent && parent.length) > 0 ? parent + "." + property : property;
+        if (itemName == $(formField).attr("name")) {
+          if ($(formField).is("input")) {
+            //处理checkbox和radio
+            if (($(formField) instanceof Array && ($(formField[0]).attr("type") == "checkbox" || $(formField[0]).attr("type") == "radio"))
+                || ($(formField).attr("type") == "checkbox" || $(formField).attr("type") == "radio")) {
+              var fromFieldArray = [];
+              if ($(formField) instanceof Array) {
+                fromFieldArray = $(formField);
+              } else {
+                fromFieldArray.push($(formField));
+              }
+              var itemDataArray = [];
+              if (itemData instanceof Array) {
+                itemDataArray = itemData;
+              } else {
+                itemDataArray.push(itemData);
+              }
+              for (perFormField in fromFieldArray) {
+                var matched = false;
+                for (perItemData in itemDataArray) {
+                  if ($(perFormField).val() == perItemData) {
+                    matched = true;
+                    break;
+                  }
+                }
+                if (matched) {
+                  $(perFormField).attr("checked", "checked");
+                } else {
+                  $(perFormField).removeAttr("checked");
+                }
+              }
+            } else {
+              $(formField).val(itemData);
+            }
+          } else if ($(formField).is("select")) {
+            $(formField).val(itemData);
+          } else if ($(formField).is("textarea")) {
+            $(formField).val(itemData);
+          } else if ($(formField).is("span")) {
+            $(formField).text(itemData);
+          } else {
+            bootbox.alert("<div class='alert alert-danger'>无效的类型：" + $(formField).attr("name") + "<br></div>");
+          }
+        }
+      }
+    }
+  }
+}
+
 function disableRecords(url, postData, successFunction, errorFunction) {
   $.ajax({
     type: "post",
