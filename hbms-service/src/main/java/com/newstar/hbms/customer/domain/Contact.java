@@ -68,7 +68,7 @@ public class Contact implements Serializable {
   /**
    * 是否关键
    */
-  private boolean key;
+  private Boolean isKey;
 
   /**
    * 备注
@@ -192,12 +192,12 @@ public class Contact implements Serializable {
     this.email = email;
   }
 
-  public boolean isKey() {
-    return key;
+  public Boolean getIsKey() {
+    return isKey;
   }
 
-  public void setKey(boolean key) {
-    this.key = key;
+  public void setIsKey(Boolean isKey) {
+    this.isKey = isKey;
   }
 
   public String getRemark() {

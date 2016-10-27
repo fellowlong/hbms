@@ -1,3 +1,19 @@
+function clearForm(form) {
+  var formFields = $(form + " input," + form + " select," + form + " textarea, " + form + " span[type='formFieldValue']");
+  $.each(formFields, function (index, item) {
+    if ($(item).is("input")) {
+      if ($(item).attr("type") == "checkbox" || $(item).attr("type") == "radio") {
+        $(item).removeAttr("checked");
+      } else {
+        $(item).val(null);
+      }
+    } else if ($(item).is("textarea")) {
+      $(item).val(null);
+    } else if ($(item).is("span")) {
+      $(item).text(null);
+    }
+  });
+}
 
 function saveOrUpdateRecord(url, form, successFunction, errorFunction) {
   $(form).isValid(function (result) {
@@ -11,7 +27,7 @@ function saveOrUpdateRecord(url, form, successFunction, errorFunction) {
           for (var i = 0; i < arr.length; i++) {
             if (arr[i].value && arr[i].value != null && arr[i].value != "") {
               notEmptyData.push(arr[i]);
-            } else if ($(arr[i]).attr("type") == "checkbox" || $(arr[i]).attr("type") == "radio"){
+            } else if ($(arr[i]).attr("type") == "checkbox" || $(arr[i]).attr("type") == "radio") {
               notEmptyData.push(arr[i]);
             }
           }
@@ -46,7 +62,6 @@ function saveOrUpdateRecord(url, form, successFunction, errorFunction) {
       });
     }
   });
-
 }
 
 function loadRecord(url, postData, form, successFunction, errorFunction) {
@@ -59,9 +74,8 @@ function loadRecord(url, postData, form, successFunction, errorFunction) {
     success: function (result, textStatus, jqXHR) {
       $(form).validator("cleanUp");
       if (result && result.success && result.data) {
-        var formFields = $(form + " input," + form + " select," + form + " textarea, "+ form + " span[type='formFieldValue']");
-        formFields.val(null);
-        formFields.removeAttr("checked");
+        clearForm(form);
+        var formFields = $(form + " input," + form + " select," + form + " textarea, " + form + " span[type='formFieldValue']");
         if (formFields && formFields.length > 0) {
           fillFormFields(result.data, formFields);
         }
@@ -96,32 +110,18 @@ function fillFormFields(data, formFields, parent) {
         if (itemName == $(formField).attr("name")) {
           if ($(formField).is("input")) {
             //处理checkbox和radio
-            if (($(formField) instanceof Array && ($(formField[0]).attr("type") == "checkbox" || $(formField[0]).attr("type") == "radio"))
-                || ($(formField).attr("type") == "checkbox" || $(formField).attr("type") == "radio")) {
-              var fromFieldArray = [];
-              if ($(formField) instanceof Array) {
-                fromFieldArray = $(formField);
-              } else {
-                fromFieldArray.push($(formField));
-              }
+            if ($(formField).attr("type") == "checkbox" || $(formField).attr("type") == "radio") {
               var itemDataArray = [];
               if (itemData instanceof Array) {
                 itemDataArray = itemData;
               } else {
                 itemDataArray.push(itemData);
               }
-              for (perFormField in fromFieldArray) {
-                var matched = false;
-                for (perItemData in itemDataArray) {
-                  if ($(perFormField).val() == perItemData) {
-                    matched = true;
-                    break;
-                  }
-                }
-                if (matched) {
-                  $(perFormField).attr("checked", "checked");
-                } else {
-                  $(perFormField).removeAttr("checked");
+              for (perItemData in itemDataArray) {
+                if ($(formField).val() == "" + itemDataArray[perItemData]) {
+                  $(formField).removeAttr("checked");
+                  $(formField).prop("checked", "checked");
+                  break;
                 }
               }
             } else {

@@ -12,10 +12,10 @@
         <div class="input-group-addon">手机</div>
         <input class="form-control" name="mobilePhone" #if($param['mobilePhone']) value="$param['mobilePhone']" #end>
         <div class="input-group-addon">关键</div>
-        <select  class="form-control" type="checkbox" name="key">
+        <select  class="form-control" type="checkbox" name="isKey">
           <option value="">全部</option>
-          <option value="true"  #if($param['key'] and $param['key'] == true) checked #end >是</option>
-          <option value="false"  #if($param['key'] and $param['key'] == false) checked #end >否</option>
+          <option value="true"  #if($param['isKey'] and $param['isKey'] == true) checked #end >是</option>
+          <option value="false"  #if($param['isKey'] and $param['isKey'] == false) checked #end >否</option>
         </select>
         <span class="input-group-btn">
           <button id="searchContact" class="btn btn-primary form-control no-radius" type="button">
@@ -53,15 +53,14 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span>
         </button>
-        <h4 class="modal-title" id="contactAddOrEditDialogTitle">客户</h4>
+        <h4 class="modal-title" id="contactAddOrEditDialogTitle">联系人</h4>
       </div>
       <div class="modal-body">
-
         <form id="insertOrUpdateContactForm" role="form" data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
           <input type="hidden" value="$!contact.id" name="id">
           <table class="table table-bordered table-striped" style="margin: 0px">
             <tr>
-              <td align="right"><label class="control-label no-padding-right">客户</label></td>
+              <td align="right"><label class="control-label no-padding-right">联系人</label></td>
               <td colspan="3">
                 <div id="customerOfEditContact">
 ##                  <input class="form-control" name="customer.name" readonly disabled style="border: 0;">
@@ -120,12 +119,14 @@
               <td><input type="text" class="form-control" name="email"/></td>
               <td align="right"><label class="control-label no-padding-right">是否关键</label></td>
               <td>
-                <div class="checkbox">
-                  <label>
-                    <input name="key" type="checkbox" class="ace">
-                    <span class="lbl">&nbsp;</span>
-                  </label>
-                </div>
+                <label>
+                  <input name="isKey" type="radio" class="ace" value="true">
+                  <span class="lbl">是</span>
+                </label>
+                <label>
+                  <input name="isKey" type="radio" class="ace" value="false">
+                  <span class="lbl">否</span>
+                </label>
               </td>
             </tr>
             <tr>
@@ -153,7 +154,7 @@
       url: '/contact/findByBean.do',
       mtype: "POST",
       datatype: "json",
-      colNames: ['姓名', '英文名', '公司', '部门', '职位', '手机', '座机', '邮箱', '是否关键'],
+      colNames: ['姓名', '英文名', '公司', '部门', '职位', '手机', '座机', '邮箱','生日', '是否关键'],
       colModel: [
         {name: 'name', width: 150},
         {name: 'englishName', width: 150},
@@ -163,13 +164,17 @@
         {name: 'mobilePhone', width: 150},
         {name: 'companyPhone', width: 150},
         {name: 'email', width: 150},
-        {name: 'key', width: 150}
+        {name: 'birthday', width: 150},
+        {name: 'isKey', width: 150, formatter: function(cellvalue, options, rowObject){
+          return cellvalue ? "<i class='ace-icon glyphicon glyphicon-ok' style='color: green'></i>" : "<i class='ace-icon glyphicon glyphicon-remove' style='color: red'></i>";
+
+        }}
       ],
       multiselect: true,
       rowNum: 10,
       rowList: [10, 30, 50, 100],
       pager: '#contactListPager',
-      caption: "客户列表",
+      caption: "联系人列表",
       shrinkToFit: true
     });
     function resizeContactList() {
@@ -185,8 +190,10 @@
       $("#contactList").jqGrid('setGridParam', {
         postData: {
           name: $("#searchContactForm input[name='name']").val(),
-          industry: $("#searchContactForm input[name='industry']").val(),
-          phone: $("#searchContactForm input[name='phone']").val()
+          englishName: $("#searchContactForm input[name='englishName']").val(),
+          "customer.name": $("#searchContactForm input[name='customer.name']").val(),
+          mobilePhone: $("#searchContactForm input[name='mobilePhone']").val(),
+          isKey: $("#searchContactForm select[name='isKey']").val()
         },
         page: 1
       }).trigger("reloadGrid");
@@ -197,10 +204,8 @@
       $("#customerOfAddContact").css("display", "block");
       $("#customerOfEditContact").css("display", "none");
       $("#insertOrUpdateContactForm").validator("cleanUp");
-      $("#insertOrUpdateContactForm input").val(null);
-      $("#insertOrUpdateContactForm select").val(null)
-      $("#insertOrUpdateContactForm textarea").val(null);
-      $("#contactAddOrEditDialogTitle").text("新增客户");
+      clearForm("#insertOrUpdateContactForm");
+      $("#contactAddOrEditDialogTitle").text("新增联系人");
       $('#contactAddOrEditDialog').modal('show')
     });
 
@@ -218,7 +223,7 @@
         $("#contactListDiv").unblock();
         $("#customerOfAddContact").css("display", "none");
         $("#customerOfEditContact").css("display", "block");
-        $("#contactAddOrEditDialogTitle").text("编辑客户");
+        $("#contactAddOrEditDialogTitle").text("编辑联系人");
         $('#contactAddOrEditDialog').modal('show')
       });
     });

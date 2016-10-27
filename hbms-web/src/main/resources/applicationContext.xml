@@ -117,6 +117,11 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
+  <bean id="positionDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.newstar.hbms.customer.dao.PositionDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
   <bean id="resumeIndexTaskDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface" value="com.newstar.hbms.resume.dao.ResumeIndexTaskDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
@@ -191,6 +196,10 @@
 
   <bean id="contactService" class="com.newstar.hbms.customer.service.impl.ContactServiceImpl">
     <property name="contactDao" ref="contactDao"/>
+  </bean>
+
+  <bean id="positionService" class="com.newstar.hbms.customer.service.impl.PositionServiceImpl">
+    <property name="positionDao" ref="positionDao"/>
   </bean>
 
   <!--web-->

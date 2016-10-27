@@ -1,0 +1,248 @@
+<div style="padding-bottom: 10px">
+  <form id="searchPositionForm" class="form-inline" role="form" action="" method="post">
+    <input type="hidden" name="id" value="$!position.id">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">名称</div>
+        <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end>
+        <div class="input-group-addon">公司</div>
+        <input class="form-control" name="customer.name" #if($param['customer.name']) value="$param['customer.name']" #end>
+        <div class="input-group-addon">行业</div>
+        <input class="form-control" name="industry" #if($param['mobilePhone']) value="$param['mobilePhone']" #end>
+        <span class="input-group-btn">
+          <button id="searchPosition" class="btn btn-primary form-control no-radius" type="button">
+            <i class="ace-icon fa fa-search"></i>搜索
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group" style="padding-left: 20px">
+      <button id="addPosition" type="button" class="btn btn-success form-control no-radius">
+        <i class="ace-icon fa fa-plus"></i>
+        新增
+      </button>
+      <button id="editPosition" type="button" class="btn btn-success form-control no-radius">
+        <i class="ace-icon fa fa-edit"></i>
+        编辑
+      </button>
+      <button id="deletePosition" type="button" class="btn btn-danger form-control no-radius">
+        <i class="ace-icon fa fa-trash-o"></i>
+        删除
+      </button>
+    </div>
+  </form>
+</div>
+
+<div id="positionListDiv">
+  <table id="positionList"></table>
+  <div id="positionListPager"></div>
+</div>
+
+<div class="modal fade" id="positionAddOrEditDialog" tabindex="-1" role="dialog"
+     aria-labelledby="positionAddOrEditDialogTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span>
+        </button>
+        <h4 class="modal-title" id="positionAddOrEditDialogTitle">职位列表</h4>
+      </div>
+      <div class="modal-body">
+        <form id="insertOrUpdatePositionForm" role="form" data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+          <input type="hidden" value="$!position.id" name="id">
+          <table class="table table-bordered table-striped" style="margin: 0px">
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">客户</label></td>
+              <td colspan="3">
+                <div id="customerOfEditPosition">
+                  <span type="formFieldValue" name="customer.name"></span>
+                </div>
+                <div id="customerOfAddPosition">
+                  <select class="chosen-select form-control" name="customerId" data-rule="客户:required;customerId" style="width: 300px">
+                    #foreach($customer in $customers)
+                    <option value="$customer.id">$customer.name</option>
+                    #end
+                  </select>
+                </div>
+              </td>
+              </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">名称</label><sup style="color:red">*</sup></td>
+              <td><input type="text" class="form-control" name="name" data-rule="名称:required;name"/></td>
+              <td align="right"><label class="control-label no-padding-right">年龄要求</label></td>
+              <td>
+                  <input type="text" name="minAge" style="width: 50px" class="ace"/>-
+                  <input type="text" name="maxAge" style="width: 50px" class="ace"/>
+              </td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">性别要求</label></td>
+              <td>
+                <div class="input-group">
+                  <label>
+                  <label>
+                    <input name="sex" type="radio" class="ace" value="0">
+                    <span class="lbl">不限</span>
+                  </label>
+                  <label>
+                    <input name="sex" type="radio" class="ace" value="1">
+                    <span class="lbl">男</span>
+                  </label>
+                  <label>
+                    <input name="sex" type="radio" class="ace" value="2">
+                    <span class="lbl">女</span>
+                  </label>
+                </div>
+              </td>
+              <td align="right"><label class="control-label no-padding-right">工作年限要求</label></td>
+              <td>
+                <input type="text" name="minWorkYears" style="width: 50px" class="ace"/>-
+                <input type="text" name="maxWorkYears" style="width: 50px" class="ace"/>
+              </td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">学历要求</label></td>
+              <td><input type="text" class="form-control" name="educationLevel"/></td>
+              <td align="right"><label class="control-label no-padding-right">行业要求</label></td>
+              <td><input type="text" class="form-control" name="industry"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">外语要求</label></td>
+              <td><input type="text" class="form-control" name="foreignLanguage"/></td>
+              <td align="right"><label class="control-label no-padding-right">地址</label></td>
+              <td><input type="text" class="form-control" name="address"/></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">职位说明</label></td>
+              <td colspan="3"><textarea  class="form-control" name="description"></textarea></td>
+            </tr>
+            <tr>
+              <td align="right"><label class="control-label no-padding-right">备注</label></td>
+              <td colspan="3"><textarea  class="form-control" name="remark"></textarea></td>
+            </tr>
+          </table>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button id="saveOrUpdatePosition" type="button" class="btn btn-primary">
+          <i class="ace-icon fa fa-check bigger-110"></i>保存
+        </button>
+        <button id="closePosition" class="btn"><i class="ace-icon fa fa-undo bigger-110"></i>关闭</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#positionList").jqGrid({
+      url: '/position/findByBean.do',
+      mtype: "POST",
+      datatype: "json",
+      colNames: ['名称', '公司', '年龄要求', '性别要求', '工作年限要求', '学历要求', '行业要求','外语要求',"地址"],
+      colModel: [
+        {name: 'name', width: 150},
+        {name: 'customer.name', width: 150},
+        {name: 'ageRequire', width: 150, formatter: function(cell, options, row){return row.minAge + "- " + row.maxAge}},
+        {name: 'sex', width: 150, formatter: function(cell, options, row){return cell == 0 ? "不限" : (cell == 1 ? "男" : (cell == 2 ? "女" : ""))}},
+        {name: 'workYearsRequire', width: 150, formatter: function(cell, options, row){return row.minWorkYears + "- " + row.maxWorkYears}},
+        {name: 'educationLevel', width: 150},
+        {name: 'industry', width: 150},
+        {name: 'foreignLanguage', width: 150},
+        {name: 'address', width: 150}
+      ],
+      multiselect: true,
+      rowNum: 10,
+      rowList: [10, 30, 50, 100],
+      pager: '#positionListPager',
+      caption: "职位列表",
+      shrinkToFit: true
+    });
+    function resizePositionList() {
+      $("#positionList").jqGrid('setGridWidth', $(window).width() - $("#positionListDiv").offset().left - 10);
+      $("#positionList").jqGrid('setGridHeight', $(window).height() - $("#positionListDiv").offset().top - 140);
+    }
+    resizePositionList();
+    $(window).on('resize', function () {
+      resizePositionList();
+    });
+
+    $("#searchPosition").on("click", function () {
+      $("#positionList").jqGrid('setGridParam', {
+        postData: {
+          name: $("#searchPositionForm input[name='name']").val(),
+          "customer.name": $("#searchPositionForm input[name='customer.name']").val(),
+          industry: $("#searchPositionForm input[name='industry']").val()
+        },
+        page: 1
+      }).trigger("reloadGrid");
+    });
+
+    $("#addPosition").on("click", function () {
+      //清空表单
+      $("#customerOfAddPosition").css("display", "block");
+      $("#customerOfEditPosition").css("display", "none");
+      $("#insertOrUpdatePositionForm").validator("cleanUp");
+      clearForm("#insertOrUpdatePositionForm");
+      $("#positionAddOrEditDialogTitle").text("新增职位");
+      $('#positionAddOrEditDialog').modal('show')
+    });
+
+    $("#editPosition").on("click", function () {
+      var rowIds = $("#positionList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length != 1) {
+        bootbox.alert("请选择要删除的记录");
+        return;
+      }
+      $("#positionListDiv").block({
+        message: '<h3>正在加载数据</h3>',
+        css: {border: '3px solid #a00'}
+      });
+      loadRecord("/position/findById.do", {id: rowIds[0]}, "#insertOrUpdatePositionForm", function () {
+        $("#positionListDiv").unblock();
+        $("#customerOfAddPosition").css("display", "none");
+        $("#customerOfEditPosition").css("display", "block");
+        $("#positionAddOrEditDialogTitle").text("编辑职位");
+        $('#positionAddOrEditDialog').modal('show')
+      });
+    });
+
+    $("#deletePosition").on("click", function () {
+      var rowIds = $("#positionList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length < 1) {
+        bootbox.alert("请选择一条进行编辑");
+        return;
+      }
+      bootbox.confirm("<h3>确定删除?</h3>", function (result) {
+        if (result) {
+          disableRecords(
+              "/position/disableByIds.do",
+              {ids: rowIds},
+              function () {
+                $("#searchPositionForm").submit();
+              },
+              function () {
+                $("#searchPositionForm").submit();
+              });
+        }
+      })
+    });
+
+    $("#saveOrUpdatePosition").on("click", function () {
+      saveOrUpdateRecord("/position/insertOrUpdate.do", "#insertOrUpdatePositionForm", function () {
+        $("#positionAddOrEditDialog").modal("hide");
+        $("#searchPositionForm").submit();
+      });
+    })
+
+    $("#closePosition").on("click", function () {
+      $("#positionAddOrEditDialog").modal("hide");
+    })
+
+    $('#customer').chosen();
+  });
+</script>
+
+

@@ -11,6 +11,18 @@ public class DateEditor extends PropertyEditorSupport {
 
   private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_PATTERN);
 
+  public DateEditor() {
+  }
+
+  public DateEditor(String datePattern) {
+    setDatePattern(datePattern);
+  }
+
+  public DateEditor(Object source, String datePattern) {
+    super(source);
+    setDatePattern(datePattern);
+  }
+
   public void setDatePattern(String datePattern) {
     this.dateFormat = new SimpleDateFormat(datePattern);
   }

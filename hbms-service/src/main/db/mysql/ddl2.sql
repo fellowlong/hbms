@@ -217,3 +217,25 @@ create table Contact(
   updateUser varchar(50) comment '修改人账户'
 ) comment='联系人表';
 
+drop table `Position`;
+create table `Position`(
+  id bigint auto_increment not null primary key comment '客户编号,主键',
+  name  varchar(100) comment '名称',
+  minAge int comment '最低年龄',
+  maxAge int comment '最高年龄',
+  sex int(1) comment '性别要求',
+  minWorkYears int comment '最小工作年限',
+  maxWorkYears int comment '最大工作年限',
+  educationLevel varchar(100) comment '学历要求',
+  industry varchar(100) comment '行业要求',
+  foreignLanguage varchar(100) comment '外语要求',
+  address varchar(100) comment '地址',
+  description varchar(2000) comment '职位描述',
+  customerId bigint comment '客户编号，外键',
+  remark varchar(500) comment '备注',
+  yn  int(1) comment '是否有效',
+  createTime datetime comment '创建时间',
+  createUser varchar(50) comment '创建人账户',
+  updateTime datetime comment '修改时间',
+  updateUser varchar(50) comment '修改人账户'
+) comment='职位表';
