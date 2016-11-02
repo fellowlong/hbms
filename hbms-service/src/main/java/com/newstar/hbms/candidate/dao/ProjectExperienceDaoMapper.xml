@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newstar.hbms.candidate.dao.ProjectExperienceDao">
+
+  <insert id="insert" parameterMap="domain.ProjectExperience">
+    insert into ProjectExperience(
+    resumeId,
+    name,
+    startDate,
+    endDate,
+    isIt,
+    softwareEnvironment,
+    hardwareEnvironment,
+    developTool,
+    responsibility,
+    projectDescription
+    )
+    values (
+    #{resumeId},
+    #{name, jdbcType=VARCHAR},
+    #{startDate,jdbcType=VARCHAR},
+    #{endDate,jdbcType=VARCHAR},
+    #{isIt,jdbcType=INTEGER},
+    #{softwareEnvironment,jdbcType=VARCHAR},
+    #{hardwareEnvironment,jdbcType=VARCHAR},
+    #{developTool,jdbcType=VARCHAR},
+    #{responsibility,jdbcType=VARCHAR},
+    #{projectDescription,jdbcType=VARCHAR}
+    )
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select last_insert_id();
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterMap="domain.ProjectExperience">
+    update ProjectExperience set
+    name = #{name, jdbcType=VARCHAR},
+    startDate = #{startDate,jdbcType=VARCHAR},
+    endDate = #{endDate,jdbcType=VARCHAR},
+    isIt = #{isIt,jdbcType=INTEGER},
+    softwareEnvironment = #{softwareEnvironment,jdbcType=VARCHAR},
+    hardwareEnvironment = #{hardwareEnvironment,jdbcType=VARCHAR},
+    developTool = #{developTool,jdbcType=VARCHAR},
+    responsibility = #{responsibility,jdbcType=VARCHAR},
+    projectDescription = #{projectDescription,jdbcType=VARCHAR}
+    where
+    id = #{id}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Long">
+    update ProjectExperience where id in
+    <foreach collection="array" open="(" close=")" separator="," item="projectExperienceId">
+      #{projectExperienceId}
+    </foreach>
+  </delete>
+
+  <select id="findByBean"
+          parameterMap="domain.ProjectExperience"
+          resultMap="domain.ProjectExperience">
+    select
+    *
+    from ProjectExperience
+    where 1 = 1
+    <if test="id != null">
+      and id = #{id}
+    </if>
+    <if test="resumeId != null">
+      and resumeId = #{resumeId}
+    </if>
+    <if test="name != null">
+      and name = #{name}
+    </if>
+    <if test="startDate != null">
+      and startDate = #{startDate}
+    </if>
+    <if test="endDate != null">
+      and endDate = #{endDate}
+    </if>
+    <if test="isIt != null">
+      and isIt = #{isIt}
+    </if>
+    <if test="softwareEnvironment != null">
+      and softwareEnvironment = #{softwareEnvironment}
+    </if>
+    <if test="hardwareEnvironment != null">
+      and hardwareEnvironment = #{hardwareEnvironment}
+    </if>
+    <if test="developTool != null">
+      and developTool = #{developTool}
+    </if>
+    <if test="responsibility != null">
+      and responsibility = #{responsibility}
+    </if>
+    <if test="projectDescription != null">
+      and projectDescription = #{projectDescription}
+    </if>
+  </select>
+
+
+  <select id="findByIds"
+          parameterMap="domain.ProjectExperience"
+          resultMap="domain.ProjectExperience">
+    select * from ProjectExperience where id in
+    <foreach collection="array" open="(" close=")" separator="," item="projectExperienceId">
+      #{projectExperienceId}
+    </foreach>
+  </select>
+
+  <select id="findByResumeIds" resultMap="domain.ProjectExperience">
+    select * from ProjectExperience where resumeId in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
+    </foreach>
+  </select>
+
+</mapper>

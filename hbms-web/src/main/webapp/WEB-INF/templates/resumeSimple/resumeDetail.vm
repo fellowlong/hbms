@@ -14,13 +14,13 @@
           <label>姓名:</label>
         </div>
         <div class="col-xs-4">
-          <span align="left">$!resume.name</span>
+          <span align="left">$!candidate.name</span>
         </div>
         <div class="col-xs-2" style="text-align: right">
           <label>简历名称:</label>
         </div>
         <div class="col-xs-4">
-          <span align="left" width="30%">$!resume.sourceResume.name</span>
+          <span align="left" width="30%">$!candidate.resume.name</span>
         </div>
       </div>
       <div class="row">
@@ -28,7 +28,7 @@
           <label>关键字:</label>
         </div>
         <div class="col-xs-10">
-          <span align="left">$!resume.keyword</span>
+          <span align="left">$!candidate.keyword</span>
         </div>
       </div>
       <div class="row">
@@ -36,7 +36,7 @@
           <label>备注:</label>
         </div>
         <div class="col-xs-10">
-          $!resume.remark
+          $!candidate.remark
         </div>
       </div>
 
@@ -46,7 +46,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">详细简历</div>
   <div class="panel-body" style="padding: 0px;margin: 0px;">
-    <pre style="background-color: #fff;border-radius: 0px;border: 0px;white-space: pre-wrap;word-wrap: break-word;">$resume.sourceResume.textResume</pre>
+    <pre style="background-color: #fff;border-radius: 0px;border: 0px;white-space: pre-wrap;word-wrap: break-word;">$candidate.resume.textResume</pre>
   </div>
 </div>
 

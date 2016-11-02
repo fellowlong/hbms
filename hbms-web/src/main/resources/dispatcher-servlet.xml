@@ -31,15 +31,21 @@
     <property name="workPanelController" ref="workPanelController"/>
     <property name="workUris">
       <list>
-        <value>/resume/index.do</value>
-        <value>/resume/resumeSearch.do</value>
-        <value>/resume/findByBean.do</value>
-        <value>/resume/preInsertOrUpdate.do</value>
-        <value>/resume/insertOrUpdate.do</value>
+        <value>/candidate/index.do</value>
+        <value>/candidate/resumeSearch.do</value>
+        <value>/candidate/findByBean.do</value>
+        <value>/candidate/preInsertOrUpdate.do</value>
+        <value>/candidate/insertOrUpdate.do</value>
         <value>/customer/workspace.do</value>
         <value>/contact/workspace.do</value>
         <value>/position/workspace.do</value>
+        <value>/project/workspace.do</value>
       </list>
+    </property>
+    <property name="exportMap">
+      <map>
+        <entry key="baseDataService" value-ref="baseDataService"/>
+      </map>
     </property>
   </bean>
 
@@ -90,11 +96,6 @@
   </bean>
 
   <bean id="candidateController" class="com.newstar.hbms.candidate.web.controller.CandidateController">
-    <property name="candidateService" ref="candidateService"/>
-    <property name="dateEditor" ref="dateEditor"/>
-  </bean>
-
-  <bean id="resumeController" class="com.newstar.hbms.resume.web.controller.ResumeController">
     <property name="resumeService" ref="resumeService"/>
     <property name="commonService" ref="commonService"/>
     <!--<property name="httpSolrServer" ref="httpSolrServer"/>-->
@@ -113,6 +114,15 @@
   <bean id="positionController" class="com.newstar.hbms.customer.web.controller.PositionController">
     <property name="positionService" ref="positionService"/>
     <property name="customerService" ref="customerService"/>
+    <property name="datePattern" value="${datePattern}"/>
+  </bean>
+
+  <bean id="projectController" class="com.newstar.hbms.project.web.controller.ProjectController">
+    <property name="projectService" ref="projectService"/>
+    <property name="customerService" ref="customerService"/>
+    <property name="contactService" ref="contactService"/>
+    <property name="positionService" ref="positionService"/>
+    <property name="userService" ref="userService"/>
     <property name="datePattern" value="${datePattern}"/>
   </bean>
 

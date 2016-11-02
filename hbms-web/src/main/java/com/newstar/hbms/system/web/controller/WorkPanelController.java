@@ -91,7 +91,7 @@ public class WorkPanelController implements Controller {
     }*/
     modelMap.put("authorities", authorityService.findAllTree());
     modelMap.put("currentAuthority", authorityService.findByUri(request.getRequestURI()));
-    return new ModelAndView("/workspace", modelMap);
+    return new ModelAndView("/workspaceSimple", modelMap);
   }
 
 }

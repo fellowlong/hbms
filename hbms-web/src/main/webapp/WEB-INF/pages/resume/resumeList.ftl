@@ -16,7 +16,7 @@
 </div>
 
 <p>
-    <button class="btn btn-sm btn-primary" onclick="mainWorkPanelReload('/resume/preInsertOrUpdate.do')">
+    <button class="btn btn-sm btn-primary" onclick="mainWorkPanelReload('/candidate/preInsertOrUpdate.do')">
       <i class="icon-plus align-top bigger-125"></i>
       新增
     </button>
@@ -50,27 +50,27 @@
     <th>最后修改时间</th>
   </thead>
   <tbody>
-  <#list resumePagingResult.records as resume>
+  <#list resumePagingResult.records as candidate>
     <tr>
       <td class="center">
         <label>
-          <input class="ace" type="checkbox" value="${resume.id}">
+          <input class="ace" type="checkbox" value="${candidate.id}">
           <span class="lbl"></span>
         </label>
       </td>
-      <td><a href="#" onclick="workPanel('/resume/findById.do?id=${resume.id}');">${resume.name}</a></td>
-      <td>${resume.sex}</td>
-      <td>${resume.age}</td>
-      <td>${resume.education}</td>
-      <td>${resume.workYears}</td>
-      <td>${resume.location}</td>
-      <td>${resume.industry}</td>
-      <td>${resume.company}</td>
-      <td>${resume.position}</td>
-      <td>${resume.createUser}</td>
-      <td>${resume.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
-      <td>${resume.updateUser}</td>
-      <td>${resume.updateTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+      <td><a href="#" onclick="workPanel('/candidate/findById.do?id=${candidate.id}');">${candidate.name}</a></td>
+      <td>${candidate.sex}</td>
+      <td>${candidate.age}</td>
+      <td>${candidate.education}</td>
+      <td>${candidate.workYears}</td>
+      <td>${candidate.location}</td>
+      <td>${candidate.industry}</td>
+      <td>${candidate.company}</td>
+      <td>${candidate.position}</td>
+      <td>${candidate.createUser}</td>
+      <td>${candidate.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+      <td>${candidate.updateUser}</td>
+      <td>${candidate.updateTime?string('yyyy-MM-dd HH:mm:ss')}</td>
     </tr>
   </#list>
   </tbody>
@@ -93,7 +93,7 @@
           }
         });
     if(checkedItems.length == 1) {
-      mainWorkPanelReload('/resume/preInsertOrUpdate.do?id=' + checkedItems[0] + '&view=/resume/resumeEdit.ftl');
+      mainWorkPanelReload('/candidate/preInsertOrUpdate.do?id=' + checkedItems[0] + '&view=/candidate/resumeEdit.ftl');
     } else {
       bootbox.dialog({
         message: "<span class='bigger-110'>请选择一条记录</span>",

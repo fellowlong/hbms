@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newstar.hbms.candidate.dao.EducationExperienceDao">
+
+  <insert id="insert" parameterMap="domain.EducationExperience">
+    insert into EducationExperience(
+    resumeId,
+    school,
+    startDate,
+    endDate,
+    degree
+    )
+    values (
+    #{resumeId},
+    #{school, jdbcType=VARCHAR},
+    #{startDate,jdbcType=VARCHAR},
+    #{endDate,jdbcType=VARCHAR},
+    #{degree}
+    )
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      select last_insert_id();
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterMap="domain.EducationExperience">
+    update EducationExperience set
+      school = #{school, jdbcType=VARCHAR},
+      startDate = #{startDate,jdbcType=VARCHAR},
+      endDate = #{endDate,jdbcType=VARCHAR},
+      degree = #{degree}
+    where
+      id = #{id}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Long">
+    delete from EducationExperience where id in
+    <foreach collection="array" open="(" close=")" separator="," item="educationExperienceId">
+      #{educationExperienceId}
+    </foreach>
+  </delete>
+
+  <select id="findByBean"
+          parameterMap="domain.EducationExperience"
+          resultMap="domain.EducationExperience">
+    select
+    e.*
+    from EducationExperience e
+    where 1 = 1
+    <if test="id != null">
+      and id = #{id}
+    </if>
+    <if test="resumeId != null">
+      and resumeId = #{resumeId}
+    </if>
+    <if test="school != null">
+      and school = #{school}
+    </if>
+    <if test="startDate != null">
+      and startDate = #{startDate}
+    </if>
+    <if test="endDate != null">
+      and endDate = #{endDate}
+    </if>
+    <if test="degree != null">
+      and degree = #{degree}
+    </if>
+  </select>
+
+
+  <select id="findByIds"
+          parameterMap="domain.EducationExperience"
+          resultMap="domain.EducationExperience">
+    select * from EducationExperience where id in
+    <foreach collection="array" open="(" close=")" separator="," item="educationExperienceId">
+      #{educationExperienceId}
+    </foreach>
+  </select>
+
+  <select id="findByResumeIds" resultMap="domain.EducationExperience">
+    select * from EducationExperience where resumeId in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
+    </foreach>
+  </select>
+
+</mapper>

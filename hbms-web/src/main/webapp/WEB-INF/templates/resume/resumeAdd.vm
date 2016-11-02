@@ -4,32 +4,39 @@
 <form id="resumeAddForm"
       method="post"
       enctype="multipart/form-data"
-      action="/resume/insertOrUpdate.do"
+      action="/candidate/insertOrUpdate.do"
       class="form-horizontal"
       role="form"
       autocomplete="off"
       data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
 
+    <div class="row">
+        <div class="container">
+              <div class="form-group">
+                  <label class="col-xs-1 control-label no-padding-right">姓名</label>
+                  <div class="col-xs-11">
+                      <input type="text" class="form-control" name="name" placeholder="姓名" data-rule="姓名:required;name"/>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="col-sm-1 control-label no-padding-right">性别</label>
+
+                  <select id="contactSelect" class="chosen-select form-control" name="contactId" data-rule="联系人:required;contactId">
+                      #set($sexes = $baseDataService.getSexes())
+                      #foreach($sex in $sexes)
+                          <option value="$sex.id">$sex.label</option>
+                      #end
+                  </select>
+              </div>
+        </div>
+    </div>
+
+
+
   <table class="table table-bordered table-striped">
     <caption>基本信息</caption>
 
-    <tr>
-      <td align="right">姓名:</td>
-      <td align="left">
-        <input type="text" id="name" name="name" placeholder="姓名" data-rule="姓名:required;name"/>
-      </td>
-      <td align="right">性别</td>
-      <td align="left">
-        <label>
-          <input name="sex" type="radio" value="男" data-rule="checked">
-          <span class="lbl">男</span>
-        </label>
-        <label>
-          <input name="sex" type="radio" value="女">
-          <span class="lbl">女</span>
-        </label>
-      </td>
-    </tr>
     <tr>
       <td align="right">年龄</td>
       <td align="left">

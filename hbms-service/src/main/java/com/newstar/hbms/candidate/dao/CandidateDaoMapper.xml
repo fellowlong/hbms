@@ -4,28 +4,26 @@
 
 <mapper namespace="com.newstar.hbms.candidate.dao.CandidateDao">
 
-  <insert id="insert" parameterMap="domain.Candidate">
-    insert into Candidate(
+  <insert id="insert" parameterType="com.newstar.hbms.candidate.domain.Candidate">
+    insert into Resume(
       name,
       sex,
-      birthday,
-      workingYears,
-      residence,
-      abroadStudyOrWork,
+      telephone,
+      age,
       email,
-      industryId,
-      currentCompany,
-      currentPosition,
-      currentAnnualSalary,
-      mobilePhone,
-      homePhone,
-      companyPhone,
-      jobHuntingStatusId,
+      education,
+      workYears,
+      marital,
+      location,
+      industry,
+      company,
+      position,
+      salary,
+      selfEvaluation,
+      other,
       keyword,
-      countryId,
-      high,
-      maritalStatusId,
-      snsNo,
+      remark,
+      language,
       yn,
       createTime,
       createUser,
@@ -34,24 +32,22 @@
     ) values (
       #{name},
       #{sex},
-      #{birthday},
-      #{workingYears},
-      #{residence},
-      #{abroadStudyOrWork},
+      #{telephone},
+      #{age},
       #{email},
-      #{industryId},
-      #{currentCompany},
-      #{currentPosition},
-      #{currentAnnualSalary},
-      #{mobilePhone},
-      #{homePhone},
-      #{companyPhone},
-      #{jobHuntingStatusId},
+      #{education},
+      #{workYears},
+      #{marital},
+      #{location},
+      #{industry},
+      #{company},
+      #{position},
+      #{salary},
+      #{selfEvaluation},
+      #{other},
       #{keyword},
-      #{countryId},
-      #{high},
-      #{maritalStatusId},
-      #{snsNo},
+      #{remark},
+      #{language},
       1,
       now(),
       #{createUser},
@@ -63,91 +59,72 @@
     </selectKey>
   </insert>
 
-  <update id="update" parameterMap="domain.Candidate">
-    update Candidate set
+  <update id="update" parameterType="com.newstar.hbms.candidate.domain.Candidate">
+    update Resume set
       name = #{name},
       sex = #{sex},
-      birthday = #{birthday},
-      workingYears = #{workingYears},
-      residence = #{residence},
-      abroadStudyOrWork = #{abroadStudyOrWork},
+      telephone = #{telephone},
+      age = #{age},
       email = #{email},
-      industryId = #{industryId},
-      currentCompany = #{currentCompany},
-      currentPosition = #{currentPosition},
-      currentAnnualSalary = #{currentAnnualSalary},
-      mobilePhone = #{mobilePhone},
-      homePhone = #{homePhone},
-      companyPhone = #{companyPhone},
-      jobHuntingStatusId = #{jobHuntingStatusId},
+      education = #{education},
+      workYears = #{workYears},
+      marital = #{marital},
+      location = #{location},
+      industry = #{industry},
+      company = #{company},
+      position = #{position},
+      salary = #{salary},
+      selfEvaluation = #{selfEvaluation},
+      other = #{other},
       keyword = #{keyword},
-      countryId = #{countryId},
-      high = #{high},
-      maritalStatusId = #{maritalStatusId},
-      snsNo = #{snsNo},
-      createTime = now(),
-      createUser =  #{createUser},
+      language = #{language},
+      remark = #{remark},
       updateTime = now(),
       updateUser = #{updateUser}
     where
       id = #{id}
   </update>
 
-  <delete id="disable" parameterType="java.lang.Long">
-    update Candidate set yn = 0 where id = #{id}
+  <delete id="deleteByIds" parameterType="java.lang.Long">
+    update Resume set yn = 0 where id in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
+    </foreach>
   </delete>
 
-  <delete id="enable" parameterType="java.lang.Long">
-    update Candidate set yn = 1 where id = #{id}
-  </delete>
-  
-  <select id="findByBean" parameterMap="domain.Candidate" resultMap="domain.Candidate">
-    select
-      t.*
-    from
-      (select
-        t.*,
-        lt1.id as IND_id,
-        lt1.value as IND_value,
-        lt2.id as JOB_id,
-        lt2.value as JOB_value,
-        lt3.id as COU_id,
-        lt3.value as COU_value,
-        lt4.id as MAR_id,
-        lt4.value as MAR_value
-        from Candidate t
-        left join ListItem lt1 on t.industryId = lt1.id
-        left join ListItem lt2 on t.jobHuntingStatusId = lt2.id
-        left join ListItem lt3 on t.countryId = lt3.id
-        left join ListItem lt4 on t.maritalStatusId = lt4.id
-        where 1=1
-        <if test="id != null">
-          and t.id = #{id}
-        </if>
-        <if test="name != null">
-          and t.name = #{name}
-        </if>
-        <if test="keyword != null">
-          and t.keyword = #{keyword}
-        </if>
-        <if test="yn != null">
-          and t.yn = #{yn}
-        </if>
-        <if test="createUser != null">
-          and t.createUser = #{createUser}
-        </if>
-        <if test="updateUser != null">
-          and t.updateUser = #{updateUser}
-        </if>
-      ) t
+  <select id="findByBean"
+          parameterType="com.newstar.hbms.candidate.domain.Candidate"
+          resultType="com.newstar.hbms.candidate.domain.Candidate">
+    select * from Resume  where 1 = 1
+      <if test="id != null">
+        and id = #{id}
+      </if>
+      <if test="name != null">
+        and name = #{name}
+      </if>
+      <if test="sex != null">
+        and sex = #{sex}
+      </if>
+      <if test="keyword != null">
+        and keyword = #{keyword}
+      </if>
+      <if test="education != null">
+        and education = #{education}
+      </if>
+      <if test="position != null">
+        and position = #{position}
+      </if>
+      <if test="yn != null">
+        and yn = #{yn}
+      </if>
   </select>
 
   <select id="findByIds"
           parameterType="com.newstar.hbms.candidate.domain.Candidate"
-          resultMap="domain.Candidate">
-    select * from Candidate where id in
-    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
-      #{candidateId}
+          resultType="com.newstar.hbms.candidate.domain.Candidate">
+    select * from Resume where id in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
     </foreach>
   </select>
 

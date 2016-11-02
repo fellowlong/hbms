@@ -2471,7 +2471,7 @@ TableTools.prototype = {
 
 
 	/**
-	 * Printing is finished, resume normal display
+	 * Printing is finished, candidate normal display
 	 *  @method  _fnPrintEnd
 	 *  @param   {Event} e Event object
 	 *  @returns void

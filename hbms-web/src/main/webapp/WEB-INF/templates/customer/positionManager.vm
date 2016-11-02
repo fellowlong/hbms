@@ -58,7 +58,7 @@
                   <span type="formFieldValue" name="customer.name"></span>
                 </div>
                 <div id="customerOfAddPosition">
-                  <select class="chosen-select form-control" name="customerId" data-rule="客户:required;customerId" style="width: 300px">
+                  <select class="chosen-select form-control" name="customerId" data-rule="客户:required;customerId">
                     #foreach($customer in $customers)
                     <option value="$customer.id">$customer.name</option>
                     #end
@@ -114,11 +114,11 @@
             </tr>
             <tr>
               <td align="right"><label class="control-label no-padding-right">职位说明</label></td>
-              <td colspan="3"><textarea  class="form-control" name="description"></textarea></td>
+              <td colspan="3"><textarea  class="form-control" name="description" rows="5"></textarea></td>
             </tr>
             <tr>
               <td align="right"><label class="control-label no-padding-right">备注</label></td>
-              <td colspan="3"><textarea  class="form-control" name="remark"></textarea></td>
+              <td colspan="3"><textarea  class="form-control" name="remark" rows="5"></textarea></td>
             </tr>
           </table>
         </form>
@@ -157,7 +157,6 @@
       rowNum: 10,
       rowList: [10, 30, 50, 100],
       pager: '#positionListPager',
-      caption: "职位列表",
       shrinkToFit: true
     });
     function resizePositionList() {
@@ -241,7 +240,8 @@
       $("#positionAddOrEditDialog").modal("hide");
     })
 
-    $('#customer').chosen();
+    $('.chosen-select').chosen({search_contains:true});
+    $(".chosen-container").css("width","100%");
   });
 </script>
 

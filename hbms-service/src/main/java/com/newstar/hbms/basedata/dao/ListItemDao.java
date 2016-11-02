@@ -23,6 +23,4 @@ public interface ListItemDao {
 
   public List<ListItem> findByIds(Long[] ids);
 
-
-
 }

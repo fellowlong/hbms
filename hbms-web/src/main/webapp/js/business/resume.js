@@ -13,7 +13,7 @@ $('#resumeDgTb a').bind('click', function(event){
       } else {
         $("#resumeTabs").tabs("add", {
           title: '新增简历',
-          href: '/page/resume/resumeAdd.html',
+          href: '/page/candidate/resumeAdd.html',
           selected: true,
           closable:true
         });
@@ -27,7 +27,7 @@ $('#resumeDgTb a').bind('click', function(event){
           "add",
           {
             title: "编辑简历",
-            href: "/page/resume/resumeAdd.html",
+            href: "/page/candidate/resumeAdd.html",
             selected: true,
             closable:true
           });
@@ -39,7 +39,7 @@ $('#resumeDgTb a').bind('click', function(event){
       $('#certificateDg').datagrid("loadData", row.certificates ?  row.certificates : []);
       $('#projectExperienceDg').datagrid("loadData", row.projectExperiences ?  row.projectExperiences : []);
       },
-    removeUrl : '/resume/deleteByIds.do',
+    removeUrl : '/candidate/deleteByIds.do',
     removePromptField : ["name"],
     deleteSuccess : function(){
       $('#resumeDg').datagrid('reload');
@@ -52,7 +52,7 @@ $('#resumeDgTb a').bind('click', function(event){
           "add",
           {
             title: "查看简历",
-            href: "/page/resume/resumeAdd.html",
+            href: "/page/candidate/resumeAdd.html",
             selected: true,
             closable:true
           });

@@ -18,7 +18,7 @@ $('#candidateDgTb a').bind('click', function(event){
       $("#candidateEditForm").form("load", row);
       showCandidateEditWin("修改候选人：" + row.name, false);
     },
-    removeUrl : '/candidate/deleteById.do',
+    removeUrl : '/candidate2/deleteById.do',
     removePromptField : ["name"],
     deleteSuccess : function(){
       $('#candidateDg').datagrid('reload');
@@ -50,7 +50,7 @@ function showCandidateEditWin(title, closed, maxZIndex) {
 
 function insertOrUpdateCandidate() {
   $("#candidateEditForm").form("submit",{
-    url: getRandomUrl(contextPath + "/candidate/insertOrUpdate.do"),
+    url: getRandomUrl(contextPath + "/candidate2/insertOrUpdate.do"),
     onSubmit: function(param){
       return $("#candidateEditForm").form("validate");
     },
@@ -98,7 +98,7 @@ function initResumeReportDgAndOriginalResumeDgToolbarBtn() {
         $("#resumeEditForm").form("load", row);
         createResumeEditWin("修改简历报告：" + row.name, false, "resumeReportDg");
       },
-      removeUrl : '/resume/deleteById.do',
+      removeUrl : '/candidate/deleteById.do',
       removePromptField : ["name"],
       deleteSuccess : function(){
         $('#resumeReportDg').datagrid('reload');
@@ -118,7 +118,7 @@ function initResumeReportDgAndOriginalResumeDgToolbarBtn() {
         $("#resumeEditForm").form("load", row);
         createResumeEditWin("修改原始简历：" + row.name, false);
       },
-      removeUrl : '/resume/deleteById.do',
+      removeUrl : '/candidate/deleteById.do',
       removePromptField : ["name"],
       deleteSuccess : function(){
         $('#originalResumeDg').datagrid('reload');
@@ -153,7 +153,7 @@ function insertOrUpdateResume(dataGridId) {
 //  $("#" + dataGridId).datagrid("insertRow", );
   /*
   $("#resumeEditForm").form("submit",{
-    url: getRandomUrl(contextPath + "/resume/insertOrUpdate.do"),
+    url: getRandomUrl(contextPath + "/candidate/insertOrUpdate.do"),
     onSubmit: function(param){
       return $("#resumeEditForm").form("validate");
     },

@@ -1,4 +1,4 @@
-<div style="padding-bottom: 10px">
+<div style="padding:10px;">
   <form id="searchCustomerForm" class="form-inline" role="form" action="" method="post">
     <input type="hidden" name="id" value="$!customer.id">
     <div class="form-group">
@@ -33,7 +33,7 @@
   </form>
 </div>
 
-<div id="customerListDiv">
+<div id="customerListDiv" style="padding:10px;">
   <table id="customerList"></table>
   <div id="customerListPager"></div>
 </div>
@@ -141,12 +141,12 @@
       rowNum: 10,
       rowList: [10, 30, 50, 100],
       pager: '#customerListPager',
-      caption: "客户列表",
       shrinkToFit: true
     });
     function resizeCustomerList() {
-      $("#customerList").jqGrid('setGridWidth', $(window).width() - $("#customerListDiv").offset().left - 10);
-      $("#customerList").jqGrid('setGridHeight', $(window).height() - $("#customerListDiv").offset().top - 140);
+//        alert($("#customerListDiv").position().left + " = " + $("#customerListDiv").position().top);
+      $("#customerList").jqGrid('setGridWidth', $(window).width() - $("#customerListDiv").position().left - 50);
+      $("#customerList").jqGrid('setGridHeight', $(window).height() - $("#customerListDiv").position().top - 160);
     }
     resizeCustomerList();
     $(window).on('resize', function () {

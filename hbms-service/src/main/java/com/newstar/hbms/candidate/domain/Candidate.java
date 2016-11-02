@@ -1,17 +1,15 @@
 package com.newstar.hbms.candidate.domain;
 
-import com.newstar.hbms.basedata.domain.ListItem;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-/**
- * Created by fellowlong on 2014-08-25.
- */
 public class Candidate implements Serializable {
 
   /**
-   * 编号
+   * 主键，编号
    */
   private Long id;
 
@@ -23,121 +21,125 @@ public class Candidate implements Serializable {
   /**
    * 性别
    */
-  private Boolean sex;
+  private String sex;
 
   /**
-   * 出生日期
+   * 手机号码
    */
-  private Date birthday;
+  private String telephone;
 
   /**
-   * 工作年限
+   * 年龄
    */
-  private Integer workingYears;
+  private Integer age;
 
   /**
-   * 居住地
-   */
-  private String residence;
-
-  /**
-   * 海外学习/工作经历
-   */
-  private Boolean abroadStudyOrWork;
-
-  /**
-   * 电子邮箱
+   * 邮箱
    */
   private String email;
 
   /**
-   * 所属行业编号
+   * 教育
    */
-  private Long industryId;
+  private String education;
 
   /**
-   * 所属行业
+   * 工作年限
    */
-  private ListItem industry;
+  private String workYears;
 
   /**
-   * 目前公司
+   * 婚姻状况
    */
-  private String currentCompany;
+  private String marital;
 
   /**
-   * 目前职务
+   * 所在地
    */
-  private String currentPosition;
+  private String location;
 
   /**
-   * 目前年薪
+   * 所在行业
    */
-  private double currentAnnualSalary;
+  private String industry;
 
   /**
-   * 手机
+   * 公司
    */
-  private String mobilePhone;
+  private String company;
 
   /**
-   * 家庭电话
+   * 年薪
    */
-  private String homePhone;
+  private String position;
 
   /**
-   * 公司电话
+   * 薪资
    */
-  private String companyPhone;
+  private String salary;
 
   /**
-   * 求职状态编号
+   * 自我评价
    */
-  private Long jobHuntingStatusId;
+  private String selfEvaluation;
 
   /**
-   * 求职状态
+   * 工作经历
    */
-  private ListItem jobHuntingStatus;
+  private List<WorkExperience> workExperiences;
 
   /**
-   * 关键词
+   * 教育经历
+   */
+  private List<EducationExperience> educationExperiences;
+
+
+  /**
+   * 语言能力
+   */
+  private List<LanguageAbility> languageAbilities;
+
+  /**
+   * 证书
+   */
+  private List<Certificate> certificates;
+
+  /**
+   * 其他信息
+   */
+  private String other;
+
+  /**
+   * 项目经验
+   */
+  private List<ProjectExperience> projectExperiences;
+
+
+  /**
+   * 搜索关键字
    */
   private String keyword;
 
   /**
-   * 国家编号
+   * 原始简历文件，用来临时存储
    */
-  private Long countryId;
+  private MultipartFile resumeFile;
 
   /**
-   * 国家
+   * 原始简历
    */
-  private ListItem country;
+  private Resume resume;
 
   /**
-   * 身高
+   * 语言
    */
-  private Long high;
+  private String language;
 
   /**
-   * 婚姻状况编号
-   */
-  private Long maritalStatusId;
-  /**
-   * 婚姻状况
-   */
-  private ListItem maritalStatus;
-
-  /**
-   * 社交号码
-   */
-  private String snsNo;
-
-  /**
-   * 是否有效
+   *
    */
   private Boolean yn;
+
 
   /**
    * 创建时间
@@ -159,6 +161,11 @@ public class Candidate implements Serializable {
    */
   private String updateUser;
 
+  /**
+   * 备注
+   */
+  private String remark;
+
   public Long getId() {
     return id;
   }
@@ -175,44 +182,28 @@ public class Candidate implements Serializable {
     this.name = name;
   }
 
-  public Boolean getSex() {
+  public String getSex() {
     return sex;
   }
 
-  public void setSex(Boolean sex) {
+  public void setSex(String sex) {
     this.sex = sex;
   }
 
-  public Date getBirthday() {
-    return birthday;
+  public String getTelephone() {
+    return telephone;
   }
 
-  public void setBirthday(Date birthday) {
-    this.birthday = birthday;
+  public void setTelephone(String telephone) {
+    this.telephone = telephone;
   }
 
-  public Integer getWorkingYears() {
-    return workingYears;
+  public Integer getAge() {
+    return age;
   }
 
-  public void setWorkingYears(Integer workingYears) {
-    this.workingYears = workingYears;
-  }
-
-  public String getResidence() {
-    return residence;
-  }
-
-  public void setResidence(String residence) {
-    this.residence = residence;
-  }
-
-  public Boolean getAbroadStudyOrWork() {
-    return abroadStudyOrWork;
-  }
-
-  public void setAbroadStudyOrWork(Boolean abroadStudyOrWork) {
-    this.abroadStudyOrWork = abroadStudyOrWork;
+  public void setAge(Integer age) {
+    this.age = age;
   }
 
   public String getEmail() {
@@ -223,84 +214,124 @@ public class Candidate implements Serializable {
     this.email = email;
   }
 
-  public Long getIndustryId() {
-    return industryId;
+  public String getEducation() {
+    return education;
   }
 
-  public void setIndustryId(Long industryId) {
-    this.industryId = industryId;
+  public void setEducation(String education) {
+    this.education = education;
   }
 
-  public ListItem getIndustry() {
+  public String getWorkYears() {
+    return workYears;
+  }
+
+  public void setWorkYears(String workYears) {
+    this.workYears = workYears;
+  }
+
+  public String getMarital() {
+    return marital;
+  }
+
+  public void setMarital(String marital) {
+    this.marital = marital;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
+  public String getIndustry() {
     return industry;
   }
 
-  public void setIndustry(ListItem industry) {
+  public void setIndustry(String industry) {
     this.industry = industry;
   }
 
-  public String getCurrentCompany() {
-    return currentCompany;
+  public String getCompany() {
+    return company;
   }
 
-  public void setCurrentCompany(String currentCompany) {
-    this.currentCompany = currentCompany;
+  public void setCompany(String company) {
+    this.company = company;
   }
 
-  public String getCurrentPosition() {
-    return currentPosition;
+  public String getPosition() {
+    return position;
   }
 
-  public void setCurrentPosition(String currentPosition) {
-    this.currentPosition = currentPosition;
+  public void setPosition(String position) {
+    this.position = position;
   }
 
-  public double getCurrentAnnualSalary() {
-    return currentAnnualSalary;
+  public String getSalary() {
+    return salary;
   }
 
-  public void setCurrentAnnualSalary(double currentAnnualSalary) {
-    this.currentAnnualSalary = currentAnnualSalary;
+  public void setSalary(String salary) {
+    this.salary = salary;
   }
 
-  public String getMobilePhone() {
-    return mobilePhone;
+  public String getSelfEvaluation() {
+    return selfEvaluation;
   }
 
-  public void setMobilePhone(String mobilePhone) {
-    this.mobilePhone = mobilePhone;
+  public void setSelfEvaluation(String selfEvaluation) {
+    this.selfEvaluation = selfEvaluation;
   }
 
-  public String getHomePhone() {
-    return homePhone;
+  public List<WorkExperience> getWorkExperiences() {
+    return workExperiences;
   }
 
-  public void setHomePhone(String homePhone) {
-    this.homePhone = homePhone;
+  public void setWorkExperiences(List<WorkExperience> workExperiences) {
+    this.workExperiences = workExperiences;
   }
 
-  public String getCompanyPhone() {
-    return companyPhone;
+  public List<EducationExperience> getEducationExperiences() {
+    return educationExperiences;
   }
 
-  public void setCompanyPhone(String companyPhone) {
-    this.companyPhone = companyPhone;
+  public void setEducationExperiences(List<EducationExperience> educationExperiences) {
+    this.educationExperiences = educationExperiences;
   }
 
-  public Long getJobHuntingStatusId() {
-    return jobHuntingStatusId;
+  public List<LanguageAbility> getLanguageAbilities() {
+    return languageAbilities;
   }
 
-  public void setJobHuntingStatusId(Long jobHuntingStatusId) {
-    this.jobHuntingStatusId = jobHuntingStatusId;
+  public void setLanguageAbilities(List<LanguageAbility> languageAbilities) {
+    this.languageAbilities = languageAbilities;
   }
 
-  public ListItem getJobHuntingStatus() {
-    return jobHuntingStatus;
+  public List<Certificate> getCertificates() {
+    return certificates;
   }
 
-  public void setJobHuntingStatus(ListItem jobHuntingStatus) {
-    this.jobHuntingStatus = jobHuntingStatus;
+  public void setCertificates(List<Certificate> certificates) {
+    this.certificates = certificates;
+  }
+
+  public String getOther() {
+    return other;
+  }
+
+  public void setOther(String other) {
+    this.other = other;
+  }
+
+  public List<ProjectExperience> getProjectExperiences() {
+    return projectExperiences;
+  }
+
+  public void setProjectExperiences(List<ProjectExperience> projectExperiences) {
+    this.projectExperiences = projectExperiences;
   }
 
   public String getKeyword() {
@@ -311,52 +342,28 @@ public class Candidate implements Serializable {
     this.keyword = keyword;
   }
 
-  public Long getCountryId() {
-    return countryId;
+  public MultipartFile getResumeFile() {
+    return resumeFile;
   }
 
-  public void setCountryId(Long countryId) {
-    this.countryId = countryId;
+  public void setResumeFile(MultipartFile resumeFile) {
+    this.resumeFile = resumeFile;
   }
 
-  public ListItem getCountry() {
-    return country;
+  public Resume getResume() {
+    return resume;
   }
 
-  public void setCountry(ListItem country) {
-    this.country = country;
+  public void setResume(Resume resume) {
+    this.resume = resume;
   }
 
-  public Long getHigh() {
-    return high;
+  public String getLanguage() {
+    return language;
   }
 
-  public void setHigh(Long high) {
-    this.high = high;
-  }
-
-  public Long getMaritalStatusId() {
-    return maritalStatusId;
-  }
-
-  public void setMaritalStatusId(Long maritalStatusId) {
-    this.maritalStatusId = maritalStatusId;
-  }
-
-  public ListItem getMaritalStatus() {
-    return maritalStatus;
-  }
-
-  public void setMaritalStatus(ListItem maritalStatus) {
-    this.maritalStatus = maritalStatus;
-  }
-
-  public String getSnsNo() {
-    return snsNo;
-  }
-
-  public void setSnsNo(String snsNo) {
-    this.snsNo = snsNo;
+  public void setLanguage(String language) {
+    this.language = language;
   }
 
   public Boolean getYn() {
@@ -399,4 +406,11 @@ public class Candidate implements Serializable {
     this.updateUser = updateUser;
   }
 
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
+  }
 }

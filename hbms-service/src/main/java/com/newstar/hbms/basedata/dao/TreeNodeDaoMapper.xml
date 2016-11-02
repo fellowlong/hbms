@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newstar.hbms.basedata.dao.TreeNodeDao">
+
+  <insert id="insert" parameterType="com.newstar.hbms.basedata.domain.TreeNode">
+    insert into TreeNode(
+      id,
+      code,
+      label,
+      value,
+      parentId,
+      ancestorId,
+      yn,
+      createTime,
+      createUser,
+      updateTime,
+      updateUser
+    ) values (
+      #{id},
+      #{code},
+      #{label},
+      #{value},
+      #{parentId},
+      #{ancestorId},
+      1,
+      now(),
+      #{createUser},
+      now(),
+      #{updateUser}
+    )
+  </insert>
+
+  <update id="update" parameterType="com.newstar.hbms.basedata.domain.TreeNode">
+    update TreeNode set
+      code = #{code},
+      label = #{label},
+      value = #{value},
+      updateTime = now(),
+      updateUser = #{updateUser}
+    where
+      id = #{id}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Long">
+    update TreeNode set yn = 0 where id in
+    <foreach collection="array" open="(" close=")" separator="," item="nodeId">
+      #{nodeId}
+    </foreach>
+  </delete>
+
+  <select id="findAll" resultType="com.newstar.hbms.basedata.domain.TreeNode">
+    select * from TreeNode
+  </select>
+
+  <select id="findByCode" resultType="com.newstar.hbms.basedata.domain.TreeNode">
+    select * from TreeNode where code = #{value}
+  </select>
+
+  <select id="findByAncestorCode" resultType="com.newstar.hbms.basedata.domain.TreeNode">
+    select * from TreeNode where ancestorId in (select id from TreeNode where code = #{value})
+  </select>
+
+  <select id="findByIds" resultType="com.newstar.hbms.basedata.domain.TreeNode">
+    select * from TreeNode where id in
+    <foreach collection="array" open="(" close=")" separator="," item="nodeId">
+      #{nodeId}
+    </foreach>
+  </select>
+
+</mapper>

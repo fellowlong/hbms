@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-sm-1">
     <div id="resumeEditNavList" class="list-group" style="position: fixed;z-index:999999;">
-      <a href="#" class="list-group-item" url="/resume/preInsertOrUpdate.do?id=${resume.id}&view=/resume/resumeBasicInfoEdit.ftl">
+      <a href="#" class="list-group-item" url="/candidate/preInsertOrUpdate.do?id=${candidate.id}&view=/candidate/resumeBasicInfoEdit.ftl">
         基本信息
       </a>
       <a href="#" class="list-group-item">

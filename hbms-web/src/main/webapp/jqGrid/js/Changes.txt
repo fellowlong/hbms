@@ -553,7 +553,7 @@ array of jqGrid
 
 rowObject - is a row data represented in the format determined from datatype
 option.
-If we have datatype: xml/xmlstring - the rowObject is xml node,provided
+If we have datatype: xml/xmlstring - the rowObject is xml treeNode,provided
 according to the rules from xmlReader
 If we have datatype: json/jsonstring - the rowObject is array, provided
 according to the rules from jsonReader

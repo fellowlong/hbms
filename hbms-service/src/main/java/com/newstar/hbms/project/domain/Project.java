@@ -1,5 +1,10 @@
 package com.newstar.hbms.project.domain;
 
+import com.newstar.hbms.customer.domain.Contact;
+import com.newstar.hbms.customer.domain.Customer;
+import com.newstar.hbms.customer.domain.Position;
+import com.newstar.hbms.system.domain.User;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,6 +21,11 @@ public class Project implements Serializable {
   private Long id;
 
   /**
+   * 项目名称
+   */
+  private String name;
+
+  /**
    * 开始日期
    */
   private Date startDate;
@@ -26,29 +36,46 @@ public class Project implements Serializable {
   private Date endDate;
 
   /**
+   * 客户编号
+   */
+  private Long customerId;
+
+  private Customer customer;
+
+  /**
+   * 职位编号
+   */
+  private Long positionId;
+
+  private Position position;
+
+  /**
    * 客户联系人
    */
-  private String contract;
+  private Long contractId;
+
+  private Contact contact;
 
   /**
    * 顾问
    */
-  private String consultant;
+  private Long consultantId;
+
+  private User consultant;
 
   /**
    * 助理
    */
-  private String assistant;
+  private Long assistantId;
+
+  private User assistant;
 
   /**
    * 项目负责人
    */
-  private String manager;
+  private Long managerId;
 
-  /**
-   * 销售员
-   */
-  private String salesman;
+  private User manager;
 
   /**
    * 项目级别
@@ -56,19 +83,9 @@ public class Project implements Serializable {
   private String level;
 
   /**
-   * 是否关键
-   */
-  private String isKey;
-
-  /**
    * 项目状态
    */
   private String status;
-
-  /**
-   * 备注
-   */
-  private String remark;
 
   /**
    * 项目计划
@@ -80,12 +97,56 @@ public class Project implements Serializable {
    */
   private String plantRemark;
 
+  /**
+   * 是否关键
+   */
+  private Boolean isKey;
+
+  /**
+   * 备注
+   */
+  private String remark;
+
+  /**
+   * 是否有效
+   * @return
+   */
+  private Boolean yn;
+
+  /**
+   * 创建时间
+   */
+  private Date createTime;
+
+  /**
+   * 创建人
+   */
+  private String createUser;
+
+  /**
+   * 修改时间
+   */
+  private Date updateTime;
+
+  /**
+   * 修改人
+   */
+  private String updateUser;
+
   public Long getId() {
     return id;
   }
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public Date getStartDate() {
@@ -104,44 +165,100 @@ public class Project implements Serializable {
     this.endDate = endDate;
   }
 
-  public String getContract() {
-    return contract;
+  public Long getCustomerId() {
+    return customerId;
   }
 
-  public void setContract(String contract) {
-    this.contract = contract;
+  public void setCustomerId(Long customerId) {
+    this.customerId = customerId;
   }
 
-  public String getConsultant() {
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
+  }
+
+  public Long getPositionId() {
+    return positionId;
+  }
+
+  public void setPositionId(Long positionId) {
+    this.positionId = positionId;
+  }
+
+  public Position getPosition() {
+    return position;
+  }
+
+  public void setPosition(Position position) {
+    this.position = position;
+  }
+
+  public Long getContractId() {
+    return contractId;
+  }
+
+  public void setContractId(Long contractId) {
+    this.contractId = contractId;
+  }
+
+  public Contact getContact() {
+    return contact;
+  }
+
+  public void setContact(Contact contact) {
+    this.contact = contact;
+  }
+
+  public Long getConsultantId() {
+    return consultantId;
+  }
+
+  public void setConsultantId(Long consultantId) {
+    this.consultantId = consultantId;
+  }
+
+  public User getConsultant() {
     return consultant;
   }
 
-  public void setConsultant(String consultant) {
+  public void setConsultant(User consultant) {
     this.consultant = consultant;
   }
 
-  public String getAssistant() {
+  public Long getAssistantId() {
+    return assistantId;
+  }
+
+  public void setAssistantId(Long assistantId) {
+    this.assistantId = assistantId;
+  }
+
+  public User getAssistant() {
     return assistant;
   }
 
-  public void setAssistant(String assistant) {
+  public void setAssistant(User assistant) {
     this.assistant = assistant;
   }
 
-  public String getManager() {
+  public Long getManagerId() {
+    return managerId;
+  }
+
+  public void setManagerId(Long managerId) {
+    this.managerId = managerId;
+  }
+
+  public User getManager() {
     return manager;
   }
 
-  public void setManager(String manager) {
+  public void setManager(User manager) {
     this.manager = manager;
-  }
-
-  public String getSalesman() {
-    return salesman;
-  }
-
-  public void setSalesman(String salesman) {
-    this.salesman = salesman;
   }
 
   public String getLevel() {
@@ -152,28 +269,12 @@ public class Project implements Serializable {
     this.level = level;
   }
 
-  public String getIsKey() {
-    return isKey;
-  }
-
-  public void setIsKey(String isKey) {
-    this.isKey = isKey;
-  }
-
   public String getStatus() {
     return status;
   }
 
   public void setStatus(String status) {
     this.status = status;
-  }
-
-  public String getRemark() {
-    return remark;
-  }
-
-  public void setRemark(String remark) {
-    this.remark = remark;
   }
 
   public String getPlant() {
@@ -190,5 +291,61 @@ public class Project implements Serializable {
 
   public void setPlantRemark(String plantRemark) {
     this.plantRemark = plantRemark;
+  }
+
+  public Boolean getKey() {
+    return isKey;
+  }
+
+  public void setKey(Boolean key) {
+    isKey = key;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
+  }
+
+  public Boolean getYn() {
+    return yn;
+  }
+
+  public void setYn(Boolean yn) {
+    this.yn = yn;
+  }
+
+  public Date getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
+
+  public String getCreateUser() {
+    return createUser;
+  }
+
+  public void setCreateUser(String createUser) {
+    this.createUser = createUser;
+  }
+
+  public Date getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
+
+  public String getUpdateUser() {
+    return updateUser;
+  }
+
+  public void setUpdateUser(String updateUser) {
+    this.updateUser = updateUser;
   }
 }

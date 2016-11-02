@@ -39,7 +39,7 @@ function insertOrUpdateResume(isNext) {
   var tabTitle = isNew ? "新增简历" : "编辑简历";
   submitForm({
     form:"#resumeEditForm",
-    url:"/resume/insertOrUpdate.do",
+    url:"/candidate/insertOrUpdate.do",
     successHandler:function(message) {
       if(isNew && message.id && message.id != null) {
         $.messager.alert("新增简历成功", "新增简历成功，请添加其他信息", "info")

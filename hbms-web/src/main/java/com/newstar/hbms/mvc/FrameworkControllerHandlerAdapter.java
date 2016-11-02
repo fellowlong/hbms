@@ -32,6 +32,8 @@ public class FrameworkControllerHandlerAdapter extends SimpleControllerHandlerAd
 
   private Controller workPanelController;
 
+  private Map<String, Object> exportMap;
+
   @Override
   public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
@@ -83,6 +85,10 @@ public class FrameworkControllerHandlerAdapter extends SimpleControllerHandlerAd
     model.put(headerName, headerMap);
     //
     model.put(requestUri, request.getRequestURI());
+    //
+    if (exportMap != null) {
+      model.putAll(exportMap);
+    }
   }
 
   public void setWorkUris(List<String> workUris) {
@@ -91,5 +97,9 @@ public class FrameworkControllerHandlerAdapter extends SimpleControllerHandlerAd
 
   public void setWorkPanelController(Controller workPanelController) {
     this.workPanelController = workPanelController;
+  }
+
+  public void setExportMap(Map<String, Object> exportMap) {
+    this.exportMap = exportMap;
   }
 }

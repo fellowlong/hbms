@@ -9,6 +9,10 @@ import java.util.List;
  */
 public interface ListItemService {
 
+  public static final String TYPE_CODE_SEX = "SEX";
+  public static final String TYPE_CODE_MARITAL = "MARITAL_STATUS";
+  public static final String TYPE_CODE_DEGREE = "DEGREE";
+
   public int insert(ListItem listItem);
 
   public int update(ListItem listItem);

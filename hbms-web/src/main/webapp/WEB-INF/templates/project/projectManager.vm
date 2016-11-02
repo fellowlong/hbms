@@ -1,0 +1,314 @@
+<div style="padding-bottom: 10px">
+  <form id="searchProjectForm" class="form-inline" role="form" action="" method="post">
+    <input type="hidden" name="id" value="$!project.id">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">名称</div>
+        <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end>
+        <div class="input-group-addon">职位</div>
+        <input class="form-control" name="project.name" #if($param['project.name']) value="$param['project.name']" #end>
+        <div class="input-group-addon">公司</div>
+        <input class="form-control" name="customer.name" #if($param['customer.name'])
+               value="$param['customer.name']" #end>
+        <div class="input-group-addon">状态</div>
+        <input class="form-control" name="status" #if($param['status']) value="$param['status']" #end>
+        <span class="input-group-btn">
+          <button id="searchProject" class="btn btn-primary form-control no-radius" type="button">
+            <i class="ace-icon fa fa-search"></i>搜索
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group" style="padding-left: 20px">
+      <button id="addProject" type="button" class="btn btn-success form-control no-radius">
+        <i class="ace-icon fa fa-plus"></i>
+        新增
+      </button>
+      <button id="editProject" type="button" class="btn btn-success form-control no-radius">
+        <i class="ace-icon fa fa-edit"></i>
+        编辑
+      </button>
+      <button id="deleteProject" type="button" class="btn btn-danger form-control no-radius">
+        <i class="ace-icon fa fa-trash-o"></i>
+        删除
+      </button>
+    </div>
+  </form>
+</div>
+
+<div id="projectListDiv">
+  <table id="projectList"></table>
+  <div id="projectListPager" style="height: 50px"></div>
+</div>
+
+<div class="modal fade" id="projectAddOrEditDialog" tabindex="-1" role="dialog"
+     aria-labelledby="projectAddOrEditDialogTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span>
+        </button>
+        <h4 class="modal-title" id="projectAddOrEditDialogTitle">项目信息</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+
+            <form id="insertOrUpdateProjectForm" role="form" class="form-horizontal"
+                  data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+
+              <div class="form-group">
+
+                <label class="col-xs-2 control-label no-padding-right">客户</label>
+                <div class="col-xs-10">
+                  <select id="customerSelect" class="chosen-select form-control" name="customerId">
+                    #foreach($customer in $customers)
+                      <option value="$customer.id">$customer.name</option>
+                    #end
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-xs-2 control-label no-padding-right">职位</label>
+                <div class="col-xs-10">
+                  <select id="positionSelect" class="chosen-select form-control" name="positionId" data-rule="职位:required;positionId">
+                    #foreach($customer in $customers)
+                      <option value="$customer.id">$customer.name</option>
+                    #end
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">联系人</label>
+                <div class="col-sm-10">
+                  <select id="contactSelect" class="chosen-select form-control" name="contactId" data-rule="联系人:required;contactId">
+                    #foreach($customer in $customers)
+                      <option value="$customer.id">$customer.name</option>
+                    #end
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">名称</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="name"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">负责人</label>
+                <div class="col-sm-10">
+                  <select class="chosen-select form-control" name="managerId" data-rule="负责人:required;managerId">
+                    #foreach($user in $users)
+                      <option value="$user.id">$user.name</option>
+                    #end
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">顾问</label>
+                <div class="col-sm-10">
+                  <select class="chosen-select form-control" name="consultantId" data-rule="顾问:required;consultantId">
+                    #foreach($user in $users)
+                      <option value="$user.id">$user.name</option>
+                    #end
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">助理</label>
+                <div class="col-sm-10">
+                  <select class="chosen-select form-control" name="assistantId" data-rule="助理:required;assistantId">
+                    #foreach($user in $users)
+                      <option value="$user.id">$user.name</option>
+                    #end
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">级别</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="level"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">状态</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="status"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">是否关键</label>
+                <div class="col-sm-10">
+                  <label>
+                    <input name="isKey" type="radio" class="ace" value="true">
+                    <span class="lbl">是</span>
+                  </label>
+                  <label>
+                    <input name="isKey" type="radio" class="ace" value="false">
+                    <span class="lbl">否</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">计划</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="plant"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">计划备注</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" name="plantRemark" rows="3"></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">备注</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control ace" name="remark" rows="3"></textarea>
+                </div>
+              </div>
+
+              <input type="hidden" value="$!project.id" name="id">
+            </form>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="saveOrUpdateProject" type="button" class="btn btn-primary">
+          <i class="ace-icon fa fa-check bigger-110"></i>保存
+        </button>
+        <button id="closeProject" class="btn"><i class="ace-icon fa fa-undo bigger-110"></i>关闭</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#projectList").jqGrid({
+      url: '/project/findByBean.do',
+      mtype: "POST",
+      datatype: "json",
+      colNames: ['名称', '职位', '公司', '起止时间', '负责人', '顾问', '状态', '是否关键'],
+      colModel: [
+        {name: 'name', width: 150},
+        {name: 'position.name', width: 150},
+        {name: 'customer.name', width: 150},
+        {
+          name: 'startEndDate', width: 150, formatter: function (cell, options, row) {
+          return row.startDate + "至" + row.endDate
+        }
+        },
+        {name: 'manager.name', width: 150},
+        {name: 'consultant.name', width: 150},
+        {name: 'status', width: 150},
+        {name: 'isKey', width: 150}
+      ],
+      multiselect: true,
+      rowNum: 10,
+      rowList: [10, 30, 50, 100],
+      pager: '#projectListPager',
+      shrinkToFit: true
+    });
+    function resizeProjectList() {
+      $("#projectList").jqGrid('setGridWidth', $(window).width() - $("#projectListDiv").offset().left - 10);
+      $("#projectList").jqGrid('setGridHeight', $(window).height() - $("#projectListDiv").offset().top - 100);
+    }
+
+    resizeProjectList();
+    $(window).on('resize', function () {
+      resizeProjectList();
+    });
+
+    $("#searchProject").on("click", function () {
+      $("#projectList").jqGrid('setGridParam', {
+        postData: {
+          name: $("#searchProjectForm input[name='name']").val(),
+          "customer.name": $("#searchProjectForm input[name='customer.name']").val(),
+          industry: $("#searchProjectForm input[name='industry']").val()
+        },
+        page: 1
+      }).trigger("reloadGrid");
+    });
+
+    $("#addProject").on("click", function () {
+      //清空表单
+      $("#customerOfAddProject").css("display", "block");
+      $("#customerOfEditProject").css("display", "none");
+      $("#insertOrUpdateProjectForm").validator("cleanUp");
+      clearForm("#insertOrUpdateProjectForm");
+      $("#projectAddOrEditDialogTitle").text("新增职位");
+      $('#projectAddOrEditDialog').modal('show')
+    });
+
+    $("#editProject").on("click", function () {
+      var rowIds = $("#projectList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length != 1) {
+        bootbox.alert("请选择要删除的记录");
+        return;
+      }
+      $("#projectListDiv").block({
+        message: '<h3>正在加载数据</h3>',
+        css: {border: '3px solid #a00'}
+      });
+      loadRecord("/project/findById.do", {id: rowIds[0]}, "#insertOrUpdateProjectForm", function () {
+        $("#projectListDiv").unblock();
+        $("#customerOfAddProject").css("display", "none");
+        $("#customerOfEditProject").css("display", "block");
+        $("#projectAddOrEditDialogTitle").text("编辑职位");
+        $('#projectAddOrEditDialog').modal('show')
+      });
+    });
+
+    $("#deleteProject").on("click", function () {
+      var rowIds = $("#projectList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length < 1) {
+        bootbox.alert("请选择一条进行编辑");
+        return;
+      }
+      bootbox.confirm("<h3>确定删除?</h3>", function (result) {
+        if (result) {
+          disableRecords(
+              "/project/disableByIds.do",
+              {ids: rowIds},
+              function () {
+                $("#searchProjectForm").submit();
+              },
+              function () {
+                $("#searchProjectForm").submit();
+              });
+        }
+      })
+    });
+
+    $("#saveOrUpdateProject").on("click", function () {
+      saveOrUpdateRecord("/project/insertOrUpdate.do", "#insertOrUpdateProjectForm", function () {
+        $("#projectAddOrEditDialog").modal("hide");
+        $("#searchProjectForm").submit();
+      });
+    })
+
+    $("#closeProject").on("click", function () {
+      $("#projectAddOrEditDialog").modal("hide");
+    })
+
+    $('.chosen-select').chosen({search_contains:true});
+    $(".chosen-container").css("width","100%");
+  });
+</script>
+
+

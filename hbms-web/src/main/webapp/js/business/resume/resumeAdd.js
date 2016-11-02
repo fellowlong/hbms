@@ -38,7 +38,7 @@ function insertOrUpdateResume() {
   var isNew = ($("#resumeEditForm input[name='id']").val() == null || $("#resumeEditForm input[name='id']").val().length == 0)
   submitForm({
     form:"#resumeBasicInfoForm",
-    url:"/resume/insertOrUpdate.do",
+    url:"/candidate/insertOrUpdate.do",
     dataGrids:[
       {id:"#workExperienceDg",property:"workExperiences"},
       {id:"#educationExperienceDg",property:"educationExperiences"},

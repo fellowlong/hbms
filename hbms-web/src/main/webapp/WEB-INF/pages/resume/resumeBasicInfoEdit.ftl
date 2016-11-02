@@ -1,7 +1,7 @@
 <form id="resumeAddForm"
       method="post"
       enctype="multipart/form-data"
-      action="/resume/insertOrUpdate.do"
+      action="/candidate/insertOrUpdate.do"
       class="form-horizontal"
       role="form"
       autocomplete="off"

@@ -37,7 +37,14 @@
   </form>
 </div>
 
+<div id="customerListDiv" style="padding:10px;">
+    <table id="telantList"></table>
+    <div id="customerListPager"></div>
+</div>
+
 <div class="row" style="margin: 5px">
+
+
 
   <table id="resumeList" border="0" class="table table-striped table-bordered table-hover" style="margin: 0">
     <thead>
@@ -54,20 +61,20 @@
       <th>最后修改时间</th>
     </thead>
     <tbody>
-    #foreach($resume in $resumePagingResult.records)
+    #foreach($candidate in $resumePagingResult.records)
 
       <tr>
         <td class="center">
           <label>
-            <input class="ace" type="checkbox" value="$!resume.id">
+            <input class="ace" type="checkbox" value="$!candidate.id">
             <span class="lbl"></span>
           </label>
         </td>
-        <td><a href="/resume/findById.do?id=$!resume.id&moduleId=$module.id" target="_blank">$!resume.name</a></td>
-        <td>$!resume.createUser</td>
-        <td>$!resume.createTime</td>
-        <td>$!resume.updateUser</td>
-        <td>$!resume.updateTime</td>
+        <td><a href="/candidate/findById.do?id=$!candidate.id&moduleId=$module.id" target="_blank">$!candidate.name</a></td>
+        <td>$!candidate.createUser</td>
+        <td>$!candidate.createTime</td>
+        <td>$!candidate.updateUser</td>
+        <td>$!candidate.updateTime</td>
       </tr>
     #end
     </tbody>
@@ -118,7 +125,7 @@
           }
         });
     if(checkedItems.length == 1) {
-      mainWorkPanelReload('/resume/preInsertOrUpdate.do?id=' + checkedItems[0] + '&view=/resume/resumeEdit.ftl');
+      mainWorkPanelReload('/candidate/preInsertOrUpdate.do?id=' + checkedItems[0] + '&view=/candidate/resumeEdit.ftl');
     } else {
       bootbox.dialog({
         message: "<span class='bigger-110'>请选择一条记录</span>",
@@ -137,7 +144,7 @@
     $.ajax({
       type: "post",
       dataType: "json",
-      url: "/resume/findById.do",
+      url: "/candidate/findById.do",
       traditional: true,
       data: {id: resumeId, moduleId:$module.id},
       timeout: 3000,

@@ -11,7 +11,7 @@ var workPanelFactoryConfig = [
     children: [
       {
         name: "候选人管理",
-        url: contextPath + "/page/candidate.html"
+        url: contextPath + "/page/candidate2.html"
       }
     ]
   },
@@ -20,11 +20,11 @@ var workPanelFactoryConfig = [
     children:[
         {
           name : "简历维护",
-          url : contextPath + "/resume/findByBean.do"
+          url : contextPath + "/candidate/findByBean.do"
         },
         {
           name : "简历入库",
-          url : contextPath + "/page/resume/resumeAdd.html"
+          url : contextPath + "/page/candidate/resumeAdd.html"
         },
         {
           name : "应用管理",

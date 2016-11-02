@@ -4,49 +4,49 @@
 <table class="table table-bordered" style="width: 800px">
   <tr>
     <td align="right">姓名:</td>
-    <td align="left">${resume.name}</td>
+    <td align="left">${candidate.name}</td>
     <td align="right">性别</td>
-    <td align="left">${resume.sex}</td>
+    <td align="left">${candidate.sex}</td>
     <td align="right">年龄</td>
-    <td align="left">${resume.age}</td>
+    <td align="left">${candidate.age}</td>
   </tr>
   <tr>
     <td align="right">教育背景</td>
-    <td align="left">${resume.education}</td>
+    <td align="left">${candidate.education}</td>
     <td align="right">婚姻状况</td>
-    <td align="left">${resume.marital}</td>
+    <td align="left">${candidate.marital}</td>
     <td align="right">居住地</td>
-    <td align="left">${resume.location}</td>
+    <td align="left">${candidate.location}</td>
   </tr>
   <tr>
     <td align="right">电话</td>
-    <td align="left">${resume.telephone}</td>
+    <td align="left">${candidate.telephone}</td>
     <td align="right">邮箱</td>
-    <td align="left">${resume.email}</td>
+    <td align="left">${candidate.email}</td>
     <td align="right">工作年限</td>
-    <td align="left">${resume.workYears}</td>
+    <td align="left">${candidate.workYears}</td>
   </tr>
   <tr>
     <td align="right">行业</td>
-    <td align="left">${resume.industry}</td>
+    <td align="left">${candidate.industry}</td>
     <td align="right">公司</td>
-    <td align="left">${resume.company}</td>
+    <td align="left">${candidate.company}</td>
     <td align="right">职位</td>
-    <td align="left">${resume.position}</td>
+    <td align="left">${candidate.position}</td>
   </tr>
   <tr>
     <td align="right">薪资</td>
-    <td align="left">${resume.salary}</td>
+    <td align="left">${candidate.salary}</td>
     <td align="right">搜索关键字</td>
-    <td align="left">${resume.keyword}</td>
+    <td align="left">${candidate.keyword}</td>
     <td align="right">语言</td>
-    <td align="left" colspan="2">${resume.language}</td>
+    <td align="left" colspan="2">${candidate.language}</td>
   </tr>
 </table>
 
 <h1><b>工作经历</b></h1>
 <table class="table table-bordered" style="width: 800px">
-  <#list resume.workExperiences as workExperience>
+  <#list candidate.workExperiences as workExperience>
     <tr>
       <td colspan="2">
         <label>${workExperience.startDate} - ${workExperience.endDate} ${workExperience.company} | ${workExperience.industry}</label>
@@ -74,7 +74,7 @@
   <th>类型</th>
   </thead>
   <tbody>
-  <#list resume.educationExperiences as educationExperience>
+  <#list candidate.educationExperiences as educationExperience>
     <tr>
       <td>${educationExperience.school}</td>
       <td>${educationExperience.startDate}</td>
@@ -96,7 +96,7 @@
     <th>听说能力</th>
   </thead>
   <tbody>
-  <#list resume.languageAbilities as languageAbility>
+  <#list candidate.languageAbilities as languageAbility>
     <tr>
       <td align="left">${languageAbility.name}</td>
       <td align="left">${languageAbility.readAndWrite}</td>
@@ -107,7 +107,7 @@
 
 <h1><b>项目经历</b></h1>
 <table class="table table-bordered" style="width: 800px">
-  <#list resume.projectExperiences as projectExperience>
+  <#list candidate.projectExperiences as projectExperience>
     <tr>
       <td colspan="6">
       <label>
@@ -135,7 +135,7 @@
   <th>获得时间</th>
   </thead>
   <tbody>
-  <#list resume.certificates as certificate>
+  <#list candidate.certificates as certificate>
   <tr>
     <td align="left">${certificate.name}</td>
     <td align="left">${certificate.acquireDate}</td>
@@ -148,14 +148,14 @@
 <h1><b>个人评价</b></h1>
 <table class="table table-bordered" style="width: 800px">
   <tr>
-    <td>${resume.selfEvaluation}</td>
+    <td>${candidate.selfEvaluation}</td>
   </tr>
 </table>
 
 <h1><b>其他</b></h1>
 <table class="table table-bordered" style="width: 800px">
   <tr>
-    <td>${resume.other}</td>
+    <td>${candidate.other}</td>
   </tr>
 </table>
 

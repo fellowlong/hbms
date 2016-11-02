@@ -8,7 +8,7 @@
 
 <div style="margin:10px">
 
-  <form action="/resume/resumeSearch.do" method="post">
+  <form action="/candidate/resumeSearch.do" method="post">
     <input type="hidden" name="moduleId" value="$param['moduleId']">
       <div class="row" style="margin-top: 10px;margin-bottom: 5px;">
         <div class="col-xs-12">
@@ -97,7 +97,7 @@
         <tr style="cursor: hand">
           <td align="center">$!document.id</td>
           <td align="center">
-            <a href="/resume/findById.do?id=$!document.id&moduleId=$module.id" target="_blank" style="text-decoration: underline">
+            <a href="/candidate/findById.do?id=$!document.id&moduleId=$module.id" target="_blank" style="text-decoration: underline">
               #if($highlights.get($!document.id).get("name"))
                 #foreach($matchedFragment in $!highlights.get($!document.id).get("name"))
                   #if($foreach.count > 1)
@@ -225,7 +225,7 @@
           }
         });
     if (checkedItems.length == 1) {
-      mainWorkPanelReload('/resume/preInsertOrUpdate.do?id=' + checkedItems[0] + '&view=/resume/resumeEdit.ftl');
+      mainWorkPanelReload('/candidate/preInsertOrUpdate.do?id=' + checkedItems[0] + '&view=/candidate/resumeEdit.ftl');
     } else {
       bootbox.dialog({
         message: "<span class='bigger-110'>请选择一条记录</span>",
@@ -244,7 +244,7 @@
     $.ajax({
       type: "post",
       dataType: "json",
-      url: "/resume/findById.do",
+      url: "/candidate/findById.do",
       traditional: true,
       data: {id: resumeId, moduleId:$module.id},
       timeout: 3000,
