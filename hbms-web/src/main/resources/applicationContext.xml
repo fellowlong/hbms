@@ -166,8 +166,12 @@
     <property name="commonDao" ref="commonDao"/>
   </bean>
 
-  <bean id="baseDataService" class="com.newstar.hbms.basedata.service.impl.BaseDataServiceImpl">
+  <bean id="treeService" class="com.newstar.hbms.basedata.service.impl.TreeServiceImpl">
     <property name="treeNodeDao" ref="treeNodeDao"/>
+  </bean>
+
+  <bean id="baseDataService" class="com.newstar.hbms.basedata.service.impl.BaseDataServiceImpl">
+    <property name="treeService" ref="treeService"/>
   </bean>
 
   <bean id="fileService" class="com.newstar.hbms.common.service.impl.FileServiceImpl">

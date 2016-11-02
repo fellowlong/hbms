@@ -32,15 +32,15 @@ public interface BaseDataService {
     public static final String TYPE_CODE_DEPARTMENT = "DEPARTMENT";
 
 
-    public List<TreeNode> getSexes();
-    public List<TreeNode> getMaritals();
-    public List<TreeNode> getDegree();
-    public List<TreeNode> getIndustries();
-    public List<TreeNode> getFunctions();
-    public List<TreeNode> getStations();
-    public List<TreeNode> getCities();
-    public List<TreeNode> getTags();
-    public List<TreeNode> getDepartments();
+    public TreeNode getSexes();
+    public TreeNode getMaritals();
+    public TreeNode getDegrees();
+    public TreeNode getIndustries();
+    public TreeNode getFunctions();
+    public TreeNode getStations();
+    public TreeNode getCities();
+    public TreeNode getTags();
+    public TreeNode getDepartments();
 
 
 }

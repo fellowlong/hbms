@@ -9,9 +9,7 @@ import java.util.List;
  */
 public interface TreeService {
 
-  public int insert(TreeNode treeNode);
-
-  public int update(TreeNode treeNode);
+  public int insertOrUpdate(TreeNode treeNode);
 
   public int deleteById(Long[] ids);
 
@@ -19,7 +17,7 @@ public interface TreeService {
 
   public TreeNode findTreeByAncestorCode(String code);
 
-  public TreeNode findByCode(String code);
+  public TreeNode findNodeByCode(String code);
 
-  public List<TreeNode> findByIds(Long[] ids);
+  public List<TreeNode> findNodeByIds(Long[] ids);
 }
