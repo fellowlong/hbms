@@ -5,6 +5,9 @@
 <mapper namespace="com.newstar.hbms.basedata.dao.TreeNodeDao">
 
   <insert id="insert" parameterType="com.newstar.hbms.basedata.domain.TreeNode">
+    <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
+      sequence.global
+    </selectKey>
     insert into TreeNode(
       id,
       code,

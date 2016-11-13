@@ -66,7 +66,7 @@
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="plugins">
       <list>
-        <bean class="com.newstar.hbms.utils.paging.PagingPlugin"/>
+        <bean class="com.newstar.hbms.support.paging.PagingPlugin"/>
       </list>
     </property>
     <property name="dataSource" ref="dataSource" />

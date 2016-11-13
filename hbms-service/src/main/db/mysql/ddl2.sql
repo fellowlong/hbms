@@ -1,8 +1,8 @@
-drop table SourceResume;
-create table SourceResume(
+drop table Resume;
+create table Resume(
   id bigint auto_increment not null primary key comment '主键',
   name varchar(100) comment '名称',
-  binaryResume MEDIUMBLOB comment '二进制简历',
+  attachmentId MEDIUMBLOB comment '简历附件编号',
   textResume  MEDIUMTEXT comment '文本简历',
   yn  int(1) comment '是否有效',
   createTime datetime comment '创建时间',
@@ -15,61 +15,31 @@ drop table Candidate;
 create table Candidate(
   id bigint auto_increment not null primary key comment '候选人编号,主键',
   name varchar(100) comment '姓名',
-  sex int(1) comment '性别',
+  sexId bigint(1) comment '性别',
   birthday datetime comment '出生日期',
-  workingYears int comment '工作年限',
-  residence varchar(100) comment '居住地',
-  abroadStudyOrWork int(1) comment '海外学习/工作经历',
+  mobile varchar(20) comment '手机',
+  telephone varchar(20) comment '家庭电话',
   email varchar(50) comment '电子邮箱',
+  otherContact varchar(100) comment '电子邮箱',
+  degreeId bigint comment '学历',
+  maritalId bigint comment '婚姻状况',
+  locationId bigint comment '所在地',
+  workYears int comment '工作年限',
+  overseasExperience int(1) comment '海外经历',
   industryId bigint comment '行业编号',
-  currentCompany varchar(100) comment '目前公司',
-  currentPosition varchar(100) comment '目前职位',
-  currentAnnualSalary varchar(50) comment '当前年薪',
-  mobilePhone varchar(15) comment '手机',
-  homePhone varchar(20) comment '家庭电话',
-  companyPhone varchar(20) comment '公司电话',
+  currentCompanyId varchar(100) comment '目前公司',
+  currentPositionId varchar(100) comment '目前职位',
+  currentAnnualSalary varchar(50) comment '目前年薪',
   jobHuntingStatusId bigint comment '求职状态',
+  other varchar(500) comment '其他信息',
   keyword varchar(200) comment '搜索关键字',
-  countryId bigint comment '国家',
-  high int comment '身高',
-  maritalStatusId bigint comment '婚姻状况',
-  snsNo varchar(20) comment 'SNS号码',
+  remark varchar(500) comment '其他信息',
   yn int(1) comment '是否有效',
   createTime datetime comment '创建时间',
   createUser varchar(50) comment '创建人账户',
   updateTime datetime comment '修改时间',
   updateUser varchar(50) comment '修改人账户'
 ) comment='候选人';
-
-drop table Resume;
-create table Resume(
-  id bigint auto_increment not null primary key comment '简历编号,主键',
-  name varchar(100) comment '简历名称',
-  sex varchar(200) comment '简历搜索关键字',
-  age  varchar(10) comment '年龄',
-  education  varchar(100) comment '教育情况',
-  marital  varchar(50) comment '婚姻状况',
-  location  varchar(100) comment '居住地',
-  telephone varchar(200) comment '电话',
-  email  varchar(100) comment '邮箱',
-  workYears  varchar(10) comment '工作年限',
-  industry  varchar(100) comment '所属行业',
-  company  varchar(100) comment '目前公司',
-  position  varchar(100) comment '目前职位',
-  salary  varchar(50) comment '薪资',
-  selfEvaluation  varchar(500) comment '个人评价',
-  other  varchar(500) comment '其他',
-  keyword  varchar(100) comment '搜索关键字',
-  OriginalResumeName varchar(100) comment '原始简历名称',
-  originalResumeUri varchar(100) comment '原始简历存储路径',
-  originalResumeText  text(100) comment '原始简历文本',
-  language  varchar(50) comment '简历语言',
-  yn int(1) comment '是否有效',
-  createTime datetime comment '创建时间',
-  createUser varchar(50) comment '创建人账户',
-  updateTime datetime comment '修改时间',
-  updateUser varchar(50) comment '修改人账户'
-) comment='简历';
 
 drop table WorkExperience;
 create table WorkExperience (

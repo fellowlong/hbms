@@ -1,8 +1,8 @@
 package com.newstar.hbms.project.dao;
 
 import com.newstar.hbms.project.domain.Project;
-import com.newstar.hbms.utils.paging.PageRange;
-import com.newstar.hbms.utils.paging.PagingResult;
+import com.newstar.hbms.support.paging.PageRange;
+import com.newstar.hbms.support.paging.PagingResult;
 
 import java.util.List;
 

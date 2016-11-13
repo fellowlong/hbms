@@ -6,8 +6,8 @@ import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.utils.ExceptionUtils;
 import com.newstar.hbms.utils.JsonUtils;
 import com.newstar.hbms.utils.WebUtils;
-import com.newstar.hbms.utils.paging.PageRange;
-import com.newstar.hbms.utils.paging.PagingResult;
+import com.newstar.hbms.support.paging.PageRange;
+import com.newstar.hbms.support.paging.PagingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 

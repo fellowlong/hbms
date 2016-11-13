@@ -1,21 +1,20 @@
 package com.newstar.hbms.candidate.web.controller;
 
 import com.newstar.hbms.candidate.domain.Candidate;
-import com.newstar.hbms.common.service.CommonService;
+import com.newstar.hbms.candidate.service.CandidateService;
+import com.newstar.hbms.customer.domain.Customer;
+import com.newstar.hbms.mvc.ConfigurableMultiActionController;
 import com.newstar.hbms.mvc.MessageCollector;
-import com.newstar.hbms.candidate.service.ResumeService;
+import com.newstar.hbms.support.paging.PageRange;
+import com.newstar.hbms.support.paging.PagingResult;
+import com.newstar.hbms.utils.JsonUtils;
 import com.newstar.hbms.utils.WebUtils;
-import com.newstar.hbms.utils.paging.PagingResult;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,22 +25,16 @@ import java.util.Map;
 /**
  * Created by fellowlong on 2014-08-07.
  */
-public class CandidateController extends MultiActionController {
+public class CandidateController extends ConfigurableMultiActionController {
 
   private Logger logger = Logger.getLogger(getClass());
 
-  private ResumeService resumeService;
-
-  private CommonService commonService;
+  private CandidateService candidateService;
 
   private HttpSolrServer httpSolrServer;
 
-  public void setResumeService(ResumeService resumeService) {
-    this.resumeService = resumeService;
-  }
-
-  public void setCommonService(CommonService commonService) {
-    this.commonService = commonService;
+  public void setCandidateService(CandidateService candidateService) {
+    this.candidateService = candidateService;
   }
 
   public void setHttpSolrServer(HttpSolrServer httpSolrServer) {
@@ -52,18 +45,40 @@ public class CandidateController extends MultiActionController {
     return new ModelAndView("/resumeSimple/resumeIndex");
   }
 
-  public ModelAndView findByBean(HttpServletRequest request,
+  public ModelAndView workspace(HttpServletRequest request,
+                                 HttpServletResponse response,
+                                 Candidate candidate) throws Exception {
+    return new ModelAndView("/resume/resumeList");
+  }
+
+  public void findByBean(HttpServletRequest request,
                                  HttpServletResponse response,
                                  Candidate candidate) throws Exception {
     candidate.setYn(Boolean.TRUE);
-    PagingResult<Candidate> resumePagingResult = resumeService.findByBean(candidate, WebUtils.getPageRange(request));
-    Map<String, Object> model = new HashMap<String, Object>();
-    model.put("resumePagingResult", resumePagingResult);
-    return new ModelAndView("/resumeSimple/resumeList", model);
+    String pageSize = request.getParameter("rows");
+    String pageNum = request.getParameter("page");
+    PageRange pageRange = new PageRange();
+    if (pageSize != null) {
+      pageRange.setPageSize(Integer.parseInt(pageSize));
+    }
+    if (pageNum != null) {
+      pageRange.setPageNum(Integer.parseInt(pageNum));
+    }
+    PagingResult<Candidate> candidateResult = candidateService.findByBean(candidate, pageRange);
+    Map<String, Object> jsonMap = new HashMap();
+    jsonMap.put("page", pageNum);
+    jsonMap.put("total ", candidateResult.getPageTotal());
+    jsonMap.put("records ", candidateResult.getRecordTotal());
+    if (candidateResult.getRecords() != null) {
+      jsonMap.put("rows", candidateResult.getRecords().toArray());
+    } else {
+      jsonMap.put("rows", null);
+    }
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap));
   }
 
   public ModelAndView findById(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    List<Candidate> candidates = resumeService.findByIds(new Long[]{WebUtils.getLong(request, WebUtils.ID)});
+    List<Candidate> candidates = candidateService.findByIds(new Long[]{WebUtils.getLong(request, WebUtils.ID)});
     ModelAndView modelAndView = new ModelAndView("/resumeSimple/resumeDetail");
     if (candidates != null && !candidates.isEmpty()) {
       modelAndView.getModel().put("resume", candidates.get(0));
@@ -81,7 +96,7 @@ public class CandidateController extends MultiActionController {
     String view = id == null ? "/resume/resumeAdd" : "/resume/resumeEdit";
     ModelAndView modelAndView = new ModelAndView(view);
     if (id != null) {
-      List<Candidate> candidates = resumeService.findByIds(new Long[]{id});
+      List<Candidate> candidates = candidateService.findByIds(new Long[]{id});
       if (candidates != null && !candidates.isEmpty()) {
         modelAndView.getModel().put("resume", candidates.get(0));
       }
@@ -89,14 +104,14 @@ public class CandidateController extends MultiActionController {
     return modelAndView;
   }
 
-  public ModelAndView insertOrUpdate(HttpServletRequest request, HttpServletResponse response,Candidate candidate2) throws Exception {
-    Candidate candidate = new Candidate();
+  public ModelAndView insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Candidate candidate) throws Exception {
+/*     = new Candidate();
     CommonsMultipartResolver resolver = new CommonsMultipartResolver();
     MultipartHttpServletRequest multipartHttpServletRequest = resolver.resolveMultipart(request);
     ServletRequestDataBinder servletRequestDataBinder = new ServletRequestDataBinder(candidate);
-    servletRequestDataBinder.bind(multipartHttpServletRequest);
+    servletRequestDataBinder.bind(multipartHttpServletRequest);*/
     boolean isNew = (candidate.getId() == null ? true : false);
-    int resultCount = resumeService.insertOrUpdate(candidate);
+    int resultCount = candidateService.insertOrUpdate(candidate);
     MessageCollector msgCollector = new MessageCollector();
     if (resultCount == 1) {
       msgCollector.addInfo(WebUtils.SUCCESS, Boolean.TRUE);
@@ -110,7 +125,7 @@ public class CandidateController extends MultiActionController {
   }
 
   public void deleteByIds(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    int resultCount = resumeService.deleteByIds(WebUtils.getLongArrayBySeparator(request, "id", ","));
+    int resultCount = candidateService.deleteByIds(WebUtils.getLongArrayBySeparator(request, "id", ","));
     MessageCollector msgCollector = new MessageCollector();
     msgCollector.addInfo(WebUtils.SUCCESS, Boolean.TRUE);
     WebUtils.writeWithJson(response, msgCollector);

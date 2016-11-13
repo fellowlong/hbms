@@ -66,7 +66,7 @@
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="plugins">
       <list>
-        <bean class="com.newstar.hbms.utils.paging.PagingPlugin"/>
+        <bean class="com.newstar.hbms.support.paging.PagingPlugin"/>
       </list>
     </property>
     <property name="dataSource" ref="dataSource" />
@@ -125,9 +125,6 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
-  <bean id="commonService" class="com.newstar.hbms.common.service.impl.CommonServiceImpl">
-    <property name="commonDao" ref="commonDao"/>
-  </bean>
 
   <bean id="fileService" class="com.newstar.hbms.common.service.impl.FileServiceImpl">
     <property name="prefix" value="${fileSaveRootPath}"/>
@@ -147,20 +144,13 @@
     <property name="resumeDao" ref="sourceResumeDao"/>
   </bean>
 
-  <bean id="resumeService" class="com.newstar.hbms.candidate.service.impl.CandidateServiceImpl">
+  <bean id="candidateService" class="com.newstar.hbms.candidate.service.impl.CandidateServiceImpl">
     <property name="candidateDao" ref="resumeDao"/>
     <property name="workExperienceDao" ref="workExperienceDao"/>
     <property name="educationExperienceDao" ref="educationExperienceDao"/>
     <property name="languageAbilityDao" ref="languageAbilityDao"/>
     <property name="certificateDao" ref="certificateDao"/>
     <property name="projectExperienceDao" ref="projectExperienceDao"/>
-    <property name="commonService" ref="commonService"/>
-    <property name="fileService" ref="fileService"/>
-    <property name="originalResumeSavePathPrefix" value="${originalResumeSavePathPrefix}"/>
-  </bean>
-
-  <bean id="listItemService" class="com.newstar.hbms.basedata.service.impl.ListItemServiceImpl">
-    <property name="listItemDao" ref="listItemDao"/>
   </bean>
 
 </beans>

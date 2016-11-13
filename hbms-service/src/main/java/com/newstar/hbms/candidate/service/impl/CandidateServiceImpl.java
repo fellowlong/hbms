@@ -5,13 +5,13 @@ import com.newstar.hbms.common.domain.Attachment;
 import com.newstar.hbms.common.domain.Domain;
 import com.newstar.hbms.candidate.dao.*;
 import com.newstar.hbms.candidate.domain.*;
-import com.newstar.hbms.candidate.service.ResumeService;
-import com.newstar.hbms.system.service.SequenceService;
+import com.newstar.hbms.candidate.service.CandidateService;
 import com.newstar.hbms.utils.WordParser;
 import com.newstar.hbms.utils.business.ObjectUtils;
-import com.newstar.hbms.utils.paging.PageRange;
-import com.newstar.hbms.utils.paging.PagingResult;
+import com.newstar.hbms.support.paging.PageRange;
+import com.newstar.hbms.support.paging.PagingResult;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
@@ -19,11 +19,7 @@ import java.util.*;
 /**
  * Created by fellowlong on 2014-08-07.
  */
-public class CandidateServiceImpl implements ResumeService {
-
-  private SequenceService sequenceService;
-
-  private String sequenceName;
+public class CandidateServiceImpl implements CandidateService {
 
   private CandidateDao candidateDao;
 
@@ -42,14 +38,6 @@ public class CandidateServiceImpl implements ResumeService {
   private ProjectExperienceDao projectExperienceDao;
 
   private CandidateIndexTaskDao candidateIndexTaskDao;
-
-  public void setSequenceService(SequenceService sequenceService) {
-    this.sequenceService = sequenceService;
-  }
-
-  public void setSequenceName(String sequenceName) {
-    this.sequenceName = sequenceName;
-  }
 
   public void setCandidateDao(CandidateDao candidateDao) {
     this.candidateDao = candidateDao;
@@ -83,6 +71,10 @@ public class CandidateServiceImpl implements ResumeService {
     this.candidateIndexTaskDao = candidateIndexTaskDao;
   }
 
+  public void setAttachmentDao(AttachmentDao attachmentDao) {
+    this.attachmentDao = attachmentDao;
+  }
+
   @Transactional(rollbackFor = Throwable.class)
   @Override
   public int insertOrUpdate(Candidate candidate) throws IOException {
@@ -90,7 +82,6 @@ public class CandidateServiceImpl implements ResumeService {
     if (candidate.getId() != null) {
       resultCount = candidateDao.update(candidate);
     } else {
-      candidate.setId(sequenceService.getNextVal(sequenceName));
       resultCount = candidateDao.insert(candidate);
     }
     if (candidate.getResumeFile() != null) {
@@ -106,7 +97,8 @@ public class CandidateServiceImpl implements ResumeService {
       attachment.setFileBinaryData(candidate.getResumeFile().getBytes());
       attachment.setFileStringData(textResume);
       attachment.setFileType(fileName.substring(fileName.lastIndexOf(".") + 1));
-      attachment.setRemark("Resume");
+      attachment.setRemark("Candidate Resume");
+      resultCount += attachmentDao.insert(attachment);
       //===========
       Resume resume = new Resume();
       resume.setAttachment(attachment);
@@ -118,7 +110,20 @@ public class CandidateServiceImpl implements ResumeService {
       candidate.setResume(resume);
       resultCount += resumeDao.insert(resume);
     }
-
+    if (candidate.getOtherAttachmentFiles() != null) {
+      for (MultipartFile attachmentFile : candidate.getOtherAttachmentFiles() ) {
+        Attachment attachment = new Attachment();
+        attachment.setBusinessId(candidate.getId());
+        attachment.setBusinessBigType("Candidate");
+        attachment.setBusinessSmallType("OtherAttachment");
+        String fileName = attachmentFile.getOriginalFilename();
+        attachment.setFileName(fileName);
+        attachment.setFileBinaryData(attachmentFile.getBytes());
+        attachment.setFileType(fileName.substring(fileName.lastIndexOf(".") + 1));
+        attachment.setRemark("Candidate OtherAttachment");
+        resultCount += attachmentDao.insert(attachment);
+      }
+    }
 
     //保存工作经历
     List<WorkExperience> workExperiences = candidate.getWorkExperiences();

@@ -1,8 +1,10 @@
 package com.newstar.hbms.candidate.domain;
 
+import org.apache.poi.hmef.Attachment;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,20 @@ public class Candidate implements Serializable {
   private Long id;
 
   /**
+   * 原始简历文件，用来临时存储
+   */
+  private MultipartFile resumeFile;
+
+  /**
+   * 原始简历
+   */
+  private Resume resume;
+
+  private MultipartFile[] otherAttachmentFiles;
+
+  private Attachment[] otherAttachments;
+
+  /**
    * 姓名
    */
   private String name;
@@ -21,17 +37,22 @@ public class Candidate implements Serializable {
   /**
    * 性别
    */
-  private String sex;
+  private Long sexId;
+
+  /**
+   * 出生日期
+   */
+  private Date birthday;
 
   /**
    * 手机号码
    */
-  private String telephone;
+  private String mobile;
 
   /**
-   * 年龄
+   * 座机
    */
-  private Integer age;
+  private String telephone;
 
   /**
    * 邮箱
@@ -39,49 +60,59 @@ public class Candidate implements Serializable {
   private String email;
 
   /**
-   * 教育
+   * 其他联系方式
    */
-  private String education;
+  private String otherContact;
 
   /**
-   * 工作年限
+   * 学历
    */
-  private String workYears;
+  private Long degreeId;
 
   /**
    * 婚姻状况
    */
-  private String marital;
+  private Long maritalId;
 
   /**
    * 所在地
    */
-  private String location;
+  private Long locationId;
+
+  /**
+   * 工作年限
+   */
+  private Integer workYears;
+
+  /**
+   * 工作年限
+   */
+  private Boolean overseasExperience;
 
   /**
    * 所在行业
    */
-  private String industry;
+  private Long industryId;
 
   /**
    * 公司
    */
-  private String company;
+  private Long currentCompanyId;
+
+  /**
+   * 职位
+   */
+  private Long currentPositionId;
 
   /**
    * 年薪
    */
-  private String position;
+  private Double currentAnnualSalary;
 
   /**
-   * 薪资
+   * 求职状态
    */
-  private String salary;
-
-  /**
-   * 自我评价
-   */
-  private String selfEvaluation;
+  private Long jobHuntingStatusId;
 
   /**
    * 工作经历
@@ -105,15 +136,14 @@ public class Candidate implements Serializable {
   private List<Certificate> certificates;
 
   /**
-   * 其他信息
-   */
-  private String other;
-
-  /**
    * 项目经验
    */
   private List<ProjectExperience> projectExperiences;
 
+  /**
+   * 其他信息
+   */
+  private String other;
 
   /**
    * 搜索关键字
@@ -121,19 +151,9 @@ public class Candidate implements Serializable {
   private String keyword;
 
   /**
-   * 原始简历文件，用来临时存储
+   * 备注
    */
-  private MultipartFile resumeFile;
-
-  /**
-   * 原始简历
-   */
-  private Resume resume;
-
-  /**
-   * 语言
-   */
-  private String language;
+  private String remark;
 
   /**
    *
@@ -161,17 +181,44 @@ public class Candidate implements Serializable {
    */
   private String updateUser;
 
-  /**
-   * 备注
-   */
-  private String remark;
-
   public Long getId() {
     return id;
   }
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public MultipartFile getResumeFile() {
+    return resumeFile;
+  }
+
+  public void setResumeFile(MultipartFile resumeFile) {
+    this.resumeFile = resumeFile;
+  }
+
+  public Resume getResume() {
+    return resume;
+  }
+
+  public void setResume(Resume resume) {
+    this.resume = resume;
+  }
+
+  public MultipartFile[] getOtherAttachmentFiles() {
+    return otherAttachmentFiles;
+  }
+
+  public void setOtherAttachmentFiles(MultipartFile[] otherAttachmentFiles) {
+    this.otherAttachmentFiles = otherAttachmentFiles;
+  }
+
+  public Attachment[] getOtherAttachments() {
+    return otherAttachments;
+  }
+
+  public void setOtherAttachments(Attachment[] otherAttachments) {
+    this.otherAttachments = otherAttachments;
   }
 
   public String getName() {
@@ -182,12 +229,28 @@ public class Candidate implements Serializable {
     this.name = name;
   }
 
-  public String getSex() {
-    return sex;
+  public Long getSexId() {
+    return sexId;
   }
 
-  public void setSex(String sex) {
-    this.sex = sex;
+  public void setSexId(Long sexId) {
+    this.sexId = sexId;
+  }
+
+  public Date getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+  public String getMobile() {
+    return mobile;
+  }
+
+  public void setMobile(String mobile) {
+    this.mobile = mobile;
   }
 
   public String getTelephone() {
@@ -198,14 +261,6 @@ public class Candidate implements Serializable {
     this.telephone = telephone;
   }
 
-  public Integer getAge() {
-    return age;
-  }
-
-  public void setAge(Integer age) {
-    this.age = age;
-  }
-
   public String getEmail() {
     return email;
   }
@@ -214,76 +269,92 @@ public class Candidate implements Serializable {
     this.email = email;
   }
 
-  public String getEducation() {
-    return education;
+  public String getOtherContact() {
+    return otherContact;
   }
 
-  public void setEducation(String education) {
-    this.education = education;
+  public void setOtherContact(String otherContact) {
+    this.otherContact = otherContact;
   }
 
-  public String getWorkYears() {
+  public Long getDegreeId() {
+    return degreeId;
+  }
+
+  public void setDegreeId(Long degreeId) {
+    this.degreeId = degreeId;
+  }
+
+  public Long getMaritalId() {
+    return maritalId;
+  }
+
+  public void setMaritalId(Long maritalId) {
+    this.maritalId = maritalId;
+  }
+
+  public Long getLocationId() {
+    return locationId;
+  }
+
+  public void setLocationId(Long locationId) {
+    this.locationId = locationId;
+  }
+
+  public Integer getWorkYears() {
     return workYears;
   }
 
-  public void setWorkYears(String workYears) {
+  public void setWorkYears(Integer workYears) {
     this.workYears = workYears;
   }
 
-  public String getMarital() {
-    return marital;
+  public Boolean getOverseasExperience() {
+    return overseasExperience;
   }
 
-  public void setMarital(String marital) {
-    this.marital = marital;
+  public void setOverseasExperience(Boolean overseasExperience) {
+    this.overseasExperience = overseasExperience;
   }
 
-  public String getLocation() {
-    return location;
+  public Long getIndustryId() {
+    return industryId;
   }
 
-  public void setLocation(String location) {
-    this.location = location;
+  public void setIndustryId(Long industryId) {
+    this.industryId = industryId;
   }
 
-  public String getIndustry() {
-    return industry;
+  public Long getCurrentCompanyId() {
+    return currentCompanyId;
   }
 
-  public void setIndustry(String industry) {
-    this.industry = industry;
+  public void setCurrentCompanyId(Long currentCompanyId) {
+    this.currentCompanyId = currentCompanyId;
   }
 
-  public String getCompany() {
-    return company;
+  public Long getCurrentPositionId() {
+    return currentPositionId;
   }
 
-  public void setCompany(String company) {
-    this.company = company;
+  public void setCurrentPositionId(Long currentPositionId) {
+    this.currentPositionId = currentPositionId;
   }
 
-  public String getPosition() {
-    return position;
+  public Double getCurrentAnnualSalary() {
+    return currentAnnualSalary;
   }
 
-  public void setPosition(String position) {
-    this.position = position;
+  public void setCurrentAnnualSalary(Double currentAnnualSalary) {
+    this.currentAnnualSalary = currentAnnualSalary;
   }
 
-  public String getSalary() {
-    return salary;
+  public Long getJobHuntingStatusId() {
+    return jobHuntingStatusId;
   }
 
-  public void setSalary(String salary) {
-    this.salary = salary;
-  }
-
-  public String getSelfEvaluation() {
-    return selfEvaluation;
-  }
-
-  public void setSelfEvaluation(String selfEvaluation) {
-    this.selfEvaluation = selfEvaluation;
+  public void setJobHuntingStatusId(Long jobHuntingStatusId) {
+    this.jobHuntingStatusId = jobHuntingStatusId;
   }
 
   public List<WorkExperience> getWorkExperiences() {
@@ -318,20 +389,20 @@ public class Candidate implements Serializable {
     this.certificates = certificates;
   }
 
-  public String getOther() {
-    return other;
-  }
-
-  public void setOther(String other) {
-    this.other = other;
-  }
-
   public List<ProjectExperience> getProjectExperiences() {
     return projectExperiences;
   }
 
   public void setProjectExperiences(List<ProjectExperience> projectExperiences) {
     this.projectExperiences = projectExperiences;
+  }
+
+  public String getOther() {
+    return other;
+  }
+
+  public void setOther(String other) {
+    this.other = other;
   }
 
   public String getKeyword() {
@@ -342,28 +413,12 @@ public class Candidate implements Serializable {
     this.keyword = keyword;
   }
 
-  public MultipartFile getResumeFile() {
-    return resumeFile;
+  public String getRemark() {
+    return remark;
   }
 
-  public void setResumeFile(MultipartFile resumeFile) {
-    this.resumeFile = resumeFile;
-  }
-
-  public Resume getResume() {
-    return resume;
-  }
-
-  public void setResume(Resume resume) {
-    this.resume = resume;
-  }
-
-  public String getLanguage() {
-    return language;
-  }
-
-  public void setLanguage(String language) {
-    this.language = language;
+  public void setRemark(String remark) {
+    this.remark = remark;
   }
 
   public Boolean getYn() {
@@ -406,11 +461,42 @@ public class Candidate implements Serializable {
     this.updateUser = updateUser;
   }
 
-  public String getRemark() {
-    return remark;
-  }
-
-  public void setRemark(String remark) {
-    this.remark = remark;
+  @Override
+  public String toString() {
+    return "Candidate{" +
+        "id=" + id +
+        ", resumeFile=" + resumeFile +
+        ", resume=" + resume +
+        ", name='" + name + '\'' +
+        ", sexId=" + sexId +
+        ", birthday=" + birthday +
+        ", mobile='" + mobile + '\'' +
+        ", telephone='" + telephone + '\'' +
+        ", email='" + email + '\'' +
+        ", otherContact='" + otherContact + '\'' +
+        ", degreeId=" + degreeId +
+        ", maritalId=" + maritalId +
+        ", locationId=" + locationId +
+        ", workYears=" + workYears +
+        ", overseasExperience=" + overseasExperience +
+        ", industryId=" + industryId +
+        ", currentCompanyId=" + currentCompanyId +
+        ", currentPositionId=" + currentPositionId +
+        ", currentAnnualSalary=" + currentAnnualSalary +
+        ", jobHuntingStatusId=" + jobHuntingStatusId +
+        ", workExperiences=" + workExperiences +
+        ", educationExperiences=" + educationExperiences +
+        ", languageAbilities=" + languageAbilities +
+        ", certificates=" + certificates +
+        ", projectExperiences=" + projectExperiences +
+        ", other='" + other + '\'' +
+        ", keyword='" + keyword + '\'' +
+        ", remark='" + remark + '\'' +
+        ", yn=" + yn +
+        ", createTime=" + createTime +
+        ", createUser='" + createUser + '\'' +
+        ", updateTime=" + updateTime +
+        ", updateUser='" + updateUser + '\'' +
+        '}';
   }
 }

@@ -3,8 +3,8 @@ package com.newstar.hbms.customer.service.impl;
 import com.newstar.hbms.customer.dao.ContactDao;
 import com.newstar.hbms.customer.domain.Contact;
 import com.newstar.hbms.customer.service.ContactService;
-import com.newstar.hbms.utils.paging.PageRange;
-import com.newstar.hbms.utils.paging.PagingResult;
+import com.newstar.hbms.support.paging.PageRange;
+import com.newstar.hbms.support.paging.PagingResult;
 
 import java.util.List;
 

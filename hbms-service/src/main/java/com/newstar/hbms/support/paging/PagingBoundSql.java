@@ -1,4 +1,4 @@
-package com.newstar.hbms.utils.paging;
+package com.newstar.hbms.support.paging;
 
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.ParameterMapping;

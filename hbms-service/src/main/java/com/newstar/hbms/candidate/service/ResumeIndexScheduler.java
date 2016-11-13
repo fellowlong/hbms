@@ -24,7 +24,7 @@ public class ResumeIndexScheduler {
 
   private long periodMillisecond = 5000;
 
-  private ResumeService resumeService;
+  private CandidateService candidateService;
 
   private CandidateIndexTaskDao candidateIndexTaskDao;
 
@@ -46,7 +46,7 @@ public class ResumeIndexScheduler {
         List<CandidateIndexTask> tasks = candidateIndexTaskDao.findByBean(candidateIndexTask);
         if (tasks != null && !tasks.isEmpty()) {
           for (CandidateIndexTask indexTask : tasks) {
-            List<Candidate> candidates = resumeService.findByIds(new Long[]{indexTask.getResumeId()});
+            List<Candidate> candidates = candidateService.findByIds(new Long[]{indexTask.getResumeId()});
             if (candidates != null && !candidates.isEmpty()) {
               Candidate candidate = candidates.get(0);
               httpServer.deleteById(String.valueOf(candidate.getId()));
@@ -80,8 +80,8 @@ public class ResumeIndexScheduler {
     this.candidateIndexTaskDao = candidateIndexTaskDao;
   }
 
-  public void setResumeService(ResumeService resumeService) {
-    this.resumeService = resumeService;
+  public void setCandidateService(CandidateService candidateService) {
+    this.candidateService = candidateService;
   }
 
   public void setPeriodMillisecond(long periodMillisecond) {

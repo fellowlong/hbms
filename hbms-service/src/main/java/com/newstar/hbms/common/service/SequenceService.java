@@ -1,4 +1,4 @@
-package com.newstar.hbms.system.service;
+package com.newstar.hbms.common.service;
 
 /**
  * Created by fellowlong on 2015-01-26.

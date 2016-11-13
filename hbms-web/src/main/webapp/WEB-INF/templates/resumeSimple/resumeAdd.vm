@@ -21,7 +21,7 @@
           </td>
           <td>
             <div class="col-xs-10">
-              <input type="file" class="form-control input-sm" name="originalResumeFile" data-rule="required;">
+              <input type="file" class="form-control input-sm" name="resumeFile" data-rule="required;">
             </div>
           </td>
         </tr>

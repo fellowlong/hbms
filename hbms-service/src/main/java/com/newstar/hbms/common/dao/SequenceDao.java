@@ -1,6 +1,6 @@
-package com.newstar.hbms.system.dao;
+package com.newstar.hbms.common.dao;
 
-import com.newstar.hbms.system.domain.Sequence;
+import com.newstar.hbms.common.domain.Sequence;
 
 import java.util.List;
 

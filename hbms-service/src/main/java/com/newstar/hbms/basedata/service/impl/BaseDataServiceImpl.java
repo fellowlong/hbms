@@ -47,8 +47,8 @@ public class BaseDataServiceImpl implements BaseDataService {
     }
 
     @Override
-    public TreeNode getStations() {
-        return treeService.findTreeByAncestorCode(TYPE_CODE_STATION);
+    public TreeNode getPositions() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_POSITION);
     }
 
     @Override
@@ -64,6 +64,16 @@ public class BaseDataServiceImpl implements BaseDataService {
     @Override
     public TreeNode getDepartments() {
         return treeService.findTreeByAncestorCode(TYPE_CODE_DEPARTMENT);
+    }
+
+    @Override
+    public TreeNode getConpanies() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_COMPANY);
+    }
+
+    @Override
+    public TreeNode getJobHuntingStatuses() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_JOB_HUNTING_STATUS);
     }
 
 }

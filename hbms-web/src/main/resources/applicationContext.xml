@@ -64,12 +64,7 @@
 
   <!-- define the SqlSessionFactory -->
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-    <property name="plugins">
-      <list>
-        <bean class="com.newstar.hbms.utils.paging.PagingPlugin"/>
-      </list>
-    </property>
-    <property name="dataSource" ref="dataSource" />
+    <property name="dataSource" ref="dataSource"/>
     <property name="mapperLocations">
       <list>
         <value>classpath:com/newstar/hbms/common/dao/*.xml</value>
@@ -80,20 +75,23 @@
         <value>classpath:com/newstar/hbms/system/dao/*.xml</value>
       </list>
     </property>
+    <property name="plugins">
+      <list>
+        <bean class="com.newstar.hbms.support.paging.PagingPlugin"/>
+        <bean class="com.newstar.hbms.support.SelectKeyFromSequenceInterceptor">
+          <property name="sequenceService" ref="sequenceService"/>
+        </bean>
+      </list>
+    </property>
   </bean>
 
-  <bean id="commonDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.newstar.hbms.common.dao.CommonDao"/>
+  <bean id="attachmentDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.newstar.hbms.common.dao.AttachmentDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
   <bean id="treeNodeDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface" value="com.newstar.hbms.basedata.dao.TreeNodeDao"/>
-    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-  </bean>
-
-  <bean id="listItemDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.newstar.hbms.basedata.dao.ListItemDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
@@ -162,10 +160,6 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
-  <bean id="commonService" class="com.newstar.hbms.common.service.impl.CommonServiceImpl">
-    <property name="commonDao" ref="commonDao"/>
-  </bean>
-
   <bean id="treeService" class="com.newstar.hbms.basedata.service.impl.TreeServiceImpl">
     <property name="treeNodeDao" ref="treeNodeDao"/>
   </bean>
@@ -174,16 +168,33 @@
     <property name="treeService" ref="treeService"/>
   </bean>
 
+  <bean id="sequenceService" class="com.newstar.hbms.common.service.impl.DbSequenceServiceImpl">
+    <property name="sequenceDao">
+      <bean id="sequenceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.newstar.hbms.common.dao.SequenceDao"/>
+        <property name="sqlSessionFactory">
+          <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="mapperLocations">
+              <list>
+                <value>classpath:com/newstar/hbms/common/dao/SequenceDaoMapper.xml</value>
+              </list>
+            </property>
+          </bean>
+        </property>
+      </bean>
+    </property>
+    <property name="shardSize" value="1"/>
+  </bean>
+
   <bean id="fileService" class="com.newstar.hbms.common.service.impl.FileServiceImpl">
     <property name="prefix" value="${fileSaveRootPath}"/>
   </bean>
 
-  <bean id="listItemService" class="com.newstar.hbms.basedata.service.impl.ListItemServiceImpl">
-    <property name="listItemDao" ref="listItemDao"/>
-  </bean>
 
-  <bean id="resumeService" class="com.newstar.hbms.candidate.service.impl.CandidateServiceImpl">
+  <bean id="candidateService" class="com.newstar.hbms.candidate.service.impl.CandidateServiceImpl">
     <property name="candidateDao" ref="candidateDao"/>
+    <property name="attachmentDao" ref="attachmentDao"/>
     <property name="workExperienceDao" ref="workExperienceDao"/>
     <property name="educationExperienceDao" ref="educationExperienceDao"/>
     <property name="languageAbilityDao" ref="languageAbilityDao"/>
@@ -201,7 +212,7 @@
     <property name="httpServer" ref="httpSolrServer"/>
     <property name="periodMillisecond" value="${indexScheduler.periodMillisecond}"/>
     <property name="candidateIndexTaskDao" ref="candidateIndexTaskDao"/>
-    <property name="resumeService" ref="resumeService"/>
+    <property name="candidateService" ref="candidateService"/>
   </bean>-->
 
   <bean id="customerService" class="com.newstar.hbms.customer.service.impl.CustomerServiceImpl">
@@ -236,8 +247,5 @@
       <property name="datePattern" value="${datePattern}"/>
   </bean>
 
-  <bean id="listItemController" class="com.newstar.hbms.basedata.web.controller.ListItemController">
-    <property name="listItemService" ref="listItemService"/>
-  </bean>
 
 </beans>

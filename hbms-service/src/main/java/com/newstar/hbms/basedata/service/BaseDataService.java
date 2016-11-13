@@ -23,7 +23,7 @@ public interface BaseDataService {
     //职能
     public static final String TYPE_CODE_FUNCTION = "FUNCTION";
     //岗位
-    public static final String TYPE_CODE_STATION = "STATION";
+    public static final String TYPE_CODE_POSITION = "POSITION";
     //城市
     public static final String TYPE_CODE_CITY = "CITY";
     //标签
@@ -31,16 +31,22 @@ public interface BaseDataService {
     //部门
     public static final String TYPE_CODE_DEPARTMENT = "DEPARTMENT";
 
+    public static final String TYPE_CODE_COMPANY = "COMPANY";
+
+    public static final String TYPE_CODE_JOB_HUNTING_STATUS = "JOB_HUNTING_STATUS";
+
 
     public TreeNode getSexes();
     public TreeNode getMaritals();
     public TreeNode getDegrees();
     public TreeNode getIndustries();
     public TreeNode getFunctions();
-    public TreeNode getStations();
+    public TreeNode getPositions();
     public TreeNode getCities();
     public TreeNode getTags();
     public TreeNode getDepartments();
+    public TreeNode getConpanies();
+    public TreeNode getJobHuntingStatuses();
 
 
 }

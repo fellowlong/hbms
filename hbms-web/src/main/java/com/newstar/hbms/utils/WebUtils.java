@@ -1,8 +1,8 @@
 package com.newstar.hbms.utils;
 
 import com.newstar.hbms.common.Constants;
-import com.newstar.hbms.utils.paging.PageRange;
-import com.newstar.hbms.utils.paging.PagingResult;
+import com.newstar.hbms.support.paging.PageRange;
+import com.newstar.hbms.support.paging.PagingResult;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -80,7 +80,7 @@ public abstract class WebUtils {
     if (value == null) {
       return;
     }
-    String json = value instanceof String ? (String) value : JsonUtils.beanToJson(value, Constants.DATE_PATTERN);
+    String json = value instanceof String ? (String) value : JsonUtils.beanToJson(value, DateEditor.dateFormat.toPattern());
     response.setContentType("application/json;charset=UTF-8");
     response.getWriter().write(json);
   }
@@ -91,7 +91,7 @@ public abstract class WebUtils {
     if (value == null) {
       return;
     }
-    response.getWriter().write(JsonUtils.beanToJson(value, Constants.DATE_PATTERN));
+    response.getWriter().write(JsonUtils.beanToJson(value, DateEditor.dateFormat.toPattern()));
   }
 
   public static PageRange getPageRange(HttpServletRequest request) {
@@ -114,7 +114,7 @@ public abstract class WebUtils {
         Object record = pagingResult.getRecords().get(i);
         StringBuilder rowJson = new StringBuilder();
         if (ignoreColumnFields) {
-          rowJson.append(JsonUtils.beanToJson(record, Constants.DATE_PATTERN));
+          rowJson.append(JsonUtils.beanToJson(record, DateEditor.dateFormat.toPattern()));
         } else {
           rowJson.append("{");
           MapContext jexlContext = new MapContext();

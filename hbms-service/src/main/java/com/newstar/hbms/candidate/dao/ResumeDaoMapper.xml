@@ -5,9 +5,13 @@
 <mapper namespace="com.newstar.hbms.candidate.dao.ResumeDao">
 
   <insert id="insert" parameterType="com.newstar.hbms.candidate.domain.Resume">
-    insert into SourceResume(
+    <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
+      sequence.global
+    </selectKey>
+    insert into Resume(
+      id,
       name,
-      binaryResume,
+      attachmentId,
       textResume,
       yn,
       createTime,
@@ -15,8 +19,9 @@
       updateTime,
       updateUser
     ) values (
+      #{id},
       #{name},
-      #{binaryResume},
+      #{attachmentId},
       #{textResume},
       1,
       now(),
@@ -27,9 +32,9 @@
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.Resume">
-    update SourceResume set
+    update Resume set
       name = #{name},
-      binaryResume = #{binaryResume},
+      attachmentId = #{attachmentId},
       textResume = #{textResume},
       updateTime = now(),
       updateUser = #{updateUser}
@@ -38,18 +43,18 @@
   </update>
 
   <delete id="deleteByIds" parameterType="java.lang.Long">
-    update SourceResume set yn = 0 where id in
-    <foreach collection="array" open="(" close=")" separator="," item="sourceResumeId">
-      #{sourceResumeId}
+    update Resume set yn = 0 where id in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
     </foreach>
   </delete>
 
   <select id="findByIds"
           parameterType="com.newstar.hbms.candidate.domain.Resume"
           resultType="com.newstar.hbms.candidate.domain.Resume">
-    select * from SourceResume where id in
-    <foreach collection="array" open="(" close=")" separator="," item="sourceResumeId">
-      #{sourceResumeId}
+    select * from Resume where id in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
     </foreach>
   </select>
 

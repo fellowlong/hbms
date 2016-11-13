@@ -7,7 +7,9 @@ public abstract class Constants {
 
   public static final String DAY_PATTERN = "yyyy-MM-dd";
 
-  public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
+  public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
+  public static final String TIME_PATTERN = "HH:mm:ss";
 
   public static final String DATE_PATTERN_FOR_FILE = "yyyy-MM-dd_HH-mm-ss";
 

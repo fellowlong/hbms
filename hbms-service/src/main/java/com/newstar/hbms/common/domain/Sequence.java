@@ -1,4 +1,4 @@
-package com.newstar.hbms.system.domain;
+package com.newstar.hbms.common.domain;
 
 /**
  * Created by wangjinsi on 2015-08-10.

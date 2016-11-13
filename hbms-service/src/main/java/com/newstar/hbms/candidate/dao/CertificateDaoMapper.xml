@@ -5,19 +5,21 @@
 <mapper namespace="com.newstar.hbms.candidate.dao.CertificateDao">
 
   <insert id="insert" parameterMap="domain.Certificate">
+    <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
+      sequence.global
+    </selectKey>
     insert into Certificate(
+    id,
     resumeId,
     name,
     acquireDate
     )
     values (
+    #{id},
     #{resumeId},
     #{name, jdbcType=VARCHAR},
     #{acquireDate,jdbcType=VARCHAR}
     )
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-      select last_insert_id();
-    </selectKey>
   </insert>
 
   <update id="update" parameterMap="domain.Certificate">

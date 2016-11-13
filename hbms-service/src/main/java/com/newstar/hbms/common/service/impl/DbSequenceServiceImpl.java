@@ -1,7 +1,7 @@
-package com.newstar.hbms.system.service.impl;
+package com.newstar.hbms.common.service.impl;
 
-import com.newstar.hbms.system.dao.SequenceDao;
-import com.newstar.hbms.system.service.SequenceService;
+import com.newstar.hbms.common.dao.SequenceDao;
+import com.newstar.hbms.common.service.SequenceService;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 

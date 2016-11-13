@@ -1,6 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.newstar.hbms.common.dao.AttachmentDao">
+
+    <insert id="insert" parameterType="com.newstar.hbms.common.domain.Attachment">
+        <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
+            sequence.global
+        </selectKey>
+        insert into Attachment(
+        id,
+        businessBigType,
+        businessSmallType,
+        businessId,
+        fileName,
+        fileType,
+        fileBinaryData,
+        fileStringData,
+        remark,
+        yn,
+        createTime,
+        createUser,
+        updateTime,
+        updateUser
+        ) values (
+        #{id},
+        #{businessBigType, jdbcType=VARCHAR},
+        #{businessSmallType, jdbcType=VARCHAR},
+        #{businessId, jdbcType=BIGINT},
+        #{fileName, jdbcType=VARCHAR},
+        #{fileType, jdbcType=VARCHAR},
+        #{fileBinaryData, jdbcType=BLOB},
+        #{fileStringData, jdbcType=VARCHAR},
+        #{remark, jdbcType=VARCHAR},
+        1,
+        now(),
+        #{createUser},
+        now(),
+        #{updateUser}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.newstar.hbms.common.domain.Attachment">
+        update Attachment set
+        businessBigType = #{businessBigType, jdbcType = VARCHAR},
+        businessSmallType = #{businessSmallType, jdbcType = VARCHAR},
+        businessId = #{businessId, jdbcType = BIGINT},
+        fileName = #{fileName, jdbcType = VARCHAR},
+        fileType = #{fileType, jdbcType = VARCHAR},
+        fileBinaryData = #{fileBinaryData, jdbcType = BLOB},
+        fileStringData = #{fileStringData, jdbcType = VARCHAR},
+        remark = #{remark, jdbcType = VARCHAR},
+        updateTime = now(),
+        updateUser = #{updateUser}
+        where
+        id = #{id}
+    </update>
+
+    <delete id="disable" parameterType="java.lang.Long">
+        update Attachment set yn = 0 where id in
+        <foreach collection="array" open="(" close=")" separator="," item="attachmentId">
+            #{attachmentId}
+        </foreach>
+    </delete>
+
+    <delete id="enable" parameterType="java.lang.Long">
+        update Attachment set yn = 1 where id in
+        <foreach collection="array" open="(" close=")" separator="," item="attachmentId">
+            #{attachmentId}
+        </foreach>
+    </delete>
+
+    <select id="findByBean"
+            parameterType="com.newstar.hbms.common.domain.Attachment"
+            resultType="com.newstar.hbms.common.domain.Attachment">
+        select a.* from Attachment a where 1=1
+        <if test="id != null">
+          and a.id = #{id}
+        </if>
+        <if test="businessBigType != null">
+          and a.businessBigType = #{businessBigType}
+        </if>
+        <if test="businessSmallType != null">
+          and a.businessSmallType = #{businessSmallType}
+        </if>
+        <if test="businessId != null">
+          and a.businessId = #{businessId}
+        </if>
+        <if test="fileName != null">
+          and a.fileName = #{fileName}
+        </if>
+        <if test="fileType != null">
+          and a.fileType = #{fileType}
+        </if>
+        <if test="yn != null">
+          and a.yn = #{yn}
+        </if>
+        <if test="createUser != null">
+          and a.createUser = #{createUser}
+        </if>
+        <if test="updateUser != null">
+          and a.updateUser = #{updateUser}
+        </if>
+    </select>
+
+    <select id="findByIds"
+            parameterType="com.newstar.hbms.common.domain.Attachment"
+            resultType="com.newstar.hbms.common.domain.Attachment">
+        select * from Attachment where id in
+        <foreach collection="array" open="(" close=")" separator="," item="attachmentId">
+            #{attachmentId}
+        </foreach>
+    </select>
+
 </mapper>

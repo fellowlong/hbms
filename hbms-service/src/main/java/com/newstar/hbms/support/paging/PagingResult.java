@@ -1,4 +1,4 @@
-package com.newstar.hbms.utils.paging;
+package com.newstar.hbms.support.paging;
 
 import java.io.Serializable;
 import java.util.Arrays;

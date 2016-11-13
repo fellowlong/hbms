@@ -8,7 +8,7 @@
     <parameter property="id" jdbcType="BIGINT"/>
     <parameter property="name" jdbcType="VARCHAR"/>
     <!--<parameter property="binaryResume" jdbcType="BLOB"/>-->
-    <!--<parameter property="textResume" jdbcType="VARCHAR"/>-->
+    <parameter property="textResume" jdbcType="VARCHAR"/>
     <parameter property="yn" jdbcType="INTEGER"/>
     <parameter property="createTime" jdbcType="DATE"/>
     <parameter property="createUser" jdbcType="VARCHAR"/>
@@ -17,14 +17,14 @@
   </parameterMap>
 
 
-  <parameterMap id="Candidate" type="com.newstar.hbms.candidate.domain.Candidate">
+  <!--<parameterMap id="Candidate" type="com.newstar.hbms.candidate.domain.Candidate">
     <parameter property="id" jdbcType="BIGINT"/>
     <parameter property="name" jdbcType="VARCHAR"/>
     <parameter property="sex" jdbcType="VARCHAR"/>
     <parameter property="telephone" jdbcType="VARCHAR"/>
     <parameter property="age" jdbcType="INTEGER"/>
     <parameter property="email" jdbcType="VARCHAR"/>
-    <parameter property="education" jdbcType="VARCHAR"/>
+    <parameter property="degree" jdbcType="BIGINT"/>
     <parameter property="workYears" jdbcType="VARCHAR"/>
     <parameter property="marital" jdbcType="VARCHAR"/>
     <parameter property="location" jdbcType="VARCHAR"/>
@@ -41,7 +41,7 @@
     <parameter property="createUser" jdbcType="VARCHAR"/>
     <parameter property="updateTime" jdbcType="DATE"/>
     <parameter property="updateUser" jdbcType="VARCHAR"/>
-  </parameterMap>
+  </parameterMap>-->
 
   <parameterMap id="WorkExperience" type="com.newstar.hbms.candidate.domain.WorkExperience">
     <parameter property="id" jdbcType="BIGINT"/>

@@ -1,8 +1,8 @@
 package com.newstar.hbms.candidate.service;
 
 import com.newstar.hbms.candidate.domain.Candidate;
-import com.newstar.hbms.utils.paging.PageRange;
-import com.newstar.hbms.utils.paging.PagingResult;
+import com.newstar.hbms.support.paging.PageRange;
+import com.newstar.hbms.support.paging.PagingResult;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * 原始简历服务类
  */
-public interface ResumeService {
+public interface CandidateService {
 
   public int insertOrUpdate(Candidate candidate) throws IOException;
 

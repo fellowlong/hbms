@@ -5,80 +5,89 @@
 <mapper namespace="com.newstar.hbms.candidate.dao.CandidateDao">
 
   <insert id="insert" parameterType="com.newstar.hbms.candidate.domain.Candidate">
-    insert into Resume(
+    <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
+      sequence.global
+    </selectKey>
+    insert into Candidate(
+      id,
       name,
-      sex,
+      sexId,
+      birthday,
+      mobile,
       telephone,
-      age,
       email,
-      education,
+      otherContact,
+      degreeId,
+      maritalId,
+      locationId,
       workYears,
-      marital,
-      location,
-      industry,
-      company,
-      position,
-      salary,
-      selfEvaluation,
+      overseasExperience,
+      industryId,
+      currentCompanyId,
+      currentPositionId,
+      currentAnnualSalary,
+      jobHuntingStatusId,
       other,
       keyword,
       remark,
-      language,
       yn,
       createTime,
       createUser,
       updateTime,
       updateUser
     ) values (
-      #{name},
-      #{sex},
-      #{telephone},
-      #{age},
-      #{email},
-      #{education},
-      #{workYears},
-      #{marital},
-      #{location},
-      #{industry},
-      #{company},
-      #{position},
-      #{salary},
-      #{selfEvaluation},
-      #{other},
-      #{keyword},
-      #{remark},
-      #{language},
+      #{id, jdbcType=BIGINT},
+      #{name, jdbcType=VARCHAR},
+      #{sexId, jdbcType=BIGINT},
+      #{birthday, jdbcType=DATE},
+      #{mobile, jdbcType=VARCHAR},
+      #{telephone, jdbcType=VARCHAR},
+      #{email, jdbcType=VARCHAR},
+      #{otherContact, jdbcType=VARCHAR},
+      #{degreeId, jdbcType=BIGINT},
+      #{maritalId, jdbcType=BIGINT},
+      #{locationId, jdbcType=BIGINT},
+      #{workYears, jdbcType=INTEGER},
+      #{overseasExperience, jdbcType=BOOLEAN},
+      #{industryId, jdbcType=BIGINT},
+      #{currentCompanyId, jdbcType=BIGINT},
+      #{currentPositionId, jdbcType=BIGINT},
+      #{currentAnnualSalary, jdbcType=DOUBLE},
+      #{jobHuntingStatusId, jdbcType=BIGINT},
+      #{other, jdbcType=VARCHAR},
+      #{keyword, jdbcType=VARCHAR},
+      #{remark, jdbcType=VARCHAR},
       1,
       now(),
       #{createUser},
       now(),
       #{updateUser}
     )
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-      select last_insert_id();
-    </selectKey>
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.Candidate">
-    update Resume set
-      name = #{name},
-      sex = #{sex},
-      telephone = #{telephone},
-      age = #{age},
-      email = #{email},
-      education = #{education},
-      workYears = #{workYears},
-      marital = #{marital},
-      location = #{location},
-      industry = #{industry},
-      company = #{company},
-      position = #{position},
-      salary = #{salary},
-      selfEvaluation = #{selfEvaluation},
-      other = #{other},
-      keyword = #{keyword},
-      language = #{language},
-      remark = #{remark},
+    update Candidate set
+      id = #{id},
+      name = #{name, jdbcType=VARCHAR},
+      sexId = #{sexId, jdbcType=BIGINT},
+      birthday = #{birthday, jdbcType=DATE},
+      mobile = #{mobile, jdbcType=VARCHAR},
+      telephone = #{telephone, jdbcType=VARCHAR},
+      email = #{email, jdbcType=VARCHAR},
+      otherContact = #{otherContact, jdbcType=VARCHAR},
+      degreeId = #{degreeId, jdbcType=BIGINT},
+      maritalId = #{maritalId, jdbcType=BIGINT},
+      locationId = #{locationId, jdbcType=BIGINT},
+      workYears = #{workYears, jdbcType=INTEGER},
+      overseasExperience = #{overseasExperience, jdbcType=BOOLEAN},
+      industryId = #{industryId, jdbcType=BIGINT},
+      currentCompanyId = #{currentCompanyId, jdbcType=BIGINT},
+      currentPositionId = #{currentPositionId, jdbcType=BIGINT},
+      currentAnnualSalary = #{currentAnnualSalary, jdbcType=DOUBLE},
+      jobHuntingStatusId = #{jobHuntingStatusId, jdbcType=BIGINT},
+      other = #{other, jdbcType=VARCHAR},
+      keyword = #{keyword, jdbcType=VARCHAR},
+      remark = #{remark, jdbcType=VARCHAR},
       updateTime = now(),
       updateUser = #{updateUser}
     where
@@ -86,33 +95,33 @@
   </update>
 
   <delete id="deleteByIds" parameterType="java.lang.Long">
-    update Resume set yn = 0 where id in
-    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
-      #{resumeId}
+    update Candidate set yn = 0 where id in
+    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
+      #{candidateId}
     </foreach>
   </delete>
 
   <select id="findByBean"
           parameterType="com.newstar.hbms.candidate.domain.Candidate"
           resultType="com.newstar.hbms.candidate.domain.Candidate">
-    select * from Resume  where 1 = 1
+    select * from Candidate  where 1 = 1
       <if test="id != null">
         and id = #{id}
       </if>
       <if test="name != null">
         and name = #{name}
       </if>
-      <if test="sex != null">
-        and sex = #{sex}
+      <if test="sexId != null">
+        and sexId = #{sexId}
       </if>
       <if test="keyword != null">
         and keyword = #{keyword}
       </if>
-      <if test="education != null">
-        and education = #{education}
+      <if test="degreeId != null">
+        and degreeId = #{degreeId}
       </if>
-      <if test="position != null">
-        and position = #{position}
+      <if test="currentPositionId != null">
+        and currentPositionId = #{currentPositionId}
       </if>
       <if test="yn != null">
         and yn = #{yn}
@@ -122,9 +131,9 @@
   <select id="findByIds"
           parameterType="com.newstar.hbms.candidate.domain.Candidate"
           resultType="com.newstar.hbms.candidate.domain.Candidate">
-    select * from Resume where id in
-    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
-      #{resumeId}
+    select * from Candidate where id in
+    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
+      #{candidateId}
     </foreach>
   </select>
 

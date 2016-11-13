@@ -31,7 +31,7 @@
     <property name="workPanelController" ref="workPanelController"/>
     <property name="workUris">
       <list>
-        <value>/candidate/index.do</value>
+        <value>/candidate/workspace.do</value>
         <value>/candidate/resumeSearch.do</value>
         <value>/candidate/findByBean.do</value>
         <value>/candidate/preInsertOrUpdate.do</value>
@@ -55,6 +55,12 @@
   </bean>
 
   <bean id="exceptionResolver" class="com.newstar.hbms.mvc.LoggerHandlerExceptionResolver"/>
+
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="defaultEncoding" value="utf-8"></property>
+    <property name="maxUploadSize" value="${maxUploadSize}"></property>
+    <property name="maxInMemorySize" value="${maxInMemorySize}"></property>
+  </bean>
 
   <bean id="dateEditor" class="com.newstar.hbms.utils.DateEditor">
       <property name="datePattern" value="${datePattern}"/>
@@ -91,13 +97,8 @@
 
   <bean id="forwardController" class="com.newstar.hbms.mvc.ForwardController"/>
 
-  <bean id="listItemController" class="com.newstar.hbms.basedata.web.controller.ListItemController">
-    <property name="listItemService" ref="listItemService"/>
-  </bean>
-
   <bean id="candidateController" class="com.newstar.hbms.candidate.web.controller.CandidateController">
-    <property name="resumeService" ref="resumeService"/>
-    <property name="commonService" ref="commonService"/>
+    <property name="candidateService" ref="candidateService"/>
     <!--<property name="httpSolrServer" ref="httpSolrServer"/>-->
   </bean>
 

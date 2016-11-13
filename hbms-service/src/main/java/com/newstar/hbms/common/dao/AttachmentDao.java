@@ -1,8 +1,8 @@
 package com.newstar.hbms.common.dao;
 
 import com.newstar.hbms.common.domain.Attachment;
-import com.newstar.hbms.utils.paging.PageRange;
-import com.newstar.hbms.utils.paging.PagingResult;
+import com.newstar.hbms.support.paging.PageRange;
+import com.newstar.hbms.support.paging.PagingResult;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface AttachmentDao {
 
     public int enable(Long[] attachmentIds);
 
-    public PagingResult<Attachment> findByBean(Attachment attachment, PageRange pageRange);
+    public List<Attachment> findByBean(Attachment attachment);
 
     public List<Attachment> findByIds(Long[] ids);
 }
