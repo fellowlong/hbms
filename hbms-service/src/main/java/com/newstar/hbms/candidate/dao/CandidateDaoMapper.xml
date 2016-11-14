@@ -69,7 +69,6 @@
     update Candidate set
       id = #{id},
       name = #{name, jdbcType=VARCHAR},
-      resumeId = #{resumeId, jdbcType=BIGINT},
       sexId = #{sexId, jdbcType=BIGINT},
       birthday = #{birthday, jdbcType=DATE},
       mobile = #{mobile, jdbcType=VARCHAR},

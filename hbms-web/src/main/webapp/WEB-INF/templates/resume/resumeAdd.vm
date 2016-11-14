@@ -34,7 +34,7 @@
         role="form"
         autocomplete="off"
         data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
-
+    <input type="hidden" name="id" value="$!candidate.id">
     <div class="row" style="margin: 0;padding: 0">
       <div class="container">
 
@@ -73,21 +73,19 @@
           </div>
 
           <div class="widget-body">
+            #if($candidate.id)
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">已上传简历</label>
               <div class="col-xs-10">
                 #if($candidate.resume and $candidate.resume.id)
-                  <input type="hidden" name="resume.id" value="$candidate.resume.id">
-                <a href="">$candidate.resume.name</a>
+                    <input type="hidden" name="resume.id" value="$candidate.resume.id">
                 #end
+                <a href="">$!candidate.resume.name</a>
               </div>
               <div class="col-xs-1">
-                <button class="btn btn-xs btn-danger" onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
-                  <i class="ace-icon fa fa-remove bigger-110"></i>
-                  删除
-                </button>
               </div>
             </div>
+            #end
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">简历</label>
               <div class="col-xs-10">
@@ -124,7 +122,7 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">性别</label>
               <div class="col-xs-11">
-                <select id="contactSelect" class="chosen-select form-control" name="sexId">
+                <select id="contactSelect"  name="sexId" value="$!candidate.sexId" class="chosen-select form-control">
                   #set($sexes = $baseDataService.getSexes().children)
                   #foreach($sex in $sexes)
                     <option value="$sex.id">$sex.label</option>
@@ -137,7 +135,7 @@
               <label class="col-xs-1 control-label no-padding-right">生日</label>
               <div class="col-xs-11">
                 <div class="input-group">
-                  <input class="form-control date-picker" name="birthday" type="text" data-date-format="yyyy-mm-dd" data-date-language="zh-CN">
+                  <input class="form-control date-picker" name="birthday" value="$!candidate.birthday" type="text" data-date-format="yyyy-mm-dd" data-date-language="zh-CN">
                   <span class="input-group-addon">
                     <i class="fa fa-calendar bigger-110"></i>
                   </span>
@@ -156,35 +154,35 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">手机<sup style="color:red">*</sup></label>
               <div class="col-xs-11">
-                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="手机"  data-rule="手机:required;telephone"/>
+                <input type="text" class="form-control" id="mobile" name="mobile" value="$!candidate.mobile" placeholder="手机"  data-rule="手机:required;telephone"/>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">座机</label>
               <div class="col-xs-11">
-                <input type="text" class="form-control" id="telephone" name="telephone" placeholder="座机" />
+                <input type="text" class="form-control" id="telephone" name="telephone" value="$!candidate.telephone" placeholder="座机" />
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">邮箱</label>
               <div class="col-xs-11">
-                <input type="text" class="form-control" id="email" name="email" placeholder="邮箱"  data-rule="邮箱:email"/>
+                <input type="text" class="form-control" id="email" name="email" value="$!candidate.email" placeholder="邮箱"  data-rule="邮箱:email"/>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">其他联系方式</label>
               <div class="col-xs-11">
-                <input type="text" class="form-control" id="otherContact" name="otherContact" placeholder="其他联系方式" />
+                <input type="text" class="form-control" id="otherContact" name="otherContact" value="$!candidate.otherContact" placeholder="其他联系方式" />
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">学历</label>
               <div class="col-xs-11">
-                <select id="degreeId" class="chosen-select form-control" name="degreeId" >
+                <select id="degreeId" class="chosen-select form-control" name="degreeId" value="$!candidate.degreeId" >
                   #set($degrees = $baseDataService.getDegrees().children)
                   #foreach($degree in $degrees)
                     <option value="$degree.id">$degree.label</option>
@@ -196,7 +194,7 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">婚姻状况</label>
               <div class="col-xs-11">
-                <select id="marital" class="chosen-select form-control" id="maritalId" name="maritalId">
+                <select id="marital" class="chosen-select form-control" id="maritalId" name="maritalId" value="$!candidate.maritalId">
                   #set($maritals = $baseDataService.getMaritals().children)
                   #foreach($marital in $maritals)
                     <option value="$marital.id">$marital.label</option>
@@ -208,7 +206,7 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">所在地</label>
               <div class="col-xs-11">
-                <select id="locationId" class="chosen-select form-control" name="locationId">
+                <select id="locationId" class="chosen-select form-control" name="locationId" value="$!candidate.locationId">
                   #set($cities = $baseDataService.getCities().children)
                   #foreach($city in $cities)
                     <option value="$city.id">$city.label</option>
@@ -220,7 +218,7 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">工作年限</label>
               <div class="col-xs-11">
-                <input type="text" class="form-control" id="workYears" name="workYears" placeholder="工作年限" />
+                <input type="text" class="form-control" id="workYears" name="workYears" value="$!candidate.workYears" placeholder="工作年限" />
               </div>
             </div>
 
@@ -241,7 +239,7 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">所在行业</label>
               <div class="col-xs-11">
-                <select id="industryId" class="chosen-select form-control" name="industryId">
+                <select id="industryId" class="chosen-select form-control" name="industryId" value="$!candidate.industryId">
                   #set($industries = $baseDataService.getIndustries().children)
                   #foreach($industry in $industries)
                     <option value="$industry.id">$industry.label</option>
@@ -253,7 +251,7 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">当前公司</label>
               <div class="col-xs-11">
-                <select id="currentCompanyId" class="chosen-select form-control" name="currentCompanyId">
+                <select id="currentCompanyId" class="chosen-select form-control" name="currentCompanyId" value="$!candidate.currentCompanyId">
                   #set($conpanies = $baseDataService.getConpanies().children)
                   #foreach($company in $conpanies)
                     <option value="$company.id">$company.label</option>
@@ -265,7 +263,7 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">当前职位</label>
               <div class="col-xs-11">
-                <select id="currentPositionId" class="chosen-select form-control" name="currentPositionId">
+                <select id="currentPositionId" class="chosen-select form-control" name="currentPositionId" value="$!candidate.currentPositionId">
                   #set($positions = $baseDataService.getPositions().children)
                   #foreach($position in $positions)
                     <option value="$position.id">$position.label</option>
@@ -277,14 +275,14 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">当前年薪</label>
               <div class="col-xs-11">
-                <input type="text" class="form-control" id="currentAnnualSalary" name="currentAnnualSalary"/>
+                <input type="text" class="form-control" id="currentAnnualSalary" name="currentAnnualSalary" value="$!candidate.currentAnnualSalary"/>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">求职状态</label>
               <div class="col-xs-11">
-                <select id="jobHuntingStatusId" class="chosen-select form-control" name="jobHuntingStatusId">
+                <select id="jobHuntingStatusId" class="chosen-select form-control" name="jobHuntingStatusId" value="$!candidate.jobHuntingStatusId">
                   #set($jobHuntingStatuses = $baseDataService.getJobHuntingStatuses().children)
                   #foreach($jobHuntingStatus in $jobHuntingStatuses)
                     <option value="$jobHuntingStatus.id">$jobHuntingStatus.label</option>
@@ -296,21 +294,21 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">其他信息</label>
               <div class="col-xs-11">
-                <textarea type="text" class="form-control" id="other" name="other"></textarea>
+                <textarea type="text" class="form-control" id="other" name="other" value="$!candidate.other"></textarea>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">备注</label>
               <div class="col-xs-11">
-                <textarea type="text" class="form-control" id="remark" name="remark"></textarea>
+                <textarea type="text" class="form-control" id="remark" name="remark" value="$!candidate.remark"></textarea>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">搜索关键字</label>
               <div class="col-xs-11">
-                <textarea type="text" class="form-control" id="keyword" name="keyword"></textarea>
+                <textarea type="text" class="form-control" id="keyword" name="keyword" value="$!candidate.keyword"></textarea>
               </div>
             </div>
 
@@ -516,8 +514,8 @@
   function renderFileInput(elementId) {
     $(elementId).ace_file_input({
       no_file:'空 ...',
-      btn_choose:'选择',
-      btn_change:'修改',
+      btn_choose:'选择简历文件(会覆盖已有简历)',
+      btn_change:'选择简历文件(会覆盖已有简历)',
       droppable:false,
       onchange:null,
       thumbnail:false //| true | large

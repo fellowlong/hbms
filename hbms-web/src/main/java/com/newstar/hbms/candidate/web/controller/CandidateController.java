@@ -4,10 +4,12 @@ import com.newstar.hbms.candidate.domain.Candidate;
 import com.newstar.hbms.candidate.service.CandidateService;
 import com.newstar.hbms.customer.domain.Customer;
 import com.newstar.hbms.mvc.ConfigurableMultiActionController;
+import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.mvc.MessageCollector;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 import com.newstar.hbms.utils.DateEditor;
+import com.newstar.hbms.utils.ExceptionUtils;
 import com.newstar.hbms.utils.JsonUtils;
 import com.newstar.hbms.utils.WebUtils;
 import org.apache.log4j.Logger;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,10 +128,25 @@ public class CandidateController extends ConfigurableMultiActionController {
   }
 
   public void disableByIds(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    int resultCount = candidateService.deleteByIds(WebUtils.getLongArrayBySeparator(request, "id", ","));
-    MessageCollector msgCollector = new MessageCollector();
-    msgCollector.addInfo(WebUtils.SUCCESS, Boolean.TRUE);
-    WebUtils.writeWithJson(response, msgCollector);
+    JsonResult jsonResult = new JsonResult();
+    try {
+      List<Long> ids = new ArrayList<Long>();
+      String[] idsStrArray = request.getParameterValues("ids[]");
+      if (idsStrArray != null && idsStrArray.length > 0) {
+        for (String idsStr : idsStrArray) {
+          ids.add(new Long(idsStr));
+        }
+        int result = candidateService.deleteByIds(ids.toArray(new Long[ids.size()]));
+        if (result > 0) {
+          jsonResult.setSuccess(true);
+          jsonResult.setData(result);
+        }
+      }
+    } catch (Throwable t) {
+      logger.error("删除Candidate失败", t);
+      jsonResult.setErrorMessage(ExceptionUtils.getExceptionStack(t));
+    }
+    WebUtils.writeWithJson(response, jsonResult);
   }
 
   public ModelAndView resumeSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {

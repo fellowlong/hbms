@@ -12,7 +12,7 @@
               <button id="candidateSearch" class="btn btn-sm btn-primary" type="button">搜索</button>
               <button id="candidateAdd" class="btn btn-sm btn-primary" type="button">新增</button>
               <button id="candidateEdit" class="btn btn-sm btn-primary" type="button">编辑</button>
-              <button id="candidateDisable" class="btn btn-sm btn-primary" type="button">编辑</button>
+              <button id="candidateDisable" class="btn btn-sm btn-primary" type="button">删除</button>
           </div>
   </form>
 </div>
