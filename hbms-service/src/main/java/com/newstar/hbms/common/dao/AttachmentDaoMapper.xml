@@ -64,11 +64,19 @@
         </foreach>
     </delete>
 
+    <delete id="disableByBusinessId" parameterType="java.lang.Long">
+        update Attachment set yn = 0 where businessId = #{value}
+    </delete>
+
     <delete id="enable" parameterType="java.lang.Long">
         update Attachment set yn = 1 where id in
         <foreach collection="array" open="(" close=")" separator="," item="attachmentId">
             #{attachmentId}
         </foreach>
+    </delete>
+
+    <delete id="enableByBusinessId" parameterType="java.lang.Long">
+        update Attachment set yn = 1 where businessId = #{value}
     </delete>
 
     <select id="findByBean"

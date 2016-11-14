@@ -13,7 +13,13 @@ public interface ResumeDao {
 
   public int update(Resume resume);
 
+  public int disable(Long[] resumeIds);
+
+  public int enable(Long[] resumeIds);
+
   public int deleteByIds(Long[] sourceResumeIds);
+
+  public List<Resume> findByCandidateIds(Long[] candidateIds);
 
   public List<Resume> findByIds(Long[] sourceResumeIds);
 

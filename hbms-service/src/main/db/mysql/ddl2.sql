@@ -1,6 +1,7 @@
 drop table Resume;
 create table Resume(
   id bigint auto_increment not null primary key comment '主键',
+  candidateId bigint comment '候选人外键',
   name varchar(100) comment '名称',
   attachmentId MEDIUMBLOB comment '简历附件编号',
   textResume  MEDIUMTEXT comment '文本简历',

@@ -74,7 +74,22 @@
 
           <div class="widget-body">
             <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">原始简历<sup style="color:red">*</sup></label>
+              <label class="col-xs-1 control-label no-padding-right">已上传简历</label>
+              <div class="col-xs-10">
+                #if($candidate.resume and $candidate.resume.id)
+                  <input type="hidden" name="resume.id" value="$candidate.resume.id">
+                <a href="">$candidate.resume.name</a>
+                #end
+              </div>
+              <div class="col-xs-1">
+                <button class="btn btn-xs btn-danger" onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
+                  <i class="ace-icon fa fa-remove bigger-110"></i>
+                  删除
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-1 control-label no-padding-right">简历</label>
               <div class="col-xs-10">
                   <input type="file" id="resumeFile" name="resumeFile">
               </div>
@@ -100,9 +115,9 @@
           <div class="widget-body" style="display: block;padding: 15px">
 
             <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">姓名</label>
+              <label class="col-xs-1 control-label no-padding-right">姓名<sup style="color:red">*</sup></label>
               <div class="col-xs-11">
-                <input type="text" class="form-control" name="name" placeholder="姓名" />
+                <input type="text" class="form-control" name="name" value="$!candidate.name" placeholder="姓名"  data-rule="姓名:required;name"/>
               </div>
             </div>
 
@@ -139,9 +154,9 @@
             </div>
 
             <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">手机</label>
+              <label class="col-xs-1 control-label no-padding-right">手机<sup style="color:red">*</sup></label>
               <div class="col-xs-11">
-                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="手机" />
+                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="手机"  data-rule="手机:required;telephone"/>
               </div>
             </div>
 
@@ -155,7 +170,7 @@
             <div class="form-group">
               <label class="col-xs-1 control-label no-padding-right">邮箱</label>
               <div class="col-xs-11">
-                <input type="text" class="form-control" id="email" name="email" placeholder="邮箱" />
+                <input type="text" class="form-control" id="email" name="email" placeholder="邮箱"  data-rule="邮箱:email"/>
               </div>
             </div>
 

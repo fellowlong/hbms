@@ -7,6 +7,7 @@ import com.newstar.hbms.mvc.ConfigurableMultiActionController;
 import com.newstar.hbms.mvc.MessageCollector;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
+import com.newstar.hbms.utils.DateEditor;
 import com.newstar.hbms.utils.JsonUtils;
 import com.newstar.hbms.utils.WebUtils;
 import org.apache.log4j.Logger;
@@ -74,7 +75,7 @@ public class CandidateController extends ConfigurableMultiActionController {
     } else {
       jsonMap.put("rows", null);
     }
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, DateEditor.dayFormat.toPattern()));
   }
 
   public ModelAndView findById(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -93,12 +94,11 @@ public class CandidateController extends ConfigurableMultiActionController {
 
   public ModelAndView preInsertOrUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
     Long id = WebUtils.getLong(request, WebUtils.ID);
-    String view = id == null ? "/resume/resumeAdd" : "/resume/resumeEdit";
-    ModelAndView modelAndView = new ModelAndView(view);
+    ModelAndView modelAndView = new ModelAndView("/resume/resumeAdd");
     if (id != null) {
       List<Candidate> candidates = candidateService.findByIds(new Long[]{id});
       if (candidates != null && !candidates.isEmpty()) {
-        modelAndView.getModel().put("resume", candidates.get(0));
+        modelAndView.getModel().put("candidate", candidates.get(0));
       }
     }
     return modelAndView;
@@ -124,7 +124,7 @@ public class CandidateController extends ConfigurableMultiActionController {
     return modelAndView;
   }
 
-  public void deleteByIds(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public void disableByIds(HttpServletRequest request, HttpServletResponse response) throws Exception {
     int resultCount = candidateService.deleteByIds(WebUtils.getLongArrayBySeparator(request, "id", ","));
     MessageCollector msgCollector = new MessageCollector();
     msgCollector.addInfo(WebUtils.SUCCESS, Boolean.TRUE);

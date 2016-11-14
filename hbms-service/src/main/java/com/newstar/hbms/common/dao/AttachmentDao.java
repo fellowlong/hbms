@@ -15,9 +15,13 @@ public interface AttachmentDao {
 
     public int update(Attachment attachment);
 
+    public int disableByBusinessId(Long businessId);
+
     public int disable(Long[] attachmentIds);
 
     public int enable(Long[] attachmentIds);
+
+    public int enableByBusinessId(Long businessId);
 
     public List<Attachment> findByBean(Attachment attachment);
 

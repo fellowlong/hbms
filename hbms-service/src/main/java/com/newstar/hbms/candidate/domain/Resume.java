@@ -12,6 +12,8 @@ public class Resume implements Serializable {
 
   private Long id;
 
+  private Long candidateId;
+
   /**
    * 简历名称（文件名）
    */
@@ -44,6 +46,14 @@ public class Resume implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Long getCandidateId() {
+    return candidateId;
+  }
+
+  public void setCandidateId(Long candidateId) {
+    this.candidateId = candidateId;
   }
 
   public String getName() {

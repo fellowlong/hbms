@@ -42,7 +42,7 @@ public class DateEditor extends PropertyEditorSupport {
 
   public void setAsText(String text) throws IllegalArgumentException {
 
-    if (text == null) {
+    if (text == null || text.isEmpty()) {
       setValue(null);
     } else {
       Date date = null;

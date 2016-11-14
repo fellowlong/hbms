@@ -10,6 +10,7 @@
     </selectKey>
     insert into Resume(
       id,
+      candidateId,
       name,
       attachmentId,
       textResume,
@@ -20,6 +21,7 @@
       updateUser
     ) values (
       #{id},
+      #{candidateId},
       #{name},
       #{attachmentId},
       #{textResume},
@@ -33,6 +35,7 @@
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.Resume">
     update Resume set
+      candidateId = #{candidateId},
       name = #{name},
       attachmentId = #{attachmentId},
       textResume = #{textResume},
@@ -49,10 +52,30 @@
     </foreach>
   </delete>
 
-  <select id="findByIds"
-          parameterType="com.newstar.hbms.candidate.domain.Resume"
-          resultType="com.newstar.hbms.candidate.domain.Resume">
-    select * from Resume where id in
+
+  <delete id="disable" parameterType="java.lang.Long">
+    update Resume set yn = 0 where id in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
+    </foreach>
+  </delete>
+
+  <delete id="enable" parameterType="java.lang.Long">
+    update Resume set yn = 1 where id in
+    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
+      #{resumeId}
+    </foreach>
+  </delete>
+
+  <select id="findByCandidateIds" resultType="com.newstar.hbms.candidate.domain.Resume">
+    select * from Resume where yn = 1 and candidateId in
+    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
+      #{candidateId}
+    </foreach>
+  </select>
+
+  <select id="findByIds" resultType="com.newstar.hbms.candidate.domain.Resume">
+    select * from Resume where yn = 1 and id in
     <foreach collection="array" open="(" close=")" separator="," item="resumeId">
       #{resumeId}
     </foreach>

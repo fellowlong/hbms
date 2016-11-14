@@ -1,7 +1,7 @@
 <div style="margin:2px">
 
 <div class="row" style="margin: 5px">
-  <form>
+  <form id="candidateSearchForm" method="post" action="/candidate/findByBean.do">
           <div class="col-xs-6">
             <div class="input-group">
               <div class="input-group-addon">关键字</div>
@@ -9,35 +9,15 @@
             </div>
           </div>
           <div class="col-xs-6">
-              <button class="btn btn-sm btn-primary" type="submit">搜索</button>
-              <button class="btn btn-sm btn-primary" type="submit">新增</button>
+              <button id="candidateSearch" class="btn btn-sm btn-primary" type="button">搜索</button>
+              <button id="candidateAdd" class="btn btn-sm btn-primary" type="button">新增</button>
+              <button id="candidateEdit" class="btn btn-sm btn-primary" type="button">编辑</button>
+              <button id="candidateDisable" class="btn btn-sm btn-primary" type="button">编辑</button>
           </div>
   </form>
 </div>
 
-<div class="row" style="margin: 5px">
-  <form>
-          <div class="col-xs-1">
-            <span>范围</span>
-          </div>
-          <div class="col-xs-1">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox">全文
-              </label>
-            </div>
-          </div>
-          <div class="col-xs-1">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox">名称
-              </label>
-            </div>
-          </div>
-  </form>
-</div>
-
-  <div id="candidateListDiv">
+  <div id="candidateListDiv" style="width: 100%;left: 0;right: 0">
     <table id="candidateList"></table>
     <div id="candidateListPager"></div>
   </div>
@@ -49,17 +29,17 @@
       datatype: "json",
       colNames: ['姓名', '公司',  '职位', '城市', '年薪', '年龄', '手机', '标签', '状态', "最近联系", "操作"],
       colModel: [
-        {name: 'name', width: 150},
-        {name: 'currentCompanyId', width: 150},
-        {name: 'currentPositionId', width: 150},
-        {name: 'locationId', width: 150},
-        {name: 'currentAnnualSalary', width: 150},
-        {name: 'birthday', width: 150},
-        {name: 'mobile', width: 150},
-        {name: 'tag', width: 150},
-        {name: 'status', width: 150},
-        {name: 'lastContact', width: 150},
-        {name: 'isKey', width: 150, formatter: function(cellvalue, options, rowObject){
+        {name: 'name'},
+        {name: 'currentCompanyId'},
+        {name: 'currentPositionId'},
+        {name: 'locationId'},
+        {name: 'currentAnnualSalary'},
+        {name: 'birthday'},
+        {name: 'mobile'},
+        {name: 'tag'},
+        {name: 'status'},
+        {name: 'lastContact'},
+        {name: 'isKey', formatter: function(cellvalue, options, rowObject){
           return cellvalue ? "<i class='ace-icon glyphicon glyphicon-ok' style='color: green'></i>" : "<i class='ace-icon glyphicon glyphicon-remove' style='color: red'></i>";
 
         }}
@@ -68,10 +48,11 @@
       rowNum: 10,
       rowList: [10, 30, 50, 100],
       pager: '#candidateListPager',
-      shrinkToFit: true
+      forceFit:true,
+      shrinkToFit: false
     });
     function resizeCandidateList() {
-      $("#candidateList").jqGrid('setGridWidth', $(window).width() - $("#candidateListDiv").position().left - 10);
+//      $("#candidateList").jqGrid('setGridWidth', $(window).width() - $("#candidateListDiv").position().left - 15);
       $("#candidateList").jqGrid('setGridHeight', $(window).height() - $("#candidateListDiv").position().top - 100);
     }
     resizeCandidateList();
@@ -81,35 +62,59 @@
   </script>
 
 <script>
-  $('#resumeList th input:checkbox').on('click' , function(){
+  $('#candidateList th input:checkbox').on('click' , function(){
     var that = this;
-    $('#resumeList').find('tr > td:first-child input:checkbox')
+    $('#candidateList').find('tr > td:first-child input:checkbox')
         .each(function(){
           this.checked = that.checked;
           $(this).closest('tr').toggleClass('selected');
         });
   });
-  $("#resumeEit").on(ace.click_event, function() {
-    var checkedItems = [];
-    $('#resumeList').find('tr > td:first-child input:checkbox')
-        .each(function(){
-          if(this.checked) {
-            checkedItems.push(this.value);
-          }
-        });
-    if(checkedItems.length == 1) {
-      mainWorkPanelReload('/candidate/preInsertOrUpdate.do?id=' + checkedItems[0] + '&view=/candidate/resumeEdit.ftl');
-    } else {
-      bootbox.dialog({
-        message: "<span class='bigger-110'>请选择一条记录</span>",
-        buttons: {
-          "click" : {
-            "label" : "关闭",
-            "className" : "btn-sm btn-primary"
-            }
-          }
-      });
+
+  $("#candidateSearch").on("click", function () {
+    searchCandidate();
+  });
+  function searchCandidate() {
+    $("#candidateList").jqGrid('setGridParam', {
+      /*postData: {
+        name: $("#searchCustomerForm input[name='name']").val(),
+        industry: $("#searchCustomerForm input[name='industry']").val(),
+        phone: $("#searchCustomerForm input[name='phone']").val()
+      },*/
+      page: 1
+    }).trigger("reloadGrid");
+  }
+
+  $("#candidateAdd").on(ace.click_event, function() {
+      window.open('/candidate/preInsertOrUpdate.do');
+  });
+  $("#candidateDisable").on("click", function () {
+    var rowIds = $("#candidateList").jqGrid('getGridParam', 'selarrrow');
+    if (!rowIds || rowIds.length < 1) {
+      bootbox.alert("请选择一条进行编辑");
+      return;
     }
+    bootbox.confirm("<h3>确定删除?</h3>", function (result) {
+      if (result) {
+        disableRecords(
+            "/candidate/disableByIds.do",
+            {ids: rowIds},
+            function () {
+              searchCandidate();
+            },
+            function () {
+              searchCandidate();
+            });
+      }
+    })
+  });
+  $("#candidateEdit").on(ace.click_event, function() {
+    var rowIds = $("#candidateList").jqGrid('getGridParam', 'selarrrow');
+    if (!rowIds || rowIds.length != 1) {
+      bootbox.alert("请选择一条进行编辑");
+      return;
+    }
+    window.open('/candidate/preInsertOrUpdate.do?id='+rowIds[0]);
   });
 
 </script>

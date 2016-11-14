@@ -1,15 +1,15 @@
 package com.newstar.hbms.candidate.service.impl;
 
-import com.newstar.hbms.common.dao.AttachmentDao;
-import com.newstar.hbms.common.domain.Attachment;
-import com.newstar.hbms.common.domain.Domain;
 import com.newstar.hbms.candidate.dao.*;
 import com.newstar.hbms.candidate.domain.*;
 import com.newstar.hbms.candidate.service.CandidateService;
-import com.newstar.hbms.utils.WordParser;
-import com.newstar.hbms.utils.business.ObjectUtils;
+import com.newstar.hbms.common.dao.AttachmentDao;
+import com.newstar.hbms.common.domain.Attachment;
+import com.newstar.hbms.common.domain.Domain;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
+import com.newstar.hbms.utils.WordParser;
+import com.newstar.hbms.utils.business.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,9 +85,14 @@ public class CandidateServiceImpl implements CandidateService {
       resultCount = candidateDao.insert(candidate);
     }
     if (candidate.getResumeFile() != null) {
+      //如果是修改的话，新的简历要覆盖旧
+      if (candidate.getId() != null && candidate.getResume() != null && candidate.getResume().getId() != null) {
+        resumeDao.disable(new Long[]{candidate.getResume().getId()});
+        attachmentDao.disableByBusinessId(candidate.getResume().getId());
+      }
+
       String fileName = candidate.getResumeFile().getOriginalFilename();
       Attachment attachment = new Attachment();
-      attachment.setBusinessId(candidate.getId());
       attachment.setBusinessBigType("Candidate");
       attachment.setBusinessSmallType("Resume");
       String textResume = WordParser.getText(
@@ -98,9 +103,9 @@ public class CandidateServiceImpl implements CandidateService {
       attachment.setFileStringData(textResume);
       attachment.setFileType(fileName.substring(fileName.lastIndexOf(".") + 1));
       attachment.setRemark("Candidate Resume");
-      resultCount += attachmentDao.insert(attachment);
       //===========
       Resume resume = new Resume();
+      resume.setCandidateId(candidate.getId());
       resume.setAttachment(attachment);
       resume.setName(fileName);
       resume.setAttachmentId(attachment.getId());
@@ -109,6 +114,9 @@ public class CandidateServiceImpl implements CandidateService {
       resume.setUpdateUser(candidate.getUpdateUser());
       candidate.setResume(resume);
       resultCount += resumeDao.insert(resume);
+
+      attachment.setBusinessId(resume.getId());
+      resultCount += attachmentDao.insert(attachment);
     }
     if (candidate.getOtherAttachmentFiles() != null) {
       for (MultipartFile attachmentFile : candidate.getOtherAttachmentFiles() ) {
@@ -266,18 +274,21 @@ public class CandidateServiceImpl implements CandidateService {
   public List<Candidate> findByIds(Long[] ids) {
     List<Candidate> candidates = candidateDao.findByIds(ids);
     if (candidates != null) {
-      List<Long> resumeIds = new ArrayList<Long>(candidates.size());
+      List<Long> candidateIds = new ArrayList<Long>(candidates.size());
       Map<Long, Candidate> resumeMap = new HashMap<Long, Candidate>();
       for (Candidate candidate : candidates) {
-        resumeIds.add(candidate.getId());
-        resumeMap.put(candidate.getId(), candidate);
+        if (candidate.getId() != null) {
+          candidateIds.add(candidate.getId());
+          resumeMap.put(candidate.getId(), candidate);
+        }
       }
-      List<Resume> resumes = resumeDao.findByIds(
-          resumeIds.toArray(new Long[resumeIds.size()]));
-      for (Resume resume : resumes) {
-        Candidate candidate = resumeMap.get(resume.getId());
-        if (candidate != null) {
-          candidate.setResume(resume);
+      if (!candidateIds.isEmpty()) {
+        List<Resume> resumes = resumeDao.findByCandidateIds(candidateIds.toArray(new Long[candidateIds.size()]));
+        for (Resume resume : resumes) {
+          Candidate candidate = resumeMap.get(resume.getCandidateId());
+          if (candidate != null) {
+            candidate.setResume(resume);
+          }
         }
       }
     }
