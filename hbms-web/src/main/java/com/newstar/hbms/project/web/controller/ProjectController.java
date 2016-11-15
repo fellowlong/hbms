@@ -1,6 +1,6 @@
 package com.newstar.hbms.project.web.controller;
 
-import com.newstar.hbms.customer.domain.Customer;
+import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.service.ContactService;
 import com.newstar.hbms.customer.service.CustomerService;
 import com.newstar.hbms.customer.service.PositionService;
@@ -60,7 +60,7 @@ public class ProjectController extends MultiActionController {
   }
 
   public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    PagingResult<Customer> customerPagingResult = customerService.findByBean(new Customer(), new PageRange(1, 100));
+    PagingResult<Company> customerPagingResult = customerService.findByBean(new Company(), new PageRange(1, 100));
     ModelAndView modelAndView =new ModelAndView("/project/projectManager");
     modelAndView.addObject("customers", customerPagingResult.getRecords());
     modelAndView.addObject("users", customerPagingResult.getRecords());

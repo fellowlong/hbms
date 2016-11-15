@@ -4,15 +4,15 @@
 
 <mapper namespace="com.newstar.hbms.project.dao.ProjectDao">
 
-  <resultMap id="Customer" type="com.newstar.hbms.customer.domain.Customer">
+  <resultMap id="Customer" type="com.newstar.hbms.company.domain.Company">
     <id column="id" property="id" />
     <result column="name" property="name"/>
   </resultMap>
-  <resultMap id="Contact" type="com.newstar.hbms.customer.domain.Contact">
+  <resultMap id="Contact" type="com.newstar.hbms.company.domain.Contact">
     <id column="id" property="id" />
     <result column="name" property="name"/>
   </resultMap>
-  <resultMap id="Position" type="com.newstar.hbms.customer.domain.Position">
+  <resultMap id="Position" type="com.newstar.hbms.company.domain.Position">
     <id column="id" property="id" />
     <result column="name" property="name"/>
   </resultMap>
@@ -43,7 +43,7 @@
     <result column="updateTime" property="updateTime"/>
     <result column="createUser" property="createUser"/>
     <result column="createTime" property="createTime"/>
-    <association property="customer" columnPrefix="CUS_" resultMap="Customer"/>
+    <association property="company" columnPrefix="CUS_" resultMap="Customer"/>
     <association property="contact" columnPrefix="CONTACT_" resultMap="Contact"/>
     <association property="position" columnPrefix="POS_" resultMap="Position"/>
     <association property="consultant" columnPrefix="CONSULTANT_" resultMap="User"/>
@@ -177,8 +177,8 @@
     <if test="isKey != null">
       and prj.isKey = #{isKey}
     </if>
-    <if test="customer != null and customer.name != null">
-      and cus.name like "%"#{customer.name}"%"
+    <if test="company != null and company.name != null">
+      and cus.name like "%"#{company.name}"%"
     </if>
     <if test="position != null and position.name != null">
       and pos.name like "%"#{position.name}"%"

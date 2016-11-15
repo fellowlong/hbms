@@ -133,7 +133,7 @@
         <li><a href="/candidate/workspace.do">人才管理</a></li>
         <li><a href="/project/workspace.do">项目管理</a></li>
         <li><a href="/project/workspace.do">寻访管理</a></li>
-        <li><a href="/customer/workspace.do">客户管理</a></li>
+        <li><a href="/company/workspace.do">客户管理</a></li>
         <li><a href="/contact/workspace.do">联系人管理</a></li>
         <li><a href="/position/workspace.do">职位管理</a></li>
         <li><a href="/project/workspace.do">List管理</a></li>

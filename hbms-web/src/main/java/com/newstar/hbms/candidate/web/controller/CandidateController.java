@@ -2,7 +2,6 @@ package com.newstar.hbms.candidate.web.controller;
 
 import com.newstar.hbms.candidate.domain.Candidate;
 import com.newstar.hbms.candidate.service.CandidateService;
-import com.newstar.hbms.customer.domain.Customer;
 import com.newstar.hbms.mvc.ConfigurableMultiActionController;
 import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.mvc.MessageCollector;

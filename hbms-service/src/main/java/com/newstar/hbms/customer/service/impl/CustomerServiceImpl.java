@@ -1,7 +1,7 @@
 package com.newstar.hbms.customer.service.impl;
 
 import com.newstar.hbms.customer.dao.CustomerDao;
-import com.newstar.hbms.customer.domain.Customer;
+import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.service.CustomerService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
@@ -20,8 +20,8 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public int insertOrUpdate(Customer customer) {
-    return customer.getId() != null ? customerDao.update(customer) : customerDao.insert(customer);
+  public int insertOrUpdate(Company company) {
+    return company.getId() != null ? customerDao.update(company) : customerDao.insert(company);
   }
 
   @Override
@@ -35,12 +35,12 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public PagingResult<Customer> findByBean(Customer customer, PageRange pageRange) {
-    return customerDao.findByBean(customer, pageRange);
+  public PagingResult<Company> findByBean(Company company, PageRange pageRange) {
+    return customerDao.findByBean(company, pageRange);
   }
 
   @Override
-  public List<Customer> findByIds(Long[] ids) {
+  public List<Company> findByIds(Long[] ids) {
     return customerDao.findByIds(ids);
   }
 
