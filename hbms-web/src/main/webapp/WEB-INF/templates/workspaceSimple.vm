@@ -74,7 +74,7 @@
             color: #666;
             min-width: 1210px;
         }
-        .navbar {
+        /*.navbar {
             min-height: 50px;
         }
         .navbar .navbar-nav > li > a {
@@ -106,13 +106,13 @@
         .navbar{
           width:100%;
           margin:0px;
-          position:fixed;/*固定作用*/
+          position:fixed;!*固定作用*!
           top:0px;
           left:0px;
-          /*ie6下样式，加下划线表示只针对ie6 的hack */
-          _position:absolute;/* 把导航栏位置定义为绝对位置  关键*/
-          _top:expression(documentElement.scrollTop + "px"); /* 把导航栏位置放在浏览器垂直滚动条的顶端  关键 */
-          z-index:9999; /* 让导航栏浮在网页的高层位置，遇到flash和图片时候也能始终保持最外层 */
+          !*ie6下样式，加下划线表示只针对ie6 的hack *!
+          _position:absolute;!* 把导航栏位置定义为绝对位置  关键*!
+          _top:expression(documentElement.scrollTop + "px"); !* 把导航栏位置放在浏览器垂直滚动条的顶端  关键 *!
+          z-index:9999; !* 让导航栏浮在网页的高层位置，遇到flash和图片时候也能始终保持最外层 *!
           text-align:left;
         }
 
@@ -120,29 +120,55 @@
           padding: 5;
           margin: 5;
         }
-
+      .active {
+        background-color: white;
+      }*/
+        body,html{margin: 0px;padding: 0;width: 100%;background-color: white}
+        .navbar .navbar-nav > li.active > a {
+          background-color: white;
+          font: "微软雅黑";
+          color: black;
+        }
+        .navbar .navbar-nav > li > a:hover,
+        .navbar .navbar-nav > li > a:focus{
+          background-color: white !important;
+          font: "微软雅黑" !important;
+          color: black !important;
+        }
+        .workspace {
+          padding-top: 10px;padding-left: 10px;padding-right: 10px;
+        }
     </style>
 
 </head>
 
-<body class="no-skin">
+<body>
 
-<div class="navbar navbar-default" role="navigation">
-    <ul class="nav navbar-nav">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Brand</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+      <ul class="nav navbar-nav">
         <li><a href="#">我的桌面</a></li>
-        <li><a href="/candidate/workspace.do">人才管理</a></li>
-        <li><a href="/project/workspace.do">项目管理</a></li>
-        <li><a href="/project/workspace.do">寻访管理</a></li>
-        <li><a href="/customer/workspace.do">客户管理</a></li>
-        <li><a href="/contact/workspace.do">联系人管理</a></li>
-        <li><a href="/position/workspace.do">职位管理</a></li>
-        <li><a href="/project/workspace.do">List管理</a></li>
-        <li><a href="/project/workspace.do">财务管理</a></li>
-        <li><a href="/project/workspace.do">报表</a></li>
-        <li><a href="/project/workspace.do">办公</a></li>
-    </ul>
-</div>
-<div style="padding-bottom: 50px"></div>
+        #foreach( $authority in $authorities )
+        <li #if($requestUri == $authority.uri) class="active" #end>
+          <a href="$authority.uri">$authority.name</a>
+        </li>
+        #end
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+<div style="padding-bottom: 45px"></div>
 
 <div class="workspace">
     #if($workView)
