@@ -1,6 +1,6 @@
 package com.newstar.hbms.customer.service.impl;
 
-import com.newstar.hbms.customer.dao.CustomerDao;
+import com.newstar.hbms.customer.dao.CompanyDao;
 import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.service.CustomerService;
 import com.newstar.hbms.support.paging.PageRange;
@@ -11,37 +11,37 @@ import java.util.List;
 /**
  * Created by wangjinsi on 2016/10/22.
  */
-public class CustomerServiceImpl implements CustomerService {
+public class CompanyServiceImpl implements CustomerService {
 
-  private CustomerDao customerDao;
+  private CompanyDao companyDao;
 
-  public void setCustomerDao(CustomerDao customerDao) {
-    this.customerDao = customerDao;
+  public void setCompanyDao(CompanyDao companyDao) {
+    this.companyDao = companyDao;
   }
 
   @Override
   public int insertOrUpdate(Company company) {
-    return company.getId() != null ? customerDao.update(company) : customerDao.insert(company);
+    return company.getId() != null ? companyDao.update(company) : companyDao.insert(company);
   }
 
   @Override
   public int disable(Long[] customerIds) {
-    return customerDao.disable(customerIds);
+    return companyDao.disable(customerIds);
   }
 
   @Override
   public int enable(Long[] customerIds) {
-    return customerDao.enable(customerIds);
+    return companyDao.enable(customerIds);
   }
 
   @Override
   public PagingResult<Company> findByBean(Company company, PageRange pageRange) {
-    return customerDao.findByBean(company, pageRange);
+    return companyDao.findByBean(company, pageRange);
   }
 
   @Override
   public List<Company> findByIds(Long[] ids) {
-    return customerDao.findByIds(ids);
+    return companyDao.findByIds(ids);
   }
 
 }

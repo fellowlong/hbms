@@ -102,17 +102,17 @@
     <!--<property name="httpSolrServer" ref="httpSolrServer"/>-->
   </bean>
 
-  <bean id="customerController" class="com.newstar.hbms.company.web.controller.CustomerController">
+  <bean id="customerController" class="com.newstar.hbms.customer.web.controller.CustomerController">
     <property name="customerService" ref="customerService"/>
   </bean>
 
-  <bean id="contactController" class="com.newstar.hbms.company.web.controller.ContactController">
+  <bean id="contactController" class="com.newstar.hbms.customer.web.controller.ContactController">
     <property name="contactService" ref="contactService"/>
     <property name="customerService" ref="customerService"/>
     <property name="datePattern" value="${datePattern}"/>
   </bean>
 
-  <bean id="positionController" class="com.newstar.hbms.company.web.controller.PositionController">
+  <bean id="positionController" class="com.newstar.hbms.customer.web.controller.PositionController">
     <property name="positionService" ref="positionService"/>
     <property name="customerService" ref="customerService"/>
     <property name="datePattern" value="${datePattern}"/>

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.newstar.hbms.candidate.dao.LanguageAbilityDao">
 
-  <insert id="insert" parameterMap="domain.LanguageAbility">
+  <insert id="insert" parameterType="com.newstar.hbms.candidate.domain.LanguageAbility">
     <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
       sequence.global
     </selectKey>
@@ -24,7 +24,7 @@
     )
   </insert>
 
-  <update id="update" parameterMap="domain.LanguageAbility">
+  <update id="update" parameterType="com.newstar.hbms.candidate.domain.LanguageAbility">
     update LanguageAbility set
     name = #{name, jdbcType=VARCHAR},
     readAndWrite = #{readAndWrite,jdbcType=VARCHAR},
@@ -41,8 +41,8 @@
   </delete>
 
   <select id="findByBean"
-          parameterMap="domain.LanguageAbility"
-          resultMap="domain.LanguageAbility">
+          parameterType="com.newstar.hbms.candidate.domain.LanguageAbility"
+          resultType="com.newstar.hbms.candidate.domain.LanguageAbility">
     select
     *
     from LanguageAbility
@@ -63,15 +63,15 @@
 
 
   <select id="findByIds"
-          parameterMap="domain.LanguageAbility"
-          resultMap="domain.LanguageAbility">
+          parameterType="com.newstar.hbms.candidate.domain.LanguageAbility"
+          resultType="com.newstar.hbms.candidate.domain.LanguageAbility">
     select * from LanguageAbility where id in
     <foreach collection="array" open="(" close=")" separator="," item="languageAbilityId">
       #{languageAbilityId}
     </foreach>
   </select>
 
-  <select id="findByResumeIds" resultMap="domain.LanguageAbility">
+  <select id="findByResumeIds" resultType="com.newstar.hbms.candidate.domain.LanguageAbility">
     select * from LanguageAbility where resumeId in
     <foreach collection="array" open="(" close=")" separator="," item="resumeId">
       #{resumeId}

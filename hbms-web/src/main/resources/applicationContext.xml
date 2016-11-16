@@ -70,8 +70,8 @@
         <value>classpath:com/newstar/hbms/common/dao/*.xml</value>
         <value>classpath:com/newstar/hbms/basedata/dao/*.xml</value>
         <value>classpath:com/newstar/hbms/candidate/dao/*.xml</value>
-        <value>classpath:com/newstar/hbms/candidate/dao/*.xml</value>
-        <value>classpath:com/newstar/hbms/company/dao/*.xml</value>
+        <value>classpath:com/newstar/hbms/customer/dao/*.xml</value>
+        <value>classpath:com/newstar/hbms/project/dao/*.xml</value>
         <value>classpath:com/newstar/hbms/system/dao/*.xml</value>
       </list>
     </property>
@@ -105,18 +105,18 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
-  <bean id="customerDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.newstar.hbms.company.dao.CustomerDao"/>
+  <bean id="companyDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.newstar.hbms.customer.dao.CompanyDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
   <bean id="contactDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.newstar.hbms.company.dao.ContactDao"/>
+    <property name="mapperInterface" value="com.newstar.hbms.customer.dao.ContactDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
   <bean id="positionDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-    <property name="mapperInterface" value="com.newstar.hbms.company.dao.PositionDao"/>
+    <property name="mapperInterface" value="com.newstar.hbms.customer.dao.PositionDao"/>
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
@@ -215,15 +215,15 @@
     <property name="candidateService" ref="candidateService"/>
   </bean>-->
 
-  <bean id="customerService" class="com.newstar.hbms.company.service.impl.CustomerServiceImpl">
-    <property name="customerDao" ref="customerDao"/>
+  <bean id="customerService" class="com.newstar.hbms.customer.service.impl.CompanyServiceImpl">
+    <property name="companyDao" ref="companyDao"/>
   </bean>
 
-  <bean id="contactService" class="com.newstar.hbms.company.service.impl.ContactServiceImpl">
+  <bean id="contactService" class="com.newstar.hbms.customer.service.impl.ContactServiceImpl">
     <property name="contactDao" ref="contactDao"/>
   </bean>
 
-  <bean id="positionService" class="com.newstar.hbms.company.service.impl.PositionServiceImpl">
+  <bean id="positionService" class="com.newstar.hbms.customer.service.impl.PositionServiceImpl">
     <property name="positionDao" ref="positionDao"/>
   </bean>
 

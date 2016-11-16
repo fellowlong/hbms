@@ -25,10 +25,10 @@ public class Certificate extends Domain {
   /**
    * 证书名称
    */
-  private String name;
+  private Long certificateId;
 
   /**
-   * 获取时间
+   * 取得时间
    */
   private String acquireDate;
 
@@ -56,12 +56,12 @@ public class Certificate extends Domain {
     this.candidate = candidate;
   }
 
-  public String getName() {
-    return name;
+  public Long getCertificateId() {
+    return certificateId;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setCertificateId(Long certificateId) {
+    this.certificateId = certificateId;
   }
 
   public String getAcquireDate() {

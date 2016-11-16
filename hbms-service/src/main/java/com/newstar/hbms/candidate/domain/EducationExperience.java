@@ -50,7 +50,7 @@ public class EducationExperience extends Domain {
   /**
    * 类型：统招、自考、成人、远程
    */
-  private String type;
+  private Long typeId;
 
 
   public Long getId() {
@@ -117,11 +117,11 @@ public class EducationExperience extends Domain {
     this.major = major;
   }
 
-  public String getType() {
-    return type;
+  public Long getTypeId() {
+    return typeId;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setTypeId(Long typeId) {
+    this.typeId = typeId;
   }
 }

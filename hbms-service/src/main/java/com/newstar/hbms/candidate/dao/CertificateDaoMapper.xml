@@ -4,7 +4,7 @@
 
 <mapper namespace="com.newstar.hbms.candidate.dao.CertificateDao">
 
-  <insert id="insert" parameterMap="domain.Certificate">
+  <insert id="insert" parameterType="com.newstar.hbms.candidate.domain.Certificate">
     <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
       sequence.global
     </selectKey>
@@ -22,7 +22,7 @@
     )
   </insert>
 
-  <update id="update" parameterMap="domain.Certificate">
+  <update id="update" parameterType="com.newstar.hbms.candidate.domain.Certificate">
     update Certificate set
       name = #{name, jdbcType=VARCHAR},
       acquireDate = #{acquireDate,jdbcType=VARCHAR}
@@ -38,8 +38,8 @@
   </delete>
 
   <select id="findByBean"
-          parameterMap="domain.Certificate"
-          resultMap="domain.Certificate">
+          parameterType="com.newstar.hbms.candidate.domain.Certificate"
+          resultType="com.newstar.hbms.candidate.domain.Certificate">
     select
     *
     from Certificate
@@ -60,15 +60,15 @@
 
 
   <select id="findByIds"
-          parameterMap="domain.Certificate"
-          resultMap="domain.Certificate">
+          parameterType="com.newstar.hbms.candidate.domain.Certificate"
+          resultType="com.newstar.hbms.candidate.domain.Certificate">
     select * from Certificate where id in
     <foreach collection="array" open="(" close=")" separator="," item="certificateId">
       #{certificateId}
     </foreach>
   </select>
 
-  <select id="findByResumeIds" resultMap="domain.Certificate">
+  <select id="findByResumeIds" parameterType="com.newstar.hbms.candidate.domain.Certificate">
     select * from Certificate where resumeId in
     <foreach collection="array" open="(" close=")" separator="," item="resumeId">
       #{resumeId}

@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.newstar.hbms.company.dao.ContactDao">
+<mapper namespace="com.newstar.hbms.customer.dao.ContactDao">
 
-  <resultMap id="Customer" type="com.newstar.hbms.company.domain.Company">
+  <resultMap id="Customer" type="com.newstar.hbms.customer.domain.Company">
     <id column="id" property="id" />
     <result column="name" property="name"/>
   </resultMap>
-  <resultMap id="Contact" type="com.newstar.hbms.company.domain.Contact">
+  <resultMap id="Contact" type="com.newstar.hbms.customer.domain.Contact">
     <id column="id" property="id" />
     <result column="name" property="name"/>
     <result column="customerId" property="customerId"/>
@@ -30,7 +30,7 @@
     <association property="company" columnPrefix="CUS_" resultMap="Customer"/>
   </resultMap>
 
-  <insert id="insert" parameterType="com.newstar.hbms.company.domain.Contact">
+  <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Contact">
     insert into Contact(
     name,
     customerId,
@@ -70,7 +70,7 @@
     )
   </insert>
 
-  <update id="update" parameterType="com.newstar.hbms.company.domain.Contact">
+  <update id="update" parameterType="com.newstar.hbms.customer.domain.Contact">
     update Contact set
       name = #{name, jdbcType=VARCHAR},
       englishName = #{englishName, jdbcType=VARCHAR},
@@ -102,7 +102,7 @@
     </foreach>
   </update>
 
-  <select id="findByBean" parameterType="com.newstar.hbms.company.domain.Contact"
+  <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Contact"
           resultMap="Contact">
     select co.*,cu.id as CUS_id,cu.name CUS_name from Contact co, Customer cu where co.yn = 1 and cu.yn = 1 and co.customerId = cu.id
     <if test="id != null">
@@ -129,7 +129,7 @@
     order by co.createTime desc
   </select>
 
-  <select id="findByIds" parameterType="com.newstar.hbms.company.domain.Contact"
+  <select id="findByIds" parameterType="com.newstar.hbms.customer.domain.Contact"
           resultMap="Contact">
     select co.*,cu.id as CUS_id,cu.name CUS_name from Contact co, Customer cu where co.yn = 1 and cu.yn = 1 and co.customerId = cu.id and co.id in
     <foreach collection="array" open="(" close=")" separator="," item="customerId">

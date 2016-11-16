@@ -3,27 +3,27 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.newstar.hbms.project.dao.ProjectDao">
-
-  <resultMap id="Customer" type="com.newstar.hbms.company.domain.Company">
+<!--
+  <resultMap id="Customer" type="com.newstar.hbms.customer.domain.Company">
     <id column="id" property="id" />
-    <result column="name" property="name"/>
+    &lt;!&ndash;<result column="name" property="name"/>&ndash;&gt;
   </resultMap>
-  <resultMap id="Contact" type="com.newstar.hbms.company.domain.Contact">
+  <resultMap id="Contact" type="com.newstar.hbms.customer.domain.Contact">
     <id column="id" property="id" />
-    <result column="name" property="name"/>
+    &lt;!&ndash;<result column="name" property="name"/>&ndash;&gt;
   </resultMap>
-  <resultMap id="Position" type="com.newstar.hbms.company.domain.Position">
+  <resultMap id="Position" type="com.newstar.hbms.customer.domain.Position">
     <id column="id" property="id" />
-    <result column="name" property="name"/>
+    &lt;!&ndash;<result column="name" property="name"/>&ndash;&gt;
   </resultMap>
   <resultMap id="User" type="com.newstar.hbms.system.domain.User">
     <id column="id" property="id" />
-    <result column="name" property="name"/>
+    &lt;!&ndash;<result column="name" property="name"/>&ndash;&gt;
   </resultMap>
 
   <resultMap id="Project" type="com.newstar.hbms.project.domain.Project">
     <id column="id" property="id" />
-    <result column="name" property="name"/>
+    &lt;!&ndash;<result column="name" property="name"/>
     <result column="startDate" property="startDate"/>
     <result column="endDate" property="endDate"/>
     <result column="customerId" property="customerId"/>
@@ -48,7 +48,7 @@
     <association property="position" columnPrefix="POS_" resultMap="Position"/>
     <association property="consultant" columnPrefix="CONSULTANT_" resultMap="User"/>
     <association property="assistant" columnPrefix="ASSISTANT_" resultMap="User"/>
-    <association property="manager" columnPrefix="MANAGER_" resultMap="User"/>
+    <association property="manager" columnPrefix="MANAGER_" resultMap="User"/>&ndash;&gt;
   </resultMap>
 
   <sql id="selectProject">
@@ -198,6 +198,6 @@
     <foreach collection="array" open="(" close=")" separator="," item="projectId">
       #{projectId}
     </foreach>
-  </select>
+  </select>-->
 
 </mapper>

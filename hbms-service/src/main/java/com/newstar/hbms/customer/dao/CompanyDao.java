@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by wangjinsi on 2016/10/22.
  */
-public interface CustomerDao {
+public interface CompanyDao {
 
   public int insert(Company company);
 

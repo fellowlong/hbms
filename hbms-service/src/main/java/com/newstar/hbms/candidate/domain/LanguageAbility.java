@@ -25,7 +25,7 @@ public class LanguageAbility extends Domain {
   /**
    * 语言名称
    */
-  private String name;
+  private Long languageId;
 
   /**
    * 读写能力
@@ -61,12 +61,12 @@ public class LanguageAbility extends Domain {
     this.candidate = candidate;
   }
 
-  public String getName() {
-    return name;
+  public Long getLanguageId() {
+    return languageId;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setLanguageId(Long languageId) {
+    this.languageId = languageId;
   }
 
   public String getReadAndWrite() {

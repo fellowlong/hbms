@@ -6,36 +6,10 @@
   .widget-body {
     padding: 15px;
   }
-  #attachmentTemplate{
-    display: none;
-  }
-  .module {
-    margin-right: 0;
-    margin-left: 0;
-    background-color: #fff;
-    border-color: #ddd;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 4px 4px 0 0;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+  #worExperiences.form-group {
+    margin: 0;
   }
 </style>
-
-<div id="attachmentTemplate">
-<div class="form-group">
-  <label class="col-xs-1 control-label no-padding-right">附件<sup style="color:red">*</sup></label>
-  <div class="col-xs-5">
-      <input type="file"  name="otherAttachmentFiles">
-  </div>
-  <div class="col-xs-1">
-    <button class="btn btn-xs btn-danger" onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
-      <i class="ace-icon fa fa-remove bigger-110"></i>
-      删除
-    </button>
-  </div>
-</div>
-</div>
 
 
 
@@ -48,435 +22,496 @@
         autocomplete="off"
         data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
     <input type="hidden" name="id" value="$!candidate.id">
-    <div class="row" style="margin: 0;padding: 0">
+    <div class="row" style="padding-left: 50px">
+      <div class="form-group">
+        <div class="col-sm-9">
+          <h3>
+            <b>新增人才</b>
+            <a href="#candidateWorkspace" data-toggle="collapse">
+              <i class="glyphicon glyphicon-collapse-down"></i>
+            </a>
 
-      <h4>
-        <b>原始简历及附件</b>
-        <button id="addAttachment" class="btn btn-xs btn-primary">
-          <i class="ace-icon fa fa-plus bigger-110"></i>
-          添加附件
-        </button>
-      </h4>
-      <hr/>
+
+          </h3>
+          <hr/>
+
+          <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+              </div>
+
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="#">Link</a></li>
+                  <li><a href="#">Link</a></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Action</a></li>
+                      <li><a href="#">Another action</a></li>
+                      <li><a href="#">Something else here</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">Separated link</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">One more separated link</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                  </div>
+                  <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">Link</a></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Action</a></li>
+                      <li><a href="#">Another action</a></li>
+                      <li><a href="#">Something else here</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">Separated link</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+          </nav>
+        </div>
+      </div>
+      <div id="candidateWorkspace" class="form-group collapse in">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-8">
+
+
+
+      <div class="form-group">
+        <div class="col-sm-11">
+          <h4>
+            <b>原始简历及附件</b>
+            <a href="#resumeAndAttachments" data-toggle="collapse">
+              <i class="glyphicon glyphicon-collapse-down"></i>
+            </a>
+          </h4>
+          <hr/>
+        </div>
+      </div>
+      <div id="resumeAndAttachments" class="collapse in">
         #if($candidate.id)
           <div class="form-group">
-            <label class="col-xs-1 control-label no-padding-right">已上传简历</label>
-            <div class="col-xs-5">
+            <label class="col-sm-1 control-label no-padding-right">已上传简历</label>
+            <div class="col-sm-10">
               #if($candidate.resume and $candidate.resume.id)
                 <input type="hidden" name="resume.id" value="$candidate.resume.id">
               #end
               <a href="">$!candidate.resume.name</a>
             </div>
-            <div class="col-xs-1">
+            <div class="col-sm-1">
             </div>
           </div>
         #end
         <div class="form-group">
-          <label class="col-xs-1 control-label no-padding-right">简历</label>
-          <div class="col-xs-5">
+          <label class="col-sm-1 control-label no-padding-right">简历</label>
+          <div class="col-sm-8">
             <input type="file" id="resumeFile" name="resumeFile">
           </div>
-          <div class="col-xs-2">
-            <button class="btn btn-xs btn-primary">
+          <div class="col-sm-1">
+            <button class="btn btn-sm btn-primary">
               <i class="ace-icon fa fa-clipboard bigger-110"></i>
               粘贴简历
             </button>
-            <script type="text/javascript">
-              $("#addAttachment").on("click", function () {
-                $("#attachments").append($("#attachmentTemplate").html());
-                reCalculateAttatcmentSeq();
-              });
-              function reCalculateAttatcmentSeq() {
-                var attatementSeq = 0;
-                $("#attachments").find(".form-group").each(function (index, item) {
-                  $(item).find("label.control-label").text("附件" + ++attatementSeq);
-                  renderFileInput($(item).find("input"));
-                });
-              }
-            </script>
           </div>
         </div>
         <div id="attachments">
         </div>
+        <div class="form-group">
+          <div class="col-sm-7" style="text-align: center">
+            <button id="addAttachment" class="btn btn-sm btn-primary" type="button">
+              <i class="ace-icon fa fa-plus bigger-110"></i>
+              添加附件
+            </button>
+          </div>
+        </div>
+      </div>
 
-      <div style="padding-top: 20px"></div>
-        <h4>
-          <b>基本信息</b>
-        </h4>
-      <hr/>
+      <div class="form-group">
+        <div class="col-sm-11">
+          <h4>
+            <b>基本信息</b>
+            <a href="#basicInfo" data-toggle="collapse">
+              <i class="glyphicon glyphicon-collapse-down"></i>
+            </a>
+          </h4>
+          <hr/>
+        </div>
+      </div>
+      <div id="basicInfo" class="collapse in">
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">姓名<sup style="color:red">*</sup></label>
+          <div class="col-sm-5">
+            <input type="text" name="name" value="$!candidate.name" placeholder="姓名" class="form-control" data-rule="姓名:required;name"/>
+          </div>
+        </div>
 
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">姓名<sup style="color:red">*</sup></label>
-              <div class="col-xs-5">
-                <input type="text"  name="name" value="$!candidate.name" placeholder="姓名"  data-rule="姓名:required;name"/>
-              </div>
-            </div>
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">性别</label>
+          <div class="col-sm-2">
+            <select id="contactSelect" name="sexId" value="$!candidate.sexId" class="chosen-select form-control">
+              #set($sexes = $baseDataService.getSexes().children)
+              #foreach($sex in $sexes)
+                <option value="$sex.id">$sex.label</option>
+              #end
+            </select>
+          </div>
+        </div>
 
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">性别</label>
-              <div class="col-xs-5">
-                <select id="contactSelect"  name="sexId" value="$!candidate.sexId" class="chosen-select form-control">
-                  #set($sexes = $baseDataService.getSexes().children)
-                  #foreach($sex in $sexes)
-                    <option value="$sex.id">$sex.label</option>
-                  #end
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">生日</label>
-              <div class="col-xs-5">
-                <div class="input-group">
-                  <input class="form-control date-picker" name="birthday" value="$!candidate.birthday" type="text" data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-rule="生日:date">
-                  <span class="input-group-addon">
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">生日</label>
+          <div class="col-sm-2">
+            <div class="input-group">
+              <input class="form-control date-picker" name="birthday" value="$!candidate.birthday" type="text"
+                     data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-rule="生日:date">
+              <span class="input-group-addon">
                     <i class="fa fa-calendar bigger-110"></i>
                   </span>
-                </div>
-                <script type="text/javascript">
-                  $('.date-picker').datepicker({
-                    autoclose: true,
-                    todayHighlight: true
-                  }).next().on("click", function(){
-                    $('.date-picker').focus();
-                  });
-                </script>
-              </div>
             </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">手机<sup style="color:red">*</sup></label>
-              <div class="col-xs-5">
-                <input type="text"  id="mobile" name="mobile" value="$!candidate.mobile" placeholder="手机"  data-rule="手机:required;telephone"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">座机</label>
-              <div class="col-xs-5">
-                <input type="text"  id="telephone" name="telephone" value="$!candidate.telephone" placeholder="座机" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">邮箱</label>
-              <div class="col-xs-5">
-                <input type="text"  id="email" name="email" value="$!candidate.email" placeholder="邮箱"  data-rule="邮箱:email"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">其他联系方式</label>
-              <div class="col-xs-5">
-                <input type="text"  id="otherContact" name="otherContact" value="$!candidate.otherContact" placeholder="其他联系方式" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">学历</label>
-              <div class="col-xs-5">
-                <select id="degreeId" class="chosen-select form-control" name="degreeId" value="$!candidate.degreeId" >
-                  #set($degrees = $baseDataService.getDegrees().children)
-                  #foreach($degree in $degrees)
-                    <option value="$degree.id">$degree.label</option>
-                  #end
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">婚姻状况</label>
-              <div class="col-xs-5">
-                <select id="marital" class="chosen-select form-control" id="maritalId" name="maritalId" value="$!candidate.maritalId">
-                  #set($maritals = $baseDataService.getMaritals().children)
-                  #foreach($marital in $maritals)
-                    <option value="$marital.id">$marital.label</option>
-                  #end
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">所在地</label>
-              <div class="col-xs-5">
-                <select id="locationId" class="chosen-select form-control" name="locationId" value="$!candidate.locationId">
-                  #set($cities = $baseDataService.getCities().children)
-                  #foreach($city in $cities)
-                    <option value="$city.id">$city.label</option>
-                  #end
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">工作年限</label>
-              <div class="col-xs-5">
-                <input type="text"  id="workYears" name="workYears" value="$!candidate.workYears" placeholder="工作年限" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">有海外经历</label>
-              <div class="col-xs-5">
-                <label>
-                  <input name="overseasExperience" type="radio" class="ace" value="true" #if($param['overseasExperience'] == true) checked #end>
-                  <span class="lbl">是</span>
-                </label>
-                <label>
-                  <input name="overseasExperience" type="radio" class="ace" value="false" #if($param['overseasExperience'] and $param['overseasExperience'] == false) checked #end>
-                  <span class="lbl">否</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">所在行业</label>
-              <div class="col-xs-5">
-                <select id="industryId" class="chosen-select form-control" name="industryId" value="$!candidate.industryId">
-                  #set($industries = $baseDataService.getIndustries().children)
-                  #foreach($industry in $industries)
-                    <option value="$industry.id">$industry.label</option>
-                  #end
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">当前公司</label>
-              <div class="col-xs-5">
-                <select id="currentCompanyId" class="chosen-select form-control" name="currentCompanyId" value="$!candidate.currentCompanyId">
-                  #set($conpanies = $baseDataService.getConpanies().children)
-                  #foreach($company in $conpanies)
-                    <option value="$company.id">$company.label</option>
-                  #end
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">当前职位</label>
-              <div class="col-xs-5">
-                <select id="currentPositionId" class="chosen-select form-control" name="currentPositionId" value="$!candidate.currentPositionId">
-                  #set($positions = $baseDataService.getPositions().children)
-                  #foreach($position in $positions)
-                    <option value="$position.id">$position.label</option>
-                  #end
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">当前年薪</label>
-              <div class="col-xs-5">
-                <input type="text"  id="currentAnnualSalary" name="currentAnnualSalary" value="$!candidate.currentAnnualSalary"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">求职状态</label>
-              <div class="col-xs-5">
-                <select id="jobHuntingStatusId" class="chosen-select form-control" name="jobHuntingStatusId" value="$!candidate.jobHuntingStatusId">
-                  #set($jobHuntingStatuses = $baseDataService.getJobHuntingStatuses().children)
-                  #foreach($jobHuntingStatus in $jobHuntingStatuses)
-                    <option value="$jobHuntingStatus.id">$jobHuntingStatus.label</option>
-                  #end
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">其他信息</label>
-              <div class="col-xs-5">
-                <textarea type="text"  id="other" name="other" value="$!candidate.other"></textarea>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">备注</label>
-              <div class="col-xs-5">
-                <textarea type="text"  id="remark" name="remark" value="$!candidate.remark"></textarea>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-xs-1 control-label no-padding-right">搜索关键字</label>
-              <div class="col-xs-5">
-                <textarea type="text"  id="keyword" name="keyword" value="$!candidate.keyword"></textarea>
-              </div>
-            </div>
-
-      <div style="padding-top: 20px"></div>
-
-      <h4>
-        <b>工作经历</b>
-      </h4>
-      <hr/>
-
-        <table CLASS="table-striped table-responsive table-hover" width="100%">
-          <tr>
-            <td>2005-09 2016-10</td>
-            <td>北京京东是科学技术</td>
-            <td>软件开发工程师</td>
-            <td>做了.........</td>
-          </tr>
-          <tr>
-            <td>2005-09 2016-10</td>
-            <td>北京京东是科学技术</td>
-            <td>软件开发工程师</td>
-            <td>做了.........</td>
-          </tr>
-          <tr>
-            <td>2005-09 2016-10</td>
-            <td>北京京东是科学技术</td>
-            <td>软件开发工程师</td>
-            <td>做了.........</td>
-          </tr>
-        </table>
-        <div class="widget-box ui-sortable-handle">
-          <div class="widget-header">
-            <h4 class="widget-title">教育经历</h4>
-            <div class="widget-toolbar">
-              <a href="#" data-action="fullscreen" class="orange2">
-                <i class="ace-icon fa fa-expand"></i>
-              </a>
-              <a href="#" data-action="collapse">
-                <i class="ace-icon fa fa-chevron-up"></i>
-              </a>
-            </div>
-          </div>
-
-          <div class="widget-body" style="display: block;padding: 15px">
-            <table CLASS="table-striped table-responsive table-hover" width="100%">
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-            </table>
+            <script type="text/javascript">
+              $('.date-picker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+              }).next().on("click", function () {
+                $('.date-picker').focus();
+              });
+            </script>
           </div>
         </div>
-        <div class="widget-box ui-sortable-handle">
-          <div class="widget-header">
-            <h4 class="widget-title">语言能力</h4>
-            <div class="widget-toolbar">
-              <a href="#" data-action="fullscreen" class="orange2">
-                <i class="ace-icon fa fa-expand"></i>
-              </a>
-              <a href="#" data-action="collapse">
-                <i class="ace-icon fa fa-chevron-up"></i>
-              </a>
-            </div>
-          </div>
 
-          <div class="widget-body" style="display: block;padding: 15px">
-            <table CLASS="table-striped table-responsive table-hover" width="100%">
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-            </table>
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">手机<sup style="color:red">*</sup></label>
+          <div class="col-sm-5">
+            <input type="text" id="mobile" name="mobile" value="$!candidate.mobile" placeholder="手机"
+                   class="form-control" data-rule="手机:required;telephone"/>
           </div>
         </div>
-        <div class="widget-box ui-sortable-handle">
-          <div class="widget-header">
-            <h4 class="widget-title">证书</h4>
-            <div class="widget-toolbar">
-              <a href="#" data-action="fullscreen" class="orange2">
-                <i class="ace-icon fa fa-expand"></i>
-              </a>
-              <a href="#" data-action="collapse">
-                <i class="ace-icon fa fa-chevron-up"></i>
-              </a>
-            </div>
-          </div>
 
-          <div class="widget-body" style="display: block;padding: 15px">
-            <table CLASS="table-striped table-responsive table-hover" width="100%">
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-            </table>
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">座机</label>
+          <div class="col-sm-5">
+            <input type="text" id="telephone" name="telephone" value="$!candidate.telephone" class="form-control"
+                   placeholder="座机"/>
           </div>
         </div>
-        <div class="widget-box ui-sortable-handle">
-          <div class="widget-header">
-            <h4 class="widget-title">项目经验</h4>
-            <div class="widget-toolbar">
-              <a href="#" data-action="fullscreen" class="orange2">
-                <i class="ace-icon fa fa-expand"></i>
-              </a>
-              <a href="#" data-action="collapse">
-                <i class="ace-icon fa fa-chevron-up"></i>
-              </a>
-            </div>
-          </div>
 
-          <div class="widget-body" style="display: block;padding: 15px">
-            <table CLASS="table-striped table-responsive table-hover" width="100%">
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-              <tr>
-                <td>2005-09 2016-10</td>
-                <td>北京京东是科学技术</td>
-                <td>软件开发工程师</td>
-                <td>做了.........</td>
-              </tr>
-            </table>
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">邮箱</label>
+          <div class="col-sm-5">
+            <input type="text" id="email" name="email" value="$!candidate.email" placeholder="邮箱" class="form-control"
+                   data-rule="邮箱:email"/>
           </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">其他联系方式</label>
+          <div class="col-sm-5">
+            <input type="text" id="otherContact" name="otherContact" value="$!candidate.otherContact"
+                   class="form-control" placeholder="其他联系方式"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">学历</label>
+          <div class="col-sm-5">
+            <select id="degreeId" class="chosen-select form-control" name="degreeId" value="$!candidate.degreeId">
+              #set($degrees = $baseDataService.getDegrees().children)
+              #foreach($degree in $degrees)
+                <option value="$degree.id">$degree.label</option>
+              #end
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">婚姻状况</label>
+          <div class="col-sm-3">
+            <select id="marital" class="chosen-select form-control" id="maritalId" name="maritalId"
+                    value="$!candidate.maritalId">
+              #set($maritals = $baseDataService.getMaritals().children)
+              #foreach($marital in $maritals)
+                <option value="$marital.id">$marital.label</option>
+              #end
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">所在地</label>
+          <div class="col-sm-5">
+            <select id="locationId" class="chosen-select form-control" name="locationId" value="$!candidate.locationId">
+              #set($cities = $baseDataService.getCities().children)
+              #foreach($city in $cities)
+                <option value="$city.id">$city.label</option>
+              #end
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">工作年限</label>
+          <div class="col-sm-2">
+            <input type="text" id="workYears" name="workYears" value="$!candidate.workYears" class="form-control"
+                   placeholder="工作年限"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">有海外经历</label>
+          <div class="col-sm-2">
+            <label>
+              <input name="overseasExperience" type="radio" class="ace" value="true" #if($param[
+                'overseasExperience'] == true) checked #end>
+              <span class="lbl">是</span>
+            </label>
+            <label>
+              <input name="overseasExperience" type="radio" class="ace" value="false" #if($param[
+                'overseasExperience'] and $param['overseasExperience'] == false) checked #end>
+              <span class="lbl">否</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">所在行业</label>
+          <div class="col-sm-5">
+            <select id="industryId" class="chosen-select form-control" name="industryId" value="$!candidate.industryId">
+              #set($industries = $baseDataService.getIndustries().children)
+              #foreach($industry in $industries)
+                <option value="$industry.id">$industry.label</option>
+              #end
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">当前公司</label>
+          <div class="col-sm-5">
+            <select id="currentCompanyId" class="chosen-select form-control" name="currentCompanyId"
+                    value="$!candidate.currentCompanyId">
+              #set($conpanies = $baseDataService.getConpanies().children)
+              #foreach($company in $conpanies)
+                <option value="$company.id">$company.label</option>
+              #end
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">当前职位</label>
+          <div class="col-sm-5">
+            <select id="currentPositionId" class="chosen-select form-control" name="currentPositionId"
+                    value="$!candidate.currentPositionId">
+              #set($positions = $baseDataService.getPositions().children)
+              #foreach($position in $positions)
+                <option value="$position.id">$position.label</option>
+              #end
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">当前年薪</label>
+          <div class="col-sm-2">
+            <input type="text" id="currentAnnualSalary" name="currentAnnualSalary"
+                   value="$!candidate.currentAnnualSalary"/>万
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">求职状态</label>
+          <div class="col-sm-5">
+            <select id="jobHuntingStatusId" class="chosen-select form-control" name="jobHuntingStatusId"
+                    value="$!candidate.jobHuntingStatusId">
+              #set($jobHuntingStatuses = $baseDataService.getJobHuntingStatuses().children)
+              #foreach($jobHuntingStatus in $jobHuntingStatuses)
+                <option value="$jobHuntingStatus.id">$jobHuntingStatus.label</option>
+              #end
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-11">
+          <h4>
+            <b>工作经历</b>
+            <a href="#worExperiencesWorkspace" data-toggle="collapse">
+              <i class="glyphicon glyphicon-collapse-down"></i>
+            </a>
+          </h4>
+          <hr/>
+        </div>
+      </div>
+      <div id="worExperiencesWorkspace" class="collapse in">
+        <div id="workExperiences">
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10" style="text-align: center">
+            <button id="addWorkExperience" class="btn btn-sm btn-primary" type="button">
+              <i class="ace-icon fa fa-plus bigger-110"></i>
+              添加工作经历
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-11">
+          <h4>
+            <b>教育经历</b>
+            <a href="#educationExperiencesWorkspace" data-toggle="collapse">
+              <i class="glyphicon glyphicon-collapse-down"></i>
+            </a>
+          </h4>
+          <hr/>
+        </div>
+      </div>
+      <div id="educationExperiencesWorkspace" class="collapse in">
+        <div id="educationExperiences">
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10" style="text-align: center">
+            <button id="addEducationExperience" class="btn btn-sm btn-primary" type="button">
+              <i class="ace-icon fa fa-plus bigger-110"></i>
+              添加教育经历
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-11">
+          <h4>
+            <b>语言能力</b>
+            <a href="#languageAbilitiesWorkspace" data-toggle="collapse">
+              <i class="glyphicon glyphicon-collapse-down"></i>
+            </a>
+          </h4>
+          <hr/>
+        </div>
+      </div>
+      <div id="languageAbilitiesWorkspace" class="collapse in">
+        <div id="languageAbilities">
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10" style="text-align: center">
+            <button id="addLanguageAbility" class="btn btn-sm btn-primary" type="button">
+              <i class="ace-icon fa fa-plus bigger-110"></i>
+              添加语言能力
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-11">
+          <h4>
+            <b>证书</b>
+            <a href="#certificateWorkspace" data-toggle="collapse">
+              <i class="glyphicon glyphicon-collapse-down"></i>
+            </a>
+          </h4>
+          <hr/>
+        </div>
+      </div>
+      <div id="certificateWorkspace" class="collapse in">
+        <div id="certificates">
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10" style="text-align: center">
+            <button id="addCertificate" class="btn btn-sm btn-primary" type="button">
+              <i class="ace-icon fa fa-plus bigger-110"></i>
+              添加证书
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-11">
+          <h4>
+            <b>项目经验</b>
+            <a href="#projectExperienceWorkspace" data-toggle="collapse">
+              <i class="glyphicon glyphicon-collapse-down"></i>
+            </a>
+          </h4>
+          <hr/>
+        </div>
+      </div>
+      <div id="projectExperienceWorkspace" class="collapse in">
+        <div id="projectExperiences">
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10" style="text-align: center">
+            <button id="addProjectExperience" class="btn btn-sm btn-primary" type="button">
+              <i class="ace-icon fa fa-plus bigger-110"></i>
+              添加项目经验
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-11">
+          <h4>
+            <b>其他</b>
+            <a href="#otherInfo" data-toggle="collapse">
+              <i class="glyphicon glyphicon-collapse-down"></i>
+            </a>
+          </h4>
+          <hr/>
+        </div>
+      </div>
+      <div id="otherInfo" class="collapse in">
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">其他信息</label>
+          <div class="col-sm-9">
+            <textarea type="text"  id="other" name="other" value="$!candidate.other" rows="5" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">备注</label>
+          <div class="col-sm-9">
+            <textarea type="text"  id="remark" name="remark" value="$!candidate.remark" rows="5" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">搜索关键字</label>
+          <div class="col-sm-9">
+            <textarea type="text"  id="keyword" name="keyword" value="$!candidate.keyword" rows="5" class="form-control"></textarea>
+          </div>
+        </div>
 
       </div>
+    </div>
+  </div>
+
+    </div>
       <div style="padding-bottom: 50px"></div>
       <div id="actionBar" style="position:fixed;_position:absolute;bottom:0;width: 100%;left:0;height:40px;background-color: lavender;text-align: center;vertical-align: middle">
         <button class="btn btn-sm btn-primary">
@@ -487,10 +522,276 @@
     </div>
   </form>
 
+<style>
+  .template{
+    display: none;
+  }
+</style>
+
+<div id="attachmentTemplate" class="template">
+  <div class="form-group">
+    <label class="col-sm-1 control-label no-padding-right">附件<sup style="color:red">*</sup></label>
+    <div class="col-sm-8">
+      <input type="file"  name="otherAttachmentFiles">
+    </div>
+    <div class="col-sm-1">
+      <button type="button" class="btn btn-sm btn-danger" onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
+        <i class="ace-icon fa fa-remove bigger-110"></i>
+        删除
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="workExperienceTemplate" class="template">
+  <div class="form-group">
+    <div class="col-sm-1 control-label no-padding-right">经历一：</div>
+    <div class="col-sm-9" style="border: 1px solid #ddd;padding-top: 15px">
+
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">时间</label>
+        <div class="col-sm-11">
+          <div class="input-daterange input-group">
+            <input type="text" class="input-sm form-control date-picker" name="startDate"   data-date-format="yyyy-mm-dd" data-date-language="zh-CN"  data-date-language="zh-CN">
+            <span class="input-group-addon">
+                    <i class="fa fa-exchange"></i>
+                  </span>
+            <input type="text" class="input-sm form-control date-picker" name="endDate"  data-date-format="yyyy-mm-dd" data-date-language="zh-CN" >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">公司</label>
+        <div class="col-sm-11">
+          <input type="text" id="company" name="company" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">职位</label>
+        <div class="col-sm-11">
+          <input type="text" id="position" name="position" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">职责描述</label>
+        <div class="col-sm-11">
+          <textarea type="text" id="responsibility" name="responsibility" value="" class="form-control" rows="5"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1" style="vertical-align: middle">
+      <button id="addWorkExperience" class="btn btn-sm btn-danger" type="button"  onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
+        <i class="ace-icon fa fa-remove bigger-110"></i>
+        删除
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+<div id="educationExperienceTemplate" class="template">
+  <div class="form-group">
+    <div class="col-sm-1 control-label no-padding-right">经历一：</div>
+    <div class="col-sm-9" style="border: 1px solid #ddd;padding-top: 15px">
+
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">学校</label>
+        <div class="col-sm-11">
+          <input type="text" id="school" name="school" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right">时间</label>
+          <div class="col-sm-11">
+            <div class="input-daterange input-group">
+              <input type="text" class="input-sm form-control date-picker" name="startDate"
+                     data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-date-language="zh-CN">
+              <span class="input-group-addon">
+                    <i class="fa fa-exchange"></i>
+                  </span>
+              <input type="text" class="input-sm form-control date-picker" name="endDate" data-date-format="yyyy-mm-dd"
+                     data-date-language="zh-CN">
+            </div>
+          </div>
+        </div>
+
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">学历</label>
+        <div class="col-sm-11">
+          <input type="text" id="degree" name="degree" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">专业</label>
+        <div class="col-sm-11">
+          <input type="text" id="major" name="major" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">类型</label>
+        <div class="col-sm-11">
+          <input type="text" id="typeId" name="typeId" value="" class="form-control"/>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1" style="vertical-align: middle">
+      <button class="btn btn-sm btn-danger" type="button"  onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
+        <i class="ace-icon fa fa-remove bigger-110"></i>
+        删除
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div id="languageAbilityTemplate" class="template">
+  <div class="form-group">
+    <div class="col-sm-1 control-label no-padding-right">经历一：</div>
+    <div class="col-sm-9" style="border: 1px solid #ddd;padding-top: 15px">
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">语种</label>
+        <div class="col-sm-11">
+          <input type="text" id="languageId" name="languageId" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">读写能力</label>
+        <div class="col-sm-11">
+          <input type="text" id="readAndWrite" name="readAndWrite" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">听说能力</label>
+        <div class="col-sm-11">
+          <input type="text" id="listenAndSpeaking" name="listenAndSpeaking" value="" class="form-control"/>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1" style="vertical-align: middle">
+      <button class="btn btn-sm btn-danger" type="button"  onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
+        <i class="ace-icon fa fa-remove bigger-110"></i>
+        删除
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div id="certificateTemplate" class="template">
+  <div class="form-group">
+    <div class="col-sm-1 control-label no-padding-right">经历一：</div>
+    <div class="col-sm-9" style="border: 1px solid #ddd;padding-top: 15px">
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">证书</label>
+        <div class="col-sm-11">
+          <input type="text" id="certificateId" name="certificateId" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">取得时间</label>
+        <div class="col-sm-11">
+          <input type="text" id="acquireDate" name="acquireDate" value="" class="form-control"/>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1" style="vertical-align: middle">
+      <button class="btn btn-sm btn-danger" type="button"  onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
+        <i class="ace-icon fa fa-remove bigger-110"></i>
+        删除
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="projectExperienceTemplate" class="template">
+  <div class="form-group">
+    <div class="col-sm-1 control-label no-padding-right">经历一：</div>
+    <div class="col-sm-9" style="border: 1px solid #ddd;padding-top: 15px">
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">名称</label>
+        <div class="col-sm-11">
+          <input type="text" id="name" name="name" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">时间</label>
+        <div class="col-sm-11">
+          <div class="input-daterange input-group">
+            <input type="text" class="input-sm form-control date-picker" name="startDate"
+                   data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-date-language="zh-CN">
+            <span class="input-group-addon">
+                    <i class="fa fa-exchange"></i>
+                  </span>
+            <input type="text" class="input-sm form-control date-picker" name="endDate" data-date-format="yyyy-mm-dd"
+                   data-date-language="zh-CN">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">IT项目</label>
+        <div class="col-sm-11">
+          <label>
+            <input name="isIt" type="radio" class="ace" value="true" #if($param['isIt'] == true) checked #end>
+            <span class="lbl">是</span>
+          </label>
+          <label>
+            <input name="isIt" type="radio" class="ace" value="false" #if($param['isIt'] and $param['isIt'] == false) checked #end>
+            <span class="lbl">否</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">软件环境</label>
+        <div class="col-sm-11">
+          <input type="text" id="softwareEnvironment" name="softwareEnvironment" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">硬件环境</label>
+        <div class="col-sm-11">
+          <input type="text" id="hardwareEnvironment" name="hardwareEnvironment" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">开发工具</label>
+        <div class="col-sm-11">
+          <input type="text" id="developTool" name="developTool" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">项目职责</label>
+        <div class="col-sm-11">
+          <input type="text" id="responsibility" name="responsibility" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">项目描述</label>
+        <div class="col-sm-11">
+          <input type="text" id="projectDescription" name="projectDescription" value="" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">项目职务</label>
+        <div class="col-sm-11">
+          <input type="text" id="position" name="position" value="" class="form-control"/>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1" style="vertical-align: middle">
+      <button class="btn btn-sm btn-danger" type="button"  onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
+        <i class="ace-icon fa fa-remove bigger-110"></i>
+        删除
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
 
 <script type="text/javascript">
   $('.chosen-select').chosen({search_contains: true});
-  $(".chosen-container").css("width", "100%");
   function renderFileInput(elementId) {
     $(elementId).ace_file_input({
       no_file:'空 ...',
@@ -506,4 +807,48 @@
     });
   }
   renderFileInput("#resumeFile");
+  $('.date-picker').datepicker({
+    autoclose: true,
+    todayHighlight: true
+  }).next().on("click", function(){
+    $('.date-picker').focus();
+  });
+
+  $("#addAttachment").on("click", function () {
+    $("#attachments").append($("#attachmentTemplate").html());
+    reCalculateAttatcmentSeq();
+  });
+
+  $("#addWorkExperience").on("click", function () {
+    $("#workExperiences").append($("#workExperienceTemplate").html());
+  });
+  $("#addWorkExperience").click();
+
+  $("#addEducationExperience").on("click", function () {
+    $("#educationExperiences").append($("#educationExperienceTemplate").html());
+  });
+  $("#addEducationExperience").click();
+
+  $("#addLanguageAbility").on("click", function () {
+    $("#languageAbilities").append($("#languageAbilityTemplate").html());
+  });
+  $("#addLanguageAbility").click();
+
+  $("#addCertificate").on("click", function () {
+    $("#certificates").append($("#certificateTemplate").html());
+  });
+  $("#addCertificate").click();
+
+  $("#addProjectExperience").on("click", function () {
+    $("#projectExperiences").append($("#projectExperienceTemplate").html());
+  });
+  $("#addProjectExperience").click();
+  function reCalculateAttatcmentSeq() {
+    var attatementSeq = 0;
+    $("#attachments").find(".form-group").each(function (index, item) {
+      $(item).find("label.control-label").text("附件" + ++attatementSeq);
+      renderFileInput($(item).find("input"));
+    });
+  }
+
 </script>

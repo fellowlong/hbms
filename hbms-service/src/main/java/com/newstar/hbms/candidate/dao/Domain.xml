@@ -42,7 +42,7 @@
     <parameter property="updateTime" jdbcType="DATE"/>
     <parameter property="updateUser" jdbcType="VARCHAR"/>
   </parameterMap>-->
-
+<!--
   <parameterMap id="WorkExperience" type="com.newstar.hbms.candidate.domain.WorkExperience">
     <parameter property="id" jdbcType="BIGINT"/>
     <parameter property="resumeId" jdbcType="BIGINT"/>
@@ -139,6 +139,6 @@
     <result property="developTool" column="developTool" jdbcType="VARCHAR"/>
     <result property="responsibility" column="responsibility" jdbcType="VARCHAR"/>
     <result property="projectDescription" column="projectDescription" jdbcType="VARCHAR"/>
-  </resultMap>
+  </resultMap>-->
 
 </mapper>

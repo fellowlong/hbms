@@ -4,7 +4,7 @@
 
 <mapper namespace="com.newstar.hbms.candidate.dao.WorkExperienceDao">
 
-  <insert id="insert" parameterMap="domain.WorkExperience">
+  <insert id="insert" parameterType="com.newstar.hbms.candidate.domain.WorkExperience">
     <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
       sequence.global
     </selectKey>
@@ -30,7 +30,7 @@
     )
   </insert>
 
-  <update id="update" parameterMap="domain.WorkExperience">
+  <update id="update" parameterType="com.newstar.hbms.candidate.domain.WorkExperience">
     update WorkExperience set
     company = #{company, jdbcType=VARCHAR},
     startDate = #{startDate, jdbcType=VARCHAR},
@@ -50,8 +50,8 @@
   </delete>
 
   <select id="findByBean"
-          parameterMap="domain.WorkExperience"
-          resultMap="domain.WorkExperience">
+          parameterType="com.newstar.hbms.candidate.domain.WorkExperience"
+          resultType="com.newstar.hbms.candidate.domain.WorkExperience">
     select
     *
     from WorkExperience
@@ -83,15 +83,15 @@
   </select>
 
   <select id="findByIds"
-          parameterMap="domain.WorkExperience"
-          resultMap="domain.WorkExperience">
+          parameterType="com.newstar.hbms.candidate.domain.WorkExperience"
+          resultType="com.newstar.hbms.candidate.domain.WorkExperience">
     select * from WorkExperience where id in
     <foreach collection="array" open="(" close=")" separator="," item="workExperienceId">
       #{workExperienceId}
     </foreach>
   </select>
 
-  <select id="findByResumeIds" resultMap="domain.WorkExperience">
+  <select id="findByResumeIds" resultType="com.newstar.hbms.candidate.domain.WorkExperience">
     select * from WorkExperience where resumeId in
     <foreach collection="array" open="(" close=")" separator="," item="resumeId">
       #{resumeId}
