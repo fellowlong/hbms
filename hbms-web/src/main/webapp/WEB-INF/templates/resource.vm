@@ -113,7 +113,7 @@
         <li><a href="/candidate/resumeSearch.do">系列教程</a></li>
         <li><a href="/candidate/preInsertOrUpdate.do">名师介绍</a></li>
         <li><a href="/candidate/preImport.do">成功案例</a></li>
-        <li><a href="/customer/workspace.do">关于我们</a></li>
+        <li><a href="/company/workspace.do">关于我们</a></li>
         <li><a href="/contact/workspace.do">关于我们</a></li>
         <li><a href="/position/workspace.do">关于我们</a></li>
         <li><a href="/project/workspace.do">关于我们</a></li>

@@ -1,6 +1,6 @@
 <div style="padding:10px;">
   <form id="searchCustomerForm" class="form-inline" role="form" action="" method="post">
-    <input type="hidden" name="id" value="$!customer.id">
+    <input type="hidden" name="id" value="$!company.id">
     <div class="form-group">
       <div class="input-group">
         <div class="input-group-addon">名称</div>
@@ -50,7 +50,7 @@
       <div class="modal-body">
 
         <form id="insertOrUpdateCustomerForm" class="form-horizontal" role="form" data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
-          <input type="hidden" value="$!customer.id" name="id">
+          <input type="hidden" value="$!company.id" name="id">
           <table class="table table-bordered table-striped" style="margin: 0px">
             <tr>
               <td align="right"><label class="control-label no-padding-right">名称</label><sup style="color:red">*</sup></td>
@@ -124,7 +124,7 @@
 <script type="text/javascript">
   $(document).ready(function () {
     $("#customerList").jqGrid({
-      url: '/customer/findByBean.do',
+      url: '/company/findByBean.do',
       mtype: "POST",
       datatype: "json",
       colNames: ['名称', '网址', '电话', '行业', '法人', '注册资金', '员工人数'],
@@ -184,7 +184,7 @@
         message: '<h3>正在加载数据</h3>',
         css: {border: '3px solid #a00'}
       });
-      loadRecord("/customer/findById.do", {id: rowIds[0]}, "#insertOrUpdateCustomerForm", function () {
+      loadRecord("/company/findById.do", {id: rowIds[0]}, "#insertOrUpdateCustomerForm", function () {
         $("#customerListDiv").unblock();
         $("#customerAddOrEditDialogTitle").text("编辑客户");
         $('#customerAddOrEditDialog').modal('show')
@@ -200,7 +200,7 @@
       bootbox.confirm("<h3>确定删除?</h3>", function (result) {
         if (result) {
           disableRecords(
-              "/customer/disableByIds.do",
+              "/company/disableByIds.do",
               {ids: rowIds},
               function () {
                 $("#searchCustomerForm").submit();
@@ -213,7 +213,7 @@
     });
 
     $("#saveOrUpdateCustomer").on("click", function () {
-      saveOrUpdateRecord("/customer/insertOrUpdate.do", "#insertOrUpdateCustomerForm", function () {
+      saveOrUpdateRecord("/company/insertOrUpdate.do", "#insertOrUpdateCustomerForm", function () {
         $("#customerAddOrEditDialog").modal("hide");
         $("#searchCustomerForm").submit();
       });

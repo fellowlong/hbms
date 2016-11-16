@@ -1,7 +1,12 @@
 package com.newstar.hbms.customer.domain;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
+import com.newstar.hbms.system.domain.User;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by fellowlong on 2014-09-22.
@@ -14,9 +19,62 @@ public class Position implements Serializable {
   private Long id;
 
   /**
+   * 所属公司
+   */
+  private Long companyId;
+
+  private Company company;
+
+  /**
+   * 客户联系人
+   */
+  private Long contactId;
+  private Contact contact;
+
+  /**
    * 名称
    */
   private String name;
+
+  /**
+   * 优先级
+   */
+  private Long priorityId;
+
+  /**
+   * 行业
+   */
+  private Long industryId;
+
+  /**
+   * 职能
+   */
+  private Long functionId;
+
+  /**
+   * 城市
+   */
+  private Long cityId;
+
+  /**
+   * 名企背景
+   */
+  private Long fameCompanyBackgroundId;
+
+  /**
+   * 国籍
+   */
+  private Long nationalityId;
+
+  /**
+   * 学历
+   */
+  private Long degreeId;
+
+  /**
+   * 语言
+   */
+  private Long languageId;
 
   /**
    * 年龄要求
@@ -25,30 +83,21 @@ public class Position implements Serializable {
   private Integer maxAge;
 
   /**
-   * 性别要求
-   */
-  private Integer sex;
-
-  /**
    * 工作年限要求：
    */
   private Integer minWorkYears;
   private Integer maxWorkYears;
 
   /**
-   * 学历要求
+   * 年薪范围
    */
-  private String educationLevel;
+  private Double minAnnualSalary;
+  private Double maxAnnualSalary;
 
   /**
-   * 行业要求
+   * 性别要求
    */
-  private String industry;
-
-  /**
-   * 外语要求
-   */
-  private String foreignLanguage;
+  private Integer sex;
 
   /**
    * 招聘地址
@@ -56,19 +105,45 @@ public class Position implements Serializable {
   private String address;
 
   /**
+   * 标签
+   */
+  private List<TreeNode> tags = new ArrayList<TreeNode>();
+
+  /**
    * 说明
    */
   private String description;
 
   /**
+   * 职位亮点及优势
+   */
+  private String brightAndAdvantage;
+
+  /**
+   * 流程及领导介绍
+   */
+  private String processAndLeaderIntro;
+
+  /**
+   * 薪资结构
+   */
+  private String salaryStructure;
+
+  /**
+   * 寻访方向
+   */
+  private String searchDirection;
+
+  /**
+   * BD
+   */
+  private Long businessDeveloperId;
+  private User businessDeveloper;
+
+  /**
    * 备注
    */
   private String remark;
-
-  /**
-   * 所属客户编号
-   */
-  private Long customerId;
 
   /**
    * 是否有效
@@ -94,167 +169,5 @@ public class Position implements Serializable {
    * 修改人
    */
   private String updateUser;
-
-  public Customer customer;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Integer getMinAge() {
-    return minAge;
-  }
-
-  public void setMinAge(Integer minAge) {
-    this.minAge = minAge;
-  }
-
-  public Integer getMaxAge() {
-    return maxAge;
-  }
-
-  public void setMaxAge(Integer maxAge) {
-    this.maxAge = maxAge;
-  }
-
-  public Integer getSex() {
-    return sex;
-  }
-
-  public void setSex(Integer sex) {
-    this.sex = sex;
-  }
-
-  public Integer getMinWorkYears() {
-    return minWorkYears;
-  }
-
-  public void setMinWorkYears(Integer minWorkYears) {
-    this.minWorkYears = minWorkYears;
-  }
-
-  public Integer getMaxWorkYears() {
-    return maxWorkYears;
-  }
-
-  public void setMaxWorkYears(Integer maxWorkYears) {
-    this.maxWorkYears = maxWorkYears;
-  }
-
-  public String getEducationLevel() {
-    return educationLevel;
-  }
-
-  public void setEducationLevel(String educationLevel) {
-    this.educationLevel = educationLevel;
-  }
-
-  public String getIndustry() {
-    return industry;
-  }
-
-  public void setIndustry(String industry) {
-    this.industry = industry;
-  }
-
-  public String getForeignLanguage() {
-    return foreignLanguage;
-  }
-
-  public void setForeignLanguage(String foreignLanguage) {
-    this.foreignLanguage = foreignLanguage;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getRemark() {
-    return remark;
-  }
-
-  public void setRemark(String remark) {
-    this.remark = remark;
-  }
-
-  public Long getCustomerId() {
-    return customerId;
-  }
-
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
-  }
-
-  public Boolean getYn() {
-    return yn;
-  }
-
-  public void setYn(Boolean yn) {
-    this.yn = yn;
-  }
-
-  public Date getCreateTime() {
-    return createTime;
-  }
-
-  public void setCreateTime(Date createTime) {
-    this.createTime = createTime;
-  }
-
-  public String getCreateUser() {
-    return createUser;
-  }
-
-  public void setCreateUser(String createUser) {
-    this.createUser = createUser;
-  }
-
-  public Date getUpdateTime() {
-    return updateTime;
-  }
-
-  public void setUpdateTime(Date updateTime) {
-    this.updateTime = updateTime;
-  }
-
-  public String getUpdateUser() {
-    return updateUser;
-  }
-
-  public void setUpdateUser(String updateUser) {
-    this.updateUser = updateUser;
-  }
-
-  public Customer getCustomer() {
-    return customer;
-  }
-
-  public void setCustomer(Customer customer) {
-    this.customer = customer;
-  }
 
 }

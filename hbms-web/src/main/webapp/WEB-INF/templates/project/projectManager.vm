@@ -8,8 +8,8 @@
         <div class="input-group-addon">职位</div>
         <input class="form-control" name="project.name" #if($param['project.name']) value="$param['project.name']" #end>
         <div class="input-group-addon">公司</div>
-        <input class="form-control" name="customer.name" #if($param['customer.name'])
-               value="$param['customer.name']" #end>
+        <input class="form-control" name="company.name" #if($param['company.name'])
+               value="$param['company.name']" #end>
         <div class="input-group-addon">状态</div>
         <input class="form-control" name="status" #if($param['status']) value="$param['status']" #end>
         <span class="input-group-btn">
@@ -62,8 +62,8 @@
                 <label class="col-xs-2 control-label no-padding-right">客户</label>
                 <div class="col-xs-10">
                   <select id="customerSelect" class="chosen-select form-control" name="customerId">
-                    #foreach($customer in $customers)
-                      <option value="$customer.id">$customer.name</option>
+                    #foreach($company in $companies)
+                      <option value="$company.id">$company.name</option>
                     #end
                   </select>
                 </div>
@@ -73,8 +73,8 @@
                 <label class="col-xs-2 control-label no-padding-right">职位</label>
                 <div class="col-xs-10">
                   <select id="positionSelect" class="chosen-select form-control" name="positionId" data-rule="职位:required;positionId">
-                    #foreach($customer in $customers)
-                      <option value="$customer.id">$customer.name</option>
+                    #foreach($company in $companies)
+                      <option value="$company.id">$company.name</option>
                     #end
                   </select>
                 </div>
@@ -84,8 +84,8 @@
                 <label class="col-sm-2 control-label no-padding-right">联系人</label>
                 <div class="col-sm-10">
                   <select id="contactSelect" class="chosen-select form-control" name="contactId" data-rule="联系人:required;contactId">
-                    #foreach($customer in $customers)
-                      <option value="$customer.id">$customer.name</option>
+                    #foreach($company in $companies)
+                      <option value="$company.id">$company.name</option>
                     #end
                   </select>
                 </div>
@@ -207,7 +207,7 @@
       colModel: [
         {name: 'name', width: 150},
         {name: 'position.name', width: 150},
-        {name: 'customer.name', width: 150},
+        {name: 'company.name', width: 150},
         {
           name: 'startEndDate', width: 150, formatter: function (cell, options, row) {
           return row.startDate + "至" + row.endDate
@@ -238,7 +238,7 @@
       $("#projectList").jqGrid('setGridParam', {
         postData: {
           name: $("#searchProjectForm input[name='name']").val(),
-          "customer.name": $("#searchProjectForm input[name='customer.name']").val(),
+          "company.name": $("#searchProjectForm input[name='company.name']").val(),
           industry: $("#searchProjectForm input[name='industry']").val()
         },
         page: 1

@@ -1,7 +1,7 @@
 package com.newstar.hbms.customer.web.controller;
 
 import com.newstar.hbms.customer.domain.Position;
-import com.newstar.hbms.customer.domain.Customer;
+import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.service.PositionService;
 import com.newstar.hbms.customer.service.CustomerService;
 import com.newstar.hbms.mvc.JsonResult;
@@ -39,7 +39,7 @@ public class PositionController extends MultiActionController {
   }
 
   public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    PagingResult<Customer> customerPagingResult = customerService.findByBean(new Customer(), new PageRange(1, 100));
+    PagingResult<Company> customerPagingResult = customerService.findByBean(new Company(), new PageRange(1, 100));
     return new ModelAndView("/customer/positionManager", "customers", customerPagingResult.getRecords());
   }
 

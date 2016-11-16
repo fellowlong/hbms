@@ -6,7 +6,7 @@
         <div class="input-group-addon">名称</div>
         <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end>
         <div class="input-group-addon">公司</div>
-        <input class="form-control" name="customer.name" #if($param['customer.name']) value="$param['customer.name']" #end>
+        <input class="form-control" name="company.name" #if($param['company.name']) value="$param['company.name']" #end>
         <div class="input-group-addon">行业</div>
         <input class="form-control" name="industry" #if($param['mobilePhone']) value="$param['mobilePhone']" #end>
         <span class="input-group-btn">
@@ -55,12 +55,12 @@
               <td align="right"><label class="control-label no-padding-right">客户</label></td>
               <td colspan="3">
                 <div id="customerOfEditPosition">
-                  <span type="formFieldValue" name="customer.name"></span>
+                  <span type="formFieldValue" name="company.name"></span>
                 </div>
                 <div id="customerOfAddPosition">
                   <select class="chosen-select form-control" name="customerId" data-rule="客户:required;customerId">
-                    #foreach($customer in $customers)
-                    <option value="$customer.id">$customer.name</option>
+                    #foreach($company in $companies)
+                    <option value="$company.id">$company.name</option>
                     #end
                   </select>
                 </div>
@@ -144,7 +144,7 @@
       colNames: ['名称', '公司', '年龄要求', '性别要求', '工作年限要求', '学历要求', '行业要求','外语要求',"地址"],
       colModel: [
         {name: 'name', width: 150},
-        {name: 'customer.name', width: 150},
+        {name: 'company.name', width: 150},
         {name: 'ageRequire', width: 150, formatter: function(cell, options, row){return row.minAge + "- " + row.maxAge}},
         {name: 'sex', width: 150, formatter: function(cell, options, row){return cell == 0 ? "不限" : (cell == 1 ? "男" : (cell == 2 ? "女" : ""))}},
         {name: 'workYearsRequire', width: 150, formatter: function(cell, options, row){return row.minWorkYears + "- " + row.maxWorkYears}},
@@ -172,7 +172,7 @@
       $("#positionList").jqGrid('setGridParam', {
         postData: {
           name: $("#searchPositionForm input[name='name']").val(),
-          "customer.name": $("#searchPositionForm input[name='customer.name']").val(),
+          "company.name": $("#searchPositionForm input[name='company.name']").val(),
           industry: $("#searchPositionForm input[name='industry']").val()
         },
         page: 1

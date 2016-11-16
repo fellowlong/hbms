@@ -1,7 +1,11 @@
 package com.newstar.hbms.customer.domain;
 
+import com.newstar.hbms.common.domain.Comment;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 联系人
@@ -16,14 +20,19 @@ public class Contact implements Serializable {
   private Long id;
 
   /**
+   * 重要程度
+   */
+  private Long importantLevelId;
+
+  /**
+   * 公司编号，外键
+   */
+  private Long companyId;
+
+  /**
    * 姓名
    */
   private String name;
-
-  /**
-   * 客户编号，外键
-   */
-  private Long customerId;
 
   /**
    * 英文姓名
@@ -31,9 +40,9 @@ public class Contact implements Serializable {
   private String englishName;
 
   /**
-   * 生日
+   * 性别
    */
-  private Date birthday;
+  private Long sexId;
 
   /**
    * 所在部门
@@ -66,9 +75,24 @@ public class Contact implements Serializable {
   private String email;
 
   /**
-   * 是否关键
+   * 其他联系方式
    */
-  private Boolean isKey;
+  private String otherContact;
+
+  /**
+   * 生日
+   */
+  private Date birthday;
+
+  /**
+   * 维护人
+   */
+  private Long maintainer;
+
+  /**
+   * 批注
+   */
+  private List<Comment> comments = new ArrayList<Comment>();
 
   /**
    * 备注
@@ -102,7 +126,7 @@ public class Contact implements Serializable {
    */
   private String updateUser;
 
-  private Customer customer;
+  private Company company;
 
   public Long getId() {
     return id;
@@ -110,6 +134,22 @@ public class Contact implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Long getImportantLevelId() {
+    return importantLevelId;
+  }
+
+  public void setImportantLevelId(Long importantLevelId) {
+    this.importantLevelId = importantLevelId;
+  }
+
+  public Long getCompanyId() {
+    return companyId;
+  }
+
+  public void setCompanyId(Long companyId) {
+    this.companyId = companyId;
   }
 
   public String getName() {
@@ -120,14 +160,6 @@ public class Contact implements Serializable {
     this.name = name;
   }
 
-  public Long getCustomerId() {
-    return customerId;
-  }
-
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
-  }
-
   public String getEnglishName() {
     return englishName;
   }
@@ -136,12 +168,12 @@ public class Contact implements Serializable {
     this.englishName = englishName;
   }
 
-  public Date getBirthday() {
-    return birthday;
+  public Long getSexId() {
+    return sexId;
   }
 
-  public void setBirthday(Date birthday) {
-    this.birthday = birthday;
+  public void setSexId(Long sexId) {
+    this.sexId = sexId;
   }
 
   public String getDepartment() {
@@ -192,12 +224,36 @@ public class Contact implements Serializable {
     this.email = email;
   }
 
-  public Boolean getIsKey() {
-    return isKey;
+  public String getOtherContact() {
+    return otherContact;
   }
 
-  public void setIsKey(Boolean isKey) {
-    this.isKey = isKey;
+  public void setOtherContact(String otherContact) {
+    this.otherContact = otherContact;
+  }
+
+  public Date getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+  public Long getMaintainer() {
+    return maintainer;
+  }
+
+  public void setMaintainer(Long maintainer) {
+    this.maintainer = maintainer;
+  }
+
+  public List<Comment> getComments() {
+    return comments;
+  }
+
+  public void setComments(List<Comment> comments) {
+    this.comments = comments;
   }
 
   public String getRemark() {
@@ -248,11 +304,11 @@ public class Contact implements Serializable {
     this.updateUser = updateUser;
   }
 
-  public Customer getCustomer() {
-    return customer;
+  public Company getCompany() {
+    return company;
   }
 
-  public void setCustomer(Customer customer) {
-    this.customer = customer;
+  public void setCompany(Company company) {
+    this.company = company;
   }
 }

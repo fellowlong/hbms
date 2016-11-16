@@ -1,19 +1,23 @@
 package com.newstar.hbms.customer.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 客户
  *
  * Created by fellowlong on 14-6-4.
  */
-public class Customer implements Serializable {
+public class Company implements Serializable {
 
   /**
    * 主键
    */
   private Long id;
+
+  private Long companyTypeId;
 
   /**
    * 名称
@@ -21,9 +25,21 @@ public class Customer implements Serializable {
   private String name;
 
   /**
-   * web站点
+   * 公司全称
    */
-  private String webSite;
+  private String fullName;
+
+  /**
+   * 所属行业，可以选三个
+   */
+  private Long industryId1;
+  private Long industryId2;
+  private Long industryId3;
+
+  /**
+   * 所在城市
+   */
+  private Long cityId;
 
   /**
    * 电话
@@ -31,14 +47,9 @@ public class Customer implements Serializable {
   private String phone;
 
   /**
-   * 传真
+   * web站点
    */
-  private String fax;
-
-  /**
-   * 地区
-   */
-  private String region;
+  private String webSite;
 
   /**
    * 地址
@@ -46,19 +57,29 @@ public class Customer implements Serializable {
   private String address;
 
   /**
-   * 邮编
+   * 邮箱
    */
-  private String postCode;
+  private String email;
+
+  /**
+   * 传真
+   */
+  private String fax;
+
+  /**
+   * 维护人
+   */
+  private Long maintainer;
+
+  /**
+   * 所属文件夹
+   */
+  private Long folderId;
 
   /**
    * 员工数量
    */
   private Integer staffCount;
-
-  /**
-   * 所属行业
-   */
-  private String industry;
 
   /**
    * 企业性质
@@ -86,14 +107,28 @@ public class Customer implements Serializable {
   private String propertyRightStructure;
 
   /**
-   * 企业备注
+   * 企业简介
    */
-  private String remark;
-
+  private String intro;
   /**
    * 关键字
    */
   private String keyword;
+
+  /**
+   * 客户开发者
+   */
+  private Long businessDeveloper;
+
+  /**
+   * 客户联系人
+   */
+  private List<Contact> contacts = new ArrayList<Contact>();
+
+  /**
+   * 企业备注
+   */
+  private String remark;
 
   /**
    * 是否有效
@@ -130,6 +165,14 @@ public class Customer implements Serializable {
     this.id = id;
   }
 
+  public Long getCompanyTypeId() {
+    return companyTypeId;
+  }
+
+  public void setCompanyTypeId(Long companyTypeId) {
+    this.companyTypeId = companyTypeId;
+  }
+
   public String getName() {
     return name;
   }
@@ -138,12 +181,44 @@ public class Customer implements Serializable {
     this.name = name;
   }
 
-  public String getWebSite() {
-    return webSite;
+  public String getFullName() {
+    return fullName;
   }
 
-  public void setWebSite(String webSite) {
-    this.webSite = webSite;
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
+
+  public Long getIndustryId1() {
+    return industryId1;
+  }
+
+  public void setIndustryId1(Long industryId1) {
+    this.industryId1 = industryId1;
+  }
+
+  public Long getIndustryId2() {
+    return industryId2;
+  }
+
+  public void setIndustryId2(Long industryId2) {
+    this.industryId2 = industryId2;
+  }
+
+  public Long getIndustryId3() {
+    return industryId3;
+  }
+
+  public void setIndustryId3(Long industryId3) {
+    this.industryId3 = industryId3;
+  }
+
+  public Long getCityId() {
+    return cityId;
+  }
+
+  public void setCityId(Long cityId) {
+    this.cityId = cityId;
   }
 
   public String getPhone() {
@@ -154,20 +229,12 @@ public class Customer implements Serializable {
     this.phone = phone;
   }
 
-  public String getFax() {
-    return fax;
+  public String getWebSite() {
+    return webSite;
   }
 
-  public void setFax(String fax) {
-    this.fax = fax;
-  }
-
-  public String getRegion() {
-    return region;
-  }
-
-  public void setRegion(String region) {
-    this.region = region;
+  public void setWebSite(String webSite) {
+    this.webSite = webSite;
   }
 
   public String getAddress() {
@@ -178,12 +245,36 @@ public class Customer implements Serializable {
     this.address = address;
   }
 
-  public String getPostCode() {
-    return postCode;
+  public String getEmail() {
+    return email;
   }
 
-  public void setPostCode(String postCode) {
-    this.postCode = postCode;
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getFax() {
+    return fax;
+  }
+
+  public void setFax(String fax) {
+    this.fax = fax;
+  }
+
+  public Long getMaintainer() {
+    return maintainer;
+  }
+
+  public void setMaintainer(Long maintainer) {
+    this.maintainer = maintainer;
+  }
+
+  public Long getFolderId() {
+    return folderId;
+  }
+
+  public void setFolderId(Long folderId) {
+    this.folderId = folderId;
   }
 
   public Integer getStaffCount() {
@@ -192,14 +283,6 @@ public class Customer implements Serializable {
 
   public void setStaffCount(Integer staffCount) {
     this.staffCount = staffCount;
-  }
-
-  public String getIndustry() {
-    return industry;
-  }
-
-  public void setIndustry(String industry) {
-    this.industry = industry;
   }
 
   public String getNature() {
@@ -242,6 +325,14 @@ public class Customer implements Serializable {
     this.propertyRightStructure = propertyRightStructure;
   }
 
+  public String getIntro() {
+    return intro;
+  }
+
+  public void setIntro(String intro) {
+    this.intro = intro;
+  }
+
   public String getRemark() {
     return remark;
   }
@@ -256,6 +347,14 @@ public class Customer implements Serializable {
 
   public void setKeyword(String keyword) {
     this.keyword = keyword;
+  }
+
+  public Long getBusinessDeveloper() {
+    return businessDeveloper;
+  }
+
+  public void setBusinessDeveloper(Long businessDeveloper) {
+    this.businessDeveloper = businessDeveloper;
   }
 
   public Boolean getYn() {

@@ -274,7 +274,7 @@
           }
         },
         {
-          label: 'Customer ID',
+          label: 'Company ID',
           name: 'CustomerID',
           width: 150,
           editable: true,

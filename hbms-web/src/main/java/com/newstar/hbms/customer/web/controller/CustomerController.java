@@ -1,6 +1,6 @@
 package com.newstar.hbms.customer.web.controller;
 
-import com.newstar.hbms.customer.domain.Customer;
+import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.service.CustomerService;
 import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.utils.ExceptionUtils;
@@ -33,10 +33,10 @@ public class CustomerController extends MultiActionController {
     return new ModelAndView("/customer/customerManager");
   }
 
-  public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Customer customer) throws Exception  {
+  public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Company company) throws Exception  {
     JsonResult jsonResult = new JsonResult();
     try {
-      int resultCount = customerService.insertOrUpdate(customer);
+      int resultCount = customerService.insertOrUpdate(company);
       jsonResult.setSuccess(true);
       jsonResult.setData(resultCount);
     } catch (Throwable t) {
@@ -69,14 +69,14 @@ public class CustomerController extends MultiActionController {
     WebUtils.writeWithJson(response, jsonResult);
   }
 
-  public void findById(HttpServletRequest request, HttpServletResponse response, Customer customer)
+  public void findById(HttpServletRequest request, HttpServletResponse response, Company company)
           throws Exception {
     JsonResult jsonResult = new JsonResult();
     try {
-      List<Customer> customers = customerService.findByIds(new Long[]{customer.getId()});
-      if (customers != null && customers.size() == 1) {
+      List<Company> companies = customerService.findByIds(new Long[]{company.getId()});
+      if (companies != null && companies.size() == 1) {
         jsonResult.setSuccess(true);
-        jsonResult.setData(customers.get(0));
+        jsonResult.setData(companies.get(0));
       } else {
         jsonResult.setSuccess(false);
         jsonResult.setErrorMessage("没有找到客户");
@@ -88,7 +88,7 @@ public class CustomerController extends MultiActionController {
     WebUtils.writeWithJson(response, jsonResult);
   }
 
-  public void findByBean(HttpServletRequest request, HttpServletResponse response, Customer customer)
+  public void findByBean(HttpServletRequest request, HttpServletResponse response, Company company)
           throws Exception {
     String pageSize = request.getParameter("rows");
     String pageNum = request.getParameter("page");
@@ -99,7 +99,7 @@ public class CustomerController extends MultiActionController {
     if (pageNum != null) {
       pageRange.setPageNum(Integer.parseInt(pageNum));
     }
-    PagingResult<Customer> customerResult = customerService.findByBean(customer, pageRange);
+    PagingResult<Company> customerResult = customerService.findByBean(company, pageRange);
     Map<String, Object> jsonMap = new HashMap();
     jsonMap.put("page", pageNum);
     jsonMap.put("total ", customerResult.getPageTotal());

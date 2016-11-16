@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.newstar.hbms.customer.dao.CustomerDao">
+<mapper namespace="com.newstar.hbms.company.dao.CustomerDao">
 
-  <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Customer">
+  <insert id="insert" parameterType="com.newstar.hbms.company.domain.Company">
     insert into Customer(
       name,
       webSite,
@@ -52,7 +52,7 @@
     )
   </insert>
 
-  <update id="update" parameterType="com.newstar.hbms.customer.domain.Customer">
+  <update id="update" parameterType="com.newstar.hbms.company.domain.Company">
     update Customer set
       name = #{name, jdbcType=VARCHAR},
       webSite = #{webSite, jdbcType=VARCHAR},
@@ -89,8 +89,8 @@
     </foreach>
   </update>
   
-  <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Customer"
-          resultType="com.newstar.hbms.customer.domain.Customer">
+  <select id="findByBean" parameterType="com.newstar.hbms.company.domain.Company"
+          resultType="com.newstar.hbms.company.domain.Company">
     select * from Customer c where yn = 1
     <if test="id != null">
       and c.id = #{id}
@@ -107,8 +107,8 @@
     order by createTime desc
   </select>
 
-  <select id="findByIds" parameterType="com.newstar.hbms.customer.domain.Customer"
-          resultType="com.newstar.hbms.customer.domain.Customer">
+  <select id="findByIds" parameterType="com.newstar.hbms.company.domain.Company"
+          resultType="com.newstar.hbms.company.domain.Company">
     select * from Customer where id in
     <foreach collection="array" open="(" close=")" separator="," item="customerId">
       #{customerId}
