@@ -27,43 +27,49 @@
         data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
     <input type="hidden" name="id" value="$!candidate.id">
     <div class="row" style="margin:0;padding-left: 50px">
-      <div class="form-group">
-        <div class="col-sm-2" style="text-align: right">
-              <a class="navbar-brand" href="#" style="color: black;">新增人才
-                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-              </a>
-          </div>
-        <div class="col-sm-7">
-          <nav class="navbar navbar-default" role="navigation" style="background-color: white;color:  !important;">
-            <div class="container-fluid">
-                <ul id="candidateEditNavbar" class="nav navbar-nav" style="color: #1a1a1a !important;">
-                  <li class="active">
-                    <a workspace="#candidateWorkspace" href="#">
-                      编辑人才信息
-                    </a>
-                  </li>
-                  <li>
-                    <a workspace="#consultantEstimate" href="#">编辑人才信息</a>
-                  </li>
-                </ul>
-              <script type="text/javascript">
-                $("#candidateEditNavbar li").on("click", function () {
-                  $(this).addClass("active");
-                  $($(this).find("a").attr("workspace")).css("display", "block");
-                  $($(this).find("a").attr("workspace")).css("visibility", "visible");
-                  $(this).siblings().each(function () {
-                    $(this).removeClass("active");
-                    $($(this).find("a").attr("workspace")).css("display", "none");
-                    $($(this).find("a").attr("workspace")).css("visibility", "hidden");
-                  });
-                });
-              </script>
-            </div>
-          </nav>
-        </div>
 
-      </div>
-      <div id="candidateWorkspace" class="form-group">
+
+        <div class="form-group">
+
+            <div class="col-sm-1">
+                <a class="navbar-brand" href="#" style="color: black;">新增人才
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="col-sm-8">
+                <div class="tabbable">
+                    <ul id="candidateEditNavbar" class="nav nav-tabs" id="myTab">
+                        <li class="active">
+                            <a data-toggle="tab" workspace="candidateWorkspace" href="#" style="width: 200px;text-align: center">
+                                <i class="green ace-icon fa fa-edit bigger-120"></i>
+                                编辑人才信息
+                            </a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" workspace="consultantEstimate" href="#" style="width: 200px;text-align: center">
+                                <i class="green ace-icon fa fa-edit bigger-120"></i>
+                                编辑顾问评价
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <script type="text/javascript">
+                    $("#candidateEditNavbar li").on("click", function () {
+                        $(this).addClass("active");
+                        alert($(this).find("a").attr("workspace"));
+                        $($(this).find("a").attr("workspace")).css("display", "block");
+                        $($(this).find("a").attr("workspace")).css("visibility", "visible");
+                        $(this).siblings().each(function () {
+                            $(this).removeClass("active");
+                            $($(this).find("a").attr("workspace")).css("display", "none");
+                            $($(this).find("a").attr("workspace")).css("visibility", "hidden");
+                        });
+                    });
+                </script
+              </div>
+            </div>
+
+      <div id="candidateWorkspace" class="form-group" style="padding-top: 50px">
         <div class="col-sm-1"></div>
         <div class="col-sm-8">
 
