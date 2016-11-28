@@ -4,47 +4,39 @@
 
 <mapper namespace="com.newstar.hbms.customer.dao.PositionDao">
 
-  <resultMap id="Customer" type="com.newstar.hbms.customer.domain.Company">
-    <id column="id" property="id" />
-    <result column="name" property="name"/>
-  </resultMap>
+  <resultMap id="Company" type="com.newstar.hbms.customer.domain.Company" autoMapping="true"/>
   <resultMap id="Position" type="com.newstar.hbms.customer.domain.Position">
-    <id column="id" property="id" />
-    <result column="name" property="name"/>
-    <result column="minAge" property="minAge"/>
-    <result column="maxAge" property="maxAge"/>
-    <result column="sex" property="sex"/>
-    <result column="minWorkYears" property="minWorkYears"/>
-    <result column="maxWorkYears" property="maxWorkYears"/>
-    <result column="educationLevel" property="educationLevel"/>
-    <result column="industry" property="industry"/>
-    <result column="foreignLanguage" property="foreignLanguage"/>
-    <result column="address" property="address"/>
-    <result column="description" property="description"/>
-    <result column="customerId" property="customerId"/>
-    <result column="remark" property="remark"/>
-    <result column="yn" property="yn"/>
-    <result column="updateUser" property="updateUser"/>
-    <result column="updateTime" property="updateTime"/>
-    <result column="createUser" property="createUser"/>
-    <result column="createTime" property="createTime"/>
-    <association property="company" columnPrefix="CUS_" resultMap="Customer"/>
+    <association property="company" columnPrefix="COM_" resultMap="Company"/>
   </resultMap>
 
   <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Position">
     insert into `Position`(
+      id,
+      companyId,
+      contactId,
       name,
+      priorityId,
+      industryId,
+      functionId,
+      cityId,
+      fameCompanyBackgroundId,
+      nationalityId,
+      degreeId,
+      languageId,
       minAge,
       maxAge,
-      sex,
       minWorkYears,
       maxWorkYears,
-      educationLevel,
-      industry,
-      foreignLanguage,
+      minAnnualSalary,
+      maxAnnualSalary,
+      sexId,
       address,
       description,
-      customerId,
+      brightAndAdvantage,
+      processAndLeaderIntro,
+      salaryStructure,
+      searchDirection,
+      businessDeveloperId,
       remark,
       yn,
       updateUser,
@@ -52,41 +44,68 @@
       createUser,
       createTime
     ) values (
-    #{name, jdbcType=VARCHAR},
-    #{minAge, jdbcType=INTEGER},
-    #{maxAge, jdbcType=INTEGER},
-    #{sex, jdbcType=INTEGER},
-    #{minWorkYears, jdbcType=INTEGER},
-    #{maxWorkYears, jdbcType=INTEGER},
-    #{educationLevel, jdbcType=VARCHAR},
-    #{industry, jdbcType=VARCHAR},
-    #{foreignLanguage, jdbcType=VARCHAR},
-    #{address, jdbcType=VARCHAR},
-    #{description, jdbcType=VARCHAR},
-    #{customerId, jdbcType=VARCHAR},
-    #{remark, jdbcType=VARCHAR},
-    1,
-    #{updateUser, jdbcType=VARCHAR},
-    now(),
-    #{createUser, jdbcType=VARCHAR},
-    now()
+      #{id, jdbcType=BIGINT},
+      #{companyId, jdbcType=BIGINT},
+      #{contactId, jdbcType=BIGINT},
+      #{name, jdbcType=VARCHAR},
+      #{priorityId, jdbcType=BIGINT},
+      #{industryId, jdbcType=BIGINT},
+      #{functionId, jdbcType=BIGINT},
+      #{cityId, jdbcType=BIGINT},
+      #{fameCompanyBackgroundId, jdbcType=BIGINT},
+      #{nationalityId, jdbcType=BIGINT},
+      #{degreeId, jdbcType=BIGINT},
+      #{languageId, jdbcType=BIGINT},
+      #{minAge, jdbcType=INTEGER},
+      #{maxAge, jdbcType=INTEGER},
+      #{minWorkYears, jdbcType=INTEGER},
+      #{maxWorkYears, jdbcType=INTEGER},
+      #{minAnnualSalary, jdbcType=DOUBLE},
+      #{maxAnnualSalary, jdbcType=DOUBLE},
+      #{sexId, jdbcType=BIGINT},
+      #{address, jdbcType=VARCHAR},
+      #{description, jdbcType=VARCHAR},
+      #{brightAndAdvantage, jdbcType=VARCHAR},
+      #{processAndLeaderIntro, jdbcType=VARCHAR},
+      #{salaryStructure, jdbcType=VARCHAR},
+      #{searchDirection, jdbcType=VARCHAR},
+      #{businessDeveloperId, jdbcType=BIGINT},
+      #{remark, jdbcType=VARCHAR},
+      1,
+      #{updateUser, jdbcType=VARCHAR},
+      now(),
+      #{createUser, jdbcType=VARCHAR},
+      now()
     )
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.customer.domain.Position">
-    update Position set
+    update `Position` set
+      companyId = #{companyId, jdbcType=BIGINT},
+      contactId = #{contactId, jdbcType=BIGINT},
       name = #{name, jdbcType=VARCHAR},
+      priorityId = #{priorityId, jdbcType=BIGINT},
+      industryId = #{industryId, jdbcType=BIGINT},
+      functionId = #{functionId, jdbcType=BIGINT},
+      cityId = #{cityId, jdbcType=BIGINT},
+      fameCompanyBackgroundId = #{fameCompanyBackgroundId, jdbcType=BIGINT},
+      nationalityId = #{nationalityId, jdbcType=BIGINT},
+      degreeId = #{degreeId, jdbcType=BIGINT},
+      languageId = #{languageId, jdbcType=BIGINT},
       minAge = #{minAge, jdbcType=INTEGER},
       maxAge = #{maxAge, jdbcType=INTEGER},
-      sex = #{sex, jdbcType=INTEGER},
       minWorkYears = #{minWorkYears, jdbcType=INTEGER},
       maxWorkYears = #{maxWorkYears, jdbcType=INTEGER},
-      educationLevel = #{educationLevel, jdbcType=VARCHAR},
-      industry = #{industry, jdbcType=VARCHAR},
-      foreignLanguage = #{foreignLanguage, jdbcType=VARCHAR},
+      minAnnualSalary = #{minAnnualSalary, jdbcType=DOUBLE},
+      maxAnnualSalary = #{maxAnnualSalary, jdbcType=DOUBLE},
+      sexId = #{sexId, jdbcType=BIGINT},
       address = #{address, jdbcType=VARCHAR},
       description = #{description, jdbcType=VARCHAR},
-      customerId = #{customerId, jdbcType=VARCHAR},
+      brightAndAdvantage = #{brightAndAdvantage, jdbcType=VARCHAR},
+      processAndLeaderIntro = #{processAndLeaderIntro, jdbcType=VARCHAR},
+      salaryStructure = #{salaryStructure, jdbcType=VARCHAR},
+      searchDirection = #{searchDirection, jdbcType=VARCHAR},
+      businessDeveloperId = #{businessDeveloperId, jdbcType=BIGINT},
       remark = #{remark, jdbcType=VARCHAR},
       updateTime = now()
     where
@@ -95,21 +114,21 @@
 
   <update id="disable">
     update Position set yn = 0, updateTime = now() where id in
-    <foreach collection="array" open="(" close=")" separator="," item="customerId">
-      #{customerId}
+    <foreach collection="array" open="(" close=")" separator="," item="positionId">
+      #{positionId}
     </foreach>
   </update>
 
   <update id="enable">
     update Position set yn = 1 , updateTime = now() where id in
-    <foreach collection="array" open="(" close=")" separator="," item="customerId">
-      #{customerId}
+    <foreach collection="array" open="(" close=")" separator="," item="positionId">
+      #{positionId}
     </foreach>
   </update>
 
   <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Position"
           resultMap="Position">
-    select p.*,cu.id as CUS_id,cu.name CUS_name from Position p, Customer cu where p.yn = 1 and cu.yn = 1 and p.customerId = cu.id
+    select p.*,com.id as COM_id, com.name COM_name from Position p, Company com where p.yn = 1 and com.yn = 1 and p.companyId = com.id
     <if test="id != null">
       and p.id = #{id}
     </if>
@@ -122,8 +141,8 @@
     <if test="maxAge != null">
       and #{maxAge} >= p.maxAge
     </if>
-    <if test="sex != null">
-      and p.sex = #{sex}
+    <if test="sexId != null">
+      and p.sexId = #{sexId}
     </if>
     <if test="minWorkYears != null">
       and p.minWorkYears >= #{minWorkYears}
@@ -131,32 +150,26 @@
     <if test="maxWorkYears != null">
       and #{maxWorkYears} >= p.maxWorkYears
     </if>
-    <if test="educationLevel != null and !educationLevel.isEmpty()">
-      and p.educationLevel like "%"#{educationLevel}"%"
-    </if>
-    <if test="industry != null and !industry.isEmpty()">
-      and p.industry like "%"#{industry}"%"
-    </if>
-    <if test="foreignLanguage != null and !foreignLanguage.isEmpty()">
-      and p.foreignLanguage like "%"#{foreignLanguage}"%"
-    </if>
-    <if test="industry != null and !industry.isEmpty()">
-      and p.industry like "%"#{industry}"%"
-    </if>
-    <if test="company != null and company.id != null">
-      and cu.id = #{company.id}
+    <if test="companyId != null">
+      and com.companyId = #{companyId}
     </if>
     <if test="company != null and company.name != null and !company.name.isEmpty()">
-      and cu.name like "%"#{company.name}"%"
+      and com.name like "%"#{company.name}"%"
     </if>
-    order by p.createTime desc
+    order by com.id, p.createTime desc
   </select>
 
-  <select id="findByIds" parameterType="com.newstar.hbms.customer.domain.Position"
-          resultMap="Position">
-    select p.*,cu.id as CUS_id,cu.name CUS_name from Position p, Customer cu where p.yn = 1 and p.yn = 1 and p.customerId = cu.id and p.id in
-    <foreach collection="array" open="(" close=")" separator="," item="customerId">
-      #{customerId}
+  <select id="findByIds" resultMap="Position">
+    select p.*,com.id as COM_id, com.name COM_name from Position p, Company com where p.yn = 1 and com.yn = 1 and p.companyId = com.id and p.id in
+    <foreach collection="array" open="(" close=")" separator="," item="positionId">
+      #{positionId}
+    </foreach>
+  </select>
+
+  <select id="findPositionTagPositionIdIds" resultType="com.newstar.hbms.customer.domain.PositionTag">
+    select * from PositionTag pt where pt.positionId in
+    <foreach collection="array" open="(" close=")" separator="," item="positionId">
+      #{positionId}
     </foreach>
   </select>
 

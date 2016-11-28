@@ -3,52 +3,31 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.newstar.hbms.project.dao.ProjectDao">
-<!--
+
   <resultMap id="Customer" type="com.newstar.hbms.customer.domain.Company">
     <id column="id" property="id" />
-    &lt;!&ndash;<result column="name" property="name"/>&ndash;&gt;
+    <!--<result column="name" property="name"/>-->
   </resultMap>
   <resultMap id="Contact" type="com.newstar.hbms.customer.domain.Contact">
     <id column="id" property="id" />
-    &lt;!&ndash;<result column="name" property="name"/>&ndash;&gt;
+    <!--<result column="name" property="name"/>-->
   </resultMap>
   <resultMap id="Position" type="com.newstar.hbms.customer.domain.Position">
     <id column="id" property="id" />
-    &lt;!&ndash;<result column="name" property="name"/>&ndash;&gt;
+    <!--<result column="name" property="name"/>-->
   </resultMap>
   <resultMap id="User" type="com.newstar.hbms.system.domain.User">
     <id column="id" property="id" />
-    &lt;!&ndash;<result column="name" property="name"/>&ndash;&gt;
+    <!--<result column="name" property="name"/>-->
   </resultMap>
 
   <resultMap id="Project" type="com.newstar.hbms.project.domain.Project">
-    <id column="id" property="id" />
-    &lt;!&ndash;<result column="name" property="name"/>
-    <result column="startDate" property="startDate"/>
-    <result column="endDate" property="endDate"/>
-    <result column="customerId" property="customerId"/>
-    <result column="positionId" property="positionId"/>
-    <result column="contractId" property="contractId"/>
-    <result column="consultantId" property="consultantId"/>
-    <result column="assistantId" property="assistantId"/>
-    <result column="managerId" property="managerId"/>
-    <result column="level" property="level"/>
-    <result column="status" property="status"/>
-    <result column="plant" property="plant"/>
-    <result column="plantRemark" property="plantRemark"/>
-    <result column="isKey" property="isKey"/>
-    <result column="remark" property="remark"/>
-    <result column="yn" property="yn"/>
-    <result column="updateUser" property="updateUser"/>
-    <result column="updateTime" property="updateTime"/>
-    <result column="createUser" property="createUser"/>
-    <result column="createTime" property="createTime"/>
     <association property="company" columnPrefix="CUS_" resultMap="Customer"/>
     <association property="contact" columnPrefix="CONTACT_" resultMap="Contact"/>
     <association property="position" columnPrefix="POS_" resultMap="Position"/>
     <association property="consultant" columnPrefix="CONSULTANT_" resultMap="User"/>
     <association property="assistant" columnPrefix="ASSISTANT_" resultMap="User"/>
-    <association property="manager" columnPrefix="MANAGER_" resultMap="User"/>&ndash;&gt;
+    <association property="manager" columnPrefix="MANAGER_" resultMap="User"/>
   </resultMap>
 
   <sql id="selectProject">
@@ -62,7 +41,7 @@
       manager.id as MANAGER_id, manager.name as MANAGER_name
     from
       Project prj,
-      Customer cus,
+      Company com,
       Position pos,
       Contact contact,
       User consultant,
@@ -79,39 +58,29 @@
 
   <insert id="insert" parameterType="com.newstar.hbms.project.domain.Project">
     insert into Project(
-    name,
-    startDate,
-    endDate,
-    customerId,
-    contractId,
-    consultantId,
-    assistantId,
-    managerId,
-    level,
-    status,
-    plant,
-    plantRemark,
-    isKey,
-    remark,
-    yn,
-    createTime,
-    createUser,
-    updateTime,
-    updateUser
+      id,
+      importantLevelId,
+      name,
+      startDate,
+      endDate,
+      positionId,
+      statusId,
+      share,
+      remark,
+      yn,
+      createTime,
+      createUser,
+      updateTime,
+      updateUser
     ) values (
+    #{id, jdbcType=BIGINT},
+    #{importantLevelId, jdbcType=BIGINT},
     #{name, jdbcType=VARCHAR},
     #{startDate, jdbcType=DATE},
     #{endDate, jdbcType=DATE},
-    #{customerId, jdbcType=BIGINT},
-    #{contractId, jdbcType=BIGINT},
-    #{consultantId, jdbcType=BIGINT},
-    #{assistantId, jdbcType=BIGINT},
-    #{managerId, jdbcType=BIGINT},
-    #{level, jdbcType=VARCHAR},
-    #{status, jdbcType=VARCHAR},
-    #{plant, jdbcType=VARCHAR},
-    #{plantRemark, jdbcType=VARCHAR},
-    #{isKey, jdbcType=BOOLEAN},
+    #{positionId, jdbcType=BIGINT},
+    #{statusId, jdbcType=BIGINT},
+    #{share, jdbcType=BOOLEAN},
     #{remark, jdbcType=VARCHAR},
     1,
     #{updateUser, jdbcType=VARCHAR},
@@ -123,19 +92,13 @@
 
   <update id="update" parameterType="com.newstar.hbms.project.domain.Project">
     update Project set
+      importantLevelId = #{importantLevelId, jdbcType=BIGINT},
       name = #{name, jdbcType=VARCHAR},
-      startDate = #{startDate, jdbcType=VARCHAR},
-      endDate = #{endDate, jdbcType=VARCHAR},
-      customerId = #{customerId, jdbcType=BIGINT},
-      contractId = #{contractId, jdbcType=BIGINT},
-      consultantId = #{consultantId, jdbcType=BIGINT},
-      assistantId = #{assistantId, jdbcType=BIGINT},
-      managerId = #{managerId, jdbcType=VARCHAR},
-      level = #{, jdbcType=VARCHAR},
-      status = #{, jdbcType=VARCHAR},
-      plant = #{, jdbcType=VARCHAR},
-      plantRemark = #{, jdbcType=VARCHAR},
-      isKey = #{isKey, jdbcType=BOOLEAN},
+      startDate = #{startDate, jdbcType=DATE},
+      endDate = #{endDate, jdbcType=DATE},
+      positionId = #{positionId, jdbcType=BIGINT},
+      statusId = #{statusId, jdbcType=BIGINT},
+      share = #{share, jdbcType=BOOLEAN},
       remark = #{remark, jdbcType=VARCHAR},
       updateTime = now()
     where
@@ -198,6 +161,6 @@
     <foreach collection="array" open="(" close=")" separator="," item="projectId">
       #{projectId}
     </foreach>
-  </select>-->
+  </select>
 
 </mapper>

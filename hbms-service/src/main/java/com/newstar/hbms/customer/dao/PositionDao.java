@@ -1,6 +1,7 @@
 package com.newstar.hbms.customer.dao;
 
 import com.newstar.hbms.customer.domain.Position;
+import com.newstar.hbms.customer.domain.PositionTag;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 
@@ -22,5 +23,7 @@ public interface PositionDao {
   public PagingResult<Position> findByBean(Position position, PageRange pageRange);
 
   public List<Position> findByIds(Long[] ids);
+
+  public List<PositionTag> findPositionTagPositionIdIds(Long[] ids);
 
 }

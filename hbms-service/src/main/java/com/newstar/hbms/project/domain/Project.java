@@ -62,14 +62,14 @@ public class Project implements Serializable {
   private TreeNode status;
 
   /**
-   * 备注
-   */
-  private String remark;
-
-  /**
    * 是否共享
    */
   private Boolean share;
+
+  /**
+   * 备注
+   */
+  private String remark;
 
   /**
    * 是否有效

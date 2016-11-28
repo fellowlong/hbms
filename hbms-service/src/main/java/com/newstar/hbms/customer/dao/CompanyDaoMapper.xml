@@ -5,45 +5,57 @@
 <mapper namespace="com.newstar.hbms.customer.dao.CompanyDao">
 
   <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Company">
-    insert into Customer(
+    insert into Company(
+      id,
+      companyTypeId,
       name,
-      webSite,
+      fullName,
+      cityId,
       phone,
-      fax,
-      region,
+      webSite,
       address,
-      postCode,
+      email,
+      fax,
+      maintainerId,
+      folderId,
       staffCount,
-      industry,
-      nature,
+      natureId,
       products,
       registeredCapital,
       legalPerson,
-      propertyRightStructure,
-      remark,
+      propertyRightStructureId,
+      intro,
       keyword,
+      businessDeveloperId,
+      remark,
       yn,
       updateUser,
       updateTime,
       createUser,
       createTime
     ) values (
+      #{id, jdbcType=VARCHAR},
+      #{companyTypeId, jdbcType=BIGINT},
       #{name, jdbcType=VARCHAR},
-      #{webSite, jdbcType=VARCHAR},
+      #{fullName, jdbcType=VARCHAR},
+      #{cityId, jdbcType=BIGINT},
       #{phone, jdbcType=VARCHAR},
-      #{fax, jdbcType=VARCHAR},
-      #{region, jdbcType=VARCHAR},
+      #{webSite, jdbcType=VARCHAR},
       #{address, jdbcType=VARCHAR},
-      #{postCode, jdbcType=VARCHAR},
-      #{staffCount, jdbcType=VARCHAR},
-      #{industry, jdbcType=VARCHAR},
-      #{nature, jdbcType=VARCHAR},
+      #{email, jdbcType=VARCHAR},
+      #{fax, jdbcType=VARCHAR},
+      #{maintainerId, jdbcType=BIGINT},
+      #{folderId, jdbcType=BIGINT},
+      #{staffCount, jdbcType=INTEGER},
+      #{natureId, jdbcType=BIGINT},
       #{products, jdbcType=VARCHAR},
       #{registeredCapital, jdbcType=VARCHAR},
       #{legalPerson, jdbcType=VARCHAR},
-      #{propertyRightStructure, jdbcType=VARCHAR},
-      #{remark, jdbcType=VARCHAR},
+      #{propertyRightStructureId, jdbcType=BIGINT},
+      #{intro, jdbcType=VARCHAR},
       #{keyword, jdbcType=VARCHAR},
+      #{businessDeveloperId, jdbcType=BIGINT},
+      #{remark, jdbcType=VARCHAR},
       1,
       #{updateUser, jdbcType=VARCHAR},
       now(),
@@ -53,45 +65,49 @@
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.customer.domain.Company">
-    update Customer set
+    update Company set
+      companyTypeId = #{companyTypeId, jdbcType=BIGINT},
       name = #{name, jdbcType=VARCHAR},
-      webSite = #{webSite, jdbcType=VARCHAR},
+      fullName = #{fullName, jdbcType=VARCHAR},
+      cityId = #{cityId, jdbcType=BIGINT},
       phone = #{phone, jdbcType=VARCHAR},
-      fax = #{fax, jdbcType=VARCHAR},
-      region = #{region, jdbcType=VARCHAR},
+      webSite = #{webSite, jdbcType=VARCHAR},
       address = #{address, jdbcType=VARCHAR},
-      postCode = #{postCode, jdbcType=VARCHAR},
-      staffCount = #{staffCount, jdbcType=VARCHAR},
-      industry = #{industry, jdbcType=VARCHAR},
-      nature = #{nature, jdbcType=VARCHAR},
+      email = #{email, jdbcType=VARCHAR},
+      fax = #{fax, jdbcType=VARCHAR},
+      maintainerId = #{maintainerId, jdbcType=BIGINT},
+      folderId = #{folderId, jdbcType=BIGINT},
+      staffCount = #{staffCount, jdbcType=INTEGER},
+      natureId = #{natureId, jdbcType=BIGINT},
       products = #{products, jdbcType=VARCHAR},
       registeredCapital = #{registeredCapital, jdbcType=VARCHAR},
       legalPerson = #{legalPerson, jdbcType=VARCHAR},
-      propertyRightStructure = #{propertyRightStructure, jdbcType=VARCHAR},
-      remark = #{remark, jdbcType=VARCHAR},
+      propertyRightStructureId = #{propertyRightStructureId, jdbcType=BIGINT},
+      intro = #{intro, jdbcType=VARCHAR},
       keyword = #{keyword, jdbcType=VARCHAR},
+      businessDeveloperId = #{businessDeveloperId, jdbcType=BIGINT},
       updateTime = now()
     where
       id = #{id}
   </update>
 
   <update id="disable">
-    update Customer set yn = 0, updateTime = now() where id in
-    <foreach collection="array" open="(" close=")" separator="," item="customerId">
-      #{customerId}
+    update Company set yn = 0, updateTime = now() where id in
+    <foreach collection="array" open="(" close=")" separator="," item="companyId">
+      #{companyId}
     </foreach>
   </update>
 
   <update id="enable">
-    update Customer set yn = 1 , updateTime = now() where id in
-    <foreach collection="array" open="(" close=")" separator="," item="customerId">
-      #{customerId}
+    update Company set yn = 1 , updateTime = now() where id in
+    <foreach collection="array" open="(" close=")" separator="," item="companyId">
+      #{companyId}
     </foreach>
   </update>
   
   <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Company"
           resultType="com.newstar.hbms.customer.domain.Company">
-    select * from Customer c where yn = 1
+    select * from Company c where yn = 1
     <if test="id != null">
       and c.id = #{id}
     </if>
@@ -109,9 +125,9 @@
 
   <select id="findByIds" parameterType="com.newstar.hbms.customer.domain.Company"
           resultType="com.newstar.hbms.customer.domain.Company">
-    select * from Customer where id in
-    <foreach collection="array" open="(" close=")" separator="," item="customerId">
-      #{customerId}
+    select * from Company where id in
+    <foreach collection="array" open="(" close=")" separator="," item="companyId">
+      #{companyId}
     </foreach>
   </select>
 
