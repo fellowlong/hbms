@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by wangjinsi on 2016/10/22.
  */
-public class CustomerController extends MultiActionController {
+public class CompanyController extends MultiActionController {
 
   private CustomerService customerService;
 
@@ -30,7 +30,7 @@ public class CustomerController extends MultiActionController {
   }
 
   public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    return new ModelAndView("/customer/customerManager");
+    return new ModelAndView("/customer/companyManager");
   }
 
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Company company) throws Exception  {

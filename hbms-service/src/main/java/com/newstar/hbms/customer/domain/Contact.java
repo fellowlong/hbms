@@ -1,6 +1,8 @@
 package com.newstar.hbms.customer.domain;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.common.domain.Comment;
+import com.newstar.hbms.system.domain.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,11 +25,13 @@ public class Contact implements Serializable {
    * 重要程度
    */
   private Long importantLevelId;
+  private TreeNode importantLevel;
 
   /**
    * 公司编号，外键
    */
   private Long companyId;
+  private Company company;
 
   /**
    * 姓名
@@ -87,7 +91,8 @@ public class Contact implements Serializable {
   /**
    * 维护人
    */
-  private Long maintainer;
+  private Long maintainerId;
+  private User maintainer;
 
   /**
    * 批注
@@ -126,8 +131,6 @@ public class Contact implements Serializable {
    */
   private String updateUser;
 
-  private Company company;
-
   public Long getId() {
     return id;
   }
@@ -144,12 +147,28 @@ public class Contact implements Serializable {
     this.importantLevelId = importantLevelId;
   }
 
+  public TreeNode getImportantLevel() {
+    return importantLevel;
+  }
+
+  public void setImportantLevel(TreeNode importantLevel) {
+    this.importantLevel = importantLevel;
+  }
+
   public Long getCompanyId() {
     return companyId;
   }
 
   public void setCompanyId(Long companyId) {
     this.companyId = companyId;
+  }
+
+  public Company getCompany() {
+    return company;
+  }
+
+  public void setCompany(Company company) {
+    this.company = company;
   }
 
   public String getName() {
@@ -240,11 +259,19 @@ public class Contact implements Serializable {
     this.birthday = birthday;
   }
 
-  public Long getMaintainer() {
+  public Long getMaintainerId() {
+    return maintainerId;
+  }
+
+  public void setMaintainerId(Long maintainerId) {
+    this.maintainerId = maintainerId;
+  }
+
+  public User getMaintainer() {
     return maintainer;
   }
 
-  public void setMaintainer(Long maintainer) {
+  public void setMaintainer(User maintainer) {
     this.maintainer = maintainer;
   }
 
@@ -302,13 +329,5 @@ public class Contact implements Serializable {
 
   public void setUpdateUser(String updateUser) {
     this.updateUser = updateUser;
-  }
-
-  public Company getCompany() {
-    return company;
-  }
-
-  public void setCompany(Company company) {
-    this.company = company;
   }
 }

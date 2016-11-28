@@ -1,5 +1,8 @@
 package com.newstar.hbms.customer.domain;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
+import com.newstar.hbms.system.domain.User;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,16 +33,15 @@ public class Company implements Serializable {
   private String fullName;
 
   /**
-   * 所属行业，可以选三个
+   * 所属行业
    */
-  private Long industryId1;
-  private Long industryId2;
-  private Long industryId3;
+  private List<CompanyIndustry> industries = new ArrayList<CompanyIndustry>();
 
   /**
    * 所在城市
    */
   private Long cityId;
+  private TreeNode city;
 
   /**
    * 电话
@@ -69,12 +71,14 @@ public class Company implements Serializable {
   /**
    * 维护人
    */
-  private Long maintainer;
+  private Long maintainerId;
+  private User maintainer;
 
   /**
    * 所属文件夹
    */
   private Long folderId;
+  private TreeNode folder;
 
   /**
    * 员工数量
@@ -84,7 +88,8 @@ public class Company implements Serializable {
   /**
    * 企业性质
    */
-  private String nature;
+  private Long natureId;
+  private TreeNode nature;
 
   /**
    * 产品
@@ -94,7 +99,7 @@ public class Company implements Serializable {
   /**
    * 注册资金
    */
-  private String registeredCapital;
+  private Double registeredCapital;
 
   /**
    * 法人
@@ -104,7 +109,8 @@ public class Company implements Serializable {
   /**
    * 产权结构
    */
-  private String propertyRightStructure;
+  private Long propertyRightStructureId;
+  private TreeNode propertyRightStructure;
 
   /**
    * 企业简介
@@ -118,7 +124,8 @@ public class Company implements Serializable {
   /**
    * 客户开发者
    */
-  private Long businessDeveloper;
+  private Long businessDeveloperId;
+  private User businessDeveloper;
 
   /**
    * 客户联系人
@@ -189,28 +196,12 @@ public class Company implements Serializable {
     this.fullName = fullName;
   }
 
-  public Long getIndustryId1() {
-    return industryId1;
+  public List<CompanyIndustry> getIndustries() {
+    return industries;
   }
 
-  public void setIndustryId1(Long industryId1) {
-    this.industryId1 = industryId1;
-  }
-
-  public Long getIndustryId2() {
-    return industryId2;
-  }
-
-  public void setIndustryId2(Long industryId2) {
-    this.industryId2 = industryId2;
-  }
-
-  public Long getIndustryId3() {
-    return industryId3;
-  }
-
-  public void setIndustryId3(Long industryId3) {
-    this.industryId3 = industryId3;
+  public void setIndustries(List<CompanyIndustry> industries) {
+    this.industries = industries;
   }
 
   public Long getCityId() {
@@ -219,6 +210,14 @@ public class Company implements Serializable {
 
   public void setCityId(Long cityId) {
     this.cityId = cityId;
+  }
+
+  public TreeNode getCity() {
+    return city;
+  }
+
+  public void setCity(TreeNode city) {
+    this.city = city;
   }
 
   public String getPhone() {
@@ -261,11 +260,19 @@ public class Company implements Serializable {
     this.fax = fax;
   }
 
-  public Long getMaintainer() {
+  public Long getMaintainerId() {
+    return maintainerId;
+  }
+
+  public void setMaintainerId(Long maintainerId) {
+    this.maintainerId = maintainerId;
+  }
+
+  public User getMaintainer() {
     return maintainer;
   }
 
-  public void setMaintainer(Long maintainer) {
+  public void setMaintainer(User maintainer) {
     this.maintainer = maintainer;
   }
 
@@ -277,6 +284,14 @@ public class Company implements Serializable {
     this.folderId = folderId;
   }
 
+  public TreeNode getFolder() {
+    return folder;
+  }
+
+  public void setFolder(TreeNode folder) {
+    this.folder = folder;
+  }
+
   public Integer getStaffCount() {
     return staffCount;
   }
@@ -285,11 +300,19 @@ public class Company implements Serializable {
     this.staffCount = staffCount;
   }
 
-  public String getNature() {
+  public Long getNatureId() {
+    return natureId;
+  }
+
+  public void setNatureId(Long natureId) {
+    this.natureId = natureId;
+  }
+
+  public TreeNode getNature() {
     return nature;
   }
 
-  public void setNature(String nature) {
+  public void setNature(TreeNode nature) {
     this.nature = nature;
   }
 
@@ -301,11 +324,11 @@ public class Company implements Serializable {
     this.products = products;
   }
 
-  public String getRegisteredCapital() {
+  public Double getRegisteredCapital() {
     return registeredCapital;
   }
 
-  public void setRegisteredCapital(String registeredCapital) {
+  public void setRegisteredCapital(Double registeredCapital) {
     this.registeredCapital = registeredCapital;
   }
 
@@ -317,11 +340,19 @@ public class Company implements Serializable {
     this.legalPerson = legalPerson;
   }
 
-  public String getPropertyRightStructure() {
+  public Long getPropertyRightStructureId() {
+    return propertyRightStructureId;
+  }
+
+  public void setPropertyRightStructureId(Long propertyRightStructureId) {
+    this.propertyRightStructureId = propertyRightStructureId;
+  }
+
+  public TreeNode getPropertyRightStructure() {
     return propertyRightStructure;
   }
 
-  public void setPropertyRightStructure(String propertyRightStructure) {
+  public void setPropertyRightStructure(TreeNode propertyRightStructure) {
     this.propertyRightStructure = propertyRightStructure;
   }
 
@@ -333,14 +364,6 @@ public class Company implements Serializable {
     this.intro = intro;
   }
 
-  public String getRemark() {
-    return remark;
-  }
-
-  public void setRemark(String remark) {
-    this.remark = remark;
-  }
-
   public String getKeyword() {
     return keyword;
   }
@@ -349,12 +372,36 @@ public class Company implements Serializable {
     this.keyword = keyword;
   }
 
-  public Long getBusinessDeveloper() {
+  public Long getBusinessDeveloperId() {
+    return businessDeveloperId;
+  }
+
+  public void setBusinessDeveloperId(Long businessDeveloperId) {
+    this.businessDeveloperId = businessDeveloperId;
+  }
+
+  public User getBusinessDeveloper() {
     return businessDeveloper;
   }
 
-  public void setBusinessDeveloper(Long businessDeveloper) {
+  public void setBusinessDeveloper(User businessDeveloper) {
     this.businessDeveloper = businessDeveloper;
+  }
+
+  public List<Contact> getContacts() {
+    return contacts;
+  }
+
+  public void setContacts(List<Contact> contacts) {
+    this.contacts = contacts;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
   }
 
   public Boolean getYn() {

@@ -22,11 +22,10 @@ public class Position implements Serializable {
    * 所属公司
    */
   private Long companyId;
-
   private Company company;
 
   /**
-   * 客户联系人
+   * 对应客户联系人
    */
   private Long contactId;
   private Contact contact;
@@ -40,41 +39,49 @@ public class Position implements Serializable {
    * 优先级
    */
   private Long priorityId;
+  private TreeNode priority;
 
   /**
    * 行业
    */
   private Long industryId;
+  private TreeNode industry;
 
   /**
    * 职能
    */
   private Long functionId;
+  private TreeNode function;
 
   /**
    * 城市
    */
   private Long cityId;
+  private TreeNode city;
 
   /**
    * 名企背景
    */
   private Long fameCompanyBackgroundId;
+  private TreeNode fameCompanyBackground;
 
   /**
    * 国籍
    */
   private Long nationalityId;
+  private TreeNode nationality;
 
   /**
    * 学历
    */
   private Long degreeId;
+  private TreeNode degree;
 
   /**
    * 语言
    */
   private Long languageId;
+  private TreeNode language;
 
   /**
    * 年龄要求
@@ -97,7 +104,8 @@ public class Position implements Serializable {
   /**
    * 性别要求
    */
-  private Integer sex;
+  private Integer sexId;
+  private TreeNode sex;
 
   /**
    * 招聘地址
@@ -107,7 +115,7 @@ public class Position implements Serializable {
   /**
    * 标签
    */
-  private List<TreeNode> tags = new ArrayList<TreeNode>();
+  private List<PositionTag> tags = new ArrayList<PositionTag>();
 
   /**
    * 说明
@@ -226,12 +234,28 @@ public class Position implements Serializable {
     this.priorityId = priorityId;
   }
 
+  public TreeNode getPriority() {
+    return priority;
+  }
+
+  public void setPriority(TreeNode priority) {
+    this.priority = priority;
+  }
+
   public Long getIndustryId() {
     return industryId;
   }
 
   public void setIndustryId(Long industryId) {
     this.industryId = industryId;
+  }
+
+  public TreeNode getIndustry() {
+    return industry;
+  }
+
+  public void setIndustry(TreeNode industry) {
+    this.industry = industry;
   }
 
   public Long getFunctionId() {
@@ -242,12 +266,28 @@ public class Position implements Serializable {
     this.functionId = functionId;
   }
 
+  public TreeNode getFunction() {
+    return function;
+  }
+
+  public void setFunction(TreeNode function) {
+    this.function = function;
+  }
+
   public Long getCityId() {
     return cityId;
   }
 
   public void setCityId(Long cityId) {
     this.cityId = cityId;
+  }
+
+  public TreeNode getCity() {
+    return city;
+  }
+
+  public void setCity(TreeNode city) {
+    this.city = city;
   }
 
   public Long getFameCompanyBackgroundId() {
@@ -258,12 +298,28 @@ public class Position implements Serializable {
     this.fameCompanyBackgroundId = fameCompanyBackgroundId;
   }
 
+  public TreeNode getFameCompanyBackground() {
+    return fameCompanyBackground;
+  }
+
+  public void setFameCompanyBackground(TreeNode fameCompanyBackground) {
+    this.fameCompanyBackground = fameCompanyBackground;
+  }
+
   public Long getNationalityId() {
     return nationalityId;
   }
 
   public void setNationalityId(Long nationalityId) {
     this.nationalityId = nationalityId;
+  }
+
+  public TreeNode getNationality() {
+    return nationality;
+  }
+
+  public void setNationality(TreeNode nationality) {
+    this.nationality = nationality;
   }
 
   public Long getDegreeId() {
@@ -274,12 +330,28 @@ public class Position implements Serializable {
     this.degreeId = degreeId;
   }
 
+  public TreeNode getDegree() {
+    return degree;
+  }
+
+  public void setDegree(TreeNode degree) {
+    this.degree = degree;
+  }
+
   public Long getLanguageId() {
     return languageId;
   }
 
   public void setLanguageId(Long languageId) {
     this.languageId = languageId;
+  }
+
+  public TreeNode getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(TreeNode language) {
+    this.language = language;
   }
 
   public Integer getMinAge() {
@@ -330,11 +402,19 @@ public class Position implements Serializable {
     this.maxAnnualSalary = maxAnnualSalary;
   }
 
-  public Integer getSex() {
+  public Integer getSexId() {
+    return sexId;
+  }
+
+  public void setSexId(Integer sexId) {
+    this.sexId = sexId;
+  }
+
+  public TreeNode getSex() {
     return sex;
   }
 
-  public void setSex(Integer sex) {
+  public void setSex(TreeNode sex) {
     this.sex = sex;
   }
 
@@ -346,11 +426,11 @@ public class Position implements Serializable {
     this.address = address;
   }
 
-  public List<TreeNode> getTags() {
+  public List<PositionTag> getTags() {
     return tags;
   }
 
-  public void setTags(List<TreeNode> tags) {
+  public void setTags(List<PositionTag> tags) {
     this.tags = tags;
   }
 

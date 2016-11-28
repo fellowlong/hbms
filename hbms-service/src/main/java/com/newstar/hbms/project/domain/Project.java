@@ -45,49 +45,21 @@ public class Project implements Serializable {
   private Date endDate;
 
   /**
-   * 所含职位
+   * 职位
    */
-  private List<Position> positions;
-
-  /**
-   * 项目负责人
-   */
-  private Long managerId;
-  private User manager;
-
-  /**
-   * 顾问
-   */
-  private Long consultantId;
-  private User consultant;
-
-  /**
-   * 助理
-   */
-  private Long assistantId;
-  private User assistant;
+  private Long positionId;
+  private Position position;
 
   /**
    * 其他顾问
    */
-  private List<User> otherConsultants = new ArrayList<User>();
+  private List<ProjectConsultant> consultants = new ArrayList<ProjectConsultant>();
 
   /**
    * 项目状态
    */
   private Long statusId;
   private TreeNode status;
-
-  /**
-   * 项目计划
-   */
-  private Long plantId;
-  private TreeNode plant;
-
-  /**
-   * 计划备注
-   */
-  private String plantRemark;
 
   /**
    * 备注
@@ -173,68 +145,28 @@ public class Project implements Serializable {
     this.endDate = endDate;
   }
 
-  public List<Position> getPositions() {
-    return positions;
+  public Long getPositionId() {
+    return positionId;
   }
 
-  public void setPositions(List<Position> positions) {
-    this.positions = positions;
+  public void setPositionId(Long positionId) {
+    this.positionId = positionId;
   }
 
-  public Long getManagerId() {
-    return managerId;
+  public Position getPosition() {
+    return position;
   }
 
-  public void setManagerId(Long managerId) {
-    this.managerId = managerId;
+  public void setPosition(Position position) {
+    this.position = position;
   }
 
-  public User getManager() {
-    return manager;
+  public List<ProjectConsultant> getConsultants() {
+    return consultants;
   }
 
-  public void setManager(User manager) {
-    this.manager = manager;
-  }
-
-  public Long getConsultantId() {
-    return consultantId;
-  }
-
-  public void setConsultantId(Long consultantId) {
-    this.consultantId = consultantId;
-  }
-
-  public User getConsultant() {
-    return consultant;
-  }
-
-  public void setConsultant(User consultant) {
-    this.consultant = consultant;
-  }
-
-  public Long getAssistantId() {
-    return assistantId;
-  }
-
-  public void setAssistantId(Long assistantId) {
-    this.assistantId = assistantId;
-  }
-
-  public User getAssistant() {
-    return assistant;
-  }
-
-  public void setAssistant(User assistant) {
-    this.assistant = assistant;
-  }
-
-  public List<User> getOtherConsultants() {
-    return otherConsultants;
-  }
-
-  public void setOtherConsultants(List<User> otherConsultants) {
-    this.otherConsultants = otherConsultants;
+  public void setConsultants(List<ProjectConsultant> consultants) {
+    this.consultants = consultants;
   }
 
   public Long getStatusId() {
@@ -251,30 +183,6 @@ public class Project implements Serializable {
 
   public void setStatus(TreeNode status) {
     this.status = status;
-  }
-
-  public Long getPlantId() {
-    return plantId;
-  }
-
-  public void setPlantId(Long plantId) {
-    this.plantId = plantId;
-  }
-
-  public TreeNode getPlant() {
-    return plant;
-  }
-
-  public void setPlant(TreeNode plant) {
-    this.plant = plant;
-  }
-
-  public String getPlantRemark() {
-    return plantRemark;
-  }
-
-  public void setPlantRemark(String plantRemark) {
-    this.plantRemark = plantRemark;
   }
 
   public String getRemark() {

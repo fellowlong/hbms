@@ -1,9 +1,12 @@
 package com.newstar.hbms.candidate.domain;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
 import org.apache.poi.hmef.Attachment;
+import org.apache.poi.hslf.model.Comment;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -141,6 +144,11 @@ public class Candidate implements Serializable {
   private List<ProjectExperience> projectExperiences;
 
   /**
+   * 技能
+   */
+  private String skills;
+
+  /**
    * 其他信息
    */
   private String other;
@@ -154,6 +162,40 @@ public class Candidate implements Serializable {
    * 备注
    */
   private String remark;
+
+  /**
+   * 优势和劣势
+   */
+  private String strengthsAndWeaknesses;
+
+  /**
+   * 批注
+   */
+  private List<Comment> comments = new ArrayList<Comment>();
+
+  /**
+   * 收藏夹
+    */
+  private Long favoriteId;
+  private TreeNode favorite;
+
+  /**
+   * 所属文件夹
+   */
+  private Long folderId;
+  private TreeNode folder;
+
+  /**
+   * 来源
+   */
+  private Long sourceId;
+  private TreeNode source;
+
+  /**
+   * 上传者
+   */
+  private Long updaterId;
+  private TreeNode updater;
 
   /**
    *
@@ -397,6 +439,14 @@ public class Candidate implements Serializable {
     this.projectExperiences = projectExperiences;
   }
 
+  public String getSkills() {
+    return skills;
+  }
+
+  public void setSkills(String skills) {
+    this.skills = skills;
+  }
+
   public String getOther() {
     return other;
   }
@@ -419,6 +469,86 @@ public class Candidate implements Serializable {
 
   public void setRemark(String remark) {
     this.remark = remark;
+  }
+
+  public String getStrengthsAndWeaknesses() {
+    return strengthsAndWeaknesses;
+  }
+
+  public void setStrengthsAndWeaknesses(String strengthsAndWeaknesses) {
+    this.strengthsAndWeaknesses = strengthsAndWeaknesses;
+  }
+
+  public List<Comment> getComments() {
+    return comments;
+  }
+
+  public void setComments(List<Comment> comments) {
+    this.comments = comments;
+  }
+
+  public Long getFavoriteId() {
+    return favoriteId;
+  }
+
+  public void setFavoriteId(Long favoriteId) {
+    this.favoriteId = favoriteId;
+  }
+
+  public TreeNode getFavorite() {
+    return favorite;
+  }
+
+  public void setFavorite(TreeNode favorite) {
+    this.favorite = favorite;
+  }
+
+  public Long getFolderId() {
+    return folderId;
+  }
+
+  public void setFolderId(Long folderId) {
+    this.folderId = folderId;
+  }
+
+  public TreeNode getFolder() {
+    return folder;
+  }
+
+  public void setFolder(TreeNode folder) {
+    this.folder = folder;
+  }
+
+  public Long getSourceId() {
+    return sourceId;
+  }
+
+  public void setSourceId(Long sourceId) {
+    this.sourceId = sourceId;
+  }
+
+  public TreeNode getSource() {
+    return source;
+  }
+
+  public void setSource(TreeNode source) {
+    this.source = source;
+  }
+
+  public Long getUpdaterId() {
+    return updaterId;
+  }
+
+  public void setUpdaterId(Long updaterId) {
+    this.updaterId = updaterId;
+  }
+
+  public TreeNode getUpdater() {
+    return updater;
+  }
+
+  public void setUpdater(TreeNode updater) {
+    this.updater = updater;
   }
 
   public Boolean getYn() {
@@ -459,44 +589,5 @@ public class Candidate implements Serializable {
 
   public void setUpdateUser(String updateUser) {
     this.updateUser = updateUser;
-  }
-
-  @Override
-  public String toString() {
-    return "Candidate{" +
-        "id=" + id +
-        ", resumeFile=" + resumeFile +
-        ", resume=" + resume +
-        ", name='" + name + '\'' +
-        ", sexId=" + sexId +
-        ", birthday=" + birthday +
-        ", mobile='" + mobile + '\'' +
-        ", telephone='" + telephone + '\'' +
-        ", email='" + email + '\'' +
-        ", otherContact='" + otherContact + '\'' +
-        ", degreeId=" + degreeId +
-        ", maritalId=" + maritalId +
-        ", locationId=" + locationId +
-        ", workYears=" + workYears +
-        ", overseasExperience=" + overseasExperience +
-        ", industryId=" + industryId +
-        ", currentCompanyId=" + currentCompanyId +
-        ", currentPositionId=" + currentPositionId +
-        ", currentAnnualSalary=" + currentAnnualSalary +
-        ", jobHuntingStatusId=" + jobHuntingStatusId +
-        ", workExperiences=" + workExperiences +
-        ", educationExperiences=" + educationExperiences +
-        ", languageAbilities=" + languageAbilities +
-        ", certificates=" + certificates +
-        ", projectExperiences=" + projectExperiences +
-        ", other='" + other + '\'' +
-        ", keyword='" + keyword + '\'' +
-        ", remark='" + remark + '\'' +
-        ", yn=" + yn +
-        ", createTime=" + createTime +
-        ", createUser='" + createUser + '\'' +
-        ", updateTime=" + updateTime +
-        ", updateUser='" + updateUser + '\'' +
-        '}';
   }
 }
