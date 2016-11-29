@@ -2,7 +2,7 @@ package com.newstar.hbms.customer.service.impl;
 
 import com.newstar.hbms.customer.dao.CompanyDao;
 import com.newstar.hbms.customer.domain.Company;
-import com.newstar.hbms.customer.service.CustomerService;
+import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by wangjinsi on 2016/10/22.
  */
-public class CompanyServiceImpl implements CustomerService {
+public class CompanyServiceImpl implements CompanyService {
 
   private CompanyDao companyDao;
 

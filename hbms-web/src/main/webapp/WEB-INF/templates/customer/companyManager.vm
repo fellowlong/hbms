@@ -165,13 +165,7 @@
     });
 
     $("#addCustomer").on("click", function () {
-      //清空表单
-      $("#insertOrUpdateCustomerForm").validator("cleanUp");
-      $("#insertOrUpdateCustomerForm input").val(null);
-      $("#insertOrUpdateCustomerForm select").val(null)
-      $("#insertOrUpdateCustomerForm textarea").text(null);
-      $("#customerAddOrEditDialogTitle").text("新增客户");
-      $('#customerAddOrEditDialog').modal('show')
+        window.open('/company/editView.do');
     });
 
     $("#editCustomer").on("click", function () {

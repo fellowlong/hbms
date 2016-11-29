@@ -215,7 +215,7 @@
     <property name="candidateService" ref="candidateService"/>
   </bean>-->
 
-  <bean id="customerService" class="com.newstar.hbms.customer.service.impl.CompanyServiceImpl">
+  <bean id="companyService" class="com.newstar.hbms.customer.service.impl.CompanyServiceImpl">
     <property name="companyDao" ref="companyDao"/>
   </bean>
 

@@ -116,21 +116,16 @@ public class Company implements Serializable {
    * 企业简介
    */
   private String intro;
-  /**
-   * 关键字
-   */
-  private String keyword;
-
-  /**
-   * 客户开发者
-   */
-  private Long businessDeveloperId;
-  private User businessDeveloper;
 
   /**
    * 客户联系人
    */
   private List<Contact> contacts = new ArrayList<Contact>();
+
+  /**
+   * 关键字
+   */
+  private String keyword;
 
   /**
    * 企业备注
@@ -370,22 +365,6 @@ public class Company implements Serializable {
 
   public void setKeyword(String keyword) {
     this.keyword = keyword;
-  }
-
-  public Long getBusinessDeveloperId() {
-    return businessDeveloperId;
-  }
-
-  public void setBusinessDeveloperId(Long businessDeveloperId) {
-    this.businessDeveloperId = businessDeveloperId;
-  }
-
-  public User getBusinessDeveloper() {
-    return businessDeveloper;
-  }
-
-  public void setBusinessDeveloper(User businessDeveloper) {
-    this.businessDeveloper = businessDeveloper;
   }
 
   public List<Contact> getContacts() {

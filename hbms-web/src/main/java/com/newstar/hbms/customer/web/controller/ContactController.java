@@ -2,8 +2,8 @@ package com.newstar.hbms.customer.web.controller;
 
 import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.domain.Contact;
+import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.customer.service.ContactService;
-import com.newstar.hbms.customer.service.CustomerService;
 import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.utils.DateEditor;
 import com.newstar.hbms.utils.ExceptionUtils;
@@ -26,7 +26,7 @@ public class ContactController extends MultiActionController {
 
   private ContactService contactService;
 
-  private CustomerService customerService;
+  private CompanyService companyService;
 
   private String datePattern;
 
@@ -34,12 +34,12 @@ public class ContactController extends MultiActionController {
     this.contactService = contactService;
   }
 
-  public void setCustomerService(CustomerService customerService) {
-    this.customerService = customerService;
+  public void setCompanyService(CompanyService companyService) {
+    this.companyService = companyService;
   }
 
   public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    PagingResult<Company> customerPagingResult = customerService.findByBean(new Company(), new PageRange(1, 100));
+    PagingResult<Company> customerPagingResult = companyService.findByBean(new Company(), new PageRange(1, 100));
     return new ModelAndView("/customer/contactManager", "customers", customerPagingResult.getRecords());
   }
 

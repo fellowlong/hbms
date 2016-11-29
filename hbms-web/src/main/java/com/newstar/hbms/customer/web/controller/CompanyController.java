@@ -1,7 +1,8 @@
 package com.newstar.hbms.customer.web.controller;
 
+import com.newstar.hbms.candidate.domain.Candidate;
 import com.newstar.hbms.customer.domain.Company;
-import com.newstar.hbms.customer.service.CustomerService;
+import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.utils.ExceptionUtils;
 import com.newstar.hbms.utils.JsonUtils;
@@ -23,20 +24,32 @@ import java.util.Map;
  */
 public class CompanyController extends MultiActionController {
 
-  private CustomerService customerService;
+  private CompanyService companyService;
 
-  public void setCustomerService(CustomerService customerService) {
-    this.customerService = customerService;
+  public void setCompanyService(CompanyService companyService) {
+    this.companyService = companyService;
   }
 
   public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
     return new ModelAndView("/customer/companyManager");
   }
 
+  public ModelAndView editView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Long id = WebUtils.getLong(request, WebUtils.ID);
+    ModelAndView modelAndView = new ModelAndView("/customer/companyEdit");
+    if (id != null) {
+      List<Company> candidates = companyService.findByIds(new Long[]{id});
+      if (candidates != null && !candidates.isEmpty()) {
+        modelAndView.getModel().put("company", candidates.get(0));
+      }
+    }
+    return modelAndView;
+  }
+
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Company company) throws Exception  {
     JsonResult jsonResult = new JsonResult();
     try {
-      int resultCount = customerService.insertOrUpdate(company);
+      int resultCount = companyService.insertOrUpdate(company);
       jsonResult.setSuccess(true);
       jsonResult.setData(resultCount);
     } catch (Throwable t) {
@@ -56,7 +69,7 @@ public class CompanyController extends MultiActionController {
         for (String idsStr : idsStrArray) {
           ids.add(new Long(idsStr));
         }
-        int result = customerService.disable(ids.toArray(new Long[ids.size()]));
+        int result = companyService.disable(ids.toArray(new Long[ids.size()]));
         if (result > 0) {
           jsonResult.setSuccess(true);
           jsonResult.setData(result);
@@ -73,7 +86,7 @@ public class CompanyController extends MultiActionController {
           throws Exception {
     JsonResult jsonResult = new JsonResult();
     try {
-      List<Company> companies = customerService.findByIds(new Long[]{company.getId()});
+      List<Company> companies = companyService.findByIds(new Long[]{company.getId()});
       if (companies != null && companies.size() == 1) {
         jsonResult.setSuccess(true);
         jsonResult.setData(companies.get(0));
@@ -99,7 +112,7 @@ public class CompanyController extends MultiActionController {
     if (pageNum != null) {
       pageRange.setPageNum(Integer.parseInt(pageNum));
     }
-    PagingResult<Company> customerResult = customerService.findByBean(company, pageRange);
+    PagingResult<Company> customerResult = companyService.findByBean(company, pageRange);
     Map<String, Object> jsonMap = new HashMap();
     jsonMap.put("page", pageNum);
     jsonMap.put("total ", customerResult.getPageTotal());

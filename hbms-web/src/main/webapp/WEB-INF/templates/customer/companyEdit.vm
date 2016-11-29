@@ -1,0 +1,324 @@
+<style>
+  .widget-title {
+    color: #000;
+    font-family: '微软雅黑';
+  }
+
+  .widget-body {
+    padding: 15px;
+  }
+
+  #worExperiences.form-group {
+    margin: 0;
+  }
+
+  .form-horizontal .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .actionBar {
+    margin-top: 45px;
+    background-color: lavender;
+  }
+  .actionBar > div {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+  }
+</style>
+
+
+<form id="resumeAddForm"
+      method="post"
+      enctype="multipart/form-data"
+      action="/company/insertOrUpdate.do"
+      class="form-horizontal"
+      role="form"
+      autocomplete="off"
+      data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+  <input type="hidden" name="id" value="$!company.id">
+  <div class="row" style="margin:0;padding-left: 50px">
+
+
+    <div class="form-group">
+      <div class="col-sm-9">
+        <h3><b>新增客户</b></h3>
+        <hr/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">客户类型</label>
+      <div class="col-sm-2">
+        <select id="companyTypeId" name="sexId" value="$!company.companyTypeId" class="chosen-select form-control">
+          #set($companyTypes = $baseDataService.getCompanyTypes().children)
+          #foreach($companyType in $companyTypes)
+            <option value="$companyType.id">$companyType.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">名称<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="name" value="$!company.name" placeholder="姓名" class="form-control"
+               data-rule="姓名:required;name"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">全称<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="fullName" value="$!company.fullName" placeholder="全称" class="form-control"
+               data-rule="全称:required;fullName"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">所属行业</label>
+      <div class="col-sm-5">
+        <select id="industries" class="chosen-select form-control" name="industries" value="$!company.industryId">
+          #set($industries = $baseDataService.getIndustries().children)
+          #foreach($industry in $industries)
+            <option value="$industry.id">$industry.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">所在城市</label>
+      <div class="col-sm-5">
+        <select id="cityId" class="chosen-select form-control" name="cityId" value="$!company.cityId">
+          #set($cities = $baseDataService.getCities().children)
+          #foreach($city in $cities)
+            <option value="$city.id">$city.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">电话<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="phone" value="$!company.phone" placeholder="电话" class="form-control"
+               data-rule="电话:required;phone"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">网址<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="webSite" value="$!company.webSite" placeholder="网址" class="form-control"
+               data-rule="网址:required;webSite"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">地址<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="address" value="$!company.address" placeholder="地址" class="form-control"
+               data-rule="地址:required;address"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">邮箱<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="email" value="$!company.email" placeholder="邮箱" class="form-control"
+               data-rule="邮箱:required;email"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">传真<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="fax" value="$!company.fax" placeholder="传真" class="form-control"
+               data-rule="传真:required;fax"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">BD</label>
+      <div class="col-sm-2">
+        <select id="maintainerId" name="maintainerId" value="$!company.maintainerId" class="chosen-select form-control">
+          #foreach($user in $users)
+            <option value="$user.id">$user.username - $user.realName</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">所属文件夹</label>
+      <div class="col-sm-2">
+        <select id="folderId" name="folderId" value="$!company.folderId" class="chosen-select form-control">
+          #set($companyFolders = $baseDataService.getCompanyFolders().children)
+          #foreach($companyFolder in $companyFolders)
+            <option value="$companyFolder.id">$companyFolder.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">员工数量<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="staffCount" value="$!company.staffCount" placeholder="员工数量" class="form-control"
+               data-rule="员工数量:required;staffCount"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">企业性质</label>
+      <div class="col-sm-2">
+        <select id="natureId" class="chosen-select form-control" name="natureId" value="$!company.natureId">
+          #set($companyNatures = $baseDataService.getCompanyNatures().children)
+          #foreach($companyNature in $companyNatures)
+            <option value="$companyNature.id">$companyNature.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">产品</label>
+      <div class="col-sm-5">
+        <input type="text" id="products" name="products" value="$!company.products" class="form-control"
+               placeholder="产品"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">注册资金</label>
+      <div class="col-sm-5">
+        <input type="text" id="registeredCapital" name="registeredCapital" value="$!company.registeredCapital"
+               placeholder="注册资金" class="form-control"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">法人</label>
+      <div class="col-sm-5">
+        <input type="text" id="legalPerson" name="legalPerson" value="$!company.legalPerson" class="form-control"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">产权结构</label>
+      <div class="col-sm-2">
+        <select id="propertyRightStructureId" name="propertyRightStructureId" value="$!company.propertyRightStructureId"
+                class="chosen-select form-control">
+          #set($companyPropertyRightStructures = $baseDataService.getCompanyPropertyRightStructures().children)
+          #foreach($companyPropertyRightStructure in $companyPropertyRightStructures)
+            <option value="$companyPropertyRightStructure.id">$companyPropertyRightStructure.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">企业简介</label>
+      <div class="col-sm-9">
+        <textarea type="text" id="intro" name="intro" value="$!company.intro" rows="5" class="form-control"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">备注</label>
+      <div class="col-sm-9">
+        <textarea type="text" id="remark" name="remark" value="$!company.remark" rows="5"
+                  class="form-control"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">搜索关键字</label>
+      <div class="col-sm-9">
+        <textarea type="text" id="keyword" name="keyword" value="$!company.keyword" rows="5"
+                  class="form-control"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <style>
+  </style>
+  <div class="actionBar">
+    <div>
+      <div class="col-sm-9" style="text-align: center">
+        <button class="btn btn-sm btn-primary">
+          <i class="fa fa-save bigger-200"></i>
+          保存
+        </button>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+<script type="text/javascript">
+  $('.chosen-select').chosen({search_contains: true});
+  function renderFileInput(elementId) {
+    $(elementId).ace_file_input({
+      no_file: '空 ...',
+      btn_choose: '选择',
+      btn_change: '修改',
+      droppable: false,
+      onchange: null,
+      thumbnail: false //| true | large
+      //whitelist:'gif|png|jpg|jpeg'
+      //blacklist:'exe|php'
+      //onchange:''
+      //
+    });
+  }
+  renderFileInput("#resumeFile");
+  $('.date-picker').datepicker({
+    autoclose: true,
+    todayHighlight: true
+  }).next().on("click", function () {
+    $('.date-picker').focus();
+  });
+
+  $("#addAttachment").on("click", function () {
+    $("#attachments").append($("#attachmentTemplate").html());
+    reCalculateAttatcmentSeq();
+  });
+
+  $("#addWorkExperience").on("click", function () {
+    $("#workExperiences").append($("#workExperienceTemplate").html());
+  });
+  $("#addWorkExperience").click();
+
+  $("#addEducationExperience").on("click", function () {
+    $("#educationExperiences").append($("#educationExperienceTemplate").html());
+  });
+  $("#addEducationExperience").click();
+
+  $("#addLanguageAbility").on("click", function () {
+    $("#languageAbilities").append($("#languageAbilityTemplate").html());
+  });
+  $("#addLanguageAbility").click();
+
+  $("#addCertificate").on("click", function () {
+    $("#certificates").append($("#certificateTemplate").html());
+  });
+  $("#addCertificate").click();
+
+  $("#addProjectExperience").on("click", function () {
+    $("#projectExperiences").append($("#projectExperienceTemplate").html());
+  });
+  $("#addProjectExperience").click();
+  function reCalculateAttatcmentSeq() {
+    var attatementSeq = 0;
+    $("#attachments").find(".form-group").each(function (index, item) {
+      $(item).find("label.control-label").text("附件" + ++attatementSeq);
+      renderFileInput($(item).find("input"));
+    });
+  }
+
+</script>

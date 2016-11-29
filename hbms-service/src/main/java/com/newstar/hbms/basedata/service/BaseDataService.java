@@ -35,6 +35,11 @@ public interface BaseDataService {
 
     public static final String TYPE_CODE_JOB_HUNTING_STATUS = "JOB_HUNTING_STATUS";
 
+    public static final String TYPE_CODE_COMPANY_TYPE = "COMPANY_TYPE";
+    public static final String TYPE_CODE_COMPANY_FOLDER = "COMPANY_FOLDER";
+    public static final String TYPE_CODE_COMPANY_NATURE = "COMPANY_NATURE";
+    public static final String TYPE_CODE_COMPANY_PROPERTY_RIGHT_STRUCTURE = "COMPANY_PROPERTY_RIGHT_STRUCTURE";
+
 
     public TreeNode getSexes();
     public TreeNode getMaritals();
@@ -45,8 +50,12 @@ public interface BaseDataService {
     public TreeNode getCities();
     public TreeNode getTags();
     public TreeNode getDepartments();
-    public TreeNode getConpanies();
+    public TreeNode getCompanies();
     public TreeNode getJobHuntingStatuses();
+    public TreeNode getCompanyTypes();
+    public TreeNode getCompanyFolders();
+    public TreeNode getCompanyNatures();
+    public TreeNode getCompanyPropertyRightStructures();
 
 
 }

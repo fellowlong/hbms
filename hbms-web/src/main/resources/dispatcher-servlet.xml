@@ -37,6 +37,7 @@
         <value>/candidate/preInsertOrUpdate.do</value>
         <value>/candidate/insertOrUpdate.do</value>
         <value>/company/workspace.do</value>
+        <value>/company/editView.do</value>
         <value>/company/findByBean.do</value>
         <value>/company/workspace.do</value>
         <value>/contact/workspace.do</value>
@@ -104,25 +105,25 @@
     <!--<property name="httpSolrServer" ref="httpSolrServer"/>-->
   </bean>
 
-  <bean id="customerController" class="com.newstar.hbms.customer.web.controller.CompanyController">
-    <property name="customerService" ref="customerService"/>
+  <bean id="companyController" class="com.newstar.hbms.customer.web.controller.CompanyController">
+    <property name="companyService" ref="companyService"/>
   </bean>
 
   <bean id="contactController" class="com.newstar.hbms.customer.web.controller.ContactController">
     <property name="contactService" ref="contactService"/>
-    <property name="customerService" ref="customerService"/>
+    <property name="companyService" ref="companyService"/>
     <property name="datePattern" value="${datePattern}"/>
   </bean>
 
   <bean id="positionController" class="com.newstar.hbms.customer.web.controller.PositionController">
     <property name="positionService" ref="positionService"/>
-    <property name="customerService" ref="customerService"/>
+    <property name="companyService" ref="companyService"/>
     <property name="datePattern" value="${datePattern}"/>
   </bean>
 
   <bean id="projectController" class="com.newstar.hbms.project.web.controller.ProjectController">
     <property name="projectService" ref="projectService"/>
-    <property name="customerService" ref="customerService"/>
+    <property name="companyService" ref="companyService"/>
     <property name="contactService" ref="contactService"/>
     <property name="positionService" ref="positionService"/>
     <property name="userService" ref="userService"/>
