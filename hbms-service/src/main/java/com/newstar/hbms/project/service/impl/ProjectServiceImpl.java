@@ -36,7 +36,7 @@ public class ProjectServiceImpl implements ProjectService  {
 
   @Override
   public PagingResult<Project> findByBean(Project project, PageRange pageRange) {
-    return null;
+    return projectDao.findByBean(project, pageRange);
   }
 
   @Override

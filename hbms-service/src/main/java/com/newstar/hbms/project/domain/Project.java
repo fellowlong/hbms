@@ -24,15 +24,38 @@ public class Project implements Serializable {
   private Long id;
 
   /**
-   * 重要程度
+   * 项目编号
    */
-  private Long importantLevelId;
-  private TreeNode importantLevel;
+  private String code;
 
   /**
    * 项目名称
    */
   private String name;
+
+  /**
+   * 客户公司
+   */
+  private Long companyId;
+  private Company company;
+
+  /**
+   * 职位
+   */
+  private Long positionId;
+  private Position position;
+
+  /**
+   * 客户联系人
+   */
+  private Long contactId;
+  private Contact contact;
+
+  /**
+   * 重要程度
+   */
+  private Long importantLevelId;
+  private TreeNode importantLevel;
 
   /**
    * 开始日期
@@ -45,10 +68,10 @@ public class Project implements Serializable {
   private Date endDate;
 
   /**
-   * 职位
+   * 项目经理
    */
-  private Long positionId;
-  private Position position;
+  private Long managerId;
+  private User manager;
 
   /**
    * 其他顾问
@@ -105,6 +128,70 @@ public class Project implements Serializable {
     this.id = id;
   }
 
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Long getCompanyId() {
+    return companyId;
+  }
+
+  public void setCompanyId(Long companyId) {
+    this.companyId = companyId;
+  }
+
+  public Company getCompany() {
+    return company;
+  }
+
+  public void setCompany(Company company) {
+    this.company = company;
+  }
+
+  public Long getPositionId() {
+    return positionId;
+  }
+
+  public void setPositionId(Long positionId) {
+    this.positionId = positionId;
+  }
+
+  public Position getPosition() {
+    return position;
+  }
+
+  public void setPosition(Position position) {
+    this.position = position;
+  }
+
+  public Long getContactId() {
+    return contactId;
+  }
+
+  public void setContactId(Long contactId) {
+    this.contactId = contactId;
+  }
+
+  public Contact getContact() {
+    return contact;
+  }
+
+  public void setContact(Contact contact) {
+    this.contact = contact;
+  }
+
   public Long getImportantLevelId() {
     return importantLevelId;
   }
@@ -119,14 +206,6 @@ public class Project implements Serializable {
 
   public void setImportantLevel(TreeNode importantLevel) {
     this.importantLevel = importantLevel;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public Date getStartDate() {
@@ -145,20 +224,20 @@ public class Project implements Serializable {
     this.endDate = endDate;
   }
 
-  public Long getPositionId() {
-    return positionId;
+  public Long getManagerId() {
+    return managerId;
   }
 
-  public void setPositionId(Long positionId) {
-    this.positionId = positionId;
+  public void setManagerId(Long managerId) {
+    this.managerId = managerId;
   }
 
-  public Position getPosition() {
-    return position;
+  public User getManager() {
+    return manager;
   }
 
-  public void setPosition(Position position) {
-    this.position = position;
+  public void setManager(User manager) {
+    this.manager = manager;
   }
 
   public List<ProjectConsultant> getConsultants() {
@@ -185,20 +264,20 @@ public class Project implements Serializable {
     this.status = status;
   }
 
-  public String getRemark() {
-    return remark;
-  }
-
-  public void setRemark(String remark) {
-    this.remark = remark;
-  }
-
   public Boolean getShare() {
     return share;
   }
 
   public void setShare(Boolean share) {
     this.share = share;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
   }
 
   public Boolean getYn() {

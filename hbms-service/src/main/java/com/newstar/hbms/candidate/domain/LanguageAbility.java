@@ -1,5 +1,6 @@
 package com.newstar.hbms.candidate.domain;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.common.domain.Domain;
 
 /**
@@ -13,29 +14,28 @@ public class LanguageAbility extends Domain {
   private Long id;
 
   /**
-   * 简历编号
+   * 人才，外键
    */
-  private Long resumeId;
-
-  /**
-   * 简历
-   */
+  private Long candidateId;
   private Candidate candidate;
 
   /**
-   * 语言名称
+   * 语言，外键
    */
   private Long languageId;
+  private TreeNode language;
 
   /**
-   * 读写能力
+   * 读写能力，外键
    */
-  private String readAndWrite;
+  private Long readAndWriteId;
+  private TreeNode readAndWrite;
 
   /**
-   * 听说能力
+   * 听说能力，外键
    */
-  private String listenAndSpeaking;
+  private Long listenAndSpeakingId;
+  private TreeNode listenAndSpeaking;
 
   public Long getId() {
     return id;
@@ -45,12 +45,12 @@ public class LanguageAbility extends Domain {
     this.id = id;
   }
 
-  public Long getResumeId() {
-    return resumeId;
+  public Long getCandidateId() {
+    return candidateId;
   }
 
-  public void setResumeId(Long resumeId) {
-    this.resumeId = resumeId;
+  public void setCandidateId(Long candidateId) {
+    this.candidateId = candidateId;
   }
 
   public Candidate getCandidate() {
@@ -69,19 +69,43 @@ public class LanguageAbility extends Domain {
     this.languageId = languageId;
   }
 
-  public String getReadAndWrite() {
+  public TreeNode getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(TreeNode language) {
+    this.language = language;
+  }
+
+  public Long getReadAndWriteId() {
+    return readAndWriteId;
+  }
+
+  public void setReadAndWriteId(Long readAndWriteId) {
+    this.readAndWriteId = readAndWriteId;
+  }
+
+  public TreeNode getReadAndWrite() {
     return readAndWrite;
   }
 
-  public void setReadAndWrite(String readAndWrite) {
+  public void setReadAndWrite(TreeNode readAndWrite) {
     this.readAndWrite = readAndWrite;
   }
 
-  public String getListenAndSpeaking() {
+  public Long getListenAndSpeakingId() {
+    return listenAndSpeakingId;
+  }
+
+  public void setListenAndSpeakingId(Long listenAndSpeakingId) {
+    this.listenAndSpeakingId = listenAndSpeakingId;
+  }
+
+  public TreeNode getListenAndSpeaking() {
     return listenAndSpeaking;
   }
 
-  public void setListenAndSpeaking(String listenAndSpeaking) {
+  public void setListenAndSpeaking(TreeNode listenAndSpeaking) {
     this.listenAndSpeaking = listenAndSpeaking;
   }
 }

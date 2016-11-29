@@ -31,6 +31,11 @@ public class Position implements Serializable {
   private Contact contact;
 
   /**
+   * 职位编号
+   */
+  private String code;
+
+  /**
    * 名称
    */
   private String name;
@@ -78,10 +83,9 @@ public class Position implements Serializable {
   private TreeNode degree;
 
   /**
-   * 语言
+   * 语言要求
    */
-  private Long languageId;
-  private TreeNode language;
+  private List<PositionLanguage> languages;
 
   /**
    * 年龄要求
@@ -218,6 +222,14 @@ public class Position implements Serializable {
     this.contact = contact;
   }
 
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
   public String getName() {
     return name;
   }
@@ -338,20 +350,12 @@ public class Position implements Serializable {
     this.degree = degree;
   }
 
-  public Long getLanguageId() {
-    return languageId;
+  public List<PositionLanguage> getLanguages() {
+    return languages;
   }
 
-  public void setLanguageId(Long languageId) {
-    this.languageId = languageId;
-  }
-
-  public TreeNode getLanguage() {
-    return language;
-  }
-
-  public void setLanguage(TreeNode language) {
-    this.language = language;
+  public void setLanguages(List<PositionLanguage> languages) {
+    this.languages = languages;
   }
 
   public Integer getMinAge() {

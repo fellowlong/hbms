@@ -1,6 +1,9 @@
 package com.newstar.hbms.candidate.domain;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.common.domain.Domain;
+
+import java.util.Date;
 
 /**
  * Created by fellowlong on 2014-05-27.
@@ -13,24 +16,21 @@ public class Certificate extends Domain {
   private Long id;
 
   /**
-   * 简历编号
+   * 人才外键
    */
-  private Long resumeId;
-
-  /**
-   * 简历
-   */
+  private Long candidateId;
   private Candidate candidate;
 
   /**
    * 证书名称
    */
   private Long certificateId;
+  private TreeNode certificate;
 
   /**
    * 取得时间
    */
-  private String acquireDate;
+  private Date acquireDate;
 
   public Long getId() {
     return id;
@@ -40,12 +40,12 @@ public class Certificate extends Domain {
     this.id = id;
   }
 
-  public Long getResumeId() {
-    return resumeId;
+  public Long getCandidateId() {
+    return candidateId;
   }
 
-  public void setResumeId(Long resumeId) {
-    this.resumeId = resumeId;
+  public void setCandidateId(Long candidateId) {
+    this.candidateId = candidateId;
   }
 
   public Candidate getCandidate() {
@@ -64,11 +64,19 @@ public class Certificate extends Domain {
     this.certificateId = certificateId;
   }
 
-  public String getAcquireDate() {
+  public TreeNode getCertificate() {
+    return certificate;
+  }
+
+  public void setCertificate(TreeNode certificate) {
+    this.certificate = certificate;
+  }
+
+  public Date getAcquireDate() {
     return acquireDate;
   }
 
-  public void setAcquireDate(String acquireDate) {
+  public void setAcquireDate(Date acquireDate) {
     this.acquireDate = acquireDate;
   }
 }

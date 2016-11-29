@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +30,11 @@ public class Candidate implements Serializable {
   private MultipartFile[] otherAttachmentFiles;
 
   private Attachment[] otherAttachments;
+
+  /**
+   * 人才编号
+   */
+  private String code;
 
   /**
    * 姓名
@@ -261,6 +265,14 @@ public class Candidate implements Serializable {
 
   public void setOtherAttachments(Attachment[] otherAttachments) {
     this.otherAttachments = otherAttachments;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getName() {

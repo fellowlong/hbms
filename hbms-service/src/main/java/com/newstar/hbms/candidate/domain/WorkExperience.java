@@ -2,6 +2,8 @@ package com.newstar.hbms.candidate.domain;
 
 import com.newstar.hbms.common.domain.Domain;
 
+import java.util.Date;
+
 /**
  * Created by fellowlong on 2014-05-27.
  */
@@ -13,13 +15,9 @@ public class WorkExperience extends Domain {
   private Long id;
 
   /**
-   * 简历编号
+   * 人才，外键
    */
-  private Long resumeId;
-
-  /**
-   * 简历
-   */
+  private Long candidateId;
   private Candidate candidate;
 
   /**
@@ -30,20 +28,15 @@ public class WorkExperience extends Domain {
   /**
    * 开始时间
    */
-  private String startDate;
+  private Date startDate;
 
   /**
    * 结束时间
    */
-  private String endDate;
+  private Date endDate;
 
   /**
-   * 行业
-   */
-  private String industry;
-
-  /**
-   * 结束时间
+   * 职位
    */
   private String position;
 
@@ -60,12 +53,12 @@ public class WorkExperience extends Domain {
     this.id = id;
   }
 
-  public Long getResumeId() {
-    return resumeId;
+  public Long getCandidateId() {
+    return candidateId;
   }
 
-  public void setResumeId(Long resumeId) {
-    this.resumeId = resumeId;
+  public void setCandidateId(Long candidateId) {
+    this.candidateId = candidateId;
   }
 
   public Candidate getCandidate() {
@@ -84,28 +77,20 @@ public class WorkExperience extends Domain {
     this.company = company;
   }
 
-  public String getStartDate() {
+  public Date getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(String startDate) {
+  public void setStartDate(Date startDate) {
     this.startDate = startDate;
   }
 
-  public String getEndDate() {
+  public Date getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(String endDate) {
+  public void setEndDate(Date endDate) {
     this.endDate = endDate;
-  }
-
-  public String getIndustry() {
-    return industry;
-  }
-
-  public void setIndustry(String industry) {
-    this.industry = industry;
   }
 
   public String getPosition() {

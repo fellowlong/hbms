@@ -10,22 +10,22 @@
     </selectKey>
     insert into Certificate(
     id,
-    resumeId,
-    name,
+    candidateId,
+    certificateId,
     acquireDate
     )
     values (
-    #{id},
-    #{resumeId},
-    #{name, jdbcType=VARCHAR},
-    #{acquireDate,jdbcType=VARCHAR}
+      #{id},
+      #{candidateId,jdbcType=BIGINT},
+      #{certificateId,jdbcType=BIGINT},
+      #{acquireDate,jdbcType=DATE}
     )
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.Certificate">
     update Certificate set
-      name = #{name, jdbcType=VARCHAR},
-      acquireDate = #{acquireDate,jdbcType=VARCHAR}
+      certificateId = #{certificateId, jdbcType=BIGINT},
+      acquireDate = #{acquireDate,jdbcType=DATE}
     where
       id = #{id}
   </update>
@@ -37,30 +37,9 @@
     </foreach>
   </delete>
 
-  <select id="findByBean"
-          parameterType="com.newstar.hbms.candidate.domain.Certificate"
-          resultType="com.newstar.hbms.candidate.domain.Certificate">
-    select
-    *
-    from Certificate
-    where 1 = 1
-    <if test="id != null">
-      and id = #{id}
-    </if>
-    <if test="resumeId != null">
-      and resumeId = #{resumeId}
-    </if>
-    <if test="name != null">
-      and name = #{name}
-    </if>
-    <if test="acquireDate != null">
-      and acquireDate = #{acquireDate}
-    </if>
-  </select>
-
 
   <select id="findByIds"
-          parameterType="com.newstar.hbms.candidate.domain.Certificate"
+          parameterType="java.lang.Long"
           resultType="com.newstar.hbms.candidate.domain.Certificate">
     select * from Certificate where id in
     <foreach collection="array" open="(" close=")" separator="," item="certificateId">
@@ -68,10 +47,10 @@
     </foreach>
   </select>
 
-  <select id="findByResumeIds" parameterType="com.newstar.hbms.candidate.domain.Certificate">
-    select * from Certificate where resumeId in
-    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
-      #{resumeId}
+  <select id="findByCandidateIds" parameterType="java.lang.Long" resultType="com.newstar.hbms.candidate.domain.Certificate">
+    select * from Certificate where candidateId in
+    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
+      #{candidateId}
     </foreach>
   </select>
 

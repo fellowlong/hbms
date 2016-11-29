@@ -143,7 +143,7 @@ public class CandidateServiceImpl implements CandidateService {
         }
       });
       for (WorkExperience perWorkExperience : workExperiences) {
-        perWorkExperience.setResumeId(candidate.getId());
+        perWorkExperience.setCandidateId(candidate.getId());
         if (perWorkExperience.getId() == null
            && perWorkExperience.getCrud() != null && perWorkExperience.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += workExperienceDao.insert(perWorkExperience);
@@ -166,7 +166,7 @@ public class CandidateServiceImpl implements CandidateService {
         }
       });
       for (EducationExperience perEducationExperience : educationExperiences) {
-        perEducationExperience.setResumeId(candidate.getId());
+        perEducationExperience.setCandidateId(candidate.getId());
         if (perEducationExperience.getId() == null
            && perEducationExperience.getCrud() != null && perEducationExperience.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += educationExperienceDao.insert(perEducationExperience);
@@ -189,7 +189,7 @@ public class CandidateServiceImpl implements CandidateService {
         }
       });
       for (LanguageAbility perLanguageAbility : languageAbilities) {
-        perLanguageAbility.setResumeId(candidate.getId());
+        perLanguageAbility.setCandidateId(candidate.getId());
         if (perLanguageAbility.getId() == null
            && perLanguageAbility.getCrud() != null && perLanguageAbility.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += languageAbilityDao.insert(perLanguageAbility);
@@ -212,7 +212,7 @@ public class CandidateServiceImpl implements CandidateService {
         }
       });
       for (Certificate perCertificate : certificates) {
-        perCertificate.setResumeId(candidate.getId());
+        perCertificate.setCandidateId(candidate.getId());
         if (perCertificate.getId() == null
            && perCertificate.getCrud() != null && perCertificate.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += certificateDao.insert(perCertificate);
@@ -235,7 +235,7 @@ public class CandidateServiceImpl implements CandidateService {
         }
       });
       for (ProjectExperience perProjectExperience : projectExperiences) {
-        perProjectExperience.setResumeId(candidate.getId());
+        perProjectExperience.setCandidateId(candidate.getId());
         if (perProjectExperience.getId() == null
            && perProjectExperience.getCrud() != null && perProjectExperience.getCrud().equals(Domain.CRUD.CREATE)) {
           resultCount += projectExperienceDao.insert(perProjectExperience);

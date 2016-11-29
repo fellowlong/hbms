@@ -24,6 +24,6 @@ public interface PositionDao {
 
   public List<Position> findByIds(Long[] ids);
 
-  public List<PositionTag> findPositionTagPositionIdIds(Long[] ids);
+  public List<PositionTag> findTagsPositionIdIds(Long[] positionIdIds);
 
 }

@@ -166,7 +166,7 @@
     </foreach>
   </select>
 
-  <select id="findPositionTagPositionIdIds" resultType="com.newstar.hbms.customer.domain.PositionTag">
+  <select id="findTagsPositionIdIds" resultType="com.newstar.hbms.customer.domain.PositionTag">
     select * from PositionTag pt where pt.positionId in
     <foreach collection="array" open="(" close=")" separator="," item="positionId">
       #{positionId}

@@ -10,25 +10,25 @@
     </selectKey>
     insert into LanguageAbility(
       id,
-      resumeId,
-      name,
-      readAndWrite,
-      listenAndSpeaking
+      candidateId,
+      languageId,
+      readAndWriteId,
+      listenAndSpeakingId
     )
     values (
       #{id},
-      #{resumeId},
-      #{name, jdbcType=VARCHAR},
-      #{readAndWrite,jdbcType=VARCHAR},
-      #{listenAndSpeaking,jdbcType=VARCHAR}
+      #{candidateId, jdbcType=BIGINT},
+      #{languageId, jdbcType=BIGINT},
+      #{readAndWriteId, jdbcType=BIGINT},
+      #{listenAndSpeakingId, jdbcType=BIGINT}
     )
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.LanguageAbility">
     update LanguageAbility set
-    name = #{name, jdbcType=VARCHAR},
-    readAndWrite = #{readAndWrite,jdbcType=VARCHAR},
-    listenAndSpeaking = #{listenAndSpeaking,jdbcType=VARCHAR}
+      languageId = #{languageId, jdbcType=BIGINT},
+      readAndWriteId = #{readAndWriteId, jdbcType=BIGINT},
+      listenAndSpeakingId = #{listenAndSpeakingId, jdbcType=BIGINT}
     where
     id = #{id}
   </update>
@@ -40,30 +40,8 @@
     </foreach>
   </delete>
 
-  <select id="findByBean"
-          parameterType="com.newstar.hbms.candidate.domain.LanguageAbility"
-          resultType="com.newstar.hbms.candidate.domain.LanguageAbility">
-    select
-    *
-    from LanguageAbility
-    where 1 = 1
-    <if test="id != null">
-      and id = #{id}
-    </if>
-    <if test="resumeId != null">
-      and resumeId = #{resumeId}
-    </if>
-    <if test="readAndWrite != null">
-      and readAndWrite = #{readAndWrite}
-    </if>
-    <if test="listenAndSpeaking != null">
-      and listenAndSpeaking = #{listenAndSpeaking}
-    </if>
-  </select>
-
-
   <select id="findByIds"
-          parameterType="com.newstar.hbms.candidate.domain.LanguageAbility"
+          parameterType="java.lang.Long"
           resultType="com.newstar.hbms.candidate.domain.LanguageAbility">
     select * from LanguageAbility where id in
     <foreach collection="array" open="(" close=")" separator="," item="languageAbilityId">
@@ -71,10 +49,10 @@
     </foreach>
   </select>
 
-  <select id="findByResumeIds" resultType="com.newstar.hbms.candidate.domain.LanguageAbility">
-    select * from LanguageAbility where resumeId in
-    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
-      #{resumeId}
+  <select id="findByCandidateIds" parameterType="java.lang.Long" resultType="com.newstar.hbms.candidate.domain.LanguageAbility">
+    select * from LanguageAbility where candidateId in
+    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
+      #{candidateId}
     </foreach>
   </select>
 </mapper>

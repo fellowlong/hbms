@@ -10,28 +10,34 @@
     </selectKey>
     insert into EducationExperience(
       id,
-      resumeId,
-      school,
+      candidateId,
+      schoolId,
       startDate,
       endDate,
-      degree
+      degreeId,
+      majorId,
+      typeId
     )
     values (
       #{id},
-      #{resumeId},
-      #{school, jdbcType=VARCHAR},
-      #{startDate,jdbcType=VARCHAR},
-      #{endDate,jdbcType=VARCHAR},
-      #{degree}
+      #{candidateId, jdbcType=BIGINT},
+      #{schoolId, jdbcType=BIGINT},
+      #{startDate,jdbcType=DATE},
+      #{endDate,jdbcType=DATE},
+      #{degreeId, jdbcType=BIGINT},
+      #{majorId, jdbcType=BIGINT},
+      #{typeId, jdbcType=BIGINT}
     )
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.EducationExperience">
     update EducationExperience set
-      school = #{school, jdbcType=VARCHAR},
-      startDate = #{startDate,jdbcType=VARCHAR},
-      endDate = #{endDate,jdbcType=VARCHAR},
-      degree = #{degree}
+      schoolId = #{schoolId, jdbcType=BIGINT},
+      startDate = #{startDate,jdbcType=DATE},
+      endDate = #{endDate,jdbcType=DATE},
+      degreeId = #{degreeId, jdbcType=BIGINT},
+      majorId = #{majorId, jdbcType=BIGINT},
+      typeId = #{typeId, jdbcType=BIGINT}
     where
       id = #{id}
   </update>
@@ -43,36 +49,8 @@
     </foreach>
   </delete>
 
-  <select id="findByBean"
-          parameterType="com.newstar.hbms.candidate.domain.EducationExperience"
-          resultType="com.newstar.hbms.candidate.domain.EducationExperience">
-    select
-    e.*
-    from EducationExperience e
-    where 1 = 1
-    <if test="id != null">
-      and id = #{id}
-    </if>
-    <if test="resumeId != null">
-      and resumeId = #{resumeId}
-    </if>
-    <if test="school != null">
-      and school = #{school}
-    </if>
-    <if test="startDate != null">
-      and startDate = #{startDate}
-    </if>
-    <if test="endDate != null">
-      and endDate = #{endDate}
-    </if>
-    <if test="degree != null">
-      and degree = #{degree}
-    </if>
-  </select>
-
-
   <select id="findByIds"
-          parameterType="com.newstar.hbms.candidate.domain.EducationExperience"
+          parameterType="java.lang.Long"
           resultType="com.newstar.hbms.candidate.domain.EducationExperience">
     select * from EducationExperience where id in
     <foreach collection="array" open="(" close=")" separator="," item="educationExperienceId">
@@ -80,10 +58,10 @@
     </foreach>
   </select>
 
-  <select id="findByResumeIds" resultType="com.newstar.hbms.candidate.domain.EducationExperience">
-    select * from EducationExperience where resumeId in
-    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
-      #{resumeId}
+  <select id="findByCandidateIds" parameterType="java.lang.Long" resultType="com.newstar.hbms.candidate.domain.EducationExperience">
+    select * from EducationExperience where candidateId in
+    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
+      #{candidateId}
     </foreach>
   </select>
 

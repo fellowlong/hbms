@@ -114,18 +114,21 @@
     <if test="name != null and !name.isEmpty()">
       and c.name like "%"#{name}"%"
     </if>
-    <if test="industry != null and !industry.isEmpty()">
-      and c.industry like "%"#{industry}"%"
-    </if>
     <if test="phone != null and !phone.isEmpty()">
       and c.phone like "%"#{phone}"%"
     </if>
     order by createTime desc
   </select>
 
-  <select id="findByIds" parameterType="com.newstar.hbms.customer.domain.Company"
-          resultType="com.newstar.hbms.customer.domain.Company">
+  <select id="findByIds" resultType="com.newstar.hbms.customer.domain.Company">
     select * from Company where id in
+    <foreach collection="array" open="(" close=")" separator="," item="companyId">
+      #{companyId}
+    </foreach>
+  </select>
+
+  <select id="findIndustriesByCompanyIds" resultType="com.newstar.hbms.customer.domain.CompanyIndustry">
+    select * from CompanyIndustry where companyId in
     <foreach collection="array" open="(" close=")" separator="," item="companyId">
       #{companyId}
     </foreach>

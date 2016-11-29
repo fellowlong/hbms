@@ -2,6 +2,8 @@ package com.newstar.hbms.candidate.domain;
 
 import com.newstar.hbms.common.domain.Domain;
 
+import java.util.Date;
+
 /**
  * Created by fellowlong on 2014/10/3.
  */
@@ -13,13 +15,9 @@ public class ProjectExperience extends Domain {
   private Long id;
 
   /**
-   * 简历编号
+   * 人才，外键
    */
-  private Long resumeId;
-
-  /**
-   * 简历
-   */
+  private Long candidateId;
   private Candidate candidate;
 
   /**
@@ -30,12 +28,12 @@ public class ProjectExperience extends Domain {
   /**
    * 开始时间
    */
-  private String startDate;
+  private Date startDate;
 
   /**
    * 结束时间
    */
-  private String endDate;
+  private Date endDate;
 
   /**
    * 是否IT项目
@@ -58,11 +56,6 @@ public class ProjectExperience extends Domain {
   private String developTool;
 
   /**
-   * 项目中职责
-   */
-  private String responsibility;
-
-  /**
    * 项目描述
    */
   private String projectDescription;
@@ -72,6 +65,11 @@ public class ProjectExperience extends Domain {
    */
   private String position;
 
+  /**
+   * 项目中职责
+   */
+  private String responsibility;
+
   public Long getId() {
     return id;
   }
@@ -80,12 +78,12 @@ public class ProjectExperience extends Domain {
     this.id = id;
   }
 
-  public Long getResumeId() {
-    return resumeId;
+  public Long getCandidateId() {
+    return candidateId;
   }
 
-  public void setResumeId(Long resumeId) {
-    this.resumeId = resumeId;
+  public void setCandidateId(Long candidateId) {
+    this.candidateId = candidateId;
   }
 
   public Candidate getCandidate() {
@@ -104,28 +102,28 @@ public class ProjectExperience extends Domain {
     this.name = name;
   }
 
-  public String getStartDate() {
+  public Date getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(String startDate) {
+  public void setStartDate(Date startDate) {
     this.startDate = startDate;
   }
 
-  public String getEndDate() {
+  public Date getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(String endDate) {
+  public void setEndDate(Date endDate) {
     this.endDate = endDate;
   }
 
-  public Boolean getIsIt() {
+  public Boolean getIt() {
     return isIt;
   }
 
-  public void setIsIt(Boolean isIt) {
-    this.isIt = isIt;
+  public void setIt(Boolean it) {
+    isIt = it;
   }
 
   public String getSoftwareEnvironment() {
@@ -152,14 +150,6 @@ public class ProjectExperience extends Domain {
     this.developTool = developTool;
   }
 
-  public String getResponsibility() {
-    return responsibility;
-  }
-
-  public void setResponsibility(String responsibility) {
-    this.responsibility = responsibility;
-  }
-
   public String getProjectDescription() {
     return projectDescription;
   }
@@ -174,5 +164,13 @@ public class ProjectExperience extends Domain {
 
   public void setPosition(String position) {
     this.position = position;
+  }
+
+  public String getResponsibility() {
+    return responsibility;
+  }
+
+  public void setResponsibility(String responsibility) {
+    this.responsibility = responsibility;
   }
 }

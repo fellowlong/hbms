@@ -45,11 +45,10 @@ create table Candidate(
 drop table WorkExperience;
 create table WorkExperience (
   id bigint auto_increment not null primary key comment '工作经历编号,主键',
-  resumeId bigint comment '简历编号',
+  candidateId bigint comment '人才，外键',
   company varchar(100) comment '公司名称',
-  startDate varchar(20) comment '开始日期',
-  endDate varchar(20) comment '结束日期',
-  industry varchar(100) comment '行业',
+  startDate date comment '开始日期',
+  endDate date comment '结束日期',
   position varchar(100) comment '职位',
   responsibility varchar(500) comment '职责'
 ) comment='工作经历';
@@ -57,75 +56,48 @@ create table WorkExperience (
 drop table EducationExperience;
 create table EducationExperience (
   id bigint auto_increment not null primary key comment '工作经历编号,主键',
-  resumeId bigint comment '简历编号',
-  school varchar(100) comment '学校名称',
-  startDate varchar(20) comment '开始日期',
-  endDate varchar(20) comment '结束日期',
-  degree varchar(100) comment '学历'
+  candidateId bigint comment '人才，外键',
+  schoolId bigint comment '学习，外键',
+  startDate date comment '开始日期',
+  endDate date comment '结束日期',
+  degreeId bigint comment '学历，外键',
+  majorId bigint comment '专业，外键',
+  typeId bigint comment '类型，外键'
 ) comment='教育经历';
 
 
 drop table LanguageAbility;
 create table LanguageAbility (
   id bigint auto_increment not null primary key comment '语言能力编号,主键',
-  resumeId bigint comment '简历编号',
-  name varchar(100) comment '名称',
-  readAndWrite varchar(50) comment '读写能力',
-  listenAndSpeaking varchar(50) comment '听说能力'
+  candidateId bigint comment '人才，外键',
+  languageId bigint comment '语言，外键',
+  readAndWriteId bigint comment '读写能力，外键',
+  listenAndSpeakingId bigint comment '听说能力，外键'
 ) comment='语言能力';
 
 drop table Certificate;
 create table Certificate (
   id bigint auto_increment not null primary key comment '证书编号,主键',
-  resumeId bigint comment '简历编号',
-  name varchar(50) comment '证书名称',
-  acquireDate varchar(20) comment '获得日期'
+  candidateId bigint comment '人才，外键',
+  certificateId bigint comment '证书，外键',
+  acquireDate date comment '获得日期'
 ) comment='证书';
 
 drop table ProjectExperience;
 create table ProjectExperience (
   id bigint auto_increment not null primary key comment '项目编号,主键',
-  resumeId bigint comment '简历编号',
+  candidateId bigint comment '人才，外键',
   name varchar(100) comment '项目名称',
-  startDate varchar(20) comment '开始日期',
-  endDate varchar(20) comment '结束日期',
+  startDate date comment '开始日期',
+  endDate date comment '结束日期',
   isIt int (1) comment '是否IT项目',
+  projectDescription varchar(500) comment '项目介绍',
   softwareEnvironment varchar(100) comment '软件环境',
   hardwareEnvironment varchar(100) comment '硬件环境',
   developTool varchar(100) comment '开发工具',
-  responsibility varchar(500) comment '工作职责',
-  projectDescription varchar(500) comment '项目介绍'
-
+  position varchar(50) comment '项目职务',
+  responsibility varchar(500) comment '工作职责'
 ) comment='项目经历';
-
-drop table ResumeReport;
-create table ResumeReport(
-  id int auto_increment not null primary key comment '简历报告编号,主键',
-  candidateId int comment '候选人编号,外键',
-  name varchar(100) comment '简历名称',
-  keyword varchar(200) comment '简历搜索关键字',
-  path varchar(200) comment '简历路径',
-  companyId int comment '公司编号,外键',
-  positionId int comment '职位编号,外键',
-  projectId int comment '项目编号,外键',
-  languageId int(2) comment '简历语言',
-  type int(1) comment '类型,原始：0,报告：1',
-  yn int(1) comment '是否有效',
-  createTime datetime comment '创建时间',
-  createUser varchar(50) comment '创建人账户',
-  updateTime datetime comment '修改时间',
-  updateUser varchar(50) comment '修改人账户'
-) comment='简历报告';
-
-drop table ListItem;
-create table ListItem(
-  id int auto_increment not null primary key comment '列表项编号,主键',
-  code varchar(100) comment '值',
-  value varchar(100) comment '值',
-  typeId int comment '列表项编号,外键',
-  UNIQUE KEY UK_ListItem_Code (code)
-) auto_increment = 100001, comment='下拉列表';
-
 
 drop table ResumeIndexTask;
 create table ResumeIndexTask(
@@ -137,27 +109,30 @@ create table ResumeIndexTask(
   updateTime datetime comment '任务修改时间'
 ) comment='创建简历索引的任务表';
 
-
-
-drop table Customer;
-create table Customer(
-  id bigint auto_increment not null primary key comment '客户编号,主键',
-  name  varchar(100) comment '名称',
-  webSite varchar(100) comment '网址',
-  phone varchar(20) comment '电话',
-  fax varchar(20) comment '传真',
-  region varchar(50) comment '地区',
-  address varchar(100) comment '地址',
-  postCode varchar(20) comment '邮编',
-  staffCount int comment '员工数量',
-  industry varchar(100) comment '所属行业',
-  nature varchar(50) comment '企业性质',
-  products varchar(100) comment '产品',
-  registeredCapital varchar(50) comment '注册资金',
+drop table Company;
+create table Company(
+  id bigint auto_increment not null primary key comment '主键',
+  companyTypeId  bigint comment '公司类型外键',
+  name varchar(100) comment '公司名称',
+  fullName varchar(100) comment '公司全名',
+  cityId bigint comment '所属城市外键',
+  phone varchar(50) comment '公司电话',
+  webSite varchar(100) comment '公司网址',
+  address varchar(100) comment '公司地址',
+  email varchar(50) comment '公司邮箱',
+  fax varchar(50) comment '公司传真',
+  maintainerId bigint comment '客户维护人外键',
+  folderId bigint comment '客户所属文件夹外键',
+  staffCount int comment '公司员工数量',
+  natureId bigint comment '公司性质外键',
+  products varchar(200) comment '公司产品',
+  registeredCapital double comment '注册资金',
   legalPerson varchar(50) comment '法人',
-  propertyRightStructure varchar(50) comment '产权结构',
+  propertyRightStructureId bigint comment '产权结构外键',
+  intro varchar(500) comment '企业介绍',
+  keyword varchar(100) comment '搜索关键字',
+  businessDeveloperId bigint comment '客户开发者外键',
   remark varchar(500) comment '企业备注',
-  keyword varchar(100) comment 'keyword',
   yn  int(1) comment '是否有效',
   createTime datetime comment '创建时间',
   createUser varchar(50) comment '创建人账户',
@@ -169,17 +144,20 @@ create table Customer(
 drop table Contact;
 create table Contact(
   id bigint auto_increment not null primary key comment '客户编号,主键',
-  name  varchar(100) comment '名称',
-  englishName varchar(20) comment '英文姓名',
-  customerId bigint comment '外键，客户主键',
-  birthday DATE comment '生日',
-  department varchar(50) comment '部门',
-  position varchar(50) comment '职位',
-  companyPhone varchar(20) comment '公司电话',
-  mobilePhone varchar(20) comment '手机',
-  companyFax varchar(20) comment '公司传真',
-  email varchar(20) comment '邮箱',
-  isKey INT (1) comment '是否关键',
+  importantLevelId bigint comment '重要级别外键',
+  companyId bigint comment '所属公司外键',
+  name varchar(100) comment '名称',
+  englishName varchar(100) comment '英文姓名',
+  sexId bigint comment '性别外键',
+  department varchar(100) comment '部门',
+  position varchar(100) comment '职位',
+  companyPhone varchar(50) comment '公司电话',
+  mobilePhone varchar(50) comment '手机',
+  companyFax varchar(100) comment '公司传真',
+  email varchar(50) comment '邮箱',
+  otherContact varchar(50) comment '其他联系方式',
+  birthday date comment '生日',
+  maintainerId bigint comment '客户维护人外键',
   remark varchar(500) comment '备注',
   yn  int(1) comment '是否有效',
   createTime datetime comment '创建时间',
@@ -191,18 +169,31 @@ create table Contact(
 drop table `Position`;
 create table `Position`(
   id bigint auto_increment not null primary key comment '客户编号,主键',
-  name  varchar(100) comment '名称',
-  minAge int comment '最低年龄',
-  maxAge int comment '最高年龄',
-  sex int(1) comment '性别要求',
-  minWorkYears int comment '最小工作年限',
-  maxWorkYears int comment '最大工作年限',
-  educationLevel varchar(100) comment '学历要求',
-  industry varchar(100) comment '行业要求',
-  foreignLanguage varchar(100) comment '外语要求',
-  address varchar(100) comment '地址',
-  description varchar(2000) comment '职位描述',
-  customerId bigint comment '客户编号，外键',
+  companyId bigint comment '所属公司外键',
+  contactId bigint comment '职位联系人外键',
+  code varchar(50) comment '职位编号',
+  name varchar(100) comment '职位名称',
+  priorityId bigint comment '优先级外键',
+  industryId bigint comment '所属公司外键',
+  functionId bigint comment '职能外键',
+  cityId bigint comment '所属城市外键',
+  fameCompanyBackgroundId bigint comment '名企背景外键',
+  nationalityId bigint comment '国籍外键',
+  degreeId bigint comment '学历外键',
+  minAge int comment '年龄要求',
+  maxAge int comment '年龄要求',
+  minWorkYears int comment '工作年限要求',
+  maxWorkYears int comment '工作年限要求',
+  minAnnualSalary double comment '年薪范围',
+  maxAnnualSalary double comment '年薪范围',
+  sexId bigint comment '性别外键',
+  address varchar(100) comment '招聘地址',
+  description varchar(500) comment '职位描述',
+  brightAndAdvantage varchar(500) comment '职位亮点及优势',
+  processAndLeaderIntro varchar(500) comment '流程及领导介绍',
+  salaryStructure varchar(500) comment '薪资结构',
+  searchDirection varchar(500) comment '寻访方向',
+  businessDeveloperId bigint comment '业务开发人外键',
   remark varchar(500) comment '备注',
   yn  int(1) comment '是否有效',
   createTime datetime comment '创建时间',
@@ -210,3 +201,25 @@ create table `Position`(
   updateTime datetime comment '修改时间',
   updateUser varchar(50) comment '修改人账户'
 ) comment='职位表';
+
+drop table Project;
+create table Project(
+  id bigint auto_increment not null primary key comment '客户编号,主键',
+  code varchar(50) comment '项目编号',
+  name varchar(50) comment '项目名称',
+  companyId bigint comment '所属公司，外键',
+  positionId bigint comment '职位，外键',
+  contactId bigint comment '联系人，外键',
+  importantLevelId bigint comment '重要程度，外键',
+  startDate date comment '开始日期',
+  endDate date comment '结束日期',
+  managerId bigint comment '项目经理，外键',
+  statusId bigint comment '状态外键',
+  share int comment '是否共享',
+  remark varchar(500) comment '备注',
+  yn  int(1) comment '是否有效',
+  createTime datetime comment '创建时间',
+  createUser varchar(50) comment '创建人账户',
+  updateTime datetime comment '修改时间',
+  updateUser varchar(50) comment '修改人账户'
+) comment='项目表';

@@ -10,7 +10,7 @@
     </selectKey>
     insert into ProjectExperience(
     id,
-    resumeId,
+    candidateId,
     name,
     startDate,
     endDate,
@@ -18,37 +18,40 @@
     softwareEnvironment,
     hardwareEnvironment,
     developTool,
-    responsibility,
-    projectDescription
+    projectDescription,
+    position,
+    responsibility
     )
     values (
     #{id},
-    #{resumeId},
+    #{candidateId, jdbcType=BIGINT},
     #{name, jdbcType=VARCHAR},
-    #{startDate,jdbcType=VARCHAR},
-    #{endDate,jdbcType=VARCHAR},
-    #{isIt,jdbcType=INTEGER},
-    #{softwareEnvironment,jdbcType=VARCHAR},
-    #{hardwareEnvironment,jdbcType=VARCHAR},
-    #{developTool,jdbcType=VARCHAR},
-    #{responsibility,jdbcType=VARCHAR},
-    #{projectDescription,jdbcType=VARCHAR}
+    #{startDate, jdbcType=DATE},
+    #{endDate, jdbcType=DATE},
+    #{isIt, jdbcType=BOOLEAN},
+    #{softwareEnvironment, jdbcType=VARCHAR},
+    #{hardwareEnvironment, jdbcType=VARCHAR},
+    #{developTool, jdbcType=VARCHAR},
+    #{projectDescription, jdbcType=VARCHAR},
+    #{position, jdbcType=VARCHAR},
+    #{responsibility, jdbcType=VARCHAR}
     )
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.ProjectExperience">
     update ProjectExperience set
-    name = #{name, jdbcType=VARCHAR},
-    startDate = #{startDate,jdbcType=VARCHAR},
-    endDate = #{endDate,jdbcType=VARCHAR},
-    isIt = #{isIt,jdbcType=INTEGER},
-    softwareEnvironment = #{softwareEnvironment,jdbcType=VARCHAR},
-    hardwareEnvironment = #{hardwareEnvironment,jdbcType=VARCHAR},
-    developTool = #{developTool,jdbcType=VARCHAR},
-    responsibility = #{responsibility,jdbcType=VARCHAR},
-    projectDescription = #{projectDescription,jdbcType=VARCHAR}
+      name = #{name, jdbcType=VARCHAR},
+      startDate = #{startDate, jdbcType=DATE},
+      endDate = #{endDate, jdbcType=DATE},
+      isIt = #{isIt, jdbcType=BOOLEAN},
+      softwareEnvironment = #{softwareEnvironment, jdbcType=VARCHAR},
+      hardwareEnvironment = #{hardwareEnvironment, jdbcType=VARCHAR},
+      developTool = #{developTool, jdbcType=VARCHAR},
+      projectDescription = #{projectDescription, jdbcType=VARCHAR},
+      position = #{position, jdbcType=VARCHAR},
+      responsibility = #{responsibility, jdbcType=VARCHAR}
     where
-    id = #{id}
+      id = #{id}
   </update>
 
   <delete id="deleteByIds" parameterType="java.lang.Long">
@@ -58,51 +61,8 @@
     </foreach>
   </delete>
 
-  <select id="findByBean"
-          parameterType="com.newstar.hbms.candidate.domain.ProjectExperience"
-          resultType="com.newstar.hbms.candidate.domain.ProjectExperience">
-    select
-    *
-    from ProjectExperience
-    where 1 = 1
-    <if test="id != null">
-      and id = #{id}
-    </if>
-    <if test="resumeId != null">
-      and resumeId = #{resumeId}
-    </if>
-    <if test="name != null">
-      and name = #{name}
-    </if>
-    <if test="startDate != null">
-      and startDate = #{startDate}
-    </if>
-    <if test="endDate != null">
-      and endDate = #{endDate}
-    </if>
-    <if test="isIt != null">
-      and isIt = #{isIt}
-    </if>
-    <if test="softwareEnvironment != null">
-      and softwareEnvironment = #{softwareEnvironment}
-    </if>
-    <if test="hardwareEnvironment != null">
-      and hardwareEnvironment = #{hardwareEnvironment}
-    </if>
-    <if test="developTool != null">
-      and developTool = #{developTool}
-    </if>
-    <if test="responsibility != null">
-      and responsibility = #{responsibility}
-    </if>
-    <if test="projectDescription != null">
-      and projectDescription = #{projectDescription}
-    </if>
-  </select>
-
-
   <select id="findByIds"
-          parameterType="com.newstar.hbms.candidate.domain.ProjectExperience"
+          parameterType="java.lang.Long"
           resultType="com.newstar.hbms.candidate.domain.ProjectExperience">
     select * from ProjectExperience where id in
     <foreach collection="array" open="(" close=")" separator="," item="projectExperienceId">
@@ -110,10 +70,10 @@
     </foreach>
   </select>
 
-  <select id="findByResumeIds" resultType="com.newstar.hbms.candidate.domain.ProjectExperience">
-    select * from ProjectExperience where resumeId in
-    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
-      #{resumeId}
+  <select id="findByCandidateIds" parameterType="java.lang.Long" resultType="com.newstar.hbms.candidate.domain.ProjectExperience">
+    select * from ProjectExperience where candidateId in
+    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
+      #{candidateId}
     </foreach>
   </select>
 

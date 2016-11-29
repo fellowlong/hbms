@@ -1,6 +1,7 @@
 package com.newstar.hbms.customer.dao;
 
 import com.newstar.hbms.customer.domain.Company;
+import com.newstar.hbms.customer.domain.CompanyIndustry;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 
@@ -22,5 +23,7 @@ public interface CompanyDao {
   public PagingResult<Company> findByBean(Company company, PageRange pageRange);
 
   public List<Company> findByIds(Long[] ids);
+
+  public List<CompanyIndustry> findIndustriesByCompanyIds(Long[] companyIds);
 
 }

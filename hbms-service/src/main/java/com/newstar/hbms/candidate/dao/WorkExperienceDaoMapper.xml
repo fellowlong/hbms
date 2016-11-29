@@ -10,36 +10,34 @@
     </selectKey>
     insert into WorkExperience(
       id,
-      resumeId,
+      candidateId,
       company,
       startDate,
       endDate,
-      industry,
       position,
       responsibility
     )
     values (
       #{id},
-      #{resumeId},
+      #{candidateId, jdbcType=BIGINT},
       #{company, jdbcType=VARCHAR},
-      #{startDate,jdbcType=VARCHAR},
-      #{endDate,jdbcType=VARCHAR},
-      #{industry,jdbcType=VARCHAR},
-      #{position,jdbcType=VARCHAR},
-      #{responsibility,jdbcType=VARCHAR}
+      #{startDate, jdbcType=DATE},
+      #{endDate, jdbcType=DATE},
+      #{position, jdbcType=VARCHAR},
+      #{responsibility, jdbcType=VARCHAR}
     )
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.WorkExperience">
     update WorkExperience set
-    company = #{company, jdbcType=VARCHAR},
-    startDate = #{startDate, jdbcType=VARCHAR},
-    endDate = #{endDate,jdbcType=VARCHAR},
-    industry = #{industry,jdbcType=VARCHAR},
-    position = #{position,jdbcType=VARCHAR},
-    responsibility = #{responsibility,jdbcType=VARCHAR}
+      candidateId = #{candidateId, jdbcType=BIGINT},
+      company = #{company, jdbcType=VARCHAR},
+      startDate = #{startDate, jdbcType=DATE},
+      endDate = #{endDate, jdbcType=DATE},
+      position = #{position, jdbcType=VARCHAR},
+      responsibility = #{responsibility, jdbcType=VARCHAR}
     where
-    id = #{id}
+      id = #{id}
   </update>
 
   <delete id="deleteByIds" parameterType="java.lang.Long">
@@ -49,41 +47,8 @@
     </foreach>
   </delete>
 
-  <select id="findByBean"
-          parameterType="com.newstar.hbms.candidate.domain.WorkExperience"
-          resultType="com.newstar.hbms.candidate.domain.WorkExperience">
-    select
-    *
-    from WorkExperience
-    where 1 = 1
-    <if test="id != null">
-      and id = #{id}
-    </if>
-    <if test="resumeId != null">
-      and resumeId = #{resumeId}
-    </if>
-    <if test="company != null">
-      and company = #{company}
-    </if>
-    <if test="startDate != null">
-      and startDate = #{startDate}
-    </if>
-    <if test="endDate != null">
-      and endDate = #{endDate}
-    </if>
-    <if test="languageId != null">
-      and industry = #{industry}
-    </if>
-    <if test="position != null">
-      and position = #{position}
-    </if>
-    <if test="responsibility != null">
-      and responsibility = #{responsibility}
-    </if>
-  </select>
-
   <select id="findByIds"
-          parameterType="com.newstar.hbms.candidate.domain.WorkExperience"
+          parameterType="java.lang.Long"
           resultType="com.newstar.hbms.candidate.domain.WorkExperience">
     select * from WorkExperience where id in
     <foreach collection="array" open="(" close=")" separator="," item="workExperienceId">
@@ -91,10 +56,10 @@
     </foreach>
   </select>
 
-  <select id="findByResumeIds" resultType="com.newstar.hbms.candidate.domain.WorkExperience">
-    select * from WorkExperience where resumeId in
-    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
-      #{resumeId}
+  <select id="findByCandidateIds" parameterType="java.lang.Long" resultType="com.newstar.hbms.candidate.domain.WorkExperience">
+    select * from WorkExperience where candidateId in
+    <foreach collection="array" open="(" close=")" separator="," item="candidateId">
+      #{candidateId}
     </foreach>
   </select>
 
