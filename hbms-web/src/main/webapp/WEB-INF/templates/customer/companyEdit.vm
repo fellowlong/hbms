@@ -16,15 +16,12 @@
     margin-left: 0px;
     margin-right: 0px;
   }
-  .actionBar {
+  .actionBar-container {
     margin-top: 45px;
-    background-color: lavender;
   }
-  .actionBar > div {
-    position: fixed;
-    right: 0;
-    left: 0;
-    z-index: 1030;
+  .actionBar {
+    background-color: lavender;
+    text-align: center;
   }
 </style>
 
@@ -42,7 +39,7 @@
 
 
     <div class="form-group">
-      <div class="col-sm-9">
+      <div class="col-sm-6">
         <h3><b>新增客户</b></h3>
         <hr/>
       </div>
@@ -50,7 +47,7 @@
 
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">客户类型</label>
-      <div class="col-sm-2">
+      <div class="col-sm-5">
         <select id="companyTypeId" name="sexId" value="$!company.companyTypeId" class="chosen-select form-control">
           #set($companyTypes = $baseDataService.getCompanyTypes().children)
           #foreach($companyType in $companyTypes)
@@ -142,7 +139,7 @@
 
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">BD</label>
-      <div class="col-sm-2">
+      <div class="col-sm-5">
         <select id="maintainerId" name="maintainerId" value="$!company.maintainerId" class="chosen-select form-control">
           #foreach($user in $users)
             <option value="$user.id">$user.username - $user.realName</option>
@@ -153,7 +150,7 @@
 
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">所属文件夹</label>
-      <div class="col-sm-2">
+      <div class="col-sm-5">
         <select id="folderId" name="folderId" value="$!company.folderId" class="chosen-select form-control">
           #set($companyFolders = $baseDataService.getCompanyFolders().children)
           #foreach($companyFolder in $companyFolders)
@@ -173,7 +170,7 @@
 
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">企业性质</label>
-      <div class="col-sm-2">
+      <div class="col-sm-5">
         <select id="natureId" class="chosen-select form-control" name="natureId" value="$!company.natureId">
           #set($companyNatures = $baseDataService.getCompanyNatures().children)
           #foreach($companyNature in $companyNatures)
@@ -208,7 +205,7 @@
 
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">产权结构</label>
-      <div class="col-sm-2">
+      <div class="col-sm-5">
         <select id="propertyRightStructureId" name="propertyRightStructureId" value="$!company.propertyRightStructureId"
                 class="chosen-select form-control">
           #set($companyPropertyRightStructures = $baseDataService.getCompanyPropertyRightStructures().children)
@@ -222,14 +219,14 @@
 
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">企业简介</label>
-      <div class="col-sm-9">
+      <div class="col-sm-5">
         <textarea type="text" id="intro" name="intro" value="$!company.intro" rows="5" class="form-control"></textarea>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">备注</label>
-      <div class="col-sm-9">
+      <div class="col-sm-5">
         <textarea type="text" id="remark" name="remark" value="$!company.remark" rows="5"
                   class="form-control"></textarea>
       </div>
@@ -237,18 +234,16 @@
 
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">搜索关键字</label>
-      <div class="col-sm-9">
-        <textarea type="text" id="keyword" name="keyword" value="$!company.keyword" rows="5"
-                  class="form-control"></textarea>
+      <div class="col-sm-5">
+        <input type="text" id="keyword" name="keyword" value="$!company.keyword" rows="5"
+                  class="form-control"></input>
       </div>
     </div>
   </div>
 
-  <style>
-  </style>
-  <div class="actionBar">
-    <div>
-      <div class="col-sm-9" style="text-align: center">
+  <div class="actionBar-container">
+    <div class="actionBar navbar-fixed-bottom">
+      <div class="col-sm-7">
         <button class="btn btn-sm btn-primary">
           <i class="fa fa-save bigger-200"></i>
           保存
