@@ -1,0 +1,220 @@
+<style>
+  .widget-title {
+    color: #000;
+    font-family: '微软雅黑';
+  }
+
+  .widget-body {
+    padding: 15px;
+  }
+
+  #worExperiences.form-group {
+    margin: 0;
+  }
+
+  .form-horizontal .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .actionBar-container {
+    margin-top: 45px;
+  }
+  .actionBar {
+    background-color: lavender;
+    text-align: center;
+  }
+</style>
+
+
+<form id="contactAddForm"
+      method="post"
+      enctype="multipart/form-data"
+      action="/contact/insertOrUpdate.do"
+      class="form-horizontal"
+      role="form"
+      autocomplete="off"
+      data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+  <input type="hidden" name="id" value="$!contact.id">
+  <div class="row" style="margin:0;padding-left: 50px">
+
+
+    <div class="form-group">
+      <div class="col-sm-6">
+        <h3><b>新增客户联系人</b></h3>
+        <hr/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">重要程度</label>
+      <div class="col-sm-5">
+        <select id="importantLevelId" name="importantLevelId" value="$!contact.importantLevelId" class="chosen-select form-control">
+          #set($contactImportantLevels = $baseDataService.getContactImportantLevels().children)
+          #foreach($contactImportantLevel in $contactImportantLevels)
+            <option value="$contactImportantLevel.id">$contactImportantLevel.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">所属公司</label>
+      <div class="col-sm-5">
+        <select id="companyId" name="companyId" value="$!contact.companyId" class="chosen-select form-control">
+          #foreach($company in $companies)
+            <option value="$company.id">$company.name</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">姓名<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="name" value="$!contact.name" placeholder="姓名" class="form-control"
+               />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">英文姓名</label>
+      <div class="col-sm-5">
+        <input type="text" name="englishName" value="$!contact.englishName" placeholder="英文姓名" class="form-control"
+               />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">性别</label>
+      <div class="col-sm-5">
+        <select id="sexId" name="sexId" value="$!candidate.sexId" class="chosen-select form-control">
+          #set($sexes = $baseDataService.getSexes().children)
+          #foreach($sex in $sexes)
+            <option value="$sex.id">$sex.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">所在部门</label>
+      <div class="col-sm-5">
+        <input type="text" name="department" value="$!contact.department" placeholder="所在部门" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">职位</label>
+      <div class="col-sm-5">
+        <input type="text" name="position" value="$!contact.position" placeholder="职位" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">公司电话</label>
+      <div class="col-sm-5">
+        <input type="text" name="companyPhone" value="$!contact.companyPhone" placeholder="公司电话" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">手机</label>
+      <div class="col-sm-5">
+        <input type="text" name="mobilePhone" value="$!contact.mobilePhone" placeholder="手机" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">公司传真</label>
+      <div class="col-sm-5">
+        <input type="text" name="companyFax" value="$!contact.companyFax" placeholder="公司传真" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">邮箱</label>
+      <div class="col-sm-5">
+        <input type="text" name="email" value="$!contact.email" placeholder="邮箱" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">其他联系方式</label>
+      <div class="col-sm-5">
+        <input type="text" name="otherContact" value="$!contact.otherContact" placeholder="其他联系方式" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">生日</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <input class="form-control date-picker" name="birthday" value="$!contact.birthday" type="text"
+                 data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-rule="生日:date">
+          <span class="input-group-addon">
+            <i class="fa fa-calendar bigger-110"></i>
+          </span>
+        </div>
+        <script type="text/javascript">
+          $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+          }).next().on("click", function () {
+            $('.date-picker').focus();
+          });
+        </script>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">备注</label>
+      <div class="col-sm-5">
+        <textarea type="text" id="remark" name="remark" value="$!contact.remark" rows="5" class="form-control"></textarea>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="actionBar-container">
+    <div class="actionBar navbar-fixed-bottom">
+      <div class="col-sm-7">
+        <button class="btn btn-sm btn-primary" type="submit">
+          <i class="fa fa-save bigger-200"></i>
+          保存
+        </button>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+<script type="text/javascript">
+  $('.chosen-select').chosen({search_contains: true});
+  $('.date-picker').datepicker({
+    autoclose: true,
+    todayHighlight: true
+  }).next().on("click", function () {
+    $('.date-picker').focus();
+  });
+
+  $("#addAttachment").on("click", function () {
+    $("#attachments").append($("#attachmentTemplate").html());
+    reCalculateAttatcmentSeq();
+  });
+  function reCalculateAttatcmentSeq() {
+    var attatementSeq = 0;
+    $("#attachments").find(".form-group").each(function (index, item) {
+      $(item).find("label.control-label").text("附件" + ++attatementSeq);
+      renderFileInput($(item).find("input"));
+    });
+  }
+
+</script>

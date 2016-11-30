@@ -40,6 +40,8 @@ public interface BaseDataService {
     public static final String TYPE_CODE_COMPANY_NATURE = "COMPANY_NATURE";
     public static final String TYPE_CODE_COMPANY_PROPERTY_RIGHT_STRUCTURE = "COMPANY_PROPERTY_RIGHT_STRUCTURE";
 
+    public static final String TYPE_CODE_CONTACT_IMPORTANT_LEVEL = "TYPE_CODE_CONTACT_IMPORTANT_LEVEL";
+
 
     public TreeNode getSexes();
     public TreeNode getMaritals();
@@ -56,6 +58,7 @@ public interface BaseDataService {
     public TreeNode getCompanyFolders();
     public TreeNode getCompanyNatures();
     public TreeNode getCompanyPropertyRightStructures();
+    public TreeNode getContactImportantLevels();
 
 
 }

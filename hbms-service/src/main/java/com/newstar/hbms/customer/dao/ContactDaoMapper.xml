@@ -25,7 +25,6 @@
       email,
       otherContact,
       birthday,
-      maintainerId,
       remark,
       yn,
       updateUser,
@@ -47,7 +46,6 @@
     #{email, jdbcType=VARCHAR},
     #{otherContact, jdbcType=VARCHAR},
     #{birthday, jdbcType=VARCHAR},
-    #{maintainerId, jdbcType=VARCHAR},
     #{remark, jdbcType=VARCHAR},
     1,
     #{updateUser, jdbcType=VARCHAR},
@@ -72,7 +70,6 @@
       email = #{email, jdbcType=VARCHAR},
       otherContact = #{otherContact, jdbcType=VARCHAR},
       birthday = #{birthday, jdbcType=DATE},
-      maintainerId = #{maintainerId, jdbcType=BIGINT},
       remark = #{remark, jdbcType=VARCHAR},
       updateTime = now()
     where
@@ -95,7 +92,7 @@
 
   <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Contact"
           resultMap="Contact">
-    select con.*,com.id as COM_id,com.name COM_name from Contact con, Company com where con.yn = 1 and com.yn = 1 and con.companyId = com.id
+    select con.*,com.id as COM_id,com.name as COM_name from Contact con, Company com where con.yn = 1 and com.yn = 1 and con.companyId = com.id
     <if test="id != null">
       and con.id = #{id}
     </if>

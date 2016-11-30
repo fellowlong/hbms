@@ -96,4 +96,9 @@ public class BaseDataServiceImpl implements BaseDataService {
         return treeService.findTreeByAncestorCode(TYPE_CODE_COMPANY_PROPERTY_RIGHT_STRUCTURE);
     }
 
+    @Override
+    public TreeNode getContactImportantLevels() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_CONTACT_IMPORTANT_LEVEL);
+    }
+
 }

@@ -1,14 +1,13 @@
 package com.newstar.hbms.customer.web.controller;
 
-import com.newstar.hbms.candidate.domain.Candidate;
 import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.mvc.JsonResult;
+import com.newstar.hbms.support.paging.PageRange;
+import com.newstar.hbms.support.paging.PagingResult;
 import com.newstar.hbms.utils.ExceptionUtils;
 import com.newstar.hbms.utils.JsonUtils;
 import com.newstar.hbms.utils.WebUtils;
-import com.newstar.hbms.support.paging.PageRange;
-import com.newstar.hbms.support.paging.PagingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 

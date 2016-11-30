@@ -41,6 +41,7 @@
         <value>/company/findByBean.do</value>
         <value>/company/workspace.do</value>
         <value>/contact/workspace.do</value>
+        <value>/contact/editView.do</value>
         <value>/position/workspace.do</value>
         <value>/project/workspace.do</value>
       </list>

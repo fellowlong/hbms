@@ -71,8 +71,8 @@ public class Company implements Serializable {
   /**
    * 维护人
    */
-  private Long maintainerId;
-  private User maintainer;
+  private Long businessDeveloperId;
+  private User businessDeveloper;
 
   /**
    * 所属文件夹
@@ -255,20 +255,20 @@ public class Company implements Serializable {
     this.fax = fax;
   }
 
-  public Long getMaintainerId() {
-    return maintainerId;
+  public Long getBusinessDeveloperId() {
+    return businessDeveloperId;
   }
 
-  public void setMaintainerId(Long maintainerId) {
-    this.maintainerId = maintainerId;
+  public void setBusinessDeveloperId(Long businessDeveloperId) {
+    this.businessDeveloperId = businessDeveloperId;
   }
 
-  public User getMaintainer() {
-    return maintainer;
+  public User getBusinessDeveloper() {
+    return businessDeveloper;
   }
 
-  public void setMaintainer(User maintainer) {
-    this.maintainer = maintainer;
+  public void setBusinessDeveloper(User businessDeveloper) {
+    this.businessDeveloper = businessDeveloper;
   }
 
   public Long getFolderId() {

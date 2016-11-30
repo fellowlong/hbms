@@ -43,6 +43,18 @@ public class ContactController extends MultiActionController {
     return new ModelAndView("/customer/contactManager", "customers", customerPagingResult.getRecords());
   }
 
+  public ModelAndView editView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Long id = WebUtils.getLong(request, WebUtils.ID);
+    ModelAndView modelAndView = new ModelAndView("/customer/contactEdit");
+    if (id != null) {
+      List<Contact> contacts = contactService.findByIds(new Long[]{id});
+      if (contacts != null && !contacts.isEmpty()) {
+        modelAndView.getModel().put("contact", contacts.get(0));
+      }
+    }
+    return modelAndView;
+  }
+
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Contact contact) throws Exception  {
     JsonResult jsonResult = new JsonResult();
     try {

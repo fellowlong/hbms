@@ -199,13 +199,7 @@
     });
 
     $("#addContact").on("click", function () {
-      //清空表单
-      $("#customerOfAddContact").css("display", "block");
-      $("#customerOfEditContact").css("display", "none");
-      $("#insertOrUpdateContactForm").validator("cleanUp");
-      clearForm("#insertOrUpdateContactForm");
-      $("#contactAddOrEditDialogTitle").text("新增联系人");
-      $('#contactAddOrEditDialog').modal('show')
+      window.open('/contact/editView.do');
     });
 
     $("#editContact").on("click", function () {

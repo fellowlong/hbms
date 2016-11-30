@@ -47,6 +47,7 @@ public class Contact implements Serializable {
    * 性别
    */
   private Long sexId;
+  private TreeNode sex;
 
   /**
    * 所在部门
@@ -87,12 +88,6 @@ public class Contact implements Serializable {
    * 生日
    */
   private Date birthday;
-
-  /**
-   * 维护人
-   */
-  private Long maintainerId;
-  private User maintainer;
 
   /**
    * 批注
@@ -195,6 +190,14 @@ public class Contact implements Serializable {
     this.sexId = sexId;
   }
 
+  public TreeNode getSex() {
+    return sex;
+  }
+
+  public void setSex(TreeNode sex) {
+    this.sex = sex;
+  }
+
   public String getDepartment() {
     return department;
   }
@@ -257,22 +260,6 @@ public class Contact implements Serializable {
 
   public void setBirthday(Date birthday) {
     this.birthday = birthday;
-  }
-
-  public Long getMaintainerId() {
-    return maintainerId;
-  }
-
-  public void setMaintainerId(Long maintainerId) {
-    this.maintainerId = maintainerId;
-  }
-
-  public User getMaintainer() {
-    return maintainer;
-  }
-
-  public void setMaintainer(User maintainer) {
-    this.maintainer = maintainer;
   }
 
   public List<Comment> getComments() {
