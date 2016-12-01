@@ -160,7 +160,7 @@
       <ul class="nav navbar-nav">
         <li><a href="#">我的桌面</a></li>
         #foreach( $authority in $authorities )
-        <li #if($requestUri == $authority.uri) class="active" #end>
+        <li #if($requestUri == $authority.uri or $currentAuthority.parentId == $authority.id) class="active" #end>
           <a href="$authority.uri">$authority.name</a>
         </li>
         #end
