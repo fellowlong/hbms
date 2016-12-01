@@ -101,4 +101,14 @@ public class BaseDataServiceImpl implements BaseDataService {
         return treeService.findTreeByAncestorCode(TYPE_CODE_CONTACT_IMPORTANT_LEVEL);
     }
 
+    @Override
+    public TreeNode getProjectImportantLevels() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_PROJECT_IMPORTANT_LEVEL);
+    }
+
+    @Override
+    public TreeNode getProjectStatuses() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_PROJECT_STATUS);
+    }
+
 }

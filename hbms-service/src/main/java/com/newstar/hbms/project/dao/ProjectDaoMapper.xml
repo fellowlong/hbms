@@ -4,34 +4,21 @@
 
 <mapper namespace="com.newstar.hbms.project.dao.ProjectDao">
 
-  <resultMap id="Customer" type="com.newstar.hbms.customer.domain.Company">
-    <id column="id" property="id" />
-    <!--<result column="name" property="name"/>-->
-  </resultMap>
-  <resultMap id="Contact" type="com.newstar.hbms.customer.domain.Contact">
-    <id column="id" property="id" />
-    <!--<result column="name" property="name"/>-->
-  </resultMap>
-  <resultMap id="Position" type="com.newstar.hbms.customer.domain.Position">
-    <id column="id" property="id" />
-    <!--<result column="name" property="name"/>-->
-  </resultMap>
-  <resultMap id="User" type="com.newstar.hbms.system.domain.User">
-    <id column="id" property="id" />
-    <!--<result column="name" property="name"/>-->
-  </resultMap>
-
-  <resultMap id="Project" type="com.newstar.hbms.project.domain.Project">
-    <association property="company" columnPrefix="CUS_" resultMap="Customer"/>
+  <resultMap id="Company" type="com.newstar.hbms.customer.domain.Company" autoMapping="true"/>
+  <resultMap id="Contact" type="com.newstar.hbms.customer.domain.Contact" autoMapping="true"/>
+  <resultMap id="Position" type="com.newstar.hbms.customer.domain.Position" autoMapping="true"/>
+  <resultMap id="User" type="com.newstar.hbms.system.domain.User" autoMapping="true"/>
+  <resultMap id="Project" type="com.newstar.hbms.project.domain.Project" autoMapping="true">
+    <association property="company" columnPrefix="CUS_" resultMap="Company"/>
     <association property="contact" columnPrefix="CONTACT_" resultMap="Contact"/>
     <association property="position" columnPrefix="POS_" resultMap="Position"/>
-    <association property="consultant" columnPrefix="CONSULTANT_" resultMap="User"/>
-    <association property="assistant" columnPrefix="ASSISTANT_" resultMap="User"/>
     <association property="manager" columnPrefix="MANAGER_" resultMap="User"/>
+    <collection property="assistants" columnPrefix="ASSISTANT_" resultMap="User"/>
+    <collection property="consultants" columnPrefix="CONSULTANT_" resultMap="User"/>
   </resultMap>
 
   <sql id="selectProject">
-        select
+    select
       prj.*,
       cus.id as CUS_id, cus.name CUS_name,
       pos.id as POS_id, pos.name as POS_name,

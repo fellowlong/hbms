@@ -24,7 +24,7 @@ public class Project implements Serializable {
   private Long id;
 
   /**
-   * 项目编号
+   * 项目编码
    */
   private String code;
 
@@ -74,7 +74,12 @@ public class Project implements Serializable {
   private User manager;
 
   /**
-   * 其他顾问
+   * 助理
+   */
+  private List<ProjectAssistant> assistants = new ArrayList<ProjectAssistant>();
+
+  /**
+   * 顾问
    */
   private List<ProjectConsultant> consultants = new ArrayList<ProjectConsultant>();
 
@@ -238,6 +243,14 @@ public class Project implements Serializable {
 
   public void setManager(User manager) {
     this.manager = manager;
+  }
+
+  public List<ProjectAssistant> getAssistants() {
+    return assistants;
+  }
+
+  public void setAssistants(List<ProjectAssistant> assistants) {
+    this.assistants = assistants;
   }
 
   public List<ProjectConsultant> getConsultants() {

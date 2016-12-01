@@ -1,0 +1,229 @@
+<style>
+  .widget-title {
+    color: #000;
+    font-family: '微软雅黑';
+  }
+
+  .widget-body {
+    padding: 15px;
+  }
+
+  #worExperiences.form-group {
+    margin: 0;
+  }
+
+  .form-horizontal .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .actionBar-container {
+    margin-top: 45px;
+  }
+  .actionBar {
+    background-color: lavender;
+    text-align: center;
+  }
+</style>
+
+
+<form id="projectAddForm"
+      method="post"
+      enctype="multipart/form-data"
+      action="/project/insertOrUpdate.do"
+      class="form-horizontal"
+      role="form"
+      autocomplete="off"
+      data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+  <input type="hidden" name="id" value="$!project.id">
+  <div class="row" style="margin:0;padding-left: 50px">
+
+
+    <div class="form-group">
+      <div class="col-sm-6">
+        <h3><b>新增项目</b></h3>
+        <hr/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">编码<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="code" value="$!project.code" placeholder="编码" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">名称<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <input type="text" name="name" value="$!project.name" placeholder="名称" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">所属公司</label>
+      <div class="col-sm-5">
+        <select id="companyId" name="companyId" value="$!project.companyId" class="chosen-select form-control">
+          #foreach($company in $companies)
+            <option value="$company.id">$company.name</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">职位</label>
+      <div class="col-sm-5">
+        <select id="positionId" name="positionId" value="$!project.positionId" class="chosen-select form-control">
+          #foreach($position in $positions)
+            <option value="$position.id">$position.name</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">客户联系人</label>
+      <div class="col-sm-5">
+        <select id="contactId" name="contactId" value="$!project.contactId" class="chosen-select form-control">
+          #foreach($contact in $contacts)
+            <option value="$contact.id">$contact.name</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">重要程度</label>
+      <div class="col-sm-5">
+        <select id="importantLevelId" name="importantLevelId" value="$!contact.importantLevelId" class="chosen-select form-control">
+          #set($projectImportantLevels = $baseDataService.getProjectImportantLevels().children)
+          #foreach($projectImportantLevel in $projectImportantLevels)
+            <option value="$projectImportantLevel.id">$projectImportantLevel.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">起止时间</label>
+      <div class="col-sm-5">
+        <div class="input-daterange input-group">
+          <input type="text" class="input-sm form-control date-picker" name="startDate" data-date-format="yyyy-mm-dd"
+                 data-date-language="zh-CN" data-date-language="zh-CN">
+          <span class="input-group-addon">
+                    <i class="fa fa-exchange"></i>
+                  </span>
+          <input type="text" class="input-sm form-control date-picker" name="endDate" data-date-format="yyyy-mm-dd"
+                 data-date-language="zh-CN">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">项目经理</label>
+      <div class="col-sm-5">
+        <select id="managerId" name="managerId" value="$!company.managerId" class="chosen-select form-control">
+          #foreach($user in $users)
+            <option value="$user.id">$user.username - $user.realName</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">助理</label>
+      <div class="col-sm-5">
+        <input type="text" name="englishName" value="$!project.englishName" placeholder="英文姓名" class="form-control"
+               />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">顾问</label>
+      <div class="col-sm-5">
+        <input type="text" name="englishName" value="$!project.englishName" placeholder="英文姓名" class="form-control"
+               />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">状态</label>
+      <div class="col-sm-5">
+        <select id="statusId" name="statusId" value="$!project.statusId" class="chosen-select form-control">
+          #set($projectStatuses = $baseDataService.getProjectStatuses().children)
+          #foreach($projectStatus in $projectStatuses)
+            <option value="$projectStatus.id">$projectStatus.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">备注</label>
+      <div class="col-sm-5">
+        <textarea type="text" id="remark" name="remark" value="$!project.remark" rows="5" class="form-control"></textarea>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label no-padding-right">共享</label>
+      <div class="col-sm-5">
+        <label>
+          <input name="share" type="radio" class="ace" value="true" #if($param['share'] == true) checked #end>
+          <span class="lbl">是</span>
+        </label>
+        <label>
+          <input name="share" type="radio" class="ace" value="false" #if($param['share'] and $param['share'] == false) checked #end>
+          <span class="lbl">否</span>
+        </label>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="col-sm-6" style="text-align: center">
+        <button class="btn btn-sm btn-primary" type="submit">
+          <i class="fa fa-save bigger-110"></i>
+          保存
+        </button>
+        <button class="btn btn-sm btn-primary" type="button" onclick="window.location.reload()">
+          <i class="fa fa-save bigger-110"></i>
+          重置
+        </button>
+      </div>
+    </div>
+
+
+    </div>
+
+</form>
+
+
+<script type="text/javascript">
+  $('.chosen-select').chosen({search_contains: true});
+  $('.date-picker').datepicker({
+    autoclose: true,
+    todayHighlight: true
+  }).next().on("click", function () {
+    $('.date-picker').focus();
+  });
+
+  $("#addAttachment").on("click", function () {
+    $("#attachments").append($("#attachmentTemplate").html());
+    reCalculateAttatcmentSeq();
+  });
+  function reCalculateAttatcmentSeq() {
+    var attatementSeq = 0;
+    $("#attachments").find(".form-group").each(function (index, item) {
+      $(item).find("label.control-label").text("附件" + ++attatementSeq);
+      renderFileInput($(item).find("input"));
+    });
+  }
+
+</script>

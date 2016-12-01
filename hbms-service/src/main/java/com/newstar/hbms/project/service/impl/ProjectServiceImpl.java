@@ -21,7 +21,7 @@ public class ProjectServiceImpl implements ProjectService  {
 
   @Override
   public int insertOrUpdate(Project project) {
-    return 0;
+    return project.getId() != null ? projectDao.update(project) : projectDao.insert(project);
   }
 
   @Override

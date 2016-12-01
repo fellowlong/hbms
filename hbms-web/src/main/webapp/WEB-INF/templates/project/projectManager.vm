@@ -246,13 +246,7 @@
     });
 
     $("#addProject").on("click", function () {
-      //清空表单
-      $("#customerOfAddProject").css("display", "block");
-      $("#customerOfEditProject").css("display", "none");
-      $("#insertOrUpdateProjectForm").validator("cleanUp");
-      clearForm("#insertOrUpdateProjectForm");
-      $("#projectAddOrEditDialogTitle").text("新增职位");
-      $('#projectAddOrEditDialog').modal('show')
+      window.open('/project/editView.do');
     });
 
     $("#editProject").on("click", function () {
