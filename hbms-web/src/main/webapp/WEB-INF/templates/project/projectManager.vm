@@ -248,8 +248,20 @@
     $("#addProject").on("click", function () {
       window.open('/project/editView.do');
     });
-
     $("#editProject").on("click", function () {
+      var rowIds = $("#projectList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length != 1) {
+        bootbox.alert("请选择要删除的记录");
+        return;
+      }
+      $("#projectListDiv").block({
+        message: '<h3>正在加载数据</h3>',
+        css: {border: '3px solid #a00'}
+      });
+      window.open('/project/editView.do?id=' + rowIds[0]);
+    });
+
+    /*$("#editProject").on("click", function () {
       var rowIds = $("#projectList").jqGrid('getGridParam', 'selarrrow');
       if (!rowIds || rowIds.length != 1) {
         bootbox.alert("请选择要删除的记录");
@@ -266,7 +278,7 @@
         $("#projectAddOrEditDialogTitle").text("编辑职位");
         $('#projectAddOrEditDialog').modal('show')
       });
-    });
+    });*/
 
     $("#deleteProject").on("click", function () {
       var rowIds = $("#projectList").jqGrid('getGridParam', 'selarrrow');
