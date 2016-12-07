@@ -76,12 +76,12 @@
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">所属行业</label>
       <div class="col-sm-5">
-        <select id="industries" class="chosen-select form-control" name="industries" value="$!company.industryId">
+#*        <select id="industries" class="chosen-select form-control" name="industries" value="$!company.industryId">
           #set($industries = $baseDataService.getIndustries().children)
           #foreach($industry in $industries)
             <option value="$industry.id">$industry.label</option>
           #end
-        </select>
+        </select>*#
       </div>
     </div>
 

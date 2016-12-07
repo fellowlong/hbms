@@ -9,48 +9,40 @@
   <resultMap id="Position" type="com.newstar.hbms.customer.domain.Position" autoMapping="true"/>
   <resultMap id="User" type="com.newstar.hbms.system.domain.User" autoMapping="true"/>
   <resultMap id="Project" type="com.newstar.hbms.project.domain.Project" autoMapping="true">
-    <association property="company" columnPrefix="CUS_" resultMap="Company"/>
+    <id property="id" column="id"/>
+    <association property="company" column="COM_id" columnPrefix="COM_" resultMap="Company"/>
     <association property="contact" columnPrefix="CONTACT_" resultMap="Contact"/>
     <association property="position" columnPrefix="POS_" resultMap="Position"/>
     <association property="manager" columnPrefix="MANAGER_" resultMap="User"/>
-    <collection property="assistants" columnPrefix="ASSISTANT_" resultMap="User"/>
-    <collection property="consultants" columnPrefix="CONSULTANT_" resultMap="User"/>
   </resultMap>
 
   <sql id="selectProject">
     select
-      prj.*,
-      cus.id as CUS_id, cus.name CUS_name,
-      pos.id as POS_id, pos.name as POS_name,
+      project.*,
+      company.id as COM_id, company.name COM_name,
+      position.id as POS_id, position.name as POS_name,
       contact.id as CONTACT_id, contact.name as CONTACT_name,
-      consultant.id as CONSULTANT_id, consultant.name as CONSULTANT_name,
-      assistant.id as ASSISTANT_id, assistant.name as ASSISTANT_name,
       manager.id as MANAGER_id, manager.name as MANAGER_name
     from
-      Project prj,
-      Company com,
-      Position pos,
-      Contact contact,
-      User consultant,
-      User assistant,
-      User manager
-    where prj.yn = 1 and cus.yn = 1 and pos.yn = 1 and contact.yn = 1 and consultant.yn = 1 and assistant.yn = 1 and manager.yn = 1
-          and prj.customerId = cus.id
-          and prj.positionId = pos.id
-          and prj.contractId = con.id
-          and prj.consultantId = consultant.id
-          and prj.assistantId = assistant.id
-          and prj.managerId = manager.id
+      Project project
+      left outer join  (select * from Company where yn = 1 ) company on project.companyId = company.id
+      left outer join   (select * from Position where yn = 1 ) position on project.positionId = position.id
+      left outer join   (select * from Contact where yn = 1 ) contact on project.contactId = contact.id
+      left outer join   (select * from User where yn = 1 ) manager on project.managerId = manager.id
   </sql>
 
   <insert id="insert" parameterType="com.newstar.hbms.project.domain.Project">
     insert into Project(
       id,
-      importantLevelId,
+      code,
       name,
+      companyId,
+      positionId,
+      contactId,
+      importantLevelId,
       startDate,
       endDate,
-      positionId,
+      managerId,
       statusId,
       share,
       remark,
@@ -61,11 +53,15 @@
       updateUser
     ) values (
     #{id, jdbcType=BIGINT},
-    #{importantLevelId, jdbcType=BIGINT},
+    #{code, jdbcType=VARCHAR},
     #{name, jdbcType=VARCHAR},
+    #{companyId, jdbcType=BIGINT},
+    #{positionId, jdbcType=BIGINT},
+    #{contactId, jdbcType=BIGINT},
+    #{importantLevelId, jdbcType=BIGINT},
     #{startDate, jdbcType=DATE},
     #{endDate, jdbcType=DATE},
-    #{positionId, jdbcType=BIGINT},
+    #{managerId, jdbcType=BIGINT},
     #{statusId, jdbcType=BIGINT},
     #{share, jdbcType=BOOLEAN},
     #{remark, jdbcType=VARCHAR},
@@ -75,15 +71,23 @@
     #{createUser, jdbcType=VARCHAR},
     now()
     )
+    <selectKey resultType="java.lang.Long" keyProperty="id">
+      select last_insert_id() as id
+    </selectKey>
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.project.domain.Project">
     update Project set
-      importantLevelId = #{importantLevelId, jdbcType=BIGINT},
+      id = #{id, jdbcType=BIGINT},
+      code = #{code, jdbcType=VARCHAR},
       name = #{name, jdbcType=VARCHAR},
+      companyId = #{companyId, jdbcType=BIGINT},
+      positionId = #{positionId, jdbcType=BIGINT},
+      contactId = #{contactId, jdbcType=BIGINT},
+      importantLevelId = #{importantLevelId, jdbcType=BIGINT},
       startDate = #{startDate, jdbcType=DATE},
       endDate = #{endDate, jdbcType=DATE},
-      positionId = #{positionId, jdbcType=BIGINT},
+      managerId = #{managerId, jdbcType=BIGINT},
       statusId = #{statusId, jdbcType=BIGINT},
       share = #{share, jdbcType=BOOLEAN},
       remark = #{remark, jdbcType=VARCHAR},
@@ -110,41 +114,35 @@
           resultMap="Project">
     <include refid="selectProject"/>
     <if test="id != null">
-      and prj.id = #{id}
+      and project.id = #{id}
     </if>
     <if test="name != null and !name.isEmpty()">
-      and prj.name like "%"#{name}"%"
+      and project.name like "%"#{name}"%"
     </if>
     <if test="startDate != null">
-      and prj.startDate >= #{startDate}
+      and project.startDate >= #{startDate}
     </if>
     <if test="endDate != null">
-      and #{endDate} >= prj.endDate
+      and #{endDate} >= project.endDate
     </if>
     <if test="status != null">
-      and prj.status = #{status}
-    </if>
-    <if test="isKey != null">
-      and prj.isKey = #{isKey}
+      and project.status = #{status}
     </if>
     <if test="company != null and company.name != null">
-      and cus.name like "%"#{company.name}"%"
+      and company.name like "%"#{company.name}"%"
     </if>
     <if test="position != null and position.name != null">
-      and pos.name like "%"#{position.name}"%"
-    </if>
-    <if test="consultant != null and consultant.name != null">
-      and consultant.name like "%"#{consultant.name}"%"
+      and position.name like "%"#{position.name}"%"
     </if>
     <if test="manager != null and manager.name != null">
       and manager.name like "%"#{manager.name}"%"
     </if>
-    order by prj.createTime desc
+    order by project.createTime desc
   </select>
 
   <select id="findByIds" parameterType="com.newstar.hbms.project.domain.Project"
           resultMap="Project">
-    <include refid="selectProject"/> and prj.id in
+    <include refid="selectProject"/> where project.id in
     <foreach collection="array" open="(" close=")" separator="," item="projectId">
       #{projectId}
     </foreach>

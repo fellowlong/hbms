@@ -251,13 +251,9 @@
     $("#editProject").on("click", function () {
       var rowIds = $("#projectList").jqGrid('getGridParam', 'selarrrow');
       if (!rowIds || rowIds.length != 1) {
-        bootbox.alert("请选择要删除的记录");
+        bootbox.alert("请选择一条记录");
         return;
       }
-      $("#projectListDiv").block({
-        message: '<h3>正在加载数据</h3>',
-        css: {border: '3px solid #a00'}
-      });
       window.open('/project/editView.do?id=' + rowIds[0]);
     });
 

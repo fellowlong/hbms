@@ -41,7 +41,7 @@ public class ProjectServiceImpl implements ProjectService  {
 
   @Override
   public List<Project> findByIds(Long[] ids) {
-    return null;
+    return projectDao.findByIds(ids);
   }
 
 }

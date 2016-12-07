@@ -45,6 +45,7 @@
         <value>/position/workspace.do</value>
         <value>/project/workspace.do</value>
         <value>/project/editView.do</value>
+        <value>/baseData/workspace.do</value>
       </list>
     </property>
     <property name="exportMap">
@@ -131,6 +132,8 @@
     <property name="userService" ref="userService"/>
     <property name="datePattern" value="${datePattern}"/>
   </bean>
+
+  <bean id="baseDataController" class="com.newstar.hbms.system.web.controller.BaseDataController"/>
 
   <bean id="authorityDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface" value="com.newstar.hbms.system.dao.AuthorityDao"/>

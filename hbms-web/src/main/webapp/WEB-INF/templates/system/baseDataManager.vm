@@ -1,0 +1,42 @@
+<div style="float:left;width: 190px;height:100%;overflow-x: auto;margin-top: 0;margin-bottom: 0">
+  <a href="#resumeAndAttachments" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">公共数据</a>
+  <div id="resumeAndAttachments" class="collapse in">
+      <div class="list-group" style="margin: 0px">
+          #foreach($authority in $authorities)
+            <a href="$authority.uri" class="list-group-item">$authority.name</a>
+          #end
+      </div>
+  </div>
+  <a href="#" class="list-group-item disabled">简历相关</a>
+  <div class="list-group" style="margin: 0px">
+      #foreach($authority in $authorities)
+        <a href="$authority.uri" class="list-group-item">$authority.name</a>
+      #end
+  </div>
+  <a href="#" class="list-group-item disabled">公司相关</a>
+  <div class="list-group" style="margin: 0px">
+      #foreach($authority in $authorities)
+        <a href="$authority.uri" class="list-group-item">$authority.name</a>
+      #end
+  </div>
+  <a href="#" class="list-group-item disabled">联系人相关</a>
+  <div class="list-group" style="margin: 0px">
+      #foreach($authority in $authorities)
+        <a href="$authority.uri" class="list-group-item">$authority.name</a>
+      #end
+  </div>
+  <a href="#" class="list-group-item disabled">项目相关</a>
+  <div class="list-group" style="margin: 0px">
+      #foreach($authority in $authorities)
+        <a href="$authority.uri" class="list-group-item">$authority.name</a>
+      #end
+  </div>
+
+</div>
+
+<div style="float:left;left: 190px">aa</div>
+<script type="text/javascript">
+  function loadData(code, multiTier) {
+
+  }
+</script>
