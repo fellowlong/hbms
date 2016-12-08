@@ -1,42 +1,114 @@
+<link rel="stylesheet" href="/resources/ztree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="/resources/ztree/jquery.ztree.all.js"></script>
+
 <div style="float:left;width: 190px;height:100%;overflow-x: auto;margin-top: 0;margin-bottom: 0">
-  <a href="#resumeAndAttachments" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">公共数据</a>
-  <div id="resumeAndAttachments" class="collapse in">
+
+  <a href="#commonBaseData" class="list-group-item" style="background-color: #3b98d6;border: #ddd solid 1px" data-toggle="collapse">公共数据</a>
+  <div id="commonBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
           #foreach($authority in $authorities)
             <a href="$authority.uri" class="list-group-item">$authority.name</a>
           #end
       </div>
   </div>
-  <a href="#" class="list-group-item disabled">简历相关</a>
-  <div class="list-group" style="margin: 0px">
-      #foreach($authority in $authorities)
-        <a href="$authority.uri" class="list-group-item">$authority.name</a>
-      #end
+
+  <a href="#candidateBaseData" class="list-group-item" style="background-color: #3b98d6;border: #ddd solid 1px" data-toggle="collapse">人才相关</a>
+  <div id="candidateBaseData" class="collapse in">
+      <div class="list-group" style="margin: 0px">
+          #foreach($authority in $authorities)
+            <a href="$authority.uri" class="list-group-item">$authority.name</a>
+          #end
+      </div>
   </div>
-  <a href="#" class="list-group-item disabled">公司相关</a>
-  <div class="list-group" style="margin: 0px">
-      #foreach($authority in $authorities)
-        <a href="$authority.uri" class="list-group-item">$authority.name</a>
-      #end
+
+  <a href="#companyBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">公司相关</a>
+  <div id="companyBaseData" class="collapse in">
+      <div class="list-group" style="margin: 0px">
+          #foreach($authority in $authorities)
+            <a href="$authority.uri" class="list-group-item">$authority.name</a>
+          #end
+      </div>
   </div>
-  <a href="#" class="list-group-item disabled">联系人相关</a>
-  <div class="list-group" style="margin: 0px">
-      #foreach($authority in $authorities)
-        <a href="$authority.uri" class="list-group-item">$authority.name</a>
-      #end
+
+  <a href="#contactBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">联系人相关</a>
+  <div id="contactBaseData" class="collapse in">
+      <div class="list-group" style="margin: 0px">
+          #foreach($authority in $authorities)
+            <a href="$authority.uri" class="list-group-item">$authority.name</a>
+          #end
+      </div>
   </div>
-  <a href="#" class="list-group-item disabled">项目相关</a>
-  <div class="list-group" style="margin: 0px">
-      #foreach($authority in $authorities)
-        <a href="$authority.uri" class="list-group-item">$authority.name</a>
-      #end
+
+  <a href="#projectBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">项目相关</a>
+  <div id="projectBaseData" class="collapse in">
+      <div class="list-group" style="margin: 0px">
+          #foreach($authority in $authorities)
+            <a href="$authority.uri" class="list-group-item">$authority.name</a>
+          #end
+      </div>
   </div>
+
 
 </div>
 
-<div style="float:left;left: 190px">aa</div>
+<div style="float:left;left: 190px">
+  <ul id="treeDemo" class="ztree"></ul>
+</div>
 <script type="text/javascript">
-  function loadData(code, multiTier) {
-
+  function loadData(code, multiTiers) {
+    $.ajax({
+      type: "POST",
+      url: "/baseData/findByCode.do",
+      data: {code:code},
+      dataType: "json",
+      timeout: 3000,
+      success: function(data, textStatus, jqXHR){
+        setting = {
+          edit: {
+              enable: true,
+              removeTitle: "删除",
+              renameTitle: "重命名",
+              showRemoveBtn: true,
+              showRenameBtn : true
+        }};
+        zNodes = createTrees(data.children, multiTiers)
+        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        var tipHtml = "<h5 class='red'><i class=\"icon-warning-sign red bigger-130\"></i>加载失败</h5>";
+        bootbox.dialog({
+          message: tipHtml,
+          buttons: {
+            "danger" : {
+              "label" : "关闭",
+              "className" : "btn-sm btn-danger"
+            }
+          }
+        });
+      }
+    });
   }
+
+  function createTrees(data) {
+    zNodes = [];
+    $(data).each(function (index, item) {
+      node = {nodeId : item.id, name:item.label};
+      zNodes.push(node);
+      if (item.children && item.children.length > 0) {
+        node.children = createTrees(item.children)
+      }
+    });
+  }
+  var zTreeObj;
+  // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+  var setting = {};
+  // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+  var zNodes = [
+    {name:"test1"},
+    {name:"test2"}
+  ];
+  $(document).ready(function(){
+    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+  });
+
 </script>
