@@ -31,7 +31,19 @@ public class BaseDataController extends ConfigurableMultiActionController {
     String code = request.getParameter("code");
     assert code != null && !code.isEmpty();
     TreeNode treeNode = treeService.findTreeByAncestorCode(code);
+    //解除上级关系，防止json序列化时死递归
+    removeParentAndAncestor(treeNode);
     WebUtils.writeWithJson(response, treeNode);
+  }
+
+  private void removeParentAndAncestor(TreeNode treeNode) {
+    treeNode.setParent(null);
+    treeNode.setAncestor(null);
+    if (treeNode.getChildren() != null && !treeNode.getChildren().isEmpty()) {
+      for (TreeNode perTreeNode : treeNode.getChildren()) {
+        removeParentAndAncestor(perTreeNode);
+      }
+    }
   }
 
 }

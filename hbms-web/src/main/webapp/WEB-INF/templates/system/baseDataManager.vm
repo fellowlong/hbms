@@ -1,61 +1,71 @@
 <link rel="stylesheet" href="/resources/ztree/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="/resources/ztree/jquery.ztree.all.js"></script>
 
-<div style="float:left;width: 190px;height:100%;overflow-x: auto;margin-top: 0;margin-bottom: 0">
+<div class="row">
+  <div class="col-sm-1">
+    <a href="#commonBaseData" class="list-group-item" style="background-color: #3b98d6;border: #ddd solid 1px" data-toggle="collapse">公共数据</a>
+    <div id="commonBaseData" class="collapse in">
+      <div class="list-group" style="margin: 0px">
+        <a href="#" class="list-group-item" onclick="loadData('SEX')">性别</a>
+        <a href="#" class="list-group-item" onclick="loadData('MARITAL')">婚姻状况</a>
+        <a href="#" class="list-group-item" onclick="loadData('DEGREE')">学历</a>
+        <a href="#" class="list-group-item" onclick="loadData('INDUSTRY')">行业</a>
+      </div>
+    </div>
 
-  <a href="#commonBaseData" class="list-group-item" style="background-color: #3b98d6;border: #ddd solid 1px" data-toggle="collapse">公共数据</a>
-  <div id="commonBaseData" class="collapse in">
+    <a href="#candidateBaseData" class="list-group-item" style="background-color: #3b98d6;border: #ddd solid 1px" data-toggle="collapse">人才相关</a>
+    <div id="candidateBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
           #foreach($authority in $authorities)
             <a href="$authority.uri" class="list-group-item">$authority.name</a>
           #end
       </div>
-  </div>
+    </div>
 
-  <a href="#candidateBaseData" class="list-group-item" style="background-color: #3b98d6;border: #ddd solid 1px" data-toggle="collapse">人才相关</a>
-  <div id="candidateBaseData" class="collapse in">
+    <a href="#companyBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">公司相关</a>
+    <div id="companyBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
           #foreach($authority in $authorities)
             <a href="$authority.uri" class="list-group-item">$authority.name</a>
           #end
       </div>
-  </div>
+    </div>
 
-  <a href="#companyBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">公司相关</a>
-  <div id="companyBaseData" class="collapse in">
+    <a href="#contactBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">联系人相关</a>
+    <div id="contactBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
           #foreach($authority in $authorities)
             <a href="$authority.uri" class="list-group-item">$authority.name</a>
           #end
       </div>
-  </div>
+    </div>
 
-  <a href="#contactBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">联系人相关</a>
-  <div id="contactBaseData" class="collapse in">
+    <a href="#projectBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">项目相关</a>
+    <div id="projectBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
           #foreach($authority in $authorities)
             <a href="$authority.uri" class="list-group-item">$authority.name</a>
           #end
       </div>
+    </div>
   </div>
+  <div class="col-sm-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="row">
+          <div id="dataContent" class="col-sm-12">
 
-  <a href="#projectBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">项目相关</a>
-  <div id="projectBaseData" class="collapse in">
-      <div class="list-group" style="margin: 0px">
-          #foreach($authority in $authorities)
-            <a href="$authority.uri" class="list-group-item">$authority.name</a>
-          #end
+          </div>
+        </div>
       </div>
+    </div>
   </div>
-
 
 </div>
 
-<div style="float:left;left: 190px">
-  <ul id="treeDemo" class="ztree"></ul>
-</div>
 <script type="text/javascript">
-  function loadData(code, multiTiers) {
+  function loadData(code) {
     $.ajax({
       type: "POST",
       url: "/baseData/findByCode.do",
@@ -63,16 +73,12 @@
       dataType: "json",
       timeout: 3000,
       success: function(data, textStatus, jqXHR){
-        setting = {
-          edit: {
-              enable: true,
-              removeTitle: "删除",
-              renameTitle: "重命名",
-              showRemoveBtn: true,
-              showRenameBtn : true
-        }};
-        zNodes = createTrees(data.children, multiTiers)
-        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        $("#dataContent").empty();
+        $("#dataContent").html("<div class='dd'><ol class='dd-list'>" + createList([data]) + "</ol></div>");
+        $('.dd').nestable();
+        $('.dd-handle a').on('mousedown', function(e){
+          e.stopPropagation();
+        });
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
         var tipHtml = "<h5 class='red'><i class=\"icon-warning-sign red bigger-130\"></i>加载失败</h5>";
@@ -89,26 +95,50 @@
     });
   }
 
-  function createTrees(data) {
-    zNodes = [];
+  function createList(data) {
+    var html = "";
     $(data).each(function (index, item) {
-      node = {nodeId : item.id, name:item.label};
-      zNodes.push(node);
-      if (item.children && item.children.length > 0) {
-        node.children = createTrees(item.children)
+      html += "<li class='dd-item' data-id='" + item.id + "'>";
+      html += "<div class='dd-handle'>" + item.label
+      html += "<div class='pull-right action-buttons'>";
+      html += "<a class='blue' href='#' onclick='addItem(this)'><i class='ace-icon fa fa-plus bigger-130'></i></a>";
+      //不能删除顶级节点
+      if (item.parentId && item.parentId != null) {
+        html += "<a class='blue' href='#'><i class='ace-icon fa fa-remove bigger-130'></i></a>";
       }
+      html += "</div>";
+      html += "</div>";
+      if (item.children && item.children.length > 0) {
+        html += "<ol class='dd-list'>" + createList(item.children) + "</ol>";
+      }
+      html += "</li>";
+    });
+    return html;
+  }
+  
+  function addItem(obj) {
+    var item = "<li class='dd-item' data-id='" + $(obj).parent().parent().parent().data("id") + "1'>";
+    item += "<div class='dd-handle'>男";
+    item += "<div class='pull-right action-buttons'>";
+    item += "<a class='blue' href='#' onclick='addItem(this)'><i class='ace-icon fa fa-plus bigger-130'></i></a>";
+    item += "<a class='blue' href='#'><i class='ace-icon fa fa-remove bigger-130'></i></a>";
+    item += "</div>";
+    item += "</div>";
+    item += "</li>";
+    if ($(obj).parent().parent().parent().find("ol").length == 1) {
+      $(obj).parent().parent().parent().find("ol").append(item);
+    } else {
+      $(obj).parent().parent().parent().append("<ol class='dd-list'>" + item + "</ol>");
+    }
+    $("#dataContent button").remove();
+    var tempHtml = $("#dataContent").html();
+    $("#dataContent").empty();
+    $("#dataContent").html(tempHtml);
+    $('.dd').nestable();
+    $('.dd-handle a').on('mousedown', function(e){
+      e.stopPropagation();
     });
   }
-  var zTreeObj;
-  // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-  var setting = {};
-  // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
-  var zNodes = [
-    {name:"test1"},
-    {name:"test2"}
-  ];
-  $(document).ready(function(){
-    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-  });
+
 
 </script>

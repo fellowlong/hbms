@@ -133,7 +133,9 @@
     <property name="datePattern" value="${datePattern}"/>
   </bean>
 
-  <bean id="baseDataController" class="com.newstar.hbms.system.web.controller.BaseDataController"/>
+  <bean id="baseDataController" class="com.newstar.hbms.system.web.controller.BaseDataController">
+    <property name="treeService" ref="treeService"/>
+  </bean>
 
   <bean id="authorityDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface" value="com.newstar.hbms.system.dao.AuthorityDao"/>
