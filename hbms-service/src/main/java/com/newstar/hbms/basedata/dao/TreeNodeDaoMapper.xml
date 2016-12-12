@@ -46,7 +46,7 @@
       id = #{id}
   </update>
 
-  <delete id="deleteByIds" parameterType="java.lang.Long">
+  <delete id="disableByIds" parameterType="java.lang.Long">
     update TreeNode set yn = 0 where id in
     <foreach collection="array" open="(" close=")" separator="," item="nodeId">
       #{nodeId}
@@ -54,19 +54,19 @@
   </delete>
 
   <select id="findAll" resultType="com.newstar.hbms.basedata.domain.TreeNode">
-    select * from TreeNode
+    select * from TreeNode where yn = 1
   </select>
 
   <select id="findByCode" resultType="com.newstar.hbms.basedata.domain.TreeNode">
-    select * from TreeNode where code = #{value}
+    select * from TreeNode where yn = 1 and code = #{value}
   </select>
 
   <select id="findByAncestorCode" resultType="com.newstar.hbms.basedata.domain.TreeNode">
-    select * from TreeNode where ancestorId in (select id from TreeNode where code = #{value})
+    select * from TreeNode where yn = 1 and ancestorId in (select id from TreeNode where code = #{value})
   </select>
 
   <select id="findByIds" resultType="com.newstar.hbms.basedata.domain.TreeNode">
-    select * from TreeNode where id in
+    select * from TreeNode where yn = 1 and id in
     <foreach collection="array" open="(" close=")" separator="," item="nodeId">
       #{nodeId}
     </foreach>

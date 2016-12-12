@@ -11,7 +11,7 @@ public interface TreeService {
 
   public int insertOrUpdate(TreeNode treeNode);
 
-  public int deleteById(Long[] ids);
+  public int disableByIds(Long[] ids);
 
   public List<TreeNode> findAllTrees();
 

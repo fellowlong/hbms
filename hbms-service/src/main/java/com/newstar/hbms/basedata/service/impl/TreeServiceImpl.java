@@ -28,8 +28,8 @@ public class TreeServiceImpl implements TreeService {
     }
 
     @Override
-    public int deleteById(Long[] nodeIds) {
-        return treeNodeDao.deleteByIds(nodeIds);
+    public int disableByIds(Long[] nodeIds) {
+        return treeNodeDao.disableByIds(nodeIds);
     }
 
     @Override

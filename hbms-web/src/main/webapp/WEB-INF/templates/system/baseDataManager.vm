@@ -1,51 +1,58 @@
 <link rel="stylesheet" href="/resources/ztree/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="/resources/ztree/jquery.ztree.all.js"></script>
+<style>
+  .list-group-title {
+    background-color: #3b98d6;
+    border: #ddd solid 1px;
+  }
+</style>
 
 <div class="row">
   <div class="col-sm-1">
-    <a href="#commonBaseData" class="list-group-item" style="background-color: #3b98d6;border: #ddd solid 1px" data-toggle="collapse">公共数据</a>
+    <a href="#commonBaseData" class="list-group-item list-group-title" data-toggle="collapse">公共数据</a>
     <div id="commonBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
         <a href="#" class="list-group-item" onclick="loadData('SEX')">性别</a>
         <a href="#" class="list-group-item" onclick="loadData('MARITAL')">婚姻状况</a>
         <a href="#" class="list-group-item" onclick="loadData('DEGREE')">学历</a>
         <a href="#" class="list-group-item" onclick="loadData('INDUSTRY')">行业</a>
+        <a href="#" class="list-group-item" onclick="loadData('FUNCTION')">职能</a>
+        <a href="#" class="list-group-item" onclick="loadData('POSITION')">职位</a>
+        <a href="#" class="list-group-item" onclick="loadData('CITY')">城市</a>
+        <a href="#" class="list-group-item" onclick="loadData('TAG')">标签</a>
+        <a href="#" class="list-group-item" onclick="loadData('COMPANY')">公司</a>
       </div>
     </div>
 
-    <a href="#candidateBaseData" class="list-group-item" style="background-color: #3b98d6;border: #ddd solid 1px" data-toggle="collapse">人才相关</a>
+    <a href="#candidateBaseData" class="list-group-item list-group-title" data-toggle="collapse">人才相关</a>
     <div id="candidateBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
-          #foreach($authority in $authorities)
-            <a href="$authority.uri" class="list-group-item">$authority.name</a>
-          #end
+        <a href="#" class="list-group-item" onclick="loadData('JOB_HUNTING_STATUS')">求职状态</a>
       </div>
     </div>
 
-    <a href="#companyBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">公司相关</a>
+    <a href="#companyBaseData" class="list-group-item list-group-title" data-toggle="collapse">公司相关</a>
     <div id="companyBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
-          #foreach($authority in $authorities)
-            <a href="$authority.uri" class="list-group-item">$authority.name</a>
-          #end
+        <a href="#" class="list-group-item" onclick="loadData('COMPANY_TYPE')">公司类型</a>
+        <a href="#" class="list-group-item" onclick="loadData('COMPANY_FOLDER')">公司目录</a>
+        <a href="#" class="list-group-item" onclick="loadData('COMPANY_NATURE')">公司性质</a>
+        <a href="#" class="list-group-item" onclick="loadData('COMPANY_PROPERTY_RIGHT_STRUCTURE')">产权结构</a>
       </div>
     </div>
 
-    <a href="#contactBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">联系人相关</a>
+    <a href="#contactBaseData" class="list-group-item list-group-title" data-toggle="collapse">联系人相关</a>
     <div id="contactBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
-          #foreach($authority in $authorities)
-            <a href="$authority.uri" class="list-group-item">$authority.name</a>
-          #end
+        <a href="#" class="list-group-item" onclick="loadData('CONTACT_IMPORTANT_LEVEL')">重要级别</a>
       </div>
     </div>
 
-    <a href="#projectBaseData" class="list-group-item" style="background-color: #ddd" data-toggle="collapse">项目相关</a>
+    <a href="#projectBaseData" class="list-group-item list-group-title" data-toggle="collapse">项目相关</a>
     <div id="projectBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
-          #foreach($authority in $authorities)
-            <a href="$authority.uri" class="list-group-item">$authority.name</a>
-          #end
+        <a href="#" class="list-group-item" onclick="loadData('PROJECT_IMPORTANT_LEVEL')">重要级别</a>
+        <a href="#" class="list-group-item" onclick="loadData('PROJECT_STATUS')">状态</a>
       </div>
     </div>
   </div>
@@ -54,14 +61,54 @@
       <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
         <div class="row">
-          <div id="dataContent" class="col-sm-12">
-
-          </div>
+          <div id="nestedListContainer" class="col-sm-12"></div>
         </div>
       </div>
     </div>
   </div>
 
+</div>
+
+<div class="modal fade" id="baseDataEditDialog" tabindex="-1" role="dialog" aria-labelledby="baseDataEditDialogTitle"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </button>
+        <h4 class="modal-title" id="baseDataEditDialogTitle">编辑</h4>
+      </div>
+      <div class="modal-body">
+        <form id="baseDataAddForm"
+              method="post"
+              action="/baseData/insertOrUpdate.do"
+              class="form-horizontal"
+              role="form"
+              autocomplete="off"
+              data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+
+          <input type="hidden" name="itemDomId">
+          <input type="hidden" name="id">
+          <input type="hidden" name="parentId">
+          <input type="hidden" name="ancestorId">
+
+          <div class="row" style="margin:0;padding-left: 50px">
+            <div class="form-group">
+              <label class="col-sm-1 control-label no-padding-right">名称</label>
+              <div class="col-sm-5">
+                <input type="text" name="label" placeholder="名称" class="form-control"/>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button id="saveBaseData" type="button" class="btn btn-primary">保存</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -73,12 +120,8 @@
       dataType: "json",
       timeout: 3000,
       success: function(data, textStatus, jqXHR){
-        $("#dataContent").empty();
-        $("#dataContent").html("<div class='dd'><ol class='dd-list'>" + createList([data]) + "</ol></div>");
-        $('.dd').nestable();
-        $('.dd-handle a').on('mousedown', function(e){
-          e.stopPropagation();
-        });
+        $("#nestedListContainer").html("<div class='dd'><ol class='dd-list'>" + createNestedList([data]) + "</ol></div>");
+        reRenderNestedList();
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
         var tipHtml = "<h5 class='red'><i class=\"icon-warning-sign red bigger-130\"></i>加载失败</h5>";
@@ -95,47 +138,130 @@
     });
   }
 
-  function createList(data) {
-    var html = "";
-    $(data).each(function (index, item) {
-      html += "<li class='dd-item' data-id='" + item.id + "'>";
-      html += "<div class='dd-handle'>" + item.label
-      html += "<div class='pull-right action-buttons'>";
-      html += "<a class='blue' href='#' onclick='addItem(this)'><i class='ace-icon fa fa-plus bigger-130'></i></a>";
-      //不能删除顶级节点
-      if (item.parentId && item.parentId != null) {
-        html += "<a class='blue' href='#'><i class='ace-icon fa fa-remove bigger-130'></i></a>";
+  function createNestedList(data) {
+    var listHtml = "";
+    $(data).each(function (index, itemData) {
+      listHtml += createItemHtml(itemData)
+      if (itemData.children && itemData.children.length > 0) {
+        listHtml += "<ol class='dd-list'>" + createNestedList(itemData.children) + "</ol>";
       }
-      html += "</div>";
-      html += "</div>";
-      if (item.children && item.children.length > 0) {
-        html += "<ol class='dd-list'>" + createList(item.children) + "</ol>";
-      }
-      html += "</li>";
+      listHtml += "</li>";
     });
-    return html;
+    return listHtml;
   }
   
-  function addItem(obj) {
-    var item = "<li class='dd-item' data-id='" + $(obj).parent().parent().parent().data("id") + "1'>";
-    item += "<div class='dd-handle'>男";
-    item += "<div class='pull-right action-buttons'>";
-    item += "<a class='blue' href='#' onclick='addItem(this)'><i class='ace-icon fa fa-plus bigger-130'></i></a>";
-    item += "<a class='blue' href='#'><i class='ace-icon fa fa-remove bigger-130'></i></a>";
-    item += "</div>";
-    item += "</div>";
-    item += "</li>";
-    if ($(obj).parent().parent().parent().find("ol").length == 1) {
-      $(obj).parent().parent().parent().find("ol").append(item);
-    } else {
-      $(obj).parent().parent().parent().append("<ol class='dd-list'>" + item + "</ol>");
+  function createItemHtml(itemData) {
+    var itemHtml = "<li id=\"item" + itemData.id + "\" class='dd-item' data-id='" + itemData.id + "' data-ancestorid='" + itemData.ancestorId + "'>";
+    itemHtml += "<div class='dd-handle'><span>" + itemData.label + "</span>"
+    itemHtml += "<div class='pull-right action-buttons'>";
+    itemHtml += "<a class='blue' href='#' onclick='openItemEditDialog(this, \"ADD\")'><i class='ace-icon fa fa-plus bigger-130'></i></a>";
+    //不能修改删除顶级节点
+    if (itemData.parentId && itemData.parentId != null) {
+      itemHtml += "<a class='blue' href='#' onclick='openItemEditDialog(this, \"UPDATE\")'><i class='ace-icon fa fa-edit bigger-130'></i></a>";
+      itemHtml += "<a class='blue' href='#' onclick='removeItem(this)'><i class='ace-icon fa fa-remove bigger-130'></i></a>";
     }
+    itemHtml += "</div>";
+    itemHtml += "</div>";
+    return itemHtml;
+  }
+
+  $("#saveBaseData").on("click", function () {
+    saveItemToServer(function (itemData) {
+      var parentId = $("#baseDataEditDialog form input[name=parentId]").val();
+      if (parentId && parseInt(parentId) > 0) {
+        addItemToView(itemData, $("#baseDataEditDialog form input[name=itemDomId]").val());
+      } else {
+        var editItemDom = $("#baseDataEditDialog form input[name=itemDomId]").val();
+        $("#" + editItemDom).children(".dd-handle").find("span").text($("#baseDataEditDialog form input[name=label]").val());
+      }
+    });
+  });
+  
+  function openItemEditDialog(eventObj, actionType) {
+    $("#baseDataEditDialog form input").val(null);
+    var itemDom = $(eventObj).parent().parent().parent();
+    if (actionType == "ADD") {
+      $("#baseDataEditDialog form input[name=parentId]").val($(itemDom).data("id"));
+    } else if (actionType == "UPDATE") {
+      $("#baseDataEditDialog form input[name=id]").val($(itemDom).data("id"));
+      $("#baseDataEditDialog form input[name=label]").val($(itemDom).children(".dd-handle").find("span").text());
+    }
+    $("#baseDataEditDialog form input[name=ancestorId]").val($(itemDom).data("ancestorid"));
+    $("#baseDataEditDialog form input[name=itemDomId]").val($(itemDom).attr("id"));
+    $('#baseDataEditDialog').modal('show');
+  }
+
+  function saveItemToServer(successFunction) {
+    $("#baseDataEditDialog form").ajaxSubmit({
+      type:"post",
+      dataType:"json",
+      url:"/baseData/insertOrUpdate.do",
+      beforeSubmit: function(arr, $form, options) {
+        var notEmptyData = [];
+        for(var i = 0 ; i < arr.length ; i++) {
+          if (arr[i].value && arr[i].value != null && arr[i].value != "") {
+            notEmptyData.push(arr[i]);
+          }
+        }
+        if (notEmptyData.length > 0) {
+          while (arr.length > 0) {
+            arr.pop();
+          }
+          for(var j = 0 ; j < notEmptyData.length ; j++) {
+            arr.push(notEmptyData[j]);
+          }
+        }
+        return true;
+      },
+      success: function(result, statusText, xhr) {
+        if (result.success) {
+          successFunction(result.data);
+        }
+        $('#baseDataEditDialog').modal('hide');
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        showHtmlMessage(textStatus, XMLHttpRequest.responseText);
+      }
+    });
+  }
+  
+  function addItemToView(itemData, parentItemDomId) {
+    var itemHtml = createItemHtml(itemData);
+    if ($("#" + parentItemDomId).find("ol").length == 1) {
+      $("#" + parentItemDomId).find("ol").append(itemHtml);
+    } else {
+      $("#" + parentItemDomId).append("<ol class='dd-list'>" + itemHtml + "</ol>");
+    }
+    reRenderNestedList();
+  }
+
+  function removeItem(obj) {
+    $.ajax({
+      type: "post",
+      dataType: "json",
+      url: "/baseData/disableByIds.do",
+      traditional: true,
+      data: {id: $(obj).parent().parent().parent().data("id")},
+      timeout: 3000,
+      success: function (result, textStatus, jqXHR) {
+        if (result.success) {
+          $(obj).parent().parent().parent().remove();
+          reRenderNestedList();
+        }
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        alert(jqXHR.responseText);
+      }
+    });
+  }
+
+  function reRenderNestedList() {
     $("#dataContent button").remove();
     var tempHtml = $("#dataContent").html();
     $("#dataContent").empty();
     $("#dataContent").html(tempHtml);
-    $('.dd').nestable();
-    $('.dd-handle a').on('mousedown', function(e){
+    $('#dataContent .dd').nestable();
+    $('#dataContent .dd-handle a').on('mousedown', function(e){
       e.stopPropagation();
     });
   }

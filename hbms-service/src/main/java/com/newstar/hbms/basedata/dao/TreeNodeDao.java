@@ -13,7 +13,7 @@ public interface TreeNodeDao {
 
   public int update(TreeNode treeNode);
 
-  public int deleteByIds(Long[] nodeIds);
+  public int disableByIds(Long[] nodeIds);
 
   public List<TreeNode> findAll();
 
