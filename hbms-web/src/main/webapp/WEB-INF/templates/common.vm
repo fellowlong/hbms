@@ -11,7 +11,6 @@
       <div class="modal-body">
         <input type="hidden" name="callback">
           <div id="baseDataTreeContainer">
-            <ul id="baseDataTree"></ul>
           </div>
       </div>
       <div class="modal-footer">
@@ -54,35 +53,22 @@
     $('#baseDataEditDialog input[name=callback]').val(callback);
     findBaseDataByCode(code, function (data) {
       var treeNodeData = convertServerDataToTreeNodeData(data);
-      $("#baseDataSelectDialogTitle").text("选择  " + treeNodeData[0]['text']);
+      $("#baseDataSelectDialogTitle").text("选择  " + treeNodeData[0]['name']);
       $('#baseDataTreeContainer').empty();
-      $('#baseDataTreeContainer').html("<ul id='baseDataTree'></ul>");
-      $('#baseDataTree').ace_tree({
-        dataSource: function (parentData, callback) {
-          var data = null
-          if(!("text" in parentData) && !("type" in parentData)){
-            data = treeNodeData[0].additionalParameters.children || {};
-          } else if("type" in parentData && parentData.type == "folder") {
-            if("additionalParameters" in parentData && "children" in parentData.additionalParameters) {
-              data = parentData.additionalParameters.children || {};
-            } else {
-              data = {}
-            }
+      $('#baseDataTreeContainer').html("<ul id='baseDataTree' class='ztree'></ul>");
+      var setting = {
+          check: {
+              enable: true,
+              chkStyle: "checkbox",
+              chkboxType: { "Y": "p", "N": "s" }
           }
-          callback({ data: data});
-        },
-        multiSelect: true,
-        cacheItems: true,
-        'open-icon' : 'ace-icon tree-minus',
-        'close-icon' : 'ace-icon tree-plus',
-        'selectable' : true,
-        'selected-icon' : 'ace-icon fa fa-check',
-        'unselected-icon' : 'ace-icon fa fa-times',
-        loadingHTML : '<div class="tree-loading"><i class="ace-icon fa fa-refresh fa-spin blue"></i></div>'
-      });
+      };
+      var zTreeObj = $.fn.zTree.init($("#baseDataTree"), setting, treeNodeData);
       $("#selectBaseData").on("click", function (obj) {
-        var selectedItems = $('#baseDataTree').ace_tree('selectedItems');
+        var treeObj = $.fn.zTree.getZTreeObj("baseDataTree");
+        var selectedItems = treeObj.getCheckedNodes(true);
         eval(callback + "(selectedItems)");
+          $('#baseDataSelectDialog').modal('hide');
       });
       $('#baseDataSelectDialog').modal('show');
     });
@@ -91,18 +77,13 @@
 
 
   function convertServerDataToTreeNodeData(serverData) {
-    var treeNodeData = {};
+    var treeNodeData = [];
     $(serverData).each(function (index, itemData) {
-      treeNodeData[index] = {};
-      treeNodeData[index].attr = {};
-      treeNodeData[index].attr.businessId = itemData.id;
-      treeNodeData[index] = {text: itemData.label};
+      var node = {name : itemData.label, id:itemData.id};
+      treeNodeData.push(node);
       if (itemData.children && itemData.children.length > 0) {
-        treeNodeData[index].type = "folder";
         var children = convertServerDataToTreeNodeData(itemData.children);
-        treeNodeData[index].additionalParameters = {children : children};
-      } else {
-        treeNodeData[index].type = "item";
+        node.children = children;
       }
     });
     return treeNodeData;

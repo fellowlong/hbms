@@ -90,7 +90,7 @@
             var labelHtml = "";
             for (var i = 0 ; i < selectedItems.length; i++) {
               $("#industriesForCompanyContainer").append("<input type='hidden' name='industries[" + i + "].id' value='" + selectedItems[i].id + "'>")
-              labelHtml += "<span>" + selectedItems[i].text + "</span>";
+              labelHtml += "<span>" + selectedItems[i].name + "</span>,";
             }
             $("#industriesForCompanyContainer label").html(labelHtml);
           }
