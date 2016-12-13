@@ -23,6 +23,25 @@
     background-color: lavender;
     text-align: center;
   }
+
+  .baseDataSelector {
+    border-bottom: dashed 1px #ddd;
+  }
+  .baseDataSelectorLabel {
+  }
+  .baseDataSelectorLabel span {
+    font-size: 10pt;
+    margin-bottom: 5px;
+    margin-right: 5px;
+  }
+  .baseDataSelectorLabel a {
+    color: deeppink;
+    margin-left: 5px;
+  }
+  .baseDataSelectorValue {
+    display: none;
+    visibility: hidden;
+  }
 </style>
 
 
@@ -76,25 +95,7 @@
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">所属行业</label>
       <div class="col-sm-5">
-        <div id="industriesForCompanyContainer" class="input-group">
-          <label></label>
-          <span class="input-group-btn">
-              <button class="btn btn-sm btn-default" type="button" onclick="openBaseDataSelectDialog('INDUSTRY', 'setSelectIndustries')">
-                  <i class="ace-icon fa fa-search bigger-130"></i>
-              </button>
-          </span>
-        </div>
-        <script type="text/javascript">
-          function setSelectIndustries(selectedItems) {
-            $("#industriesForCompanyContainer input[type=hidden]").remove();
-            var labelHtml = "";
-            for (var i = 0 ; i < selectedItems.length; i++) {
-              $("#industriesForCompanyContainer").append("<input type='hidden' name='industries[" + i + "].id' value='" + selectedItems[i].id + "'>")
-              labelHtml += "<span>" + selectedItems[i].name + "</span>,";
-            }
-            $("#industriesForCompanyContainer label").html(labelHtml);
-          }
-        </script>
+        <div id="industriesForCompany" class="baseDataSelector"></div>
       </div>
     </div>
 
@@ -284,16 +285,6 @@
     $('.date-picker').focus();
   });
 
-  $("#addAttachment").on("click", function () {
-    $("#attachments").append($("#attachmentTemplate").html());
-    reCalculateAttatcmentSeq();
-  });
-  function reCalculateAttatcmentSeq() {
-    var attatementSeq = 0;
-    $("#attachments").find(".form-group").each(function (index, item) {
-      $(item).find("label.control-label").text("附件" + ++attatementSeq);
-      renderFileInput($(item).find("input"));
-    });
-  }
+  $("#industriesForCompany").baseData("INDUSTRY", "industries[#index#].id", true);
 
 </script>

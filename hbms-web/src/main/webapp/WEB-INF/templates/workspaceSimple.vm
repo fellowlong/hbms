@@ -71,6 +71,7 @@
     <script src="/ace/js/date-time/bootstrap-datepicker.js"></script>
     <script src="/ace/js/date-time/bootstrap-datepicker.zh-CN.min.js"></script>
     <script src="/resources/ztree/jquery.ztree.all.js"></script>
+    <script src="/resources/plugin/jquery.basedata.js"></script>
     <script src="/js/common.js"></script>
 
     <style>
