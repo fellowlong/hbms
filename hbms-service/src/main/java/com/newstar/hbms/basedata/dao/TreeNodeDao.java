@@ -19,6 +19,8 @@ public interface TreeNodeDao {
 
   public List<TreeNode> findByAncestorCode(String code);
 
+  public List<TreeNode> findAllWithSameAncestorByIds(Long[] ids);
+
   public TreeNode findByCode(String code);
 
   public List<TreeNode> findByIds(Long[] ids);

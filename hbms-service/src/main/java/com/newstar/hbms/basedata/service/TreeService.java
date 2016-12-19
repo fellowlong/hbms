@@ -17,6 +17,8 @@ public interface TreeService {
 
   public TreeNode findTreeByAncestorCode(String code);
 
+  public List<TreeNode> findTreesByIds(Long[] ids);
+
   public TreeNode findNodeByCode(String code);
 
   public List<TreeNode> findNodeByIds(Long[] ids);

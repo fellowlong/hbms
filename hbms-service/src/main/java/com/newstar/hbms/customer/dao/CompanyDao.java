@@ -1,6 +1,7 @@
 package com.newstar.hbms.customer.dao;
 
 import com.newstar.hbms.customer.domain.Company;
+import com.newstar.hbms.customer.domain.CompanyFolder;
 import com.newstar.hbms.customer.domain.CompanyIndustry;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
@@ -24,6 +25,18 @@ public interface CompanyDao {
 
   public List<Company> findByIds(Long[] ids);
 
+  public int insertIndustry(CompanyIndustry companyIndustry);
+
+  public int cleanIndustries(Long companyId);
+
+  public int insertFolder(CompanyFolder companyFolder);
+
+  public int cleanFolders(Long companyId);
+
   public List<CompanyIndustry> findIndustriesByCompanyIds(Long[] companyIds);
+
+  public List<CompanyFolder> findFoldersByCompanyIds(Long[] companyIds);
+
+
 
 }

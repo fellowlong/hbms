@@ -115,7 +115,7 @@
   function loadData(code) {
     $.ajax({
       type: "POST",
-      url: "/baseData/findByCode.do",
+      url: "/baseData/findTreeByCode.do",
       data: {code:code},
       dataType: "json",
       timeout: 3000,

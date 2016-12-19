@@ -65,6 +65,15 @@
     select * from TreeNode where yn = 1 and ancestorId in (select id from TreeNode where code = #{value})
   </select>
 
+
+  <select id="findAllWithSameAncestorByIds" resultType="com.newstar.hbms.basedata.domain.TreeNode">
+    select * from TreeNode where yn = 1 and ancestorId in  (select distinct ancestorId from TreeNode where id in
+    <foreach collection="array" open="(" close=")" separator="," item="nodeId">
+      #{nodeId}
+    </foreach>
+    )
+  </select>
+
   <select id="findByIds" resultType="com.newstar.hbms.basedata.domain.TreeNode">
     select * from TreeNode where yn = 1 and id in
     <foreach collection="array" open="(" close=")" separator="," item="nodeId">

@@ -24,24 +24,6 @@
     text-align: center;
   }
 
-  .baseDataSelector {
-    border-bottom: dashed 1px #ddd;
-  }
-  .baseDataSelectorLabel {
-  }
-  .baseDataSelectorLabel span {
-    font-size: 10pt;
-    margin-bottom: 5px;
-    margin-right: 5px;
-  }
-  .baseDataSelectorLabel a {
-    color: deeppink;
-    margin-left: 5px;
-  }
-  .baseDataSelectorValue {
-    display: none;
-    visibility: hidden;
-  }
 </style>
 
 
@@ -67,10 +49,10 @@
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">客户类型</label>
       <div class="col-sm-5">
-        <select id="companyTypeId" name="sexId" value="$!company.companyTypeId" class="chosen-select form-control">
+        <select id="companyTypeId" name="companyTypeId" value="$!company.companyTypeId" class="chosen-select form-control">
           #set($companyTypes = $baseDataService.getCompanyTypes().children)
           #foreach($companyType in $companyTypes)
-            <option value="$companyType.id">$companyType.label</option>
+            <option value="$companyType.id" #if($companyType.id == $!company.companyTypeId) selected #end>$companyType.label</option>
           #end
         </select>
       </div>
@@ -105,7 +87,7 @@
         <select id="cityId" class="chosen-select form-control" name="cityId" value="$!company.cityId">
           #set($cities = $baseDataService.getCities().children)
           #foreach($city in $cities)
-            <option value="$city.id">$city.label</option>
+            <option value="$city.id" #if($city.id == $!company.cityId) selected #end>$city.label</option>
           #end
         </select>
       </div>
@@ -165,7 +147,7 @@
         <select id="natureId" class="chosen-select form-control" name="natureId" value="$!company.natureId">
           #set($companyNatures = $baseDataService.getCompanyNatures().children)
           #foreach($companyNature in $companyNatures)
-            <option value="$companyNature.id">$companyNature.label</option>
+            <option value="$companyNature.id" #if($companyNature.id == $!company.natureId) selected #end>$companyNature.label</option>
           #end
         </select>
       </div>
@@ -201,7 +183,7 @@
                 class="chosen-select form-control">
           #set($companyPropertyRightStructures = $baseDataService.getCompanyPropertyRightStructures().children)
           #foreach($companyPropertyRightStructure in $companyPropertyRightStructures)
-            <option value="$companyPropertyRightStructure.id">$companyPropertyRightStructure.label</option>
+            <option value="$companyPropertyRightStructure.id" #if($companyPropertyRightStructure.id == $!company.propertyRightStructureId) selected #end>$companyPropertyRightStructure.label</option>
           #end
         </select>
       </div>
@@ -211,14 +193,14 @@
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">企业简介</label>
       <div class="col-sm-5">
-        <textarea type="text" id="intro" name="intro" value="$!company.intro" rows="5" class="form-control"></textarea>
+        <textarea type="text" id="intro" name="intro" rows="5" class="form-control">$!company.intro</textarea>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">备注</label>
       <div class="col-sm-5">
-        <textarea type="text" id="remark" name="remark" value="$!company.remark" rows="5" class="form-control"></textarea>
+        <textarea type="text" id="remark" name="remark"rows="5" class="form-control">$!company.remark</textarea>
       </div>
     </div>
 
@@ -242,7 +224,7 @@
       <div class="col-sm-5">
         <select id="maintainerId" name="maintainerId" value="$!company.maintainerId" class="chosen-select form-control">
           #foreach($user in $users)
-            <option value="$user.id">$user.username - $user.realName</option>
+            <option value="$user.id" #if($user.id == $!company.maintainerId) selected #end>$user.username - $user.realName</option>
           #end
         </select>
       </div>
@@ -251,12 +233,7 @@
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">所属文件夹</label>
       <div class="col-sm-5">
-        <select id="folderId" name="folderId" value="$!company.folderId" class="chosen-select form-control">
-          #set($companyFolders = $baseDataService.getCompanyFolders().children)
-          #foreach($companyFolder in $companyFolders)
-            <option value="$companyFolder.id">$companyFolder.label</option>
-          #end
-        </select>
+        <div id="foldersForCompany" class="baseDataSelector"></div>
       </div>
     </div>
   </div>
@@ -285,6 +262,32 @@
     $('.date-picker').focus();
   });
 
-  $("#industriesForCompany").baseData("INDUSTRY", "industries[#index#].id", true);
+  $("#industriesForCompany").baseDataSelector({
+    code: "INDUSTRY",
+    formFieldName: "industries[#index#].industryId",
+    isMultiFormField: true,
+    initServerData:(function() {
+      var serverData = [];
+      var industries = $JsonUtils.beanToJson($company.industries);
+      $(industries).each(function (index, itemData) {
+        serverData.push(itemData.industry);
+      });
+      return serverData;
+    })()
+  });
+
+  $("#foldersForCompany").baseDataSelector({
+    code: "COMPANY_FOLDER",
+    formFieldName: "folders[#index#].folderId",
+    isMultiFormField: true,
+    initServerData:(function() {
+      var serverData = [];
+      var folders = $JsonUtils.beanToJson($company.folders);
+      $(folders).each(function (index, itemData) {
+        serverData.push(itemData.folder);
+      });
+      return serverData;
+    })()
+  });
 
 </script>

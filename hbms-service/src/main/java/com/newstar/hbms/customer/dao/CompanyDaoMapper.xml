@@ -6,7 +6,6 @@
 
   <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Company">
     insert into Company(
-      id,
       companyTypeId,
       name,
       fullName,
@@ -33,7 +32,6 @@
       createUser,
       createTime
     ) values (
-      #{id, jdbcType=VARCHAR},
       #{companyTypeId, jdbcType=BIGINT},
       #{name, jdbcType=VARCHAR},
       #{fullName, jdbcType=VARCHAR},
@@ -60,6 +58,9 @@
       #{createUser, jdbcType=VARCHAR},
       now()
     )
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+      select last_insert_id()
+    </selectKey>
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.customer.domain.Company">
@@ -83,6 +84,7 @@
       keyword = #{keyword, jdbcType=VARCHAR},
       businessDeveloperId = #{businessDeveloperId, jdbcType=BIGINT},
       folderId = #{folderId, jdbcType=BIGINT},
+      remark = #{remark, jdbcType=VARCHAR},
       updateTime = now()
     where
       id = #{id}
@@ -131,4 +133,42 @@
     </foreach>
   </select>
 
+  <select id="findFoldersByCompanyIds" resultType="com.newstar.hbms.customer.domain.CompanyFolder">
+    select * from CompanyFolder where companyId in
+    <foreach collection="array" open="(" close=")" separator="," item="companyId">
+      #{companyId}
+    </foreach>
+  </select>
+
+  <!--industry-->
+  <insert id="insertIndustry" parameterType="com.newstar.hbms.customer.domain.CompanyIndustry">
+    insert into CompanyIndustry(
+    id,
+    companyId,
+    industryId
+    ) values (
+    #{id, jdbcType=VARCHAR},
+    #{companyId, jdbcType=BIGINT},
+    #{industryId, jdbcType=BIGINT}
+    )
+  </insert>
+  <delete id="cleanIndustries"  parameterType="java.lang.Long">
+    delete from CompanyIndustry where companyId = #{value}
+  </delete>
+
+  <!--folder-->
+  <insert id="insertFolder" parameterType="com.newstar.hbms.customer.domain.CompanyFolder">
+    insert into CompanyFolder(
+    id,
+    companyId,
+    folderId
+    ) values (
+    #{id, jdbcType=VARCHAR},
+    #{companyId, jdbcType=BIGINT},
+    #{folderId, jdbcType=BIGINT}
+    )
+  </insert>
+  <delete id="cleanFolders"  parameterType="java.lang.Long">
+    delete from CompanyFolder where companyId = #{value}
+  </delete>
 </mapper>

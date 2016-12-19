@@ -28,8 +28,17 @@ public class BaseDataController extends ConfigurableMultiActionController {
     return new ModelAndView("/system/baseDataManager");
   }
 
-  public void findByCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public void findTreeByCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String code = request.getParameter("code");
+    assert code != null && !code.isEmpty();
+    TreeNode treeNode = treeService.findTreeByAncestorCode(code);
+    //解除上级关系，防止json序列化时死递归
+    removeParentAndAncestor(treeNode);
+    WebUtils.writeWithJson(response, treeNode);
+  }
+
+  public void findTreesById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String code = request.getParameter("id[]");
     assert code != null && !code.isEmpty();
     TreeNode treeNode = treeService.findTreeByAncestorCode(code);
     //解除上级关系，防止json序列化时死递归

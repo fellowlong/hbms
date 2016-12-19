@@ -21,6 +21,7 @@ public class Company implements Serializable {
   private Long id;
 
   private Long companyTypeId;
+  private TreeNode companyType;
 
   /**
    * 名称
@@ -78,7 +79,7 @@ public class Company implements Serializable {
    * 所属文件夹
    */
   private Long folderId;
-  private TreeNode folder;
+  private List<CompanyFolder> folders = new ArrayList<CompanyFolder>();
 
   /**
    * 员工数量
@@ -173,6 +174,14 @@ public class Company implements Serializable {
 
   public void setCompanyTypeId(Long companyTypeId) {
     this.companyTypeId = companyTypeId;
+  }
+
+  public TreeNode getCompanyType() {
+    return companyType;
+  }
+
+  public void setCompanyType(TreeNode companyType) {
+    this.companyType = companyType;
   }
 
   public String getName() {
@@ -279,12 +288,12 @@ public class Company implements Serializable {
     this.folderId = folderId;
   }
 
-  public TreeNode getFolder() {
-    return folder;
+  public List<CompanyFolder> getFolders() {
+    return folders;
   }
 
-  public void setFolder(TreeNode folder) {
-    this.folder = folder;
+  public void setFolders(List<CompanyFolder> folders) {
+    this.folders = folders;
   }
 
   public Integer getStaffCount() {

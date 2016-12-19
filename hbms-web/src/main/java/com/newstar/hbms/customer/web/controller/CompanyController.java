@@ -1,6 +1,9 @@
 package com.newstar.hbms.customer.web.controller;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.customer.domain.Company;
+import com.newstar.hbms.customer.domain.CompanyFolder;
+import com.newstar.hbms.customer.domain.CompanyIndustry;
 import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.support.paging.PageRange;
@@ -13,10 +16,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by wangjinsi on 2016/10/22.
@@ -37,9 +37,21 @@ public class CompanyController extends MultiActionController {
     Long id = WebUtils.getLong(request, WebUtils.ID);
     ModelAndView modelAndView = new ModelAndView("/customer/companyEdit");
     if (id != null) {
-      List<Company> candidates = companyService.findByIds(new Long[]{id});
-      if (candidates != null && !candidates.isEmpty()) {
-        modelAndView.getModel().put("company", candidates.get(0));
+      List<Company> companies = companyService.findByIds(new Long[]{id});
+      if (companies != null && !companies.isEmpty()) {
+        List<TreeNode> treeNodes = new ArrayList<TreeNode>();
+        if (companies.get(0).getIndustries() != null) {
+          for (CompanyIndustry companyIndustry : companies.get(0).getIndustries()) {
+            treeNodes.add(companyIndustry.getIndustry());
+          }
+        }
+        if (companies.get(0).getFolders() != null) {
+          for (CompanyFolder companyFolder : companies.get(0).getFolders()) {
+            treeNodes.add(companyFolder.getFolder());
+          }
+        }
+        removeTreeNodeChildren(treeNodes);
+        modelAndView.getModel().put("company", companies.get(0));
       }
     }
     return modelAndView;
@@ -112,6 +124,34 @@ public class CompanyController extends MultiActionController {
       pageRange.setPageNum(Integer.parseInt(pageNum));
     }
     PagingResult<Company> customerResult = companyService.findByBean(company, pageRange);
+    List<TreeNode> treeNodes = new ArrayList<TreeNode>();
+    if (customerResult.getRecords() != null) {
+      for (Company perCompany : customerResult.getRecords()) {
+        if(perCompany.getCompanyType() != null) {
+          treeNodes.add(perCompany.getCompanyType());
+        }
+        if(perCompany.getCity() != null) {
+          treeNodes.add(perCompany.getCity());
+        }
+        if(perCompany.getNature() != null) {
+          treeNodes.add(perCompany.getNature());
+        }
+        if(perCompany.getPropertyRightStructure() != null) {
+          treeNodes.add(perCompany.getPropertyRightStructure());
+        }
+        if (perCompany.getIndustries() != null) {
+          for (CompanyIndustry companyIndustry : perCompany.getIndustries()) {
+            treeNodes.add(companyIndustry.getIndustry());
+          }
+        }
+        if (perCompany.getFolders() != null) {
+          for (CompanyFolder companyFolder : perCompany.getFolders()) {
+            treeNodes.add(companyFolder.getFolder());
+          }
+        }
+      }
+    }
+    removeTreeNodeChildren(treeNodes);
     Map<String, Object> jsonMap = new HashMap();
     jsonMap.put("page", pageNum);
     jsonMap.put("total ", customerResult.getPageTotal());
@@ -122,6 +162,17 @@ public class CompanyController extends MultiActionController {
       jsonMap.put("rows", null);
     }
     WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap));
+  }
+
+  private void removeTreeNodeChildren(List<TreeNode> treeNodes) {
+    if (treeNodes != null) {
+      for (TreeNode treeNode : treeNodes) {
+        treeNode.setChildren(null);
+        if (treeNode.getParent() != null) {
+          removeTreeNodeChildren(Arrays.asList(new TreeNode[]{treeNode.getParent()}));
+        }
+      }
+    }
   }
 
 }

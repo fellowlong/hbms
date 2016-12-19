@@ -1,0 +1,23 @@
+/**
+ * Created by wangjinsi on 2016/12/13.
+ */
+
+.baseDataSelector {
+  border-bottom: dashed 1px #ddd;
+}
+.baseDataSelectorLabel {
+}
+.baseDataSelectorLabel span {
+  font-size: 10pt;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+.baseDataSelectorLabel a {
+  color: deeppink;
+  margin-left: 5px;
+}
+.baseDataSelectorValue {
+  display: none;
+  visibility: hidden;
+}
+

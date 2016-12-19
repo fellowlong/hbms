@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/ace/css/dropzone.css" />
     <link rel="stylesheet" href="/validator/jquery.validator.css" />
     <link rel="stylesheet" href="/resources/ztree/zTreeStyle.css" />
+    <link rel="stylesheet" href="/resources/plugin/jquery.basedata.css" />
 
     <!-- page specific plugin styles -->
 

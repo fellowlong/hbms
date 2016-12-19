@@ -217,6 +217,7 @@
 
   <bean id="companyService" class="com.newstar.hbms.customer.service.impl.CompanyServiceImpl">
     <property name="companyDao" ref="companyDao"/>
+    <property name="treeService" ref="treeService"/>
   </bean>
 
   <bean id="contactService" class="com.newstar.hbms.customer.service.impl.ContactServiceImpl">

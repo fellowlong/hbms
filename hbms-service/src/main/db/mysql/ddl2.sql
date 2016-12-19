@@ -140,6 +140,21 @@ create table Company(
   updateUser varchar(50) comment '修改人账户'
 ) comment='客户表';
 
+drop table CompanyIndustry;
+create table CompanyIndustry(
+  id bigint auto_increment not null primary key comment '主键',
+  companyId  bigint comment '公司外键',
+  industryId bigint comment '行业外键'
+) comment='公司所属行业表';
+
+
+drop table CompanyFolder;
+create table CompanyFolder(
+  id bigint auto_increment not null primary key comment '主键',
+  companyId  bigint comment '公司外键',
+  folderId bigint comment '目录外键'
+) comment='公司所属目录表';
+
 
 drop table Contact;
 create table Contact(

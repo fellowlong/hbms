@@ -127,12 +127,24 @@
       url: '/company/findByBean.do',
       mtype: "POST",
       datatype: "json",
-      colNames: ['名称', '网址', '电话', '行业', '法人', '注册资金', '员工人数'],
+      colNames: ['名称', '城市', '行业', '电话', '法人', '注册资金', '员工人数'],
       colModel: [
         {name: 'name', width: 150},
-        {name: 'webSite', width: 150},
+        {name: 'city', width: 150, formatter: function(cellvalue, options, rowObject){
+          return cellvalue ? cellvalue.label : "";
+
+        }},
+        {name: 'industries', width: 150, formatter: function(cellvalue, options, rowObject){
+          if (cellvalue && cellvalue.length > 0) {
+            var text = "";
+            $(cellvalue).each(function (index, item) {
+              text += (text != "" ? "," : "") + item.industry.label
+            });
+            return text;
+          }
+          return "";
+        }},
         {name: 'phone', width: 150},
-        {name: 'industry', width: 150},
         {name: 'legalPerson', width: 150},
         {name: 'registeredCapital', width: 150},
         {name: 'staffCount', width: 150}
@@ -171,18 +183,10 @@
     $("#editCustomer").on("click", function () {
       var rowIds = $("#customerList").jqGrid('getGridParam', 'selarrrow');
       if (!rowIds || rowIds.length != 1) {
-        bootbox.alert("请选择要删除的记录");
+        bootbox.alert("请选择一条记录");
         return;
       }
-      $("#customerListDiv").block({
-        message: '<h3>正在加载数据</h3>',
-        css: {border: '3px solid #a00'}
-      });
-      loadRecord("/company/findById.do", {id: rowIds[0]}, "#insertOrUpdateCustomerForm", function () {
-        $("#customerListDiv").unblock();
-        $("#customerAddOrEditDialogTitle").text("编辑客户");
-        $('#customerAddOrEditDialog').modal('show')
-      });
+      window.open('/company/editView.do?id=' + rowIds[0]);
     });
 
     $("#deleteCustomer").on("click", function () {

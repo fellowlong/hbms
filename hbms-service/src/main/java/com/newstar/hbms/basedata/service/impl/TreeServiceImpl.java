@@ -54,6 +54,24 @@ public class TreeServiceImpl implements TreeService {
         return null;
     }
 
+    @Override
+    public List<TreeNode> findTreesByIds(Long[] ids) {
+        List<TreeNode> treeNodes = treeNodeDao.findAllWithSameAncestorByIds(ids);
+        if (treeNodes == null || treeNodes.isEmpty()) {
+            return null;
+        }
+        buildTrees(treeNodes);
+        List<TreeNode> trees = new ArrayList<TreeNode>();
+        for (TreeNode node : treeNodes) {
+            for (Long id : ids) {
+                if (node.getId().longValue() == id.longValue()) {
+                    trees.add(node);
+                }
+            }
+        }
+        return trees;
+    }
+
     public TreeNode findNodeByCode(String code) {
         return treeNodeDao.findByCode(code);
     }
