@@ -10,8 +10,9 @@ import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wangjinsi on 2016/10/22.
@@ -83,8 +84,8 @@ public class CompanyServiceImpl implements CompanyService {
     if (companies == null || companies.isEmpty()) {
       return;
     }
-    List<Long> treeNodeIds = new ArrayList<Long>();
-    List<Long> companyIds = new ArrayList<Long>();
+    Set<Long> treeNodeIds = new HashSet<Long>();
+    Set<Long> companyIds = new HashSet<Long>();
     for (Company company : companies) {
       companyIds.add(company.getId());
       if (company.getCompanyTypeId() != null) {
