@@ -222,6 +222,7 @@
 
   <bean id="contactService" class="com.newstar.hbms.customer.service.impl.ContactServiceImpl">
     <property name="contactDao" ref="contactDao"/>
+    <property name="treeService" ref="treeService"/>
   </bean>
 
   <bean id="positionService" class="com.newstar.hbms.customer.service.impl.PositionServiceImpl">

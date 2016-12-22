@@ -113,8 +113,16 @@
     <if test="name != null and !name.isEmpty()">
       and c.name like "%"#{name}"%"
     </if>
-    <if test="phone != null and !phone.isEmpty()">
-      and c.phone like "%"#{phone}"%"
+    <if test="cityId != null">
+      and c.cityId = #{cityId}
+    </if>
+    <if test="industries != null and !industries.isEmpty()">
+      and c.id in (
+        select companyId from CompanyIndustry where industryId in
+        <foreach collection="industries" index="index" open="(" close=")" separator=",">
+          #{industries[${index}].industryId}
+        </foreach>
+      )
     </if>
     order by createTime desc
   </select>

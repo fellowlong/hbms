@@ -6,6 +6,7 @@
 
   <resultMap id="Company" type="com.newstar.hbms.customer.domain.Company" autoMapping="true"/>
   <resultMap id="Contact" type="com.newstar.hbms.customer.domain.Contact" autoMapping="true">
+    <id property="id" column="id"/>
     <association property="company" columnPrefix="COM_" resultMap="Company"/>
   </resultMap>
 
@@ -90,8 +91,7 @@
     </foreach>
   </update>
 
-  <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Contact"
-          resultMap="Contact">
+  <select id="findByBean" parameterType="com.newstar.hbms.customer.domain.Contact" resultMap="Contact">
     select con.*,com.id as COM_id,com.name as COM_name from Contact con, Company com where con.yn = 1 and com.yn = 1 and con.companyId = com.id
     <if test="id != null">
       and con.id = #{id}
@@ -110,9 +110,6 @@
     </if>
     <if test="companyId != null">
       and con.companyId = #{companyId}
-    </if>
-    <if test="company != null and company.name != null and !company.name.isEmpty()">
-      and com.name like "%"#{company.name}"%"
     </if>
     order by com.id, con.createTime desc
   </select>

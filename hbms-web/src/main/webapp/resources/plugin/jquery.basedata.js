@@ -28,7 +28,7 @@
       initData : undefined,
       initServerData : undefined,
       code: undefined,
-      formFieldName: undefined,
+      formFieldsMapping: undefined,
       isMultiFormField: undefined
     };
     this.options = $.extend({}, this.defaults, options);
@@ -86,13 +86,15 @@
     },
 
     addItems: function(items) {
-      var formFieldName = this.options.formFieldName;
+      var formFields = this.options.formFieldsMapping
       var itemHtml = "";
       for (var i = 0 ; i < items.length; i++) {
-        var parseFormFieldName = formFieldName.replace("#index#", i);
         itemHtml += "<span class='badge badge-primary'>" + items[i].name;
         itemHtml += "<a href='javascript:void()' data-id='" + items[i].id +"'><i class='ace-icon fa fa-remove icon-only'></i></a>";
-        itemHtml += "<input type='hidden' name='" + parseFormFieldName + "' value='" + items[i].id + "'>";
+        $(formFields).each(function (index, formFieldItem) {
+          var parsedValue = items[i][formFieldItem.treeNodeAttr];
+          itemHtml += "<input type='hidden' rawname='" + formFieldItem.rawName + "' value='" + parsedValue + "'>";
+        });
         itemHtml += "</span>";
       }
       var itemElement = $(this.element).children("div").first().children("div").first();
@@ -105,14 +107,18 @@
         reCalValueIndex(itemElement);
       });
 
+
       function reCalValueIndex(itemElement) {
         //重新编号，防止跳号，spring无法绑定到array或list上
-        var values = itemElement.find("input");
-        if (values && values.length > 0) {
-          for(var i = 0 ; i < values.length; i++) {
-            $(values[i]).attr("name", formFieldName.replace("#index#", i));
+        $(formFields).each(function (index, formFieldItem) {
+          var valueInputs = itemElement.find("input[rawname='" + formFieldItem.rawName + "']");
+          if (valueInputs && valueInputs.length > 0) {
+            for(var i = 0 ; i < valueInputs.length; i++) {
+              var parsedName = formFieldItem.rawName.replace("#index#", i);
+              $(valueInputs[i]).attr("name", parsedName);
+            }
           }
-        }
+        });
       }
     },
 
@@ -128,8 +134,14 @@
         timeout: 3000,
         success: function(data, textStatus, jqXHR){
           var treeNodes = convertToTreeNodes(data);
-          dialogElement.find(".modal-title").text("选择  " + treeNodes[0]['name']);
-          rootThis.tree = $.fn.zTree.init(dialogElement.find("ul"), rootThis.treeSetting, treeNodes);
+          if (treeNodes && treeNodes.length > 0) {
+            treeNodes[0].nocheck = true;
+            $(treeNodes).each(function(index, item) {
+              item.open = true;
+            });
+            rootThis.tree = $.fn.zTree.init(dialogElement.find("ul"), rootThis.treeSetting, treeNodes);
+            dialogElement.find(".modal-title").html("选择 <b style='font-family: 'Arial Black''>" + treeNodes[0]['name'] + "</b>");
+          }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
           var tipHtml = "<h5 class='red'><i class=\"icon-warning-sign red bigger-130\"></i>加载失败</h5>";
@@ -187,80 +199,3 @@
   }
   
 })(jQuery, window, document);
-/*
-
-//sample:扩展jquery对象的方法，bold()用于加粗字体。
-(function ($) {
-
-  var methods = {
-    addItem: function(options) {
-      // this
-    },
-    show: function() {
-      // is
-    },
-    hide: function() {
-      // good
-    },
-    update: function(content) {
-      // !!!
-    }
-  };
-
-
-  $.fn.extend({
-    ///<summary>
-    /// 基础数据选择插件
-    ///</summary>
-    "baseData": function (options) {
-      var defaults = {
-        code : undefined,
-        formFieldName : undefined,
-        isMultiFormField : undefined
-      };
-      this.options = $.extend({}, defaults, options);
-
-      $(this).addClass("input-group");
-      var baseDataSource = this;
-      var html = "<div class='baseDataSelectorLabel'></div>";
-      html += "<div class='baseDataSelectorValue'></div>";
-      html += "<span class='input-group-btn'>";
-      html += "<button type='button' class='btn btn-xs btn-primary'>";
-      html += "<i class='ace-icon fa fa-search bigger-130'></i>选择";
-      html += "</button>";
-      html += "</span>";
-      $(this).append(html);
-      $(this).find("button").on("click", function (obj) {
-        openBaseDataSelectDialog(code, isMultiFormField, function(selectedItems){
-          var valuesHtml = "";
-          var labelsHtml = "";
-          for (var i = 0 ; i < selectedItems.length; i++) {
-            var parseFormFieldName = formFieldName.replace("#index#", i);
-            valuesHtml += "<input type='hidden' name='" + parseFormFieldName + "' value='" + selectedItems[i].id + "'>";
-            labelsHtml += "<span class='badge badge-primary'>" + selectedItems[i].name;
-            labelsHtml += "<a href='#' data-id='" + selectedItems[i].id +"'><i class='ace-icon fa fa-remove icon-only'></i></a>";
-            labelsHtml += "</span>";
-          }
-          $(baseDataSource).children(".baseDataSelectorValue").append(valuesHtml)
-          $(baseDataSource).children(".baseDataSelectorLabel").append(labelsHtml);
-          $(baseDataSource).find("a").unbind();
-          $(baseDataSource).find("a").on("click", function (obj) {
-            $(baseDataSource).find(".baseDataSelectorValue input[value=" + $(obj.currentTarget).data("id") + "]").remove();
-            //重新编号，防止跳号，spring无法绑定到array或list上
-            var values = $(baseDataSource).find(".baseDataSelectorValue input");
-            if (values && values.length > 0) {
-              for(var i = 0 ; i < values.length; i++) {
-                $(values[i]).attr("name", formFieldName.replace("#index#", i));
-              }
-            }
-            $(obj.currentTarget).parent().remove();
-          });
-        });
-      });
-      return;
-    }
-  });
-  $.fn.baseData.addItem = function (items) {
-    return "<strong>" + str + "</strong>";
-  }
-})(jQuery);*/

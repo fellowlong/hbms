@@ -1,14 +1,31 @@
+<style>
+  .baseDataSelectorLabel {
+    min-width: 200px;
+  }
+</style>
+
 <div style="padding:10px;">
   <form id="searchCustomerForm" class="form-inline" role="form" action="" method="post">
-    <input type="hidden" name="id" value="$!company.id">
     <div class="form-group">
       <div class="input-group">
         <div class="input-group-addon">名称</div>
         <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end>
-        <div class="input-group-addon">行业</div>
-        <input class="form-control" name="industry" #if($param['industry']) value="$param['industry']" #end>
-        <div class="input-group-addon">电话</div>
-        <input class="form-control" name="phone" #if($param['phone']) value="$param['phone']" #end>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">城市</div>
+        <select id="cityId" class="chosen-select form-control" name="cityId" value="$!company.cityId" data-placeholder="请选择..." style="min-width: 100px">
+          #set($cities = $baseDataService.getCities().children)
+            <option value="">全部</option>
+          #foreach($city in $cities)
+            <option value="$city.id" #if($city.id == $!company.cityId) selected #end>$city.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon" style="border: 1px solid #cccccc;">行业</div>
+        <div id="industriesForSearch" class="baseDataSelector"></div>
+      </div>
+      <div class="input-group">
         <span class="input-group-btn">
           <button id="searchCustomer" class="btn btn-primary form-control no-radius" type="button">
             <i class="ace-icon fa fa-search"></i>搜索
@@ -124,7 +141,7 @@
 <script type="text/javascript">
   $(document).ready(function () {
     $("#customerList").jqGrid({
-      url: '/company/findByBean.do',
+      url: '/company/findByBean.do?' + Math.random() + "=" + new Date().getTime(),
       mtype: "POST",
       datatype: "json",
       colNames: ['名称', '城市', '行业', '电话', '法人', '注册资金', '员工人数'],
@@ -166,12 +183,23 @@
     });
 
     $("#searchCustomer").on("click", function () {
+      var postData = $("#customerList").jqGrid("getGridParam", "postData");
+      while (!$.isEmptyObject(postData)) {
+        for (var key in postData) {
+          delete postData[key];
+        }
+      }
       $("#customerList").jqGrid('setGridParam', {
-        postData: {
-          name: $("#searchCustomerForm input[name='name']").val(),
-          industry: $("#searchCustomerForm input[name='industry']").val(),
-          phone: $("#searchCustomerForm input[name='phone']").val()
-        },
+        postData: (function () {
+          var postData = {};
+          $("#searchCustomerForm input, #searchCustomerForm select").each(function (index, item) {
+            var val = $(item).val();
+            if (val && val.length > 0) {
+              postData[$(item).attr("name")] = val;
+            }
+          });
+          return postData;
+        })(),
         page: 1
       }).trigger("reloadGrid");
     });
@@ -209,17 +237,32 @@
         }
       })
     });
+  });
 
-    $("#saveOrUpdateCustomer").on("click", function () {
-      saveOrUpdateRecord("/company/insertOrUpdate.do", "#insertOrUpdateCustomerForm", function () {
-        $("#customerAddOrEditDialog").modal("hide");
-        $("#searchCustomerForm").submit();
+  $("#industriesForSearch").baseDataSelector({
+    code: "INDUSTRY",
+    formFieldsMapping: [
+      {rawName: "industries[#index#].industryId", treeNodeAttr: "id"}
+    ],
+    isMultiFormField: true,
+    initServerData:(function() {
+      var serverData = [];
+      var industries = [];
+      #if($!company.industries)
+        industries = $JsonUtils.beanToJson($!company.industries);
+      #end
+      $(industries).each(function (index, itemData) {
+        serverData.push(itemData.industry);
       });
-    })
-
-    $("#closeCustomer").on("click", function () {
-      $("#customerAddOrEditDialog").modal("hide");
-    })
+      return serverData;
+    })()
+  });
+  $('.chosen-select').chosen({search_contains: true});
+  $('.date-picker').datepicker({
+    autoclose: true,
+    todayHighlight: true
+  }).next().on("click", function () {
+    $('.date-picker').focus();
   });
 </script>
 

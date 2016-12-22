@@ -264,11 +264,17 @@
 
   $("#industriesForCompany").baseDataSelector({
     code: "INDUSTRY",
-    formFieldName: "industries[#index#].industryId",
+    formFieldsMapping: [
+      {rawName: "industries[#index#].industryId", treeNodeAttr: "id"},
+      {rawName: "industries[#index#].industry.label", treeNodeAttr: "name"}
+    ],
     isMultiFormField: true,
-    initServerData:(function() {
+    initServerData: (function () {
       var serverData = [];
-      var industries = $JsonUtils.beanToJson($company.industries);
+      var industries = [];
+      #if($company.industries)
+        industries = $JsonUtils.beanToJson($company.industries);
+      #end
       $(industries).each(function (index, itemData) {
         serverData.push(itemData.industry);
       });
@@ -278,11 +284,17 @@
 
   $("#foldersForCompany").baseDataSelector({
     code: "COMPANY_FOLDER",
-    formFieldName: "folders[#index#].folderId",
+    formFieldsMapping: [
+      {rawName: "folders[#index#].folderId", treeNodeAttr: "id"},
+      {rawName: "folders[#index#].folder.label", treeNodeAttr: "name"}
+    ],
     isMultiFormField: true,
     initServerData:(function() {
       var serverData = [];
-      var folders = $JsonUtils.beanToJson($company.folders);
+      var folders = [];
+      #if($company.folders)
+        folders = $JsonUtils.beanToJson($company.folders);
+      #end
       $(folders).each(function (index, itemData) {
         serverData.push(itemData.folder);
       });

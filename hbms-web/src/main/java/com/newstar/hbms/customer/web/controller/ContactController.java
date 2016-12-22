@@ -39,8 +39,8 @@ public class ContactController extends MultiActionController {
   }
 
   public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    PagingResult<Company> customerPagingResult = companyService.findByBean(new Company(), new PageRange(1, 100));
-    return new ModelAndView("/customer/contactManager", "customers", customerPagingResult.getRecords());
+    PagingResult<Company> companyPagingResult = companyService.findByBean(new Company(), new PageRange(1, 1000));
+    return new ModelAndView("/customer/contactManager", "companies", companyPagingResult.getRecords());
   }
 
   public ModelAndView editView(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -52,6 +52,8 @@ public class ContactController extends MultiActionController {
         modelAndView.getModel().put("contact", contacts.get(0));
       }
     }
+    PagingResult<Company> companyPagingResult = companyService.findByBean(new Company(), new PageRange(1, 1000));
+    modelAndView.addObject("companies", companyPagingResult.getRecords());
     return modelAndView;
   }
 
