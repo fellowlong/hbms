@@ -34,13 +34,13 @@ public class PagingPlugin implements Interceptor {
     } else if (allParams instanceof Map) {
       Map paramMap = (Map)allParams;
       String lastMethodArgKey = paramMap.keySet().size() > 1
-                                ? String.valueOf(paramMap.keySet().size()/2 - 1)
+                                ? "arg" + String.valueOf(paramMap.keySet().size()/2 - 1)
                                 : paramMap.keySet().iterator().next().toString();
       Object lastMethodArgValue = paramMap.get(lastMethodArgKey);
       if (lastMethodArgValue instanceof PageRange) {
         pageRange = (PageRange) lastMethodArgValue;
         if (paramMap.size() == 4) {
-          noPageParams = paramMap.get("0");
+          noPageParams = paramMap.get("arg0");
         } else if (paramMap.size() > 4) {
           Map tempNoPageParams = new HashMap(paramMap);
           tempNoPageParams.remove(lastMethodArgKey);
