@@ -12,47 +12,57 @@
     <a href="#commonBaseData" class="list-group-item list-group-title" data-toggle="collapse">公共数据</a>
     <div id="commonBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
-        <a href="#" class="list-group-item" onclick="loadData('SEX')">性别</a>
-        <a href="#" class="list-group-item" onclick="loadData('MARITAL')">婚姻状况</a>
-        <a href="#" class="list-group-item" onclick="loadData('DEGREE')">学历</a>
-        <a href="#" class="list-group-item" onclick="loadData('INDUSTRY')">行业</a>
-        <a href="#" class="list-group-item" onclick="loadData('FUNCTION')">职能</a>
-        <a href="#" class="list-group-item" onclick="loadData('POSITION')">职位</a>
-        <a href="#" class="list-group-item" onclick="loadData('CITY')">城市</a>
-        <a href="#" class="list-group-item" onclick="loadData('TAG')">标签</a>
-        <a href="#" class="list-group-item" onclick="loadData('COMPANY')">公司</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('SEX')">性别</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('MARITAL')">婚姻状况</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('DEGREE')">学历</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('INDUSTRY')">行业</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('FUNCTION')">职能</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('POSITION')">职位</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('NATIONALITY')">国籍</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('CITY')">城市</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('TAG')">标签</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('COMPANY')">公司</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('LANGUAGE')">语言</a>
       </div>
     </div>
 
     <a href="#candidateBaseData" class="list-group-item list-group-title" data-toggle="collapse">人才相关</a>
     <div id="candidateBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
-        <a href="#" class="list-group-item" onclick="loadData('JOB_HUNTING_STATUS')">求职状态</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('JOB_HUNTING_STATUS')">求职状态</a>
       </div>
     </div>
 
     <a href="#companyBaseData" class="list-group-item list-group-title" data-toggle="collapse">公司相关</a>
     <div id="companyBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
-        <a href="#" class="list-group-item" onclick="loadData('COMPANY_TYPE')">公司类型</a>
-        <a href="#" class="list-group-item" onclick="loadData('COMPANY_FOLDER')">公司目录</a>
-        <a href="#" class="list-group-item" onclick="loadData('COMPANY_NATURE')">公司性质</a>
-        <a href="#" class="list-group-item" onclick="loadData('COMPANY_PROPERTY_RIGHT_STRUCTURE')">产权结构</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('COMPANY_TYPE')">公司类型</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('COMPANY_FOLDER')">公司目录</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('COMPANY_NATURE')">公司性质</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('COMPANY_PROPERTY_RIGHT_STRUCTURE')">产权结构</a>
       </div>
     </div>
 
     <a href="#contactBaseData" class="list-group-item list-group-title" data-toggle="collapse">联系人相关</a>
     <div id="contactBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
-        <a href="#" class="list-group-item" onclick="loadData('CONTACT_IMPORTANT_LEVEL')">重要级别</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('CONTACT_IMPORTANT_LEVEL')">重要级别</a>
+      </div>
+    </div>
+
+    <a href="#projectBaseData" class="list-group-item list-group-title" data-toggle="collapse">职位相关</a>
+    <div id="projectBaseData" class="collapse in">
+      <div class="list-group" style="margin: 0px">
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('POSITION_PRIORITY')">优先级</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('POSITION_FAME_COMPANY_BACKGROUND')">名企背景</a>
       </div>
     </div>
 
     <a href="#projectBaseData" class="list-group-item list-group-title" data-toggle="collapse">项目相关</a>
     <div id="projectBaseData" class="collapse in">
       <div class="list-group" style="margin: 0px">
-        <a href="#" class="list-group-item" onclick="loadData('PROJECT_IMPORTANT_LEVEL')">重要级别</a>
-        <a href="#" class="list-group-item" onclick="loadData('PROJECT_STATUS')">状态</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('PROJECT_IMPORTANT_LEVEL')">重要级别</a>
+        <a href="javascript:void()" class="list-group-item" onclick="loadData('PROJECT_STATUS')">状态</a>
       </div>
     </div>
   </div>

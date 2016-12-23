@@ -16,6 +16,8 @@ public interface BaseDataService {
     public static final String TYPE_CODE_MARITAL = "MARITAL";
     //学历
     public static final String TYPE_CODE_DEGREE = "DEGREE";
+    //语言
+    public static final String TYPE_CODE_LANGUAGE= "LANGUAGE";
 
     //多层
     //行业
@@ -33,6 +35,9 @@ public interface BaseDataService {
 
     public static final String TYPE_CODE_COMPANY = "COMPANY";
 
+    public static final String TYPE_CODE_NATIONALITY = "NATIONALITY";
+
+
     public static final String TYPE_CODE_JOB_HUNTING_STATUS = "JOB_HUNTING_STATUS";
 
     public static final String TYPE_CODE_COMPANY_TYPE = "COMPANY_TYPE";
@@ -42,6 +47,9 @@ public interface BaseDataService {
 
     public static final String TYPE_CODE_CONTACT_IMPORTANT_LEVEL = "CONTACT_IMPORTANT_LEVEL";
 
+    public static final String TYPE_CODE_POSITION_PRIORITY= "POSITION_PRIORITY";
+    public static final String TYPE_CODE_POSITION_FAME_COMPANY_BACKGROUND= "POSITION_FAME_COMPANY_BACKGROUND";
+
     public static final String TYPE_CODE_PROJECT_IMPORTANT_LEVEL = "PROJECT_IMPORTANT_LEVEL";
 
     public static final String TYPE_CODE_PROJECT_STATUS = "PROJECT_STATUS";
@@ -50,6 +58,7 @@ public interface BaseDataService {
     public TreeNode getSexes();
     public TreeNode getMaritals();
     public TreeNode getDegrees();
+    public TreeNode getLanguages();
     public TreeNode getIndustries();
     public TreeNode getFunctions();
     public TreeNode getPositions();
@@ -57,12 +66,15 @@ public interface BaseDataService {
     public TreeNode getTags();
     public TreeNode getDepartments();
     public TreeNode getCompanies();
+    public TreeNode getNationalities();
     public TreeNode getJobHuntingStatuses();
     public TreeNode getCompanyTypes();
     public TreeNode getCompanyFolders();
     public TreeNode getCompanyNatures();
     public TreeNode getCompanyPropertyRightStructures();
     public TreeNode getContactImportantLevels();
+    public TreeNode getPositionPriorities();
+    public TreeNode getPositionFameCompanyBackgrounds();
     public TreeNode getProjectImportantLevels();
     public TreeNode getProjectStatuses();
 

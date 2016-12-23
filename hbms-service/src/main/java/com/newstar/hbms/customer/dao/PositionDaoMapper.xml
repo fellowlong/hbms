@@ -5,7 +5,8 @@
 <mapper namespace="com.newstar.hbms.customer.dao.PositionDao">
 
   <resultMap id="Company" type="com.newstar.hbms.customer.domain.Company" autoMapping="true"/>
-  <resultMap id="Position" type="com.newstar.hbms.customer.domain.Position">
+  <resultMap id="Position" type="com.newstar.hbms.customer.domain.Position" autoMapping="true">
+    <id property="id" javaType="java.lang.Long" column="id"/>
     <association property="company" columnPrefix="COM_" resultMap="Company"/>
   </resultMap>
 
@@ -14,6 +15,7 @@
       id,
       companyId,
       contactId,
+      code,
       name,
       priorityId,
       industryId,
@@ -22,7 +24,6 @@
       fameCompanyBackgroundId,
       nationalityId,
       degreeId,
-      languageId,
       minAge,
       maxAge,
       minWorkYears,
@@ -47,6 +48,7 @@
       #{id, jdbcType=BIGINT},
       #{companyId, jdbcType=BIGINT},
       #{contactId, jdbcType=BIGINT},
+      #{code, jdbcType=VARCHAR},
       #{name, jdbcType=VARCHAR},
       #{priorityId, jdbcType=BIGINT},
       #{industryId, jdbcType=BIGINT},
@@ -55,7 +57,6 @@
       #{fameCompanyBackgroundId, jdbcType=BIGINT},
       #{nationalityId, jdbcType=BIGINT},
       #{degreeId, jdbcType=BIGINT},
-      #{languageId, jdbcType=BIGINT},
       #{minAge, jdbcType=INTEGER},
       #{maxAge, jdbcType=INTEGER},
       #{minWorkYears, jdbcType=INTEGER},
@@ -83,6 +84,7 @@
     update `Position` set
       companyId = #{companyId, jdbcType=BIGINT},
       contactId = #{contactId, jdbcType=BIGINT},
+      code = #{code, jdbcType=VARCHAR},
       name = #{name, jdbcType=VARCHAR},
       priorityId = #{priorityId, jdbcType=BIGINT},
       industryId = #{industryId, jdbcType=BIGINT},
@@ -91,7 +93,6 @@
       fameCompanyBackgroundId = #{fameCompanyBackgroundId, jdbcType=BIGINT},
       nationalityId = #{nationalityId, jdbcType=BIGINT},
       degreeId = #{degreeId, jdbcType=BIGINT},
-      languageId = #{languageId, jdbcType=BIGINT},
       minAge = #{minAge, jdbcType=INTEGER},
       maxAge = #{maxAge, jdbcType=INTEGER},
       minWorkYears = #{minWorkYears, jdbcType=INTEGER},

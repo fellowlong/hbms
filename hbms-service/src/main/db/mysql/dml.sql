@@ -16,3 +16,7 @@ INSERT INTO treenode(id, code, label, value, parentId, ancestorId, yn, createTim
 INSERT INTO treenode(id, code, label, value, parentId, ancestorId, yn, createTime, createUser, updateTime, updateUser) VALUES(16, 'CONTACT_IMPORTANT_LEVEL', '联系人重要级别', NULL, NULL, 16, 1, now(), NULL, now(), NULL);
 INSERT INTO treenode(id, code, label, value, parentId, ancestorId, yn, createTime, createUser, updateTime, updateUser) VALUES(17, 'PROJECT_IMPORTANT_LEVEL', '项目重要级别', NULL, NULL, 17, 1, now(), NULL, now(), NULL);
 INSERT INTO treenode(id, code, label, value, parentId, ancestorId, yn, createTime, createUser, updateTime, updateUser) VALUES(18, 'PROJECT_STATUS', '项目状态', NULL, NULL, 18, 1, now(), NULL, now(), NULL);
+INSERT INTO treenode(id, code, label, value, parentId, ancestorId, yn, createTime, createUser, updateTime, updateUser) VALUES(19, 'LANGUAGE', '语言', NULL, NULL, 19, 1, now(), NULL, now(), NULL);
+INSERT INTO treenode(id, code, label, value, parentId, ancestorId, yn, createTime, createUser, updateTime, updateUser) VALUES(20, 'NATIONALITY', '国籍', NULL, NULL, 20, 1, now(), NULL, now(), NULL);
+INSERT INTO treenode(id, code, label, value, parentId, ancestorId, yn, createTime, createUser, updateTime, updateUser) VALUES(21, 'POSITION_PRIORITY', '职位优先级', NULL, NULL, 21, 1, now(), NULL, now(), NULL);
+INSERT INTO treenode(id, code, label, value, parentId, ancestorId, yn, createTime, createUser, updateTime, updateUser) VALUES(22, 'POSITION_FAME_COMPANY_BACKGROUND', '名企背景', NULL, NULL, 22, 1, now(), NULL, now(), NULL);

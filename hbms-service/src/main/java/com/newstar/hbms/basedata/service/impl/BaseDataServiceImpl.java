@@ -37,6 +37,11 @@ public class BaseDataServiceImpl implements BaseDataService {
     }
 
     @Override
+    public TreeNode getLanguages() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_LANGUAGE);
+    }
+
+    @Override
     public TreeNode getIndustries() {
         return treeService.findTreeByAncestorCode(TYPE_CODE_INDUSTRY);
     }
@@ -72,6 +77,11 @@ public class BaseDataServiceImpl implements BaseDataService {
     }
 
     @Override
+    public TreeNode getNationalities() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_NATIONALITY);
+    }
+
+    @Override
     public TreeNode getJobHuntingStatuses() {
         return treeService.findTreeByAncestorCode(TYPE_CODE_JOB_HUNTING_STATUS);
     }
@@ -99,6 +109,16 @@ public class BaseDataServiceImpl implements BaseDataService {
     @Override
     public TreeNode getContactImportantLevels() {
         return treeService.findTreeByAncestorCode(TYPE_CODE_CONTACT_IMPORTANT_LEVEL);
+    }
+
+    @Override
+    public TreeNode getPositionPriorities() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_POSITION_PRIORITY);
+    }
+
+    @Override
+    public TreeNode getPositionFameCompanyBackgrounds() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_POSITION_FAME_COMPANY_BACKGROUND);
     }
 
     @Override

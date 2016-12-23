@@ -48,80 +48,7 @@
         <h4 class="modal-title" id="positionAddOrEditDialogTitle">职位列表</h4>
       </div>
       <div class="modal-body">
-        <form id="insertOrUpdatePositionForm" role="form" data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
-          <input type="hidden" value="$!position.id" name="id">
-          <table class="table table-bordered table-striped" style="margin: 0px">
-            <tr>
-              <td align="right"><label class="control-label no-padding-right">客户</label></td>
-              <td colspan="3">
-                <div id="customerOfEditPosition">
-                  <span type="formFieldValue" name="company.name"></span>
-                </div>
-                <div id="customerOfAddPosition">
-                  <select class="chosen-select form-control" name="customerId" data-rule="客户:required;customerId">
-                    #foreach($company in $companies)
-                    <option value="$company.id">$company.name</option>
-                    #end
-                  </select>
-                </div>
-              </td>
-              </tr>
-            <tr>
-              <td align="right"><label class="control-label no-padding-right">名称</label><sup style="color:red">*</sup></td>
-              <td><input type="text" class="form-control" name="name" data-rule="名称:required;name"/></td>
-              <td align="right"><label class="control-label no-padding-right">年龄要求</label></td>
-              <td>
-                  <input type="text" name="minAge" style="width: 50px" class="ace"/>-
-                  <input type="text" name="maxAge" style="width: 50px" class="ace"/>
-              </td>
-            </tr>
-            <tr>
-              <td align="right"><label class="control-label no-padding-right">性别要求</label></td>
-              <td>
-                <div class="input-group">
-                  <label>
-                  <label>
-                    <input name="sex" type="radio" class="ace" value="0">
-                    <span class="lbl">不限</span>
-                  </label>
-                  <label>
-                    <input name="sex" type="radio" class="ace" value="1">
-                    <span class="lbl">男</span>
-                  </label>
-                  <label>
-                    <input name="sex" type="radio" class="ace" value="2">
-                    <span class="lbl">女</span>
-                  </label>
-                </div>
-              </td>
-              <td align="right"><label class="control-label no-padding-right">工作年限要求</label></td>
-              <td>
-                <input type="text" name="minWorkYears" style="width: 50px" class="ace"/>-
-                <input type="text" name="maxWorkYears" style="width: 50px" class="ace"/>
-              </td>
-            </tr>
-            <tr>
-              <td align="right"><label class="control-label no-padding-right">学历要求</label></td>
-              <td><input type="text" class="form-control" name="educationLevel"/></td>
-              <td align="right"><label class="control-label no-padding-right">行业要求</label></td>
-              <td><input type="text" class="form-control" name="industry"/></td>
-            </tr>
-            <tr>
-              <td align="right"><label class="control-label no-padding-right">外语要求</label></td>
-              <td><input type="text" class="form-control" name="foreignLanguage"/></td>
-              <td align="right"><label class="control-label no-padding-right">地址</label></td>
-              <td><input type="text" class="form-control" name="address"/></td>
-            </tr>
-            <tr>
-              <td align="right"><label class="control-label no-padding-right">职位说明</label></td>
-              <td colspan="3"><textarea  class="form-control" name="description" rows="5"></textarea></td>
-            </tr>
-            <tr>
-              <td align="right"><label class="control-label no-padding-right">备注</label></td>
-              <td colspan="3"><textarea  class="form-control" name="remark" rows="5"></textarea></td>
-            </tr>
-          </table>
-        </form>
+
 
       </div>
       <div class="modal-footer">
@@ -180,32 +107,16 @@
     });
 
     $("#addPosition").on("click", function () {
-      //清空表单
-      $("#customerOfAddPosition").css("display", "block");
-      $("#customerOfEditPosition").css("display", "none");
-      $("#insertOrUpdatePositionForm").validator("cleanUp");
-      clearForm("#insertOrUpdatePositionForm");
-      $("#positionAddOrEditDialogTitle").text("新增职位");
-      $('#positionAddOrEditDialog').modal('show')
+        window.open('/position/editView.do');
     });
 
     $("#editPosition").on("click", function () {
       var rowIds = $("#positionList").jqGrid('getGridParam', 'selarrrow');
       if (!rowIds || rowIds.length != 1) {
-        bootbox.alert("请选择要删除的记录");
+        bootbox.alert("请选择一条记录");
         return;
       }
-      $("#positionListDiv").block({
-        message: '<h3>正在加载数据</h3>',
-        css: {border: '3px solid #a00'}
-      });
-      loadRecord("/position/findById.do", {id: rowIds[0]}, "#insertOrUpdatePositionForm", function () {
-        $("#positionListDiv").unblock();
-        $("#customerOfAddPosition").css("display", "none");
-        $("#customerOfEditPosition").css("display", "block");
-        $("#positionAddOrEditDialogTitle").text("编辑职位");
-        $('#positionAddOrEditDialog').modal('show')
-      });
+      window.open('/position/editView.do?id=' + rowIds[0]);
     });
 
     $("#deletePosition").on("click", function () {
@@ -229,16 +140,6 @@
       })
     });
 
-    $("#saveOrUpdatePosition").on("click", function () {
-      saveOrUpdateRecord("/position/insertOrUpdate.do", "#insertOrUpdatePositionForm", function () {
-        $("#positionAddOrEditDialog").modal("hide");
-        $("#searchPositionForm").submit();
-      });
-    })
-
-    $("#closePosition").on("click", function () {
-      $("#positionAddOrEditDialog").modal("hide");
-    })
 
     $('.chosen-select').chosen({search_contains:true});
     $(".chosen-container").css("width","100%");

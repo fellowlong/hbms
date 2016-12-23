@@ -1,0 +1,387 @@
+<style>
+  .widget-title {
+    color: #000;
+    font-family: '微软雅黑';
+  }
+
+  .widget-body {
+    padding: 15px;
+  }
+
+  #worExperiences.form-group {
+    margin: 0;
+  }
+
+  .form-horizontal .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .actionBar-container {
+    margin-top: 45px;
+  }
+  .actionBar {
+    background-color: lavender;
+    text-align: center;
+  }
+
+</style>
+
+
+<form id="positionForm"
+      method="post"
+      enctype="multipart/form-data"
+      action="/position/insertOrUpdate.do"
+      class="form-horizontal"
+      role="form"
+      autocomplete="off"
+      data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+
+    <input type="hidden" value="$!position.id" name="id">
+    <div class="row" style="margin:0;padding-left: 50px">
+
+    <div class="form-group">
+        <div class="col-sm-6">
+            <h3><b>#if($position.id) 编辑 #else 新增 #end 职位</b> </h3>
+            <hr/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">所属公司</label>
+        <div class="col-sm-5">
+            <select id="companyId" name="companyId" value="$!position.companyId" class="chosen-select form-control">
+              #foreach($company in $companies)
+                  <option value="$company.id" #if($company.id == $!position.companyId) selected #end>$company.name</option>
+              #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">客户联系人</label>
+        <div class="col-sm-5">
+            <select id="contactId" name="contactId" value="$!position.contactId" class="chosen-select form-control">
+              #foreach($contact in $contacts)
+                  <option value="$contact.id" #if($contact.id == $!position.contactId) selected #end>$contact.name</option>
+              #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">编码<sup style="color:red">*</sup></label>
+        <div class="col-sm-5">
+            <input type="text" name="code" value="$!position.code" placeholder="编码" class="form-control"
+            />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">职位名称<sup style="color:red">*</sup></label>
+        <div class="col-sm-5">
+            <input type="text" name="name" value="$!position.name" placeholder="姓名" class="form-control"
+            />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">优先级</label>
+        <div class="col-sm-5">
+            <select id="priorityId" name="priorityId" value="$!position.priorityId" class="chosen-select form-control">
+                #set($positionPriorities = $baseDataService.getPositionPriorities().children)
+                #foreach($positionPriority in $positionPriorities)
+                    <option value="$positionPriority.id" #if($positionPriority.id == $!position.priorityId) selected #end>$positionPriority.label</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">所属行业</label>
+        <div class="col-sm-5">
+            <div id="industriesForPosition" class="baseDataSelector"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">职能</label>
+        <div class="col-sm-5">
+            <select id="functionId" name="functionId" value="$!position.functionId" class="chosen-select form-control">
+                #set($functions = $baseDataService.getFunctions().children)
+                #foreach($function in $functions)
+                    <option value="$function.id" #if($function.id == $!position.functionId) selected #end>$function.label</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">所在城市</label>
+        <div class="col-sm-5">
+            <div id="cityForPosition" class="baseDataSelector"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">名企背景</label>
+        <div class="col-sm-5">
+            <select id="fameCompanyBackgroundId" name="fameCompanyBackgroundId" value="$!position.fameCompanyBackgroundId" class="chosen-select form-control">
+                #set($positionFameCompanyBackgrounds = $baseDataService.getPositionFameCompanyBackgrounds().children)
+                #foreach($positionFameCompanyBackground in $positionFameCompanyBackgrounds)
+                    <option value="$positionFameCompanyBackground.id" #if($positionFameCompanyBackground.id == $!position.fameCompanyBackgroundId) selected #end>$positionFameCompanyBackground.label</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">国籍</label>
+        <div class="col-sm-5">
+            <select id="nationalityId" name="nationalityId" value="$!position.nationalityId" class="chosen-select form-control">
+                #set($nationalities = $baseDataService.getNationalities().children)
+                #foreach($nationality in $nationalities)
+                    <option value="$nationality.id" #if($nationality.id == $!position.nationalityId) selected #end>$nationality.label</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">学历</label>
+        <div class="col-sm-5">
+            <select id="degreeId" name="degreeId" value="$!position.degreeId" class="chosen-select form-control">
+                #set($degrees = $baseDataService.getDegrees().children)
+                #foreach($degree in $degrees)
+                    <option value="$degree.id" #if($degree.id == $!position.degreeId) selected #end>$degree.label</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">语言要求</label>
+        <div class="col-sm-5">
+            <div id="languagesForPosition" class="baseDataSelector"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">年龄要求<sup style="color:red">*</sup></label>
+        <div class="col-sm-5">
+        <div class="input-group">
+            <input type="text" name="minAge" value="$!position.minAge" placeholder="最小年龄" class="form-control"/>
+            <div class="input-group-addon">-</div>
+            <input type="text" name="maxAge" value="$!position.maxAge" placeholder="最大年龄" class="form-control"/>
+        </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">工作年限要求<sup style="color:red">*</sup></label>
+        <div class="col-sm-5">
+        <div class="input-group">
+            <input type="text" name="minWorkYears" value="$!position.minWorkYears" placeholder="最小工作年限" class="form-control"/>
+            <div class="input-group-addon">-</div>
+            <input type="text" name="maxWorkYears" value="$!position.maxWorkYears" placeholder="最大工作年限" class="form-control"/>
+        </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">年薪范围<sup style="color:red">*</sup></label>
+        <div class="col-sm-5">
+            <div class="input-group">
+            <input type="text" name="minAnnualSalary" value="$!position.minAnnualSalary" placeholder="最小年薪" class="form-control"/>
+            <div class="input-group-addon">-</div>
+            <input type="text" name="maxAnnualSalary" value="$!position.maxAnnualSalary" placeholder="最大年薪" class="form-control"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">性别</label>
+        <div class="col-sm-5">
+            <select id="sexId" name="sexId" value="$!position.sexId" class="chosen-select form-control">
+                #set($sexes = $baseDataService.getSexes().children)
+                #foreach($sex in $sexes)
+                    <option value="$sex.id" #if($sex.id == $!position.sexId) selected #end>$sex.label</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">招聘地址<sup style="color:red">*</sup></label>
+        <div class="col-sm-5">
+            <input type="text" name="address" value="$!position.address" placeholder="地址" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">标签</label>
+        <div class="col-sm-5">
+            <div id="targsForPosition" class="baseDataSelector"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">说明</label>
+        <div class="col-sm-5">
+            <textarea type="text" id="description" name="description" rows="5" class="form-control">$!position.description</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">职位亮点及优势</label>
+        <div class="col-sm-5">
+            <textarea type="text" id="brightAndAdvantage" name="brightAndAdvantage" rows="5" class="form-control">$!position.brightAndAdvantage</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">流程及领导介绍</label>
+        <div class="col-sm-5">
+            <textarea type="text" id="processAndLeaderIntro" name="processAndLeaderIntro" rows="5" class="form-control">$!position.processAndLeaderIntro</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">薪资结构</label>
+        <div class="col-sm-5">
+            <textarea type="text" id="salaryStructure" name="salaryStructure" rows="5" class="form-control">$!position.salaryStructure</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">寻访方向</label>
+        <div class="col-sm-5">
+            <textarea type="text" id="searchDirection" name="searchDirection" rows="5" class="form-control">$!position.searchDirection</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">备注</label>
+        <div class="col-sm-5">
+            <textarea type="text" id="remark" name="remark" rows="5" class="form-control">$!position.remark</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">BD</label>
+        <div class="col-sm-5">
+            <select id="businessDeveloperId" name="businessDeveloperId" value="$!position.businessDeveloperId" class="chosen-select form-control">
+                #foreach($user in $users)
+                    <option value="$user.id" #if($user.id == $!position.businessDeveloperId) selected #end>$user.username - $user.realName</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="actionBar-container">
+        <div class="actionBar navbar-fixed-bottom">
+            <div class="col-sm-7">
+                <button class="btn btn-sm btn-primary" type="submit">
+                    <i class="fa fa-save bigger-200"></i>
+                    保存
+                </button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+#parse("/common.vm")
+
+<script type="text/javascript">
+  $('.chosen-select').attr("data-placeholder", "选择...");
+  $('.chosen-select').chosen({search_contains: true,no_results_text:"aa"});
+  $('.date-picker').datepicker({
+    autoclose: true,
+    todayHighlight: true
+  }).next().on("click", function () {
+    $('.date-picker').focus();
+  });
+  $("#positionForm select[name=companyId]").chosen().change(function (obj) {
+      onCompanyChanged($(obj.currentTarget).val());
+
+  });
+  onCompanyChanged($("#positionForm select[name=companyId]").val());
+  function onCompanyChanged(companyId) {
+      $("#positionForm select[name=contactId]").html();
+      if (companyId && companyId.length > 0) {
+          $.ajax({
+              type: "POST",
+              url: "/contact/findByBean.do",
+              data: {companyId: companyId},
+              dataType: "json",
+              timeout: 3000,
+              async:false,
+              success: function (data, textStatus, jqXHR) {
+                  if (data && data.rows) {
+                      var options = "";
+                      $(data.rows).each(function (index, item) {
+                          options += "<option value='" + item.id + "'>" + item.name + "</option>";
+                      });
+                      $("#positionForm select[name=contactId]").html(options)
+                  }
+
+              },
+              error: function (XMLHttpRequest, textStatus, errorThrown) {
+                  var tipHtml = "<h5 class='red'><i class=\"icon-warning-sign red bigger-130\"></i>加载失败</h5>";
+                  bootbox.dialog({
+                      message: tipHtml,
+                      buttons: {
+                          "danger": {
+                              "label": "关闭",
+                              "className": "btn-sm btn-danger"
+                          }
+                      }
+                  });
+              }
+          });
+      }
+      $("#positionForm select[name=contactId]").trigger("chosen:updated");
+  }
+
+  $("#industriesForPosition").baseDataSelector({
+    code: "INDUSTRY",
+    formFieldsMapping: [
+      {rawName: "industryId", treeNodeAttr: "id"},
+      {rawName: "industry.label", treeNodeAttr: "name"}
+    ],
+    isMultiFormField: false,
+    initServerData: (function () {
+      var serverData = [];
+      #if($position.industry)
+        serverData.push($JsonUtils.beanToJson($position.industry));
+      #end
+      return serverData;
+    })()
+  });
+
+  $("#foldersForCompany").baseDataSelector({
+    code: "COMPANY_FOLDER",
+    formFieldsMapping: [
+      {rawName: "folders[#index#].folderId", treeNodeAttr: "id"},
+      {rawName: "folders[#index#].folder.label", treeNodeAttr: "name"}
+    ],
+    isMultiFormField: true,
+    initServerData:(function() {
+      var serverData = [];
+      var folders = [];
+      #if($company.folders)
+        folders = $JsonUtils.beanToJson($company.folders);
+      #end
+      $(folders).each(function (index, itemData) {
+        serverData.push(itemData.folder);
+      });
+      return serverData;
+    })()
+  });
+
+</script>

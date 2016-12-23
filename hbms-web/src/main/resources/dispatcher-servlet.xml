@@ -43,6 +43,7 @@
         <value>/contact/workspace.do</value>
         <value>/contact/editView.do</value>
         <value>/position/workspace.do</value>
+        <value>/position/editView.do</value>
         <value>/project/workspace.do</value>
         <value>/project/editView.do</value>
         <value>/baseData/workspace.do</value>
