@@ -76,7 +76,6 @@
         {name: 'industry', width: 150, formatter: function(cell, options, row){return cell.label}},
         {name: 'workYearsRequire', width: 150, formatter: function(cell, options, row){return row.minWorkYears + "- " + row.maxWorkYears}},
         {name: 'educationLevel', width: 150},
-        {name: 'industry', width: 150},
         {name: 'foreignLanguage', width: 150},
         {name: 'address', width: 150}
       ],
