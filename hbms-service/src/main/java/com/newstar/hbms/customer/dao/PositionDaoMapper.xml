@@ -174,4 +174,50 @@
     </foreach>
   </select>
 
+
+  <insert id="insertLanguage" parameterType="com.newstar.hbms.customer.domain.PositionLanguage">
+    insert into PositionLanguage(
+    id,
+    positionId,
+    languageId
+    ) values (
+    #{id, jdbcType=VARCHAR},
+    #{positionId, jdbcType=BIGINT},
+    #{languageId, jdbcType=BIGINT}
+    )
+  </insert>
+  <delete id="cleanLanguages"  parameterType="java.lang.Long">
+    delete from PositionLanguage where positionId = #{value}
+  </delete>
+
+
+  <insert id="insertTag" parameterType="com.newstar.hbms.customer.domain.PositionTag">
+    insert into PositionTag(
+    id,
+    positionId,
+    tagId
+    ) values (
+    #{id, jdbcType=VARCHAR},
+    #{positionId, jdbcType=BIGINT},
+    #{tagId, jdbcType=BIGINT}
+    )
+  </insert>
+  <delete id="cleanTags"  parameterType="java.lang.Long">
+    delete from PositionTag where positionId = #{value}
+  </delete>
+
+  <select id="findLanguagesPositionIds" resultType="com.newstar.hbms.customer.domain.PositionLanguage">
+    select * from PositionLanguage where positionId in
+    <foreach collection="array" open="(" close=")" separator="," item="positionId">
+      #{positionId}
+    </foreach>
+  </select>
+
+  <select id="findTagsPositionIds" resultType="com.newstar.hbms.customer.domain.PositionTag">
+    select * from PositionTag where positionId in
+    <foreach collection="array" open="(" close=")" separator="," item="positionId">
+      #{positionId}
+    </foreach>
+  </select>
+
 </mapper>

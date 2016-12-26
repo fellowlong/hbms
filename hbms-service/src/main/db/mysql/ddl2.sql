@@ -217,6 +217,22 @@ create table `Position`(
   updateUser varchar(50) comment '修改人账户'
 ) comment='职位表';
 
+drop table PositionLanguage;
+create table PositionLanguage(
+  id bigint auto_increment not null primary key comment '主键',
+  positionId  bigint comment '职位外键',
+  languageId bigint comment '语言外键'
+) comment='职位要求的语言';
+
+
+drop table PositionTag;
+create table PositionTag(
+  id bigint auto_increment not null primary key comment '主键',
+  positionId  bigint comment '职位外键',
+  tagId bigint comment '标签外键'
+) comment='职位标签';
+
+
 drop table Project;
 create table Project(
   id bigint auto_increment not null primary key comment '客户编号,主键',

@@ -108,7 +108,7 @@ public class Position implements Serializable {
   /**
    * 性别要求
    */
-  private Integer sexId;
+  private Long sexId;
   private TreeNode sex;
 
   /**
@@ -406,11 +406,11 @@ public class Position implements Serializable {
     this.maxAnnualSalary = maxAnnualSalary;
   }
 
-  public Integer getSexId() {
+  public Long getSexId() {
     return sexId;
   }
 
-  public void setSexId(Integer sexId) {
+  public void setSexId(Long sexId) {
     this.sexId = sexId;
   }
 

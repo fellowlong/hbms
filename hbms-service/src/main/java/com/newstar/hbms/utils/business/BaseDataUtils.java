@@ -36,17 +36,19 @@ public abstract class BaseDataUtils {
                     if (id != null) {
                         ObjectBaseDataMapping objectBaseDataMapping = new ObjectBaseDataMapping(perO);
                         objectBaseDataMapping.configIdMapping.put(baseDataConfig, id);
+                        objectBaseDataMappings.add(objectBaseDataMapping);
                         baseDataIds.add(id);
                     }
                 }
                 } catch (Exception e) {
-                   throw new RuntimeException("获取对象属性失败，o=" + o.getClass() + ", property=" + baseDataConfig.getIdName());
+                   throw new RuntimeException("获取对象属性失败，o=" + o.getClass() + ", property=" + baseDataConfig.getIdName(), e);
                 }
             }
         }
         if (!baseDataIds.isEmpty()) {
-            List<TreeNode> baseDatas = treeService.findNodeByIds(baseDataIds.toArray(new Long[baseDataIds.size()]));
-            if (baseDatas != null && baseDatas.isEmpty()) {
+            List<TreeNode> baseDatas = treeService.findTreesByIds(baseDataIds.toArray(new Long[baseDataIds.size()]));
+            removeTreeNodeChildren(baseDatas);
+            if (baseDatas != null && !baseDatas.isEmpty()) {
                 for (TreeNode baseData : baseDatas) {
                     for (ObjectBaseDataMapping mapping : objectBaseDataMappings) {
                         Map<String, Object> valueMapping = new HashMap<String, Object>();
@@ -61,6 +63,17 @@ public abstract class BaseDataUtils {
             }
         }
 
+    }
+
+    public static void removeTreeNodeChildren(List<TreeNode> treeNodes) {
+        if (treeNodes != null) {
+            for (TreeNode treeNode : treeNodes) {
+                treeNode.setChildren(null);
+                if (treeNode.getParent() != null) {
+                    removeTreeNodeChildren(Arrays.asList(new TreeNode[]{treeNode.getParent()}));
+                }
+            }
+        }
     }
 
     public static  class  BaseDataConfig {

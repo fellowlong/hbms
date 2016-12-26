@@ -32,21 +32,24 @@ public class PagingPlugin implements Interceptor {
     if (allParams instanceof PageRange) {
       pageRange = (PageRange) allParams;
     } else if (allParams instanceof Map) {
-      Map paramMap = (Map)allParams;
-      String lastMethodArgKey = paramMap.keySet().size() > 1
-                                ? "arg" + String.valueOf(paramMap.keySet().size()/2 - 1)
-                                : paramMap.keySet().iterator().next().toString();
-      Object lastMethodArgValue = paramMap.get(lastMethodArgKey);
-      if (lastMethodArgValue instanceof PageRange) {
-        pageRange = (PageRange) lastMethodArgValue;
-        if (paramMap.size() == 4) {
-          noPageParams = paramMap.get("arg0");
-        } else if (paramMap.size() > 4) {
-          Map tempNoPageParams = new HashMap(paramMap);
-          tempNoPageParams.remove(lastMethodArgKey);
-          tempNoPageParams.remove("param" + lastMethodArgKey);
-          noPageParams = tempNoPageParams;
+      Map<Object, Object> paramMap = (Map)allParams;
+      List<Object> pageRangeKeys = new ArrayList<Object>();
+      Map tempNoPageParams = new HashMap();
+      for (Map.Entry<Object, Object> entry : paramMap.entrySet()) {
+        if (entry.getValue() instanceof PageRange) {
+          pageRangeKeys.add(entry.getKey());
+        } else {
+          //去除重复的值，和mybatis默认参数映射有关
+          tempNoPageParams.put(entry.getValue(),entry.getValue());
         }
+      }
+      for (Object key : pageRangeKeys) {
+        pageRange = (PageRange) paramMap.remove(key);
+      }
+      if (tempNoPageParams.size() == 1) {
+        noPageParams = tempNoPageParams.values().iterator().next();
+      } else {
+        noPageParams = paramMap;
       }
     }
     if (pageRange != null) {

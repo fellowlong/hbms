@@ -224,7 +224,7 @@
     <div class="form-group">
         <label class="col-sm-1 control-label no-padding-right">标签</label>
         <div class="col-sm-5">
-            <div id="targsForPosition" class="baseDataSelector"></div>
+            <div id="tagsForPosition" class="baseDataSelector"></div>
         </div>
     </div>
 
@@ -364,21 +364,57 @@
     })()
   });
 
-  $("#foldersForCompany").baseDataSelector({
-    code: "COMPANY_FOLDER",
+  $("#cityForPosition").baseDataSelector({
+    code: "CITY",
     formFieldsMapping: [
-      {rawName: "folders[#index#].folderId", treeNodeAttr: "id"},
-      {rawName: "folders[#index#].folder.label", treeNodeAttr: "name"}
+      {rawName: "cityId", treeNodeAttr: "id"},
+      {rawName: "city.label", treeNodeAttr: "name"}
+    ],
+    isMultiFormField: false,
+    initServerData: (function () {
+      var serverData = [];
+      #if($position.city)
+        serverData.push($JsonUtils.beanToJson($position.city));
+      #end
+      return serverData;
+    })()
+  });
+
+  $("#languagesForPosition").baseDataSelector({
+    code: "LANGUAGE",
+    formFieldsMapping: [
+      {rawName: "languages[#index#].languageId", treeNodeAttr: "id"},
+      {rawName: "languages[#index#].language.label", treeNodeAttr: "name"}
     ],
     isMultiFormField: true,
     initServerData:(function() {
       var serverData = [];
-      var folders = [];
-      #if($company.folders)
-        folders = $JsonUtils.beanToJson($company.folders);
+      var languages = [];
+      #if($position.languages)
+        languages = $JsonUtils.beanToJson($position.languages);
       #end
-      $(folders).each(function (index, itemData) {
-        serverData.push(itemData.folder);
+      $(languages).each(function (index, itemData) {
+        serverData.push(itemData.language);
+      });
+      return serverData;
+    })()
+  });
+
+  $("#tagsForPosition").baseDataSelector({
+    code: "TAG",
+    formFieldsMapping: [
+      {rawName: "tags[#index#].tagId", treeNodeAttr: "id"},
+      {rawName: "tags[#index#].tag.label", treeNodeAttr: "name"}
+    ],
+    isMultiFormField: true,
+    initServerData:(function() {
+      var serverData = [];
+      var tags = [];
+      #if($position.tags)
+        tags = $JsonUtils.beanToJson($position.tags);
+      #end
+      $(tags).each(function (index, itemData) {
+        serverData.push(itemData.tag);
       });
       return serverData;
     })()
