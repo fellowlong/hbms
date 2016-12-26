@@ -83,6 +83,18 @@
         });
         this.addItems(initData);
       }
+
+      function getPathedNodeNameFromServer(node) {
+        if(node.code && node.code == rootThis.options.code) {
+          return "";
+        } else {
+          var name = node.label;
+          if (node.parent && node.parent != null) {
+              name = getPathedNodeNameFromServer(node.parent) + "/" + name;
+          }
+          return name.charAt(0) == '/' ? name : "/" + name;
+        }
+      }
     },
 
     addItems: function(items) {
@@ -133,14 +145,10 @@
         dataType: "json",
         timeout: 3000,
         success: function(data, textStatus, jqXHR){
-          var treeNodes = convertToTreeNodes(data);
+          var treeNodes = convertToTreeNodes(data.children);
           if (treeNodes && treeNodes.length > 0) {
-            treeNodes[0].nocheck = true;
-            $(treeNodes).each(function(index, item) {
-              item.open = true;
-            });
             rootThis.tree = $.fn.zTree.init(dialogElement.find("ul"), rootThis.treeSetting, treeNodes);
-            dialogElement.find(".modal-title").html("选择 <b style='font-family: 'Arial Black''>" + treeNodes[0]['name'] + "</b>");
+            dialogElement.find(".modal-title").html("选择 <b style='font-family: 'Arial Black''>" + data.label + "</b>");
           }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -181,15 +189,6 @@
       name = getPathedNodeNameFromZtree(node.getParentNode()) + "/" + name;
     }
     return name.charAt(0) == '/' ? name : "/" + name;
-  }
-
-  function getPathedNodeNameFromServer(node) {
-    var name = node.label;
-    if (node.parent && node.parent != null) {
-      name = getPathedNodeNameFromServer(node.parent) + "/" + name;
-    }
-    return name.charAt(0) == '/' ? name : "/" + name;
-
   }
   
   $.fn.baseDataSelector = function (options) {
