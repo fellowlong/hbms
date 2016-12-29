@@ -68,16 +68,14 @@
       url: '/position/findByBean.do',
       mtype: "POST",
       datatype: "json",
-      colNames: ['名称', '公司', '城市', '行业', '工作年限要求', '学历要求', '行业要求','外语要求',"地址"],
+      colNames: ['名称', '公司', '城市', '行业', '工作年限要求', '客户联系人'],
       colModel: [
         {name: 'name', width: 150},
         {name: 'company.name', width: 150},
-        {name: 'city', width: 150, formatter: function(cell, options, row){return cell.label}},
-        {name: 'industry', width: 150, formatter: function(cell, options, row){return cell.label}},
-        {name: 'workYearsRequire', width: 150, formatter: function(cell, options, row){return row.minWorkYears + "- " + row.maxWorkYears}},
-        {name: 'educationLevel', width: 150},
-        {name: 'foreignLanguage', width: 150},
-        {name: 'address', width: 150}
+        {name: 'city.label', width: 150},
+        {name: 'industry.label', width: 150},
+        {name: 'priority.label', width: 150},
+        {name: 'contact.name', width: 150}
       ],
       multiselect: true,
       rowNum: 10,
