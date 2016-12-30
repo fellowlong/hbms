@@ -34,8 +34,8 @@ public interface PositionDao {
 
   public int cleanTags(Long positionId);
 
-  public List<PositionLanguage> findLanguagesPositionIds(Long[] positionIdIds);
+  public List<PositionLanguage> findLanguagesByPositionIds(Long[] positionIdIds);
 
-  public List<PositionTag> findTagsPositionIds(Long[] positionIdIds);
+  public List<PositionTag> findTagsByPositionIds(Long[] positionIdIds);
 
 }

@@ -1,5 +1,8 @@
 package com.newstar.hbms.customer.web.controller;
 
+import com.alibaba.fastjson.serializer.PropertyFilter;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.domain.Contact;
 import com.newstar.hbms.customer.service.CompanyService;
@@ -133,6 +136,13 @@ public class ContactController extends MultiActionController {
     } else {
       jsonMap.put("rows", null);
     }
+    SerializeConfig.getGlobalInstance().addFilter(TreeNode.class, new PropertyFilter() {
+      @Override
+      public boolean apply(Object object, String name, Object value) {
+        return name.equals("children") ? false : true;
+      }
+
+    });
     WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, datePattern));
   }
 

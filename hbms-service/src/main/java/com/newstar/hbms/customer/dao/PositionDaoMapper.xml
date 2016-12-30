@@ -206,14 +206,14 @@
     delete from PositionTag where positionId = #{value}
   </delete>
 
-  <select id="findLanguagesPositionIds" resultType="com.newstar.hbms.customer.domain.PositionLanguage">
+  <select id="findLanguagesByPositionIds" resultType="com.newstar.hbms.customer.domain.PositionLanguage">
     select * from PositionLanguage where positionId in
     <foreach collection="array" open="(" close=")" separator="," item="positionId">
       #{positionId}
     </foreach>
   </select>
 
-  <select id="findTagsPositionIds" resultType="com.newstar.hbms.customer.domain.PositionTag">
+  <select id="findTagsByPositionIds" resultType="com.newstar.hbms.customer.domain.PositionTag">
     select * from PositionTag where positionId in
     <foreach collection="array" open="(" close=")" separator="," item="positionId">
       #{positionId}

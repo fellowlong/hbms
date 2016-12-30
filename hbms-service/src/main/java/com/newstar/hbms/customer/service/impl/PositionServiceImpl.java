@@ -5,14 +5,15 @@ import com.newstar.hbms.customer.dao.PositionDao;
 import com.newstar.hbms.customer.domain.Position;
 import com.newstar.hbms.customer.domain.PositionLanguage;
 import com.newstar.hbms.customer.domain.PositionTag;
+import com.newstar.hbms.customer.service.CompanyService;
+import com.newstar.hbms.customer.service.ContactService;
 import com.newstar.hbms.customer.service.PositionService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
-import com.newstar.hbms.utils.business.BaseDataUtils;
+import com.newstar.hbms.system.service.UserService;
 import com.newstar.hbms.utils.business.ObjectUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,18 +25,73 @@ public class PositionServiceImpl implements PositionService {
 
   private TreeService treeService;
 
-  private static List<BaseDataUtils.BaseDataConfig> baseDataConfigs = new ArrayList<BaseDataUtils.BaseDataConfig>();
-  static {
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig("priorityId", "priority"));
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig("industryId", "industry"));
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig("functionId", "function"));
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig("cityId", "city"));
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig("fameCompanyBackgroundId", "fameCompanyBackground"));
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig("nationalityId", "nationality"));
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig("degreeId", "degree"));
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig("sexId", "sex"));
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig(true, "languages", "languageId", "language"));
-    baseDataConfigs.add(new BaseDataUtils.BaseDataConfig(true, "tags", "tagId", "tag"));
+  private CompanyService companyService;
+  private ContactService contactService;
+  private UserService userService;
+
+  private List<ObjectUtils.SubObjectConfig> subObjectConfigs = new ArrayList<ObjectUtils.SubObjectConfig>();
+
+  private List<ObjectUtils.SubCollectionConfig> subCollectionConfigs = new ArrayList<ObjectUtils.SubCollectionConfig>();
+
+
+  public PositionServiceImpl() {
+    //填充子对象配置
+    ObjectUtils.SubObjectFetcher baseDataFetcher = new ObjectUtils.SubObjectFetcher() {
+      @Override
+      public List fetch(List keys) {
+        return treeService.findTreesByIds((Long[]) keys.toArray(new Long[keys.size()]));
+      }
+    };
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("priorityId", "priority", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("industryId", "industry", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("functionId", "function", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("cityId", "city", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("fameCompanyBackgroundId", "fameCompanyBackground", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("nationalityId", "nationality", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("degreeId", "degree", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("sexId", "sex", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("languages", "languageId", "language", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("tags", "tagId", "tag", "id", baseDataFetcher));
+
+    ObjectUtils.SubObjectFetcher companyFetcher = new ObjectUtils.SubObjectFetcher() {
+      @Override
+      public List fetch(List keys) {
+        return companyService.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
+      }
+    };
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig( "companyId", "company", "id", companyFetcher));
+
+    ObjectUtils.SubObjectFetcher contactFetcher = new ObjectUtils.SubObjectFetcher() {
+      @Override
+      public List fetch(List keys) {
+        return contactService.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
+      }
+    };
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig( "contactId", "contact", "id", contactFetcher));
+
+    ObjectUtils.SubObjectFetcher userFetcher = new ObjectUtils.SubObjectFetcher() {
+      @Override
+      public List fetch(List keys) {
+        return userService.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
+      }
+    };
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig( "businessDeveloperId", "businessDeveloper", "id", userFetcher));
+
+    //填充子集合配置
+    ObjectUtils.SubCollectionFetcher languagesFetcher = new ObjectUtils.SubCollectionFetcher() {
+      @Override
+      public List fetch(List parentKeys) {
+        return positionDao.findLanguagesByPositionIds((Long[]) parentKeys.toArray(new Long[parentKeys.size()]));
+      }
+    };
+    subCollectionConfigs.add(new ObjectUtils.SubCollectionConfig("id", "languages", "positionId", languagesFetcher));
+    ObjectUtils.SubCollectionFetcher tagsFetcher = new ObjectUtils.SubCollectionFetcher() {
+      @Override
+      public List fetch(List parentKeys) {
+        return positionDao.findTagsByPositionIds((Long[]) parentKeys.toArray(new Long[parentKeys.size()]));
+      }
+    };
+    subCollectionConfigs.add(new ObjectUtils.SubCollectionConfig("id", "tags", "positionId", tagsFetcher));
   }
 
   public void setPositionDao(PositionDao positionDao) {
@@ -44,6 +100,18 @@ public class PositionServiceImpl implements PositionService {
 
   public void setTreeService(TreeService treeService) {
     this.treeService = treeService;
+  }
+
+  public void setCompanyService(CompanyService companyService) {
+    this.companyService = companyService;
+  }
+
+  public void setContactService(ContactService contactService) {
+    this.contactService = contactService;
+  }
+
+  public void setUserService(UserService userService) {
+    this.userService = userService;
   }
 
   @Override
@@ -84,42 +152,20 @@ public class PositionServiceImpl implements PositionService {
   @Override
   public PagingResult<Position> findByBean(Position position, PageRange pageRange) {
     PagingResult<Position> result = positionDao.findByBean(position, pageRange);
-    fillSubCollections(result.getRecords());
-    BaseDataUtils.fillBaseData(result.getRecords(), baseDataConfigs, treeService);
+    fillAllSubObjects(result.getRecords());
     return result;
   }
 
   @Override
   public List<Position> findByIds(Long[] ids) {
     List<Position> positions = positionDao.findByIds(ids);
-    fillSubCollections(positions);
-    BaseDataUtils.fillBaseData(positions, baseDataConfigs, treeService);
+    fillAllSubObjects(positions);
     return positions;
   }
 
-  private void fillSubCollections(List<Position> positions) {
-    ObjectUtils.fillCollection(
-        positions,
-        "id",
-        "languages",
-        "positionId",
-        new ObjectUtils.CollectionFetcher() {
-          @Override
-          public List fetch(Object[] parentKeys) {
-            return positionDao.findLanguagesPositionIds(Arrays.asList(parentKeys).toArray(new Long[parentKeys.length]));
-          }
-        });
-    ObjectUtils.fillCollection(
-        positions,
-        "id",
-        "tags",
-        "positionId",
-        new ObjectUtils.CollectionFetcher() {
-          @Override
-          public List fetch(Object[] parentKeys) {
-            return positionDao.findTagsPositionIds(Arrays.asList(parentKeys).toArray(new Long[parentKeys.length]));
-          }
-        });
+  private void fillAllSubObjects(List<Position> positions) {
+    ObjectUtils.fillSubCollection(positions, subCollectionConfigs);
+    ObjectUtils.fillSubObjects(positions, subObjectConfigs);
   }
 
 

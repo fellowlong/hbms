@@ -13,6 +13,8 @@ import java.util.*;
  */
 public abstract class ObjectUtils {
 
+  private static JexlEngine jexlEngine = new JexlEngine();
+
   public static class SubObjectConfig {
 
     private String collectionNameInParent;
@@ -98,32 +100,6 @@ public abstract class ObjectUtils {
     public List fetch(List keys);
 
   }
-
-  public static class ProxySubObjectFetcher implements SubObjectFetcher {
-
-    private SubObjectConfig subObjectConfig;
-
-    private SubObjectFetcher targetSubObjectFetcher;
-
-    public ProxySubObjectFetcher(SubObjectConfig subObjectConfig, SubObjectFetcher targetSubObjectFetcher) {
-      this.subObjectConfig = subObjectConfig;
-      this.targetSubObjectFetcher = targetSubObjectFetcher;
-    }
-
-    @Override
-    public List fetch(List keys) {
-      return targetSubObjectFetcher.fetch(keys);
-    }
-
-    public SubObjectConfig getSubObjectConfig() {
-      return subObjectConfig;
-    }
-
-    public SubObjectFetcher getTargetSubObjectFetcher() {
-      return targetSubObjectFetcher;
-    }
-  }
-
 
   public static void fillSubObjects(List parents, List<SubObjectConfig> subObjectConfigs) {
     if (parents == null || parents.isEmpty() || subObjectConfigs == null || subObjectConfigs.isEmpty()) {
@@ -235,107 +211,115 @@ public abstract class ObjectUtils {
     return map;
   }
 
+  public static class SubCollectionConfig {
 
-  public static void fillAssociationByKey(List parents,
-                                          String keyNameInParent,
-                                          String associationNameInParent,
-                                          String keyNameInAssociation,
-                                          AssociationFetcher associationFetcher) {
-    if (parents == null || parents.isEmpty()
-       || keyNameInParent == null || keyNameInParent.isEmpty()
-       || associationNameInParent == null || associationNameInParent.isEmpty()
-       || keyNameInAssociation == null || keyNameInAssociation.isEmpty()
-       || associationFetcher == null) {
-      return;
+    private String parentKeyNameInParent;
+    private String collectionNameInParent;
+    private String parentKeyNameInCollectionItem;
+    private SubCollectionFetcher subCollectionFetcher;
+
+    public SubCollectionConfig(String parentKeyNameInParent,
+                               String collectionNameInParent,
+                               String parentKeyNameInCollectionItem,
+                               SubCollectionFetcher subCollectionFetcher) {
+      this.parentKeyNameInParent = parentKeyNameInParent;
+      this.collectionNameInParent = collectionNameInParent;
+      this.parentKeyNameInCollectionItem = parentKeyNameInCollectionItem;
+      this.subCollectionFetcher = subCollectionFetcher;
     }
-    //获取parent中所有子对象的key
-    List associationKeys = getUniquePropertyValuesFromCollection(parents, keyNameInParent);
-    if (associationKeys == null || associationKeys.size() == 0) {
-      return;
+
+    public String getParentKeyNameInParent() {
+      return parentKeyNameInParent;
     }
-    //根据key获取所有对象
-    List associations = associationFetcher.fetch(associationKeys.toArray(new Object[associationKeys.size()]));
-    if (associations == null || associations.size() == 0) {
-      return;
+
+    public void setParentKeyNameInParent(String parentKeyNameInParent) {
+      this.parentKeyNameInParent = parentKeyNameInParent;
     }
-    //建立key和子对象的关联
-    Map<Object, Object> keyAssociationPairs = new HashMap<Object, Object>(associations.size());
-    JexlEngine jexlEngine = new JexlEngine();
-    String associationJexlKeyName = "association";
-    Expression subObjectExpression =
-       jexlEngine.createExpression(associationJexlKeyName + "." + keyNameInAssociation);
-    for (Object association : associations) {
-      MapContext jexlContext = new MapContext();
-      jexlContext.set(associationJexlKeyName, association);
-      Object associationKeyValue = subObjectExpression.evaluate(jexlContext);
-      keyAssociationPairs.put(associationKeyValue, association);
+
+    public String getCollectionNameInParent() {
+      return collectionNameInParent;
     }
-    if (keyAssociationPairs == null || keyAssociationPairs.size() == 0) {
-      return;
+
+    public void setCollectionNameInParent(String collectionNameInParent) {
+      this.collectionNameInParent = collectionNameInParent;
     }
-    //将子对象填充到父对象中
-    String parentJexlKeyName = "parent";
-    Expression parentExpression =
-       jexlEngine.createExpression(parentJexlKeyName + "." + keyNameInParent);
-    for (Object parent : parents) {
-      Map<String, Object> properties = new HashMap<String, Object>(1);
-      MapContext jexlContext = new MapContext();
-      jexlContext.set(parentJexlKeyName, parent);
-      Object associationKeyValue = parentExpression.evaluate(jexlContext);
-      properties.put(associationNameInParent, keyAssociationPairs.get(associationKeyValue));
-      BeanUtils.bindProperties(parent, properties);
+
+    public String getParentKeyNameInCollectionItem() {
+      return parentKeyNameInCollectionItem;
+    }
+
+    public void setParentKeyNameInCollectionItem(String parentKeyNameInCollectionItem) {
+      this.parentKeyNameInCollectionItem = parentKeyNameInCollectionItem;
+    }
+
+    public SubCollectionFetcher getSubCollectionFetcher() {
+      return subCollectionFetcher;
+    }
+
+    public void setSubCollectionFetcher(SubCollectionFetcher subCollectionFetcher) {
+      this.subCollectionFetcher = subCollectionFetcher;
+    }
+
+    @Override
+    public String toString() {
+      return "SubCollectionConfig{" +
+          "parentKeyNameInParent='" + parentKeyNameInParent + '\'' +
+          ", collectionNameInParent='" + collectionNameInParent + '\'' +
+          ", parentKeyNameInCollectionItem='" + parentKeyNameInCollectionItem + '\'' +
+          ", subCollectionFetcher=" + subCollectionFetcher +
+          '}';
     }
   }
 
-  public interface AssociationFetcher {
 
-    public List fetch(Object[] associationKeys);
+  public static interface SubCollectionFetcher {
+
+    public List fetch(List parentKeys);
 
   }
 
-  public static void fillCollection(List parents,
-                                    String parentKeyNameInParent,
-                                    String collectionNameInParent,
-                                    String parentKeyNameInCollectionItem,
-                                    CollectionFetcher collectionFetcher) {
-    if (parents == null || parents.isEmpty()
-       || parentKeyNameInParent == null || parentKeyNameInParent.isEmpty()
-       || collectionNameInParent == null || collectionNameInParent.isEmpty()
-       || parentKeyNameInCollectionItem == null || parentKeyNameInCollectionItem.isEmpty()
-       || collectionFetcher == null) {
+  public static void fillSubCollection(List parents, List<SubCollectionConfig> subCollectionConfigs) {
+    if (parents == null || parents.isEmpty() || subCollectionConfigs == null || subCollectionConfigs.isEmpty()) {
       return;
     }
-    List parentKeys = getUniquePropertyValuesFromCollection(parents, parentKeyNameInParent);
+    List parentKeys = getUniquePropertyValuesFromCollection(parents, subCollectionConfigs.get(0).getParentKeyNameInParent());
     if (parentKeys == null || parentKeys.isEmpty()) {
       return;
     }
-    List collection = collectionFetcher.fetch(parentKeys.toArray(new Object[parentKeys.size()]));
-    if (collection == null || collection.isEmpty()) {
-      return;
+
+    Map<Object, Object> parentMap = listToMap(parents, subCollectionConfigs.get(0).getParentKeyNameInParent());
+
+    //找到parent下的所有子集合的对应关系
+    Map<Object, Map<String, Object>> parentAndSubCollectionMapping = new HashMap<Object, Map<String, Object>>(parents.size());
+    for (SubCollectionConfig config : subCollectionConfigs) {
+      List subCollection = config.getSubCollectionFetcher().fetch(parentKeys);
+      if (subCollection == null || subCollection.isEmpty()) {
+        continue;
+      }
+      //按照parent key对子集合分组
+      Map<Object, Collection> groups = collectionGroup(subCollection, config.getParentKeyNameInCollectionItem());
+      if (groups == null || groups.isEmpty()) {
+        continue;
+      }
+      for (Map.Entry<Object, Collection> entry : groups.entrySet()) {
+        Object parent = parentMap.get(entry.getKey());
+        Map<String, Object> subCollectionMapping = parentAndSubCollectionMapping.get(parent);
+        if (subCollectionMapping == null) {
+          subCollectionMapping = new HashMap<String, Object>(subCollectionConfigs.size());
+          parentAndSubCollectionMapping.put(parent, subCollectionMapping);
+        }
+        subCollectionMapping.put(config.getCollectionNameInParent(), entry.getValue());
+      }
     }
-    Map<Object, Collection> groups = collectionGroup(collection, parentKeyNameInCollectionItem);
-    if (groups == null || groups.isEmpty()) {
-      return;
-    }
-    JexlEngine jexlEngine = new JexlEngine();
-    String parentJexlKeyName = "parent";
-    Expression parentKeyExpression =
-       jexlEngine.createExpression(parentJexlKeyName + "." + parentKeyNameInParent);
-    for (Object parent : parents) {
-      MapContext mapContext = new MapContext();
-      mapContext.set(parentJexlKeyName, parent);
-      Object parentKeyValue = parentKeyExpression.evaluate(mapContext);
-      Map<String, Object> properties = new HashMap<String, Object>(1);
-      properties.put(collectionNameInParent, groups.get(parentKeyValue));
-      BeanUtils.bindProperties(parent, properties);
+
+    //子集合绑定到parent上
+    for (Map.Entry<Object, Map<String, Object>> entry : parentAndSubCollectionMapping.entrySet()) {
+      Object parent = entry.getKey();
+      Map<String, Object> subCollections = entry.getValue();
+      BeanUtils.bindProperties(parent, subCollections);
     }
   }
 
-  public interface CollectionFetcher {
-
-    public List fetch(Object[] parentKeys);
-
-  }
 
   public static List getUniquePropertyValuesFromCollection(Collection collection, String propertyName) {
     Map<Object, Object> values = new HashMap<Object, Object>();
@@ -364,7 +348,6 @@ public abstract class ObjectUtils {
        && groupPropertyName != null
        && !groupPropertyName.isEmpty()) {
       //获取parent中所有子对象的key
-      JexlEngine jexlEngine = new JexlEngine();
       String itemJexlKeyName = "item";
       Expression itemExpression = jexlEngine.createExpression(itemJexlKeyName + "." + groupPropertyName);
       for (Object item : collection) {

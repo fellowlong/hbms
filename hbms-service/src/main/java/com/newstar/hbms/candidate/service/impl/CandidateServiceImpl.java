@@ -39,6 +39,27 @@ public class CandidateServiceImpl implements CandidateService {
 
   private CandidateIndexTaskDao candidateIndexTaskDao;
 
+  private List<ObjectUtils.SubCollectionConfig> subCollectionConfigs = new ArrayList<ObjectUtils.SubCollectionConfig>();
+
+  public CandidateServiceImpl() {
+    //填充子集合配置
+    /*ObjectUtils.SubCollectionFetcher languagesFetcher = new ObjectUtils.SubCollectionFetcher() {
+      @Override
+      public List fetch(List parentKeys) {
+        return positionDao.findLanguagesByPositionIds((Long[]) parentKeys.toArray(new Long[parentKeys.size()]));
+      }
+    };
+    subCollectionConfigs.add(new ObjectUtils.SubCollectionConfig("id", "languages", "positionId", languagesFetcher));
+    ObjectUtils.SubCollectionFetcher tagsFetcher = new ObjectUtils.SubCollectionFetcher() {
+      @Override
+      public List fetch(List parentKeys) {
+        return positionDao.findTagsByPositionIds((Long[]) parentKeys.toArray(new Long[parentKeys.size()]));
+      }
+    };
+    subCollectionConfigs.add(new ObjectUtils.SubCollectionConfig("id", "tags", "positionId", tagsFetcher));
+*/
+  }
+
   public void setCandidateDao(CandidateDao candidateDao) {
     this.candidateDao = candidateDao;
   }
@@ -297,7 +318,7 @@ public class CandidateServiceImpl implements CandidateService {
   }
 
   private void fillSubObjects(List<Candidate> candidates) {
-    ObjectUtils.fillCollection(
+    /*ObjectUtils.fillCollection(
             candidates,
        "id",
        "workExperiences",
@@ -351,7 +372,7 @@ public class CandidateServiceImpl implements CandidateService {
          public List fetch(Object[] parentKeys) {
            return projectExperienceDao.findByResumeIds(Arrays.asList(parentKeys).toArray(new Long[parentKeys.length]));
          }
-       });
+       });*/
   }
 
 }

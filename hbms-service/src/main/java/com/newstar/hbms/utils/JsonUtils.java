@@ -1,5 +1,11 @@
 package com.newstar.hbms.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.PropertyFilter;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.SimpleDateFormatSerializer;
+import com.newstar.hbms.basedata.domain.TreeNode;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -12,6 +18,7 @@ import org.codehaus.jackson.node.ValueNode;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * User: fellowlong
@@ -19,6 +26,8 @@ import java.text.SimpleDateFormat;
  * Time: 1:58 PM
  */
 public abstract class JsonUtils {
+
+  public static final String defaultDatePattern = "yyyy-MM-dd HH:mm:ss.SSS";
 
   private static ObjectMapper objectMapper = null;
 
@@ -33,6 +42,12 @@ public abstract class JsonUtils {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     objectMapper.getSerializationConfig().setDateFormat(dateFormat);
     objectMapper.getDeserializationConfig().setDateFormat(dateFormat);
+
+
+    SerializeConfig.getGlobalInstance().config(Object.class, SerializerFeature.IgnoreNonFieldGetter, true);
+    SerializeConfig.getGlobalInstance().config(Object.class, SerializerFeature.IgnoreErrorGetter, true);
+    SerializeConfig.getGlobalInstance().put(Date.class, new SimpleDateFormatSerializer(defaultDatePattern));
+
   }
 
   /**
@@ -83,9 +98,9 @@ public abstract class JsonUtils {
     if (object == null) {
       return null;
     }
-    //保存原值
+    /*//保存原值
     DateFormat oldDateFormat = objectMapper.getSerializationConfig().getDateFormat();
-    if (datePattern != null && datePattern.length == 1) {
+    if (datePattern != null && datePattern.length == 1 && datePattern[0] != null) {
       SimpleDateFormat customerFormat = new SimpleDateFormat(datePattern[0]);
       objectMapper.getSerializationConfig().setDateFormat(customerFormat);
     }
@@ -98,7 +113,19 @@ public abstract class JsonUtils {
     }
     //恢复原值
     objectMapper.getSerializationConfig().setDateFormat(oldDateFormat);
-    return returnResult;
+
+    SerializeConfig.getGlobalInstance().addFilter(TreeNode.class, new PropertyFilter() {
+      @Override
+      public boolean apply(Object object, String name, Object value) {
+        return name.equals("children") ? false : true;
+      }
+
+    });*/
+    String finalDatePattern = defaultDatePattern;
+    if (datePattern != null && datePattern.length == 1 && datePattern[0] != null) {
+      finalDatePattern = datePattern[0];
+    }
+    return JSON.toJSONStringWithDateFormat(object, finalDatePattern);
   }
 
   /**
