@@ -3,9 +3,7 @@ package com.newstar.hbms.utils.business;
 import com.newstar.hbms.basedata.domain.TreeNode;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by root on 16-12-30.
@@ -37,23 +35,33 @@ public abstract class TreeUtils {
     }
   }
 
-  public static void removeChildrenOfProperties(List objects, boolean includeAncestor) {
+  public static void removeChildrenOfProperties(List objects, boolean includeAncestor, Map properties) {
+    if (properties == null) {
+      properties = new HashMap();
+    }
     try {
       if (objects != null && !objects.isEmpty()) {
         for (Object o : objects) {
           Field[] fields = o.getClass().getDeclaredFields();
-          List notTreeNodeProperties = new ArrayList(fields.length);
-          for (Field field : fields) {
-            field.setAccessible(true);
-            Object value = field.get(o);
-            if (value instanceof TreeNode) {
-              removeChildren(Arrays.asList(new TreeNode[]{(TreeNode) value}), includeAncestor);
-            } else {
-              notTreeNodeProperties.add(value);
+          if (fields != null && fields.length > 0) {
+            for (Field field : fields) {
+              field.setAccessible(true);
+              Object value = field.get(o);
+              if (value != null) {
+                if (value instanceof TreeNode) {
+                  removeChildren(Arrays.asList(new TreeNode[]{(TreeNode) value}), includeAncestor);
+                } else if (value instanceof Collection) {
+                  removeChildrenOfProperties(new ArrayList((Collection) value), includeAncestor, properties);
+                } else if (value instanceof Map) {
+                  removeChildrenOfProperties(new ArrayList(((Map) value).values()), includeAncestor, properties);
+                } else {
+                  if (!properties.containsKey(value)) {
+                    properties.put(value, value);
+                    removeChildrenOfProperties(Arrays.asList(new Object[]{value}), includeAncestor, properties);
+                  }
+                }
+              }
             }
-          }
-          if (notTreeNodeProperties != null) {
-            removeChildrenOfProperties(notTreeNodeProperties, includeAncestor);
           }
         }
       }

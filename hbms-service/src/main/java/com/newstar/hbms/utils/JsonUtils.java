@@ -1,10 +1,7 @@
 package com.newstar.hbms.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.PropertyFilter;
-import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.serializer.SimpleDateFormatSerializer;
+import com.alibaba.fastjson.serializer.*;
 import com.newstar.hbms.basedata.domain.TreeNode;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
@@ -18,7 +15,9 @@ import org.codehaus.jackson.node.ValueNode;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
+
+import static com.alibaba.fastjson.JSON.DEFAULT_GENERATE_FEATURE;
 
 /**
  * User: fellowlong
@@ -44,6 +43,7 @@ public abstract class JsonUtils {
     objectMapper.getDeserializationConfig().setDateFormat(dateFormat);
 
 
+    SerializeConfig.getGlobalInstance().config(Object.class, SerializerFeature.DisableCircularReferenceDetect, true);
     SerializeConfig.getGlobalInstance().config(Object.class, SerializerFeature.IgnoreNonFieldGetter, true);
     SerializeConfig.getGlobalInstance().config(Object.class, SerializerFeature.IgnoreErrorGetter, true);
     SerializeConfig.getGlobalInstance().put(Date.class, new SimpleDateFormatSerializer(defaultDatePattern));
@@ -88,44 +88,57 @@ public abstract class JsonUtils {
     return null;
   }
 
+  public static String beanToJson(Object object, boolean detectCircleDependency) {
+    return beanToJson(object, detectCircleDependency,  null, null);
+  }
+
+
+  public static String beanToJson(Object object, boolean detectCircleDependency, String datePattern) {
+    return beanToJson(object, detectCircleDependency,  null, datePattern);
+  }
+
+
+  public static String beanToJson(Object object, boolean detectCircleDependency, Map<Class, String[]> excludedProperties) {
+    return beanToJson(object, detectCircleDependency, excludedProperties, null);
+  }
+
   /**
    * 将JavaBean实例转换成JSON格式的字符串
    *
    * @param object
    * @return
    */
-  public static String beanToJson(Object object, String...datePattern) {
+  public static String beanToJson(Object object, boolean detectCircleDependency, Map<Class, String[]> excludedProperties, String datePattern) {
     if (object == null) {
       return null;
     }
-    /*//保存原值
-    DateFormat oldDateFormat = objectMapper.getSerializationConfig().getDateFormat();
-    if (datePattern != null && datePattern.length == 1 && datePattern[0] != null) {
-      SimpleDateFormat customerFormat = new SimpleDateFormat(datePattern[0]);
-      objectMapper.getSerializationConfig().setDateFormat(customerFormat);
-    }
-    String returnResult = null;
-    try {
-      returnResult = objectMapper.writeValueAsString(object);
-    } catch (IOException e) {
-      throw new RuntimeException(
-              "将对象[" + object.getClass().getName() + "]转换成JSON串异常,", e);
-    }
-    //恢复原值
-    objectMapper.getSerializationConfig().setDateFormat(oldDateFormat);
-
-    SerializeConfig.getGlobalInstance().addFilter(TreeNode.class, new PropertyFilter() {
-      @Override
-      public boolean apply(Object object, String name, Object value) {
-        return name.equals("children") ? false : true;
-      }
-
-    });*/
     String finalDatePattern = defaultDatePattern;
-    if (datePattern != null && datePattern.length == 1 && datePattern[0] != null) {
-      finalDatePattern = datePattern[0];
+    if (datePattern != null) {
+      finalDatePattern = datePattern;
     }
-    return JSON.toJSONStringWithDateFormat(object, finalDatePattern);
+    List<SerializeFilter> filters = new ArrayList<SerializeFilter>();
+    if (excludedProperties != null && !excludedProperties.isEmpty()) {
+      for (final Map.Entry<Class, String[]> propertiesOfType : excludedProperties.entrySet()) {
+        filters.add(new PropertyFilter() {
+          @Override
+          public boolean apply(Object object, String name, Object value) {
+            return Arrays.asList(propertiesOfType.getValue()).contains(name) ? false : true;
+          }
+
+        });
+      }
+    }
+    SerializerFeature features[] = new SerializerFeature[1];
+    if (!detectCircleDependency) {
+      features[1] = SerializerFeature.DisableCircularReferenceDetect;
+    }
+    return JSON.toJSONString(
+        object,
+        SerializeConfig.globalInstance,
+        filters.toArray(new SerializeFilter[filters.size()]),
+        finalDatePattern,
+        DEFAULT_GENERATE_FEATURE,
+        features);
   }
 
   /**

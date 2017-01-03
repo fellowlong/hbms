@@ -348,6 +348,9 @@
       $("#positionForm select[name=contactId]").trigger("chosen:updated");
   }
 
+  ###加载基础数据
+
+
   $("#industriesForPosition").baseDataSelector({
     code: "INDUSTRY",
     formFieldsMapping: [
@@ -358,7 +361,7 @@
     initServerData: (function () {
       var serverData = [];
       #if($position.industry)
-        serverData.push($JsonUtils.beanToJson($position.industry));
+        serverData.push($JsonUtils.beanToJson($position.industry, $excludedProperties));
       #end
       return serverData;
     })()
@@ -374,7 +377,7 @@
     initServerData: (function () {
       var serverData = [];
       #if($position.city)
-        serverData.push($JsonUtils.beanToJson($position.city));
+        serverData.push($JsonUtils.beanToJson($position.city, $excludedProperties));
       #end
       return serverData;
     })()
@@ -391,7 +394,7 @@
       var serverData = [];
       var languages = [];
       #if($position.languages)
-        languages = $JsonUtils.beanToJson($position.languages);
+        languages = $JsonUtils.beanToJson($position.languages, $excludedProperties);
       #end
       $(languages).each(function (index, itemData) {
         serverData.push(itemData.language);
@@ -411,7 +414,7 @@
       var serverData = [];
       var tags = [];
       #if($position.tags)
-        tags = $JsonUtils.beanToJson($position.tags);
+        tags = $JsonUtils.beanToJson($position.tags, $excludedProperties);
       #end
       $(tags).each(function (index, itemData) {
         serverData.push(itemData.tag);

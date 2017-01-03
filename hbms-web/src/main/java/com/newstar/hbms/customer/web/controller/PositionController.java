@@ -43,6 +43,12 @@ public class PositionController extends MultiActionController {
 
   private String datePattern;
 
+  public static Map<Class, String[]> excludedProperties = new HashMap<Class, String[]>(0);
+
+  static {
+    excludedProperties.put(TreeNode.class, new String[]{"children"});
+  }
+
   public void setPositionService(PositionService positionService) {
     this.positionService = positionService;
   }
@@ -62,9 +68,11 @@ public class PositionController extends MultiActionController {
     List<Position> positions = null;
     if (id != null) {
       positions = positionService.findByIds(new Long[]{id});
+      TreeUtils.removeChildrenOfProperties(positions, true, null);
       if (positions != null && !positions.isEmpty()) {
         Position position = positions.get(0);
         modelAndView.getModel().put("position", position);
+        modelAndView.getModel().put("excludedProperties", excludedProperties);
       }
     }
     PagingResult<Company> companyPagingResult = companyService.findByBean(new Company(), new PageRange(1, 1000));
@@ -113,7 +121,7 @@ public class PositionController extends MultiActionController {
     JsonResult jsonResult = new JsonResult();
     try {
       List<Position> positions = positionService.findByIds(new Long[]{position.getId()});
-      TreeUtils.removeChildrenOfProperties(positions, true);
+      TreeUtils.removeChildrenOfProperties(positions, true, null);
       if (positions != null && positions.size() == 1) {
         jsonResult.setSuccess(true);
         jsonResult.setData(positions.get(0));
@@ -125,7 +133,7 @@ public class PositionController extends MultiActionController {
       logger.error("查询Position失败", t);
       jsonResult.setErrorMessage(ExceptionUtils.getExceptionStack(t));
     }
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonResult, datePattern));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonResult, false, datePattern));
   }
 
   public void findByBean(HttpServletRequest request, HttpServletResponse response, Position position)
@@ -140,7 +148,7 @@ public class PositionController extends MultiActionController {
       pageRange.setPageNum(Integer.parseInt(pageNum));
     }
     PagingResult<Position> positionResult = positionService.findByBean(position, pageRange);
-//    TreeUtils.removeChildrenOfProperties(positionResult.getRecords(), true);
+    TreeUtils.removeChildrenOfProperties(positionResult.getRecords(), true, null);
     Map<String, Object> jsonMap = new HashMap();
     jsonMap.put("page", pageNum);
     jsonMap.put("total ", positionResult.getPageTotal());
@@ -151,14 +159,8 @@ public class PositionController extends MultiActionController {
       jsonMap.put("rows", null);
     }
 
-    SerializeConfig.getGlobalInstance().addFilter(TreeNode.class, new PropertyFilter() {
-      @Override
-      public boolean apply(Object object, String name, Object value) {
-        return name.equals("children") ? false : true;
-      }
 
-    });
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, false, excludedProperties));
   }
 
   @Override

@@ -112,7 +112,7 @@ public class ContactController extends MultiActionController {
       logger.error("查询Contact失败", t);
       jsonResult.setErrorMessage(ExceptionUtils.getExceptionStack(t));
     }
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonResult, datePattern));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonResult, false, datePattern));
   }
 
   public void findByBean(HttpServletRequest request, HttpServletResponse response, Contact contact)
@@ -143,7 +143,7 @@ public class ContactController extends MultiActionController {
       }
 
     });
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, datePattern));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, false, datePattern));
   }
 
   @Override

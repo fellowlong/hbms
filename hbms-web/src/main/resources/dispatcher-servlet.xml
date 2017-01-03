@@ -54,6 +54,9 @@
         <entry key="JsonUtils">
           <value type="java.lang.Class">com.newstar.hbms.utils.JsonUtils</value>
         </entry>
+        <entry key="BaseDataUtils">
+          <value type="java.lang.Class">com.newstar.hbms.utils.business.BaseDataUtils</value>
+        </entry>
         <entry key="baseDataService" value-ref="baseDataService"/>
       </map>
     </property>

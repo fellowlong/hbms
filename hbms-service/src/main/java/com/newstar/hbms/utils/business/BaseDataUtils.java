@@ -11,6 +11,18 @@ import java.util.*;
  */
 public abstract class BaseDataUtils {
 
+    public final static Map<Class, String[]> excludedChildren = new HashMap<Class, String[]>(1);
+
+    static {
+        excludedChildren.put(TreeNode.class, new String[]{"children"});
+    }
+
+    public final static Map<Class, String[]> excludedParent = new HashMap<Class, String[]>(1);
+
+    static {
+        excludedParent.put(TreeNode.class, new String[]{"parent"});
+    }
+
     public static void fillBaseData(List objects,
                                     List<BaseDataConfig> baseDataConfigs,
                                     TreeService treeService) {
