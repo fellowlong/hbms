@@ -1,5 +1,8 @@
 package com.newstar.hbms.system.domain;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
+import com.newstar.hbms.candidate.domain.Candidate;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,11 +31,8 @@ public class User implements Serializable {
    */
   private String realName;
 
-  /**
-   * 职位
-   */
-  private String position;
-
+  private Long resumeId;
+  private Candidate resume;
 
   /**
    *
@@ -92,12 +92,20 @@ public class User implements Serializable {
     this.realName = realName;
   }
 
-  public String getPosition() {
-    return position;
+  public Long getResumeId() {
+    return resumeId;
   }
 
-  public void setPosition(String position) {
-    this.position = position;
+  public void setResumeId(Long resumeId) {
+    this.resumeId = resumeId;
+  }
+
+  public Candidate getResume() {
+    return resume;
+  }
+
+  public void setResume(Candidate resume) {
+    this.resume = resume;
   }
 
   public Boolean getYn() {
@@ -138,21 +146,5 @@ public class User implements Serializable {
 
   public void setUpdateUser(String updateUser) {
     this.updateUser = updateUser;
-  }
-
-  @Override
-  public String toString() {
-    return "User{" +
-        "id=" + id +
-        ", username='" + username + '\'' +
-        ", password='" + password + '\'' +
-        ", realName='" + realName + '\'' +
-        ", position='" + position + '\'' +
-        ", yn=" + yn +
-        ", createTime=" + createTime +
-        ", createUser='" + createUser + '\'' +
-        ", updateTime=" + updateTime +
-        ", updateUser='" + updateUser + '\'' +
-        '}';
   }
 }

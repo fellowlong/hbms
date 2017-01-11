@@ -2,6 +2,10 @@ package com.newstar.hbms.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.*;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.newstar.hbms.basedata.domain.TreeNode;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
@@ -26,7 +30,7 @@ import static com.alibaba.fastjson.JSON.DEFAULT_GENERATE_FEATURE;
  */
 public abstract class JsonUtils {
 
-  public static final String defaultDatePattern = "yyyy-MM-dd HH:mm:ss.SSS";
+  public static final String defaultDatePattern = "yyyy-MM-dd";
 
   private static ObjectMapper objectMapper = null;
 
@@ -88,18 +92,20 @@ public abstract class JsonUtils {
     return null;
   }
 
-  public static String beanToJson(Object object, boolean detectCircleDependency) {
-    return beanToJson(object, detectCircleDependency,  null, null);
+  public static String beanToJson(Object object) {
+    return beanToJson(object, null, null, defaultDatePattern, true);
   }
 
-
-  public static String beanToJson(Object object, boolean detectCircleDependency, String datePattern) {
-    return beanToJson(object, detectCircleDependency,  null, datePattern);
+  public static String beanToJson(Object object, String datePattern) {
+    return beanToJson(object, null, null, datePattern, true);
   }
 
+  public static String beanToJson(Object object, Map<Class, List<String>> excludedProperties) {
+    return beanToJson(object, null, excludedProperties, defaultDatePattern, true);
+  }
 
-  public static String beanToJson(Object object, boolean detectCircleDependency, Map<Class, String[]> excludedProperties) {
-    return beanToJson(object, detectCircleDependency, excludedProperties, null);
+  public static String beanToJson(Object object, Map<Class, List<String>> excludedProperties, String datePattern) {
+    return beanToJson(object, null, excludedProperties, datePattern, true);
   }
 
   /**
@@ -108,37 +114,57 @@ public abstract class JsonUtils {
    * @param object
    * @return
    */
-  public static String beanToJson(Object object, boolean detectCircleDependency, Map<Class, String[]> excludedProperties, String datePattern) {
+  public static String beanToJson(Object object,
+                                  final List<Class> excludedClasses,
+                                  final Map<Class, List<String>> excludedProperties,
+                                  String datePattern,
+                                  boolean ignoreNulls) {
     if (object == null) {
       return null;
     }
-    String finalDatePattern = defaultDatePattern;
-    if (datePattern != null) {
-      finalDatePattern = datePattern;
-    }
-    List<SerializeFilter> filters = new ArrayList<SerializeFilter>();
-    if (excludedProperties != null && !excludedProperties.isEmpty()) {
-      for (final Map.Entry<Class, String[]> propertiesOfType : excludedProperties.entrySet()) {
-        filters.add(new PropertyFilter() {
-          @Override
-          public boolean apply(Object object, String name, Object value) {
-            return Arrays.asList(propertiesOfType.getValue()).contains(name) ? false : true;
-          }
 
-        });
-      }
+    GsonBuilder gson = new GsonBuilder();
+    if (datePattern != null) {
+      gson.setDateFormat(datePattern);
     }
-    SerializerFeature features[] = new SerializerFeature[1];
-    if (!detectCircleDependency) {
-      features[1] = SerializerFeature.DisableCircularReferenceDetect;
+    gson.disableHtmlEscaping();
+    if (excludedClasses != null || excludedProperties != null) {
+      ExclusionStrategy exclusionStrategy = new ExclusionStrategy() {
+
+        @Override
+        public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+          if (excludedProperties != null) {
+            Class clazz = fieldAttributes.getDeclaringClass();
+            for (Map.Entry<Class, List<String>> entry : excludedProperties.entrySet()) {
+              if (entry.getKey().isAssignableFrom(clazz)
+                  && entry.getValue().contains(fieldAttributes.getName())) {
+                return true;
+              }
+            }
+          }
+          return false;
+        }
+
+        @Override
+        public boolean shouldSkipClass(Class<?> clazz) {
+          if (excludedClasses != null) {
+            for (Class excludedClazz : excludedClasses) {
+              if (excludedClazz.isAssignableFrom(clazz)) {
+                return true;
+              }
+            }
+          }
+          return false;
+        }
+
+      };
+      gson.setExclusionStrategies(exclusionStrategy);
     }
-    return JSON.toJSONString(
-        object,
-        SerializeConfig.globalInstance,
-        filters.toArray(new SerializeFilter[filters.size()]),
-        finalDatePattern,
-        DEFAULT_GENERATE_FEATURE,
-        features);
+    if (ignoreNulls) {
+      gson.serializeNulls();
+    }
+
+    return gson.create().toJson(object);
   }
 
   /**

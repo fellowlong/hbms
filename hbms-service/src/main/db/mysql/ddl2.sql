@@ -254,3 +254,18 @@ create table Project(
   updateTime datetime comment '修改时间',
   updateUser varchar(50) comment '修改人账户'
 ) comment='项目表';
+
+
+drop table ProjectAssistant;
+create table ProjectAssistant(
+  id bigint auto_increment not null primary key comment '主键',
+  projectId  bigint comment '项目外键',
+  assistantId bigint comment '助理(user)外键'
+) comment='项目助理';
+
+drop table ProjectConsultant;
+create table ProjectConsultant(
+  id bigint auto_increment not null primary key comment '主键',
+  projectId  bigint comment '项目外键',
+  consultantId bigint comment '顾问(user)外键'
+) comment='项目顾问';

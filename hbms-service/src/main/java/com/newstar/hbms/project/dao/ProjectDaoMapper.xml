@@ -22,7 +22,7 @@
       company.id as COM_id, company.name COM_name,
       position.id as POS_id, position.name as POS_name,
       contact.id as CONTACT_id, contact.name as CONTACT_name,
-      manager.id as MANAGER_id, manager.name as MANAGER_name
+      manager.id as MANAGER_id, manager.username as MANAGER_username, manager.realName as MANAGER_realName
     from
       Project project
       left outer join  (select * from Company where yn = 1 ) company on project.companyId = company.id
@@ -33,7 +33,6 @@
 
   <insert id="insert" parameterType="com.newstar.hbms.project.domain.Project">
     insert into Project(
-      id,
       code,
       name,
       companyId,
@@ -52,7 +51,6 @@
       updateTime,
       updateUser
     ) values (
-    #{id, jdbcType=BIGINT},
     #{code, jdbcType=VARCHAR},
     #{name, jdbcType=VARCHAR},
     #{companyId, jdbcType=BIGINT},
@@ -134,8 +132,8 @@
     <if test="position != null and position.name != null">
       and position.name like "%"#{position.name}"%"
     </if>
-    <if test="manager != null and manager.name != null">
-      and manager.name like "%"#{manager.name}"%"
+    <if test="manager != null and manager.username != null">
+      and (manager.username like "%"#{manager.username}"%" or manager.realName like "%"#{manager.username}"%")
     </if>
     order by project.createTime desc
   </select>
@@ -143,6 +141,51 @@
   <select id="findByIds" parameterType="com.newstar.hbms.project.domain.Project"
           resultMap="Project">
     <include refid="selectProject"/> where project.id in
+    <foreach collection="array" open="(" close=")" separator="," item="projectId">
+      #{projectId}
+    </foreach>
+  </select>
+
+  <insert id="insertAssistant" parameterType="com.newstar.hbms.project.domain.ProjectAssistant">
+    insert into ProjectAssistant(
+    id,
+    projectId,
+    assistantId
+    ) values (
+    #{id, jdbcType=VARCHAR},
+    #{projectId, jdbcType=BIGINT},
+    #{assistantId, jdbcType=BIGINT}
+    )
+  </insert>
+  <delete id="cleanAssistants"  parameterType="java.lang.Long">
+    delete from ProjectAssistant where projectId = #{value}
+  </delete>
+
+
+  <insert id="insertConsultant" parameterType="com.newstar.hbms.project.domain.ProjectAssistant">
+    insert into ProjectConsultant(
+    id,
+    projectId,
+    consultantId
+    ) values (
+    #{id, jdbcType=VARCHAR},
+    #{projectId, jdbcType=BIGINT},
+    #{consultantId, jdbcType=BIGINT}
+    )
+  </insert>
+  <delete id="cleanConsultants"  parameterType="java.lang.Long">
+    delete from ProjectConsultant where projectId = #{value}
+  </delete>
+
+  <select id="findAssistantsByProjectIds" resultType="com.newstar.hbms.project.domain.ProjectAssistant">
+    select * from ProjectAssistant where projectId in
+    <foreach collection="array" open="(" close=")" separator="," item="projectId">
+      #{projectId}
+    </foreach>
+  </select>
+
+  <select id="findConsultantsByProjectIds" resultType="com.newstar.hbms.project.domain.ProjectConsultant">
+    select * from ProjectConsultant where projectId in
     <foreach collection="array" open="(" close=")" separator="," item="projectId">
       #{projectId}
     </foreach>

@@ -295,8 +295,6 @@
 </form>
 
 
-#parse("/common.vm")
-
 <script type="text/javascript">
   $('.chosen-select').attr("data-placeholder", "选择...");
   $('.chosen-select').chosen({search_contains: true,no_results_text:"aa"});
@@ -306,11 +304,31 @@
   }).next().on("click", function () {
     $('.date-picker').focus();
   });
-  $("#positionForm select[name=companyId]").chosen().change(function (obj) {
+  $("#positionForm select[name=companyId]").cascadedChosen(
+    [{
+        childRef:$("#positionForm select[name=contactId]"),
+        options:{
+            dataCallback: undefined,//[{value:"",label:""}, {value:"",label:""}]
+            url: "/contact/findByBean.do?companyId=",
+            dataMapper: function (data) {
+                var nodeData = undefined;
+                $(data.rows).each(function (index, item) {
+                    if (!nodeData) {
+                        nodeData = [];
+                    }
+                    nodeData.push({value: item.id, label: item.name});
+                });
+                return nodeData;
+            },
+            selectedData:[$!position.contactId]
+        }
+    }]);
+
+  /*$("#positionForm select[name=companyId]").chosen().change(function (obj) {
       onCompanyChanged($(obj.currentTarget).val());
 
   });
-  onCompanyChanged($("#positionForm select[name=companyId]").val());
+  onCompanyChanged($("#positionForm select[name=companyId]").val());*/
   function onCompanyChanged(companyId) {
       $("#positionForm select[name=contactId]").html();
       if (companyId && companyId.length > 0) {

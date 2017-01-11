@@ -80,7 +80,7 @@ public abstract class WebUtils {
     if (value == null) {
       return;
     }
-    String json = value instanceof String ? (String) value : JsonUtils.beanToJson(value, DateEditor.dateFormat.toPattern());
+    String json = value instanceof String ? (String) value : JsonUtils.beanToJson(value);
     response.setContentType("application/json;charset=UTF-8");
     response.getWriter().write(json);
   }
@@ -91,7 +91,7 @@ public abstract class WebUtils {
     if (value == null) {
       return;
     }
-    response.getWriter().write(JsonUtils.beanToJson(value, DateEditor.dateFormat.toPattern()));
+    response.getWriter().write(JsonUtils.beanToJson(value));
   }
 
   public static PageRange getPageRange(HttpServletRequest request) {
@@ -114,7 +114,7 @@ public abstract class WebUtils {
         Object record = pagingResult.getRecords().get(i);
         StringBuilder rowJson = new StringBuilder();
         if (ignoreColumnFields) {
-          rowJson.append(JsonUtils.beanToJson(record, DateEditor.dateFormat.toPattern()));
+          rowJson.append(JsonUtils.beanToJson(record));
         } else {
           rowJson.append("{");
           MapContext jexlContext = new MapContext();

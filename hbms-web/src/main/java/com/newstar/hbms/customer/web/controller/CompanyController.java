@@ -161,7 +161,7 @@ public class CompanyController extends MultiActionController {
     } else {
       jsonMap.put("rows", null);
     }
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, false));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap));
   }
 
   private void removeTreeNodeChildren(List<TreeNode> treeNodes) {

@@ -3,12 +3,8 @@
     <input type="hidden" name="id" value="$!contact.id">
     <div class="form-group">
       <div class="input-group">
-        <div class="input-group-addon">中文名</div>
+        <div class="input-group-addon">中英文名</div>
         <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end>
-      </div>
-      <div class="input-group">
-        <div class="input-group-addon">英文名</div>
-        <input class="form-control" name="englishName" #if($param['englishName']) value="$param['englishName']" #end>
       </div>
       <div class="input-group">
         <div class="input-group-addon">公司</div>

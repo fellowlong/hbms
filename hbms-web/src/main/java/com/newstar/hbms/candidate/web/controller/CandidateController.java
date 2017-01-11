@@ -77,7 +77,7 @@ public class CandidateController extends ConfigurableMultiActionController {
     } else {
       jsonMap.put("rows", null);
     }
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, DateEditor.dayFormat.toPattern()));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap));
   }
 
   public ModelAndView findById(HttpServletRequest request, HttpServletResponse response) throws Exception {

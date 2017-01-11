@@ -26,14 +26,15 @@
 </style>
 
 
-<form id="projectAddForm"
+<form id="projectForm"
       method="post"
       enctype="multipart/form-data"
       action="/project/insertOrUpdate.do"
       class="form-horizontal"
       role="form"
       autocomplete="off"
-      data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
+      data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}"
+      onsubmit="return mappingMultiSelect()">
   <input type="hidden" name="id" value="$!project.id">
   <div class="row" style="margin:0;padding-left: 50px">
 
@@ -66,7 +67,7 @@
       <div class="col-sm-5">
         <select id="companyId" name="companyId" value="$!project.companyId" class="chosen-select form-control">
           #foreach($company in $companies)
-            <option value="$company.id">$company.name</option>
+            <option value="$company.id" #if($company.id == $project.companyId) selected #end>$company.name</option>
           #end
         </select>
       </div>
@@ -77,7 +78,7 @@
       <div class="col-sm-5">
         <select id="positionId" name="positionId" value="$!project.positionId" class="chosen-select form-control">
           #foreach($position in $positions)
-            <option value="$position.id">$position.name</option>
+            <option value="$position.id" #if($position.id == $project.positionId) selected #end>$position.name</option>
           #end
         </select>
       </div>
@@ -88,7 +89,7 @@
       <div class="col-sm-5">
         <select id="contactId" name="contactId" value="$!project.contactId" class="chosen-select form-control">
           #foreach($contact in $contacts)
-            <option value="$contact.id">$contact.name</option>
+            <option value="$contact.id" #if($contact.id == $project.contactId) selected #end>$contact.name</option>
           #end
         </select>
       </div>
@@ -97,10 +98,10 @@
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">重要程度</label>
       <div class="col-sm-5">
-        <select id="importantLevelId" name="importantLevelId" value="$!contact.importantLevelId" class="chosen-select form-control">
+        <select id="importantLevelId" name="importantLevelId" value="$!project.importantLevelId" class="chosen-select form-control">
           #set($projectImportantLevels = $baseDataService.getProjectImportantLevels().children)
           #foreach($projectImportantLevel in $projectImportantLevels)
-            <option value="$projectImportantLevel.id">$projectImportantLevel.label</option>
+            <option value="$projectImportantLevel.id" #if($projectImportantLevel.id == $project.importantLevelId) selected #end>$projectImportantLevel.label</option>
           #end
         </select>
       </div>
@@ -126,28 +127,35 @@
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">项目经理</label>
       <div class="col-sm-5">
-        <select id="managerId" name="managerId" value="$!company.managerId" class="chosen-select form-control">
+        <select id="managerId" name="managerId" value="$!project.managerId" class="chosen-select form-control" data-placeholder="请选择...">
+            <option value=""></option>
           #foreach($user in $users)
-            <option value="$user.id">$user.username - $user.realName</option>
+            <option value="$user.id" #if($user.id == $!project.managerId) selected #end>$user.realName ($user.username)</option>
           #end
         </select>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-sm-1 control-label no-padding-right">助理</label>
-      <div class="col-sm-5">
-        <input type="text" name="englishName" value="$!project.englishName" placeholder="英文姓名" class="form-control"
-               />
-      </div>
+        <label class="col-sm-1 control-label no-padding-right">顾问</label>
+        <div class="col-sm-5">
+            <select id="consultants" rawname="consultants[#index#].consultantId" class="chosen-select form-control" multiple>
+              #foreach($user in $users)
+                <option value="$!user.id" #foreach($consultant in $project.consultants) #if($user.id == $!consultant.consultantId) selected #end #end>$user.realName ($user.username)</option>
+              #end
+            </select>
+        </div>
     </div>
 
     <div class="form-group">
-      <label class="col-sm-1 control-label no-padding-right">顾问</label>
+      <label class="col-sm-1 control-label no-padding-right">助理</label>
       <div class="col-sm-5">
-        <input type="text" name="englishName" value="$!project.englishName" placeholder="英文姓名" class="form-control"
-               />
-      </div>
+        <select id="assistants"  rawname="assistants[#index#].assistantId" class="chosen-select form-control" multiple>
+          #foreach($user in $users)
+              <option value="$!user.id" #foreach($assistant in $project.assistants) #if($user.id == $!assistant.assistantId) selected #end #end>$user.realName ($user.username)</option>
+          #end
+        </select>
+    </div>
     </div>
 
     <div class="form-group">
@@ -166,7 +174,7 @@
     <div class="form-group">
       <label class="col-sm-1 control-label no-padding-right">备注</label>
       <div class="col-sm-5">
-        <textarea type="text" id="remark" name="remark" value="$!project.remark" rows="5" class="form-control"></textarea>
+        <textarea type="text" id="remark" name="remark" rows="5" class="form-control">$!project.remark</textarea>
       </div>
     </div>
 
@@ -175,11 +183,11 @@
       <label class="col-sm-1 control-label no-padding-right">共享</label>
       <div class="col-sm-5">
         <label>
-          <input name="share" type="radio" class="ace" value="true" #if($param['share'] == true) checked #end>
+          <input name="share" type="radio" class="ace" value="true" #if($project.share) checked #end>
           <span class="lbl">是</span>
         </label>
         <label>
-          <input name="share" type="radio" class="ace" value="false" #if($param['share'] and $param['share'] == false) checked #end>
+          <input name="share" type="radio" class="ace" value="false" #if(!$project.share) checked #end>
           <span class="lbl">否</span>
         </label>
       </div>
@@ -206,7 +214,93 @@
 
 
 <script type="text/javascript">
-  $('.chosen-select').chosen({search_contains: true});
+  $('.chosen-select').chosen({allow_single_deselect: true,search_contains: true});
+  $("#projectForm select[name=companyId]").cascadedChosen(
+          [{
+              childRef:$("#projectForm select[name=positionId]"),
+              options:{
+                  dataCallback: undefined,//[{value:"",label:""}, {value:"",label:""}]
+                  url: "/position/findByBean.do?companyId=",
+                  dataMapper: function (data) {
+                      var nodeData = undefined;
+                      $(data.rows).each(function (index, item) {
+                          if (!nodeData) {
+                              nodeData = [];
+                          }
+                          nodeData.push({value: item.id, label: item.name});
+                      });
+                      return nodeData;
+                  },
+                  selectedData:[$!project.positionId]
+              }
+          },
+          {
+              childRef:$("#projectForm select[name=contactId]"),
+              options:{
+                  dataCallback: undefined,//[{value:"",label:""}, {value:"",label:""}]
+                  url: "/contact/findByBean.do?companyId=",
+                  dataMapper: function (data) {
+                      var nodeData = undefined;
+                      $(data.rows).each(function (index, item) {
+                          if (!nodeData) {
+                              nodeData = [];
+                          }
+                          nodeData.push({value: item.id, label: item.name});
+                      });
+                      return nodeData;
+                  },
+                  selectedData:[$!project.contactId]
+              }
+          }
+          ]);
+
+  /*$("#projectForm select[name=companyId]")
+    .cascadedChosen({
+        getNodeDataFunction:function (parentId, currentRef, parentRef) {
+            var nodeData = [];
+          #foreach($company in $companies)
+              nodeData.push({value:$company.id, label:"$company.name"});
+          #end
+            return nodeData;
+        },
+        selectedData:[$!project.companyId]
+    })
+    .cascade(
+            $("#projectForm select[name=positionId]"),
+            {
+                url: "/position/findByBean.do",
+                parentIdNameForPost: "companyId",
+                dataConverter: function (data) {
+                    var nodeData = undefined;
+                    $(data.rows).each(function (index, item) {
+                        if (!nodeData) {
+                            nodeData = [];
+                        }
+                        nodeData.push({value: item.id, label: item.name});
+                    });
+                    return nodeData;
+                },
+                selectedData:[$!project.positionId]
+            }
+    )
+    .cascade(
+            $("#projectForm select[name=contactId]"),
+            {
+                url: "/contact/findByBean.do",
+                parentIdNameForPost: "companyId",
+                dataConverter: function (data) {
+                    var nodeData = undefined;
+                    $(data.rows).each(function (index, item) {
+                        if (!nodeData) {
+                            nodeData = [];
+                        }
+                        nodeData.push({value: item.id, label: item.name});
+                    });
+                    return nodeData;
+                },
+                selectedData:[$!project.contactId]
+            }
+    );*/
   $('.date-picker').datepicker({
     autoclose: true,
     todayHighlight: true
@@ -214,16 +308,16 @@
     $('.date-picker').focus();
   });
 
-  $("#addAttachment").on("click", function () {
-    $("#attachments").append($("#attachmentTemplate").html());
-    reCalculateAttatcmentSeq();
-  });
-  function reCalculateAttatcmentSeq() {
-    var attatementSeq = 0;
-    $("#attachments").find(".form-group").each(function (index, item) {
-      $(item).find("label.control-label").text("附件" + ++attatementSeq);
-      renderFileInput($(item).find("input"));
+function mappingMultiSelect() {
+    $("#projectForm select[multiple]").each(function (selectIndex, select) {
+      var rawname = $(select).attr("rawname");
+      $(select).prev("div[rawname='" + rawname +"']").remove();
+      $(select).before("<div rawname='" + rawname +"' style='display: none;visibility: hidden'></div>");
+       $($(select).val()).each(function (valueIndex, value) {
+           $(select).prev("div[rawname='" + rawname +"']").append("<input type='hidden' name='"+ rawname.replace("#index#", valueIndex) +"' value='" + value + "'>");;
+       });
     });
-  }
+    return true;
+}
 
 </script>

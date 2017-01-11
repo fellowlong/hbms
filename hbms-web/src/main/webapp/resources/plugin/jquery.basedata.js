@@ -108,8 +108,14 @@
           itemHtml += "<input type='hidden' rawname='" + formFieldItem.rawName + "' value='" + parsedValue + "'>";
         });
         itemHtml += "</span>";
+        if (!this.options.isMultiFormField) {
+            break;
+        }
       }
       var itemElement = $(this.element).children("div").first().children("div").first();
+      if (!this.options.isMultiFormField) {
+          itemElement.empty();
+      }
       itemElement.append(itemHtml);
       reCalValueIndex(itemElement);
 

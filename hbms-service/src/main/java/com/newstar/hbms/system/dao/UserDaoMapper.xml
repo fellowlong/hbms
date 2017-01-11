@@ -6,48 +6,20 @@
 
   <insert id="insert" parameterType="com.newstar.hbms.system.domain.User">
     insert into User(
-      name,
-      sex,
-      telephone,
-      age,
-      email,
-      education,
-      workYears,
-      marital,
-      location,
-      industry,
-      company,
-      position,
-      salary,
-      selfEvaluation,
-      other,
-      keyword,
-      remark,
-      language,
+      username,
+      password,
+      realName,
+      resumeId,
       yn,
       createTime,
       createUser,
       updateTime,
       updateUser
     ) values (
-      #{name},
-      #{sex},
-      #{telephone},
-      #{age},
-      #{email},
-      #{education},
-      #{workYears},
-      #{marital},
-      #{location},
-      #{industry},
-      #{company},
-      #{position},
-      #{salary},
-      #{selfEvaluation},
-      #{other},
-      #{keyword},
-      #{remark},
-      #{language},
+      #{username},
+      #{password},
+      #{realName},
+      #{resumeId},
       1,
       now(),
       #{createUser},
@@ -58,24 +30,10 @@
 
   <update id="update" parameterType="com.newstar.hbms.system.domain.User">
     update User set
-      name = #{name},
-      sex = #{sex},
-      telephone = #{telephone},
-      age = #{age},
-      email = #{email},
-      education = #{education},
-      workYears = #{workYears},
-      marital = #{marital},
-      location = #{location},
-      industry = #{industry},
-      company = #{company},
-      position = #{position},
-      salary = #{salary},
-      selfEvaluation = #{selfEvaluation},
-      other = #{other},
-      keyword = #{keyword},
-      language = #{language},
-      remark = #{remark},
+      username = #{username},
+      password = #{password},
+      realName = #{realName},
+      resumeId = #{resumeId}，
       updateTime = now(),
       updateUser = #{updateUser}
     where
@@ -84,8 +42,8 @@
 
   <delete id="deleteByIds" parameterType="java.lang.Long">
     update User set yn = 0 where id in
-    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
-      #{resumeId}
+    <foreach collection="array" open="(" close=")" separator="," item="userId">
+      #{userId}
     </foreach>
   </delete>
 
@@ -98,9 +56,9 @@
   </select>
 
   <select id="findByIds" resultType="com.newstar.hbms.system.domain.User">
-    select * from Resume where id in
-    <foreach collection="array" open="(" close=")" separator="," item="resumeId">
-      #{resumeId}
+    select * from User where id in
+    <foreach collection="array" open="(" close=")" separator="," item="userId">
+      #{userId}
     </foreach>
   </select>
 

@@ -1,5 +1,6 @@
 package com.newstar.hbms.project.web.controller;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.customer.service.ContactService;
@@ -39,6 +40,12 @@ public class ProjectController extends MultiActionController {
 
   private String datePattern;
 
+  public static Map<Class, List<String>> excludedProperties = new HashMap<Class, List<String>>(0);
+
+  static {
+    excludedProperties.put(TreeNode.class, Arrays.asList(new String[]{"children"}));
+  }
+
   public void setProjectService(ProjectService projectService) {
     this.projectService = projectService;
   }
@@ -62,7 +69,7 @@ public class ProjectController extends MultiActionController {
   public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
     PagingResult<Company> customerPagingResult = companyService.findByBean(new Company(), new PageRange(1, 100));
     ModelAndView modelAndView =new ModelAndView("/project/projectManager");
-    modelAndView.addObject("customers", customerPagingResult.getRecords());
+    modelAndView.addObject("companies", customerPagingResult.getRecords());
     modelAndView.addObject("users", customerPagingResult.getRecords());
     return modelAndView;
   }
@@ -76,6 +83,9 @@ public class ProjectController extends MultiActionController {
         modelAndView.getModel().put("project", projects.get(0));
       }
     }
+    PagingResult<Company> customerPagingResult = companyService.findByBean(new Company(), new PageRange(1, 1000));
+    modelAndView.addObject("companies", customerPagingResult.getRecords());
+    modelAndView.addObject("users", userService.findAll());
     return modelAndView;
   }
 
@@ -131,7 +141,7 @@ public class ProjectController extends MultiActionController {
       logger.error("查询Position失败", t);
       jsonResult.setErrorMessage(ExceptionUtils.getExceptionStack(t));
     }
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonResult, datePattern));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonResult, excludedProperties));
   }
 
   public void findByBean(HttpServletRequest request, HttpServletResponse response, Project project)
@@ -155,7 +165,7 @@ public class ProjectController extends MultiActionController {
     } else {
       jsonMap.put("rows", null);
     }
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, datePattern));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, excludedProperties));
   }
 
   @Override

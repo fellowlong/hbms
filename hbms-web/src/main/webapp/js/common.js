@@ -169,3 +169,31 @@ function disableRecords(url, postData, successFunction, errorFunction) {
     }
   });
 }
+
+function disableRecords(url, postData, successFunction, errorFunction) {
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    url: url,
+    data: postData,
+    timeout: 3000,
+    success: function (result, textStatus, jqXHR) {
+      if (result && result.success) {
+        if (successFunction) {
+          successFunction();
+        }
+      } else {
+        if (errorFunction) {
+          errorFunction();
+        }
+        bootbox.alert("<div class='alert alert-danger'>删除失败，请联系管理员<br></div>");
+      }
+    },
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+      if (errorFunction) {
+        errorFunction();
+      }
+      bootbox.alert("<div class='alert alert-danger'>删除异常，请联系管理员<br></div>");
+    }
+  });
+}

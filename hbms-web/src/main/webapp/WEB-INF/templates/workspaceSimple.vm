@@ -73,6 +73,7 @@
     <script src="/ace/js/date-time/bootstrap-datepicker.zh-CN.min.js"></script>
     <script src="/resources/ztree/jquery.ztree.all.js"></script>
     <script src="/resources/plugin/jquery.basedata.js"></script>
+    <script src="/resources/plugin/jquery.cascadedchosen.js"></script>
     <script src="/js/common.js"></script>
 
     <style>
@@ -146,6 +147,12 @@
           padding-top: 10px;padding-left: 10px;padding-right: 10px;
         }
     </style>
+
+    <script type="text/javascript">
+        $.fn.chosen.default_multiple_text = "请选择...";
+        $.fn.chosen.default_single_text = "请选择...";
+        $.fn.chosen.default_no_result_text = "没有匹配的结果";
+    </script>
 
 </head>
 

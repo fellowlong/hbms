@@ -74,14 +74,14 @@ public class Project implements Serializable {
   private User manager;
 
   /**
-   * 助理
-   */
-  private List<ProjectAssistant> assistants = new ArrayList<ProjectAssistant>();
-
-  /**
    * 顾问
    */
   private List<ProjectConsultant> consultants = new ArrayList<ProjectConsultant>();
+
+  /**
+   * 助理
+   */
+  private List<ProjectAssistant> assistants = new ArrayList<ProjectAssistant>();
 
   /**
    * 项目状态

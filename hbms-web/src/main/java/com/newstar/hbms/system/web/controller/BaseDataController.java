@@ -11,10 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by wangjinsi on 2016/12/7.
@@ -23,10 +20,10 @@ public class BaseDataController extends ConfigurableMultiActionController {
 
   private TreeService treeService;
 
-  public static Map<Class, String[]> excludedProperties = new HashMap<Class, String[]>(0);
+  public static Map<Class, List<String>> excludedProperties = new HashMap<Class, List<String>>(0);
 
   static {
-    excludedProperties.put(TreeNode.class, new String[]{"parent"});
+    excludedProperties.put(TreeNode.class, Arrays.asList(new String[]{"parent"}));
   }
 
   public void setTreeService(TreeService treeService) {
@@ -42,7 +39,7 @@ public class BaseDataController extends ConfigurableMultiActionController {
     assert code != null && !code.isEmpty();
     TreeNode treeNode = treeService.findTreeByAncestorCode(code);
     //解除上级关系，防止json序列化时死递归
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(treeNode, true, excludedProperties));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(treeNode, excludedProperties));
   }
 
   public void findTreesById(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -50,7 +47,7 @@ public class BaseDataController extends ConfigurableMultiActionController {
     assert code != null && !code.isEmpty();
     TreeNode treeNode = treeService.findTreeByAncestorCode(code);
     //解除上级关系，防止json序列化时死递归
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(treeNode, true, excludedProperties));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(treeNode, excludedProperties));
   }
 
   public void insertOrUpdate(HttpServletRequest request,

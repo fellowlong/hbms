@@ -235,6 +235,11 @@
 
   <bean id="projectService" class="com.newstar.hbms.project.service.impl.ProjectServiceImpl">
     <property name="projectDao" ref="projectDao"/>
+    <property name="userService" ref="userService"/>
+    <property name="contactService" ref="contactService"/>
+    <property name="companyService" ref="companyService"/>
+    <property name="positionService" ref="positionService"/>
+    <property name="treeService" ref="treeService"/>
   </bean>
 
   <bean id="userService" class="com.newstar.hbms.system.service.impl.UserServiceImpl">

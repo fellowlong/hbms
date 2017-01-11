@@ -12,7 +12,6 @@
 
   <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Position">
     insert into `Position`(
-      id,
       companyId,
       contactId,
       code,
@@ -45,7 +44,6 @@
       createUser,
       createTime
     ) values (
-      #{id, jdbcType=BIGINT},
       #{companyId, jdbcType=BIGINT},
       #{contactId, jdbcType=BIGINT},
       #{code, jdbcType=VARCHAR},
@@ -78,6 +76,9 @@
       #{createUser, jdbcType=VARCHAR},
       now()
     )
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+      select last_insert_id()
+    </selectKey>
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.customer.domain.Position">
@@ -152,12 +153,9 @@
       and #{maxWorkYears} >= p.maxWorkYears
     </if>
     <if test="companyId != null">
-      and com.companyId = #{companyId}
+      and p.companyId = #{companyId}
     </if>
-    <if test="company != null and company.name != null and !company.name.isEmpty()">
-      and com.name like "%"#{company.name}"%"
-    </if>
-    order by com.id, p.createTime desc
+    order by p.companyId, p.createTime desc
   </select>
 
   <select id="findByIds" resultMap="Position">
@@ -193,13 +191,13 @@
 
   <insert id="insertTag" parameterType="com.newstar.hbms.customer.domain.PositionTag">
     insert into PositionTag(
-    id,
-    positionId,
-    tagId
+      id,
+      positionId,
+      tagId
     ) values (
-    #{id, jdbcType=VARCHAR},
-    #{positionId, jdbcType=BIGINT},
-    #{tagId, jdbcType=BIGINT}
+      #{id, jdbcType=VARCHAR},
+      #{positionId, jdbcType=BIGINT},
+      #{tagId, jdbcType=BIGINT}
     )
   </insert>
   <delete id="cleanTags"  parameterType="java.lang.Long">

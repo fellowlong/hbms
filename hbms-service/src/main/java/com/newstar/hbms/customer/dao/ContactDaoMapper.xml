@@ -12,7 +12,6 @@
 
   <insert id="insert" parameterType="com.newstar.hbms.customer.domain.Contact">
     insert into Contact(
-      id,
       importantLevelId,
       companyId,
       name,
@@ -33,27 +32,29 @@
       createUser,
       createTime
     ) values (
-    #{id, jdbcType=VARCHAR},
-    #{importantLevelId, jdbcType=VARCHAR},
-    #{companyId, jdbcType=VARCHAR},
-    #{name, jdbcType=VARCHAR},
-    #{englishName, jdbcType=VARCHAR},
-    #{sexId, jdbcType=VARCHAR},
-    #{department, jdbcType=VARCHAR},
-    #{position, jdbcType=VARCHAR},
-    #{companyPhone, jdbcType=VARCHAR},
-    #{mobilePhone, jdbcType=VARCHAR},
-    #{companyFax, jdbcType=VARCHAR},
-    #{email, jdbcType=VARCHAR},
-    #{otherContact, jdbcType=VARCHAR},
-    #{birthday, jdbcType=VARCHAR},
-    #{remark, jdbcType=VARCHAR},
-    1,
-    #{updateUser, jdbcType=VARCHAR},
-    now(),
-    #{createUser, jdbcType=VARCHAR},
-    now()
+      #{importantLevelId, jdbcType=VARCHAR},
+      #{companyId, jdbcType=VARCHAR},
+      #{name, jdbcType=VARCHAR},
+      #{englishName, jdbcType=VARCHAR},
+      #{sexId, jdbcType=VARCHAR},
+      #{department, jdbcType=VARCHAR},
+      #{position, jdbcType=VARCHAR},
+      #{companyPhone, jdbcType=VARCHAR},
+      #{mobilePhone, jdbcType=VARCHAR},
+      #{companyFax, jdbcType=VARCHAR},
+      #{email, jdbcType=VARCHAR},
+      #{otherContact, jdbcType=VARCHAR},
+      #{birthday, jdbcType=VARCHAR},
+      #{remark, jdbcType=VARCHAR},
+      1,
+      #{updateUser, jdbcType=VARCHAR},
+      now(),
+      #{createUser, jdbcType=VARCHAR},
+      now()
     )
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+      select last_insert_id()
+    </selectKey>
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.customer.domain.Contact">
@@ -97,10 +98,7 @@
       and con.id = #{id}
     </if>
     <if test="name != null and !name.isEmpty()">
-      and con.name like "%"#{name}"%"
-    </if>
-    <if test="englishName != null and !englishName.isEmpty()">
-      and con.englishName like "%"#{englishName}"%"
+      and (con.name like "%"#{name}"%" or con.englishName like "%"#{name}"%")
     </if>
     <if test="mobilePhone != null and !mobilePhone.isEmpty()">
       and con.mobilePhone like "%"#{mobilePhone}"%"
