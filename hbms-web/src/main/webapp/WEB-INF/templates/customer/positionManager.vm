@@ -94,12 +94,18 @@
 
     $("#searchPosition").on("click", function () {
       $("#positionList").jqGrid('setGridParam', {
-        postData: {
-          name: $("#searchPositionForm input[name='name']").val(),
-          "company.name": $("#searchPositionForm input[name='company.name']").val(),
-          industry: $("#searchPositionForm input[name='industry']").val()
-        },
+        postData: (function () {
+            var postData = {};
+            $("#searchPositionForm input, #searchPositionForm select").each(function (index, item) {
+                var val = $(item).val();
+                if (val && val.length > 0) {
+                    postData[$(item).attr("name")] = val;
+                }
+            });
+            return postData;
+        })(),
         page: 1
+
       }).trigger("reloadGrid");
     });
 

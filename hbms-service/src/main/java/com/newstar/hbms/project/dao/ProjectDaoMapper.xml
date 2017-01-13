@@ -110,37 +110,28 @@
 
   <select id="findByBean" parameterType="com.newstar.hbms.project.domain.Project"
           resultMap="Project">
-    <include refid="selectProject"/>
+    select * from Project project where 1=1
     <if test="id != null">
       and project.id = #{id}
     </if>
     <if test="name != null and !name.isEmpty()">
       and project.name like "%"#{name}"%"
     </if>
-    <if test="startDate != null">
-      and project.startDate >= #{startDate}
+    <if test="statusId != null">
+      and project.statusId = #{statusId}
     </if>
-    <if test="endDate != null">
-      and #{endDate} >= project.endDate
+    <if test="companyId != null">
+      and project.companyId = #{companyId}
     </if>
-    <if test="status != null">
-      and project.status = #{status}
-    </if>
-    <if test="company != null and company.name != null">
-      and company.name like "%"#{company.name}"%"
-    </if>
-    <if test="position != null and position.name != null">
-      and position.name like "%"#{position.name}"%"
-    </if>
-    <if test="manager != null and manager.username != null">
-      and (manager.username like "%"#{manager.username}"%" or manager.realName like "%"#{manager.username}"%")
+    <if test="positionId != null">
+      and project.positionId = #{positionId}
     </if>
     order by project.createTime desc
   </select>
 
   <select id="findByIds" parameterType="com.newstar.hbms.project.domain.Project"
           resultMap="Project">
-    <include refid="selectProject"/> where project.id in
+    select * from Project project where project.id in
     <foreach collection="array" open="(" close=")" separator="," item="projectId">
       #{projectId}
     </foreach>
