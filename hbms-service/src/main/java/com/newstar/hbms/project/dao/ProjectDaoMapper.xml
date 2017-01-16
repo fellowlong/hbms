@@ -110,7 +110,7 @@
 
   <select id="findByBean" parameterType="com.newstar.hbms.project.domain.Project"
           resultMap="Project">
-    select * from Project project where 1=1
+    select * from Project project where yn=1
     <if test="id != null">
       and project.id = #{id}
     </if>

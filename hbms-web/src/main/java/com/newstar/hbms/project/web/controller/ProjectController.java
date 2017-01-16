@@ -70,7 +70,6 @@ public class ProjectController extends MultiActionController {
     PagingResult<Company> customerPagingResult = companyService.findByBean(new Company(), new PageRange(1, 100));
     ModelAndView modelAndView =new ModelAndView("/project/projectManager");
     modelAndView.addObject("companies", customerPagingResult.getRecords());
-    modelAndView.addObject("users", customerPagingResult.getRecords());
     return modelAndView;
   }
 
@@ -112,7 +111,7 @@ public class ProjectController extends MultiActionController {
         for (String idsStr : idsStrArray) {
           ids.add(new Long(idsStr));
         }
-        int result = positionService.disable(ids.toArray(new Long[ids.size()]));
+        int result = projectService.disable(ids.toArray(new Long[ids.size()]));
         if (result > 0) {
           jsonResult.setSuccess(true);
           jsonResult.setData(result);

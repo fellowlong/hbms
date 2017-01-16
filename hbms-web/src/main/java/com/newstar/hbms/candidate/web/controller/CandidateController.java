@@ -51,7 +51,7 @@ public class CandidateController extends ConfigurableMultiActionController {
   public ModelAndView workspace(HttpServletRequest request,
                                  HttpServletResponse response,
                                  Candidate candidate) throws Exception {
-    return new ModelAndView("/resume/resumeList");
+    return new ModelAndView("/candidate/candidateManage");
   }
 
   public void findByBean(HttpServletRequest request,
