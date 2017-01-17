@@ -1,12 +1,13 @@
 package com.newstar.hbms.candidate.domain;
 
 import com.newstar.hbms.basedata.domain.TreeNode;
-import com.newstar.hbms.common.domain.Domain;
+
+import java.io.Serializable;
 
 /**
  * Created by fellowlong on 2014-05-27.
  */
-public class LanguageAbility extends Domain {
+public class LanguageAbility  implements Serializable {
 
   /**
    * 编号，主键

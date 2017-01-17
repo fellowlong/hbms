@@ -2,11 +2,14 @@ package com.newstar.hbms.candidate.web.controller;
 
 import com.newstar.hbms.candidate.domain.Candidate;
 import com.newstar.hbms.candidate.service.CandidateService;
+import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.mvc.ConfigurableMultiActionController;
 import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.mvc.MessageCollector;
+import com.newstar.hbms.project.domain.Project;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
+import com.newstar.hbms.system.service.UserService;
 import com.newstar.hbms.utils.DateEditor;
 import com.newstar.hbms.utils.ExceptionUtils;
 import com.newstar.hbms.utils.JsonUtils;
@@ -36,12 +39,18 @@ public class CandidateController extends ConfigurableMultiActionController {
 
   private HttpSolrServer httpSolrServer;
 
+  private UserService userService;
+
   public void setCandidateService(CandidateService candidateService) {
     this.candidateService = candidateService;
   }
 
   public void setHttpSolrServer(HttpSolrServer httpSolrServer) {
     this.httpSolrServer = httpSolrServer;
+  }
+
+  public void setUserService(UserService userService) {
+    this.userService = userService;
   }
 
   public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -89,30 +98,25 @@ public class CandidateController extends ConfigurableMultiActionController {
     return modelAndView;
   }
 
-  public ModelAndView resumeAddView(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    return new ModelAndView("/resumeSimple/resumeAdd");
-  }
-
-
-  public ModelAndView preInsertOrUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public ModelAndView edit(HttpServletRequest request, HttpServletResponse response) throws Exception {
     Long id = WebUtils.getLong(request, WebUtils.ID);
-    ModelAndView modelAndView = new ModelAndView("/resume/resumeAdd");
+    ModelAndView modelAndView = new ModelAndView("/candidate/candidateEdit");
     if (id != null) {
       List<Candidate> candidates = candidateService.findByIds(new Long[]{id});
       if (candidates != null && !candidates.isEmpty()) {
         modelAndView.getModel().put("candidate", candidates.get(0));
       }
     }
+    modelAndView.addObject("users", userService.findAll());
     return modelAndView;
   }
 
-  public ModelAndView insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Candidate candidate) throws Exception {
+  public ModelAndView save(HttpServletRequest request, HttpServletResponse response, Candidate candidate) throws Exception {
 /*     = new Candidate();
     CommonsMultipartResolver resolver = new CommonsMultipartResolver();
     MultipartHttpServletRequest multipartHttpServletRequest = resolver.resolveMultipart(request);
     ServletRequestDataBinder servletRequestDataBinder = new ServletRequestDataBinder(candidate);
     servletRequestDataBinder.bind(multipartHttpServletRequest);*/
-    boolean isNew = (candidate.getId() == null ? true : false);
     int resultCount = candidateService.insertOrUpdate(candidate);
     MessageCollector msgCollector = new MessageCollector();
     if (resultCount == 1) {

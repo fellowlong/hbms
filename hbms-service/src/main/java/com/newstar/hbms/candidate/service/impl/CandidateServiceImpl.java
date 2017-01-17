@@ -5,7 +5,6 @@ import com.newstar.hbms.candidate.domain.*;
 import com.newstar.hbms.candidate.service.CandidateService;
 import com.newstar.hbms.common.dao.AttachmentDao;
 import com.newstar.hbms.common.domain.Attachment;
-import com.newstar.hbms.common.domain.Domain;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 import com.newstar.hbms.utils.WordParser;
@@ -105,6 +104,7 @@ public class CandidateServiceImpl implements CandidateService {
     } else {
       resultCount = candidateDao.insert(candidate);
     }
+
     if (candidate.getResumeFile() != null) {
       //如果是修改的话，新的简历要覆盖旧
       if (candidate.getId() != null && candidate.getResume() != null && candidate.getResume().getId() != null) {
@@ -154,121 +154,7 @@ public class CandidateServiceImpl implements CandidateService {
       }
     }
 
-    //保存工作经历
-    List<WorkExperience> workExperiences = candidate.getWorkExperiences();
-    if (workExperiences != null && workExperiences.size() > 0) {
-      Collections.sort(workExperiences, new Comparator<WorkExperience>() {
-        @Override
-        public int compare(WorkExperience o1, WorkExperience o2) {
-          return (o1.getId() == null || o2.getId() == null) ? -1 : o1.getId().compareTo(o2.getId());
-        }
-      });
-      for (WorkExperience perWorkExperience : workExperiences) {
-        perWorkExperience.setCandidateId(candidate.getId());
-        if (perWorkExperience.getId() == null
-           && perWorkExperience.getCrud() != null && perWorkExperience.getCrud().equals(Domain.CRUD.CREATE)) {
-          resultCount += workExperienceDao.insert(perWorkExperience);
-        } else if (perWorkExperience.getId() != null
-           && perWorkExperience.getCrud() != null && perWorkExperience.getCrud().equals(Domain.CRUD.UPDATE)){
-          resultCount += workExperienceDao.update(perWorkExperience);
-        }else if (perWorkExperience.getId() != null
-           && perWorkExperience.getCrud() != null && perWorkExperience.getCrud().equals(Domain.CRUD.DELETE)){
-          resultCount += workExperienceDao.deleteByIds(new Long[]{perWorkExperience.getId()});
-        }
-      }
-    }
-    //保存教育经历
-    List<EducationExperience> educationExperiences = candidate.getEducationExperiences();
-    if (educationExperiences != null && educationExperiences.size() > 0) {
-      Collections.sort(educationExperiences, new Comparator<EducationExperience>() {
-        @Override
-        public int compare(EducationExperience o1, EducationExperience o2) {
-          return (o1.getId() == null || o2.getId() == null) ? -1 : o1.getId().compareTo(o2.getId());
-        }
-      });
-      for (EducationExperience perEducationExperience : educationExperiences) {
-        perEducationExperience.setCandidateId(candidate.getId());
-        if (perEducationExperience.getId() == null
-           && perEducationExperience.getCrud() != null && perEducationExperience.getCrud().equals(Domain.CRUD.CREATE)) {
-          resultCount += educationExperienceDao.insert(perEducationExperience);
-        } else if (perEducationExperience.getId() != null
-           && perEducationExperience.getCrud() != null && perEducationExperience.getCrud().equals(Domain.CRUD.UPDATE)){
-          resultCount += educationExperienceDao.update(perEducationExperience);
-        } else if (perEducationExperience.getId() != null
-           && perEducationExperience.getCrud() != null && perEducationExperience.getCrud().equals(Domain.CRUD.DELETE)){
-          resultCount += educationExperienceDao.deleteByIds(new Long[]{perEducationExperience.getId()});
-        }
-      }
-    }
-    //保存语言能力
-    List<LanguageAbility> languageAbilities = candidate.getLanguageAbilities();
-    if (languageAbilities != null && languageAbilities.size() > 0) {
-      Collections.sort(languageAbilities, new Comparator<LanguageAbility>() {
-        @Override
-        public int compare(LanguageAbility o1, LanguageAbility o2) {
-          return (o1.getId() == null || o2.getId() == null) ? -1 : o1.getId().compareTo(o2.getId());
-        }
-      });
-      for (LanguageAbility perLanguageAbility : languageAbilities) {
-        perLanguageAbility.setCandidateId(candidate.getId());
-        if (perLanguageAbility.getId() == null
-           && perLanguageAbility.getCrud() != null && perLanguageAbility.getCrud().equals(Domain.CRUD.CREATE)) {
-          resultCount += languageAbilityDao.insert(perLanguageAbility);
-        } else if (perLanguageAbility.getId() != null
-           && perLanguageAbility.getCrud() != null && perLanguageAbility.getCrud().equals(Domain.CRUD.UPDATE)){
-          resultCount += languageAbilityDao.update(perLanguageAbility);
-        } else if (perLanguageAbility.getId() != null
-           && perLanguageAbility.getCrud() != null && perLanguageAbility.getCrud().equals(Domain.CRUD.DELETE)){
-          resultCount += languageAbilityDao.deleteByIds(new Long[]{perLanguageAbility.getId()});
-        }
-      }
-    }
-    //保存证书
-    List<Certificate> certificates = candidate.getCertificates();
-    if (certificates != null && certificates.size() > 0) {
-      Collections.sort(certificates, new Comparator<Certificate>() {
-        @Override
-        public int compare(Certificate o1, Certificate o2) {
-          return (o1.getId() == null || o2.getId() == null) ? -1 : o1.getId().compareTo(o2.getId());
-        }
-      });
-      for (Certificate perCertificate : certificates) {
-        perCertificate.setCandidateId(candidate.getId());
-        if (perCertificate.getId() == null
-           && perCertificate.getCrud() != null && perCertificate.getCrud().equals(Domain.CRUD.CREATE)) {
-          resultCount += certificateDao.insert(perCertificate);
-        } else if (perCertificate.getId() != null
-           && perCertificate.getCrud() != null && perCertificate.getCrud().equals(Domain.CRUD.UPDATE)) {
-          resultCount += certificateDao.update(perCertificate);
-        } else if (perCertificate.getId() != null
-           && perCertificate.getCrud() != null && perCertificate.getCrud().equals(Domain.CRUD.DELETE)) {
-          resultCount += certificateDao.deleteByIds(new Long[]{perCertificate.getId()});
-        }
-      }
-    }
-    //保存项目经历
-    List<ProjectExperience> projectExperiences = candidate.getProjectExperiences();
-    if (projectExperiences != null && projectExperiences.size() > 0) {
-      Collections.sort(projectExperiences, new Comparator<ProjectExperience>() {
-        @Override
-        public int compare(ProjectExperience o1, ProjectExperience o2) {
-          return (o1.getId() == null || o2.getId() == null) ? -1 : o1.getId().compareTo(o2.getId());
-        }
-      });
-      for (ProjectExperience perProjectExperience : projectExperiences) {
-        perProjectExperience.setCandidateId(candidate.getId());
-        if (perProjectExperience.getId() == null
-           && perProjectExperience.getCrud() != null && perProjectExperience.getCrud().equals(Domain.CRUD.CREATE)) {
-          resultCount += projectExperienceDao.insert(perProjectExperience);
-        } else if (perProjectExperience.getId() != null
-           && perProjectExperience.getCrud() != null && perProjectExperience.getCrud().equals(Domain.CRUD.UPDATE)) {
-          resultCount += projectExperienceDao.update(perProjectExperience);
-        } else if (perProjectExperience.getId() != null
-           && perProjectExperience.getCrud() != null && perProjectExperience.getCrud().equals(Domain.CRUD.DELETE)) {
-          resultCount += projectExperienceDao.deleteByIds(new Long[]{perProjectExperience.getId()});
-        }
-      }
-    }
+
     //添加创建索引任务
     CandidateIndexTask candidateIndexTask = new CandidateIndexTask();
     candidateIndexTask.setResumeId(candidate.getId());

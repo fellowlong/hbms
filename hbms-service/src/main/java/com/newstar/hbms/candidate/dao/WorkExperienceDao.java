@@ -15,14 +15,14 @@ public interface WorkExperienceDao {
 
   public int update(WorkExperience workExperience);
 
-  public int deleteByIds(Long[] resumeIds);
+  public int deleteByIds(Long[] workExperienceIds);
+
+  public int deleteByCandidateIds(Long[] candidateIds);
 
   public PagingResult<WorkExperience> findByBean(WorkExperience workExperience, PageRange pageRange);
 
   public List<WorkExperience> findByIds(Long[] ids);
 
-  public List<WorkExperience> findByResumeIds(Long[] ids);
-
-  public PagingResult<WorkExperience> findMaxByCandidateIdsAndBean(WorkExperience workExperience, PageRange pageRange);
+  public List<WorkExperience> findByCandidateIds(Long[] ids);
 
 }

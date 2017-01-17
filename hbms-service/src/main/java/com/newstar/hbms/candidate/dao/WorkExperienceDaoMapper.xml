@@ -5,11 +5,7 @@
 <mapper namespace="com.newstar.hbms.candidate.dao.WorkExperienceDao">
 
   <insert id="insert" parameterType="com.newstar.hbms.candidate.domain.WorkExperience">
-    <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
-      sequence.global
-    </selectKey>
     insert into WorkExperience(
-      id,
       candidateId,
       company,
       startDate,
@@ -18,7 +14,6 @@
       responsibility
     )
     values (
-      #{id},
       #{candidateId, jdbcType=BIGINT},
       #{company, jdbcType=VARCHAR},
       #{startDate, jdbcType=DATE},
@@ -26,6 +21,9 @@
       #{position, jdbcType=VARCHAR},
       #{responsibility, jdbcType=VARCHAR}
     )
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+      select last_insert_id()
+    </selectKey>
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.WorkExperience">

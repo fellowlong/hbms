@@ -1,13 +1,12 @@
 package com.newstar.hbms.candidate.domain;
 
-import com.newstar.hbms.common.domain.Domain;
-
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by fellowlong on 2014-05-27.
  */
-public class WorkExperience extends Domain {
+public class WorkExperience  implements Serializable {
 
   /**
    * 编号，主键
@@ -21,11 +20,6 @@ public class WorkExperience extends Domain {
   private Candidate candidate;
 
   /**
-   * 公司
-   */
-  private String company;
-
-  /**
    * 开始时间
    */
   private Date startDate;
@@ -34,6 +28,11 @@ public class WorkExperience extends Domain {
    * 结束时间
    */
   private Date endDate;
+
+  /**
+   * 公司
+   */
+  private String company;
 
   /**
    * 职位

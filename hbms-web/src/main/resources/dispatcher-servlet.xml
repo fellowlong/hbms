@@ -34,7 +34,7 @@
         <value>/candidate/workspace.do</value>
         <value>/candidate/resumeSearch.do</value>
         <value>/candidate/findByBean.do</value>
-        <value>/candidate/preInsertOrUpdate.do</value>
+        <value>/candidate/edit.do</value>
         <value>/candidate/insertOrUpdate.do</value>
         <value>/company/workspace.do</value>
         <value>/company/editView.do</value>
@@ -113,6 +113,7 @@
   <bean id="candidateController" class="com.newstar.hbms.candidate.web.controller.CandidateController">
     <property name="candidateService" ref="candidateService"/>
     <!--<property name="httpSolrServer" ref="httpSolrServer"/>-->
+    <property name="userService" ref="userService"/>
   </bean>
 
   <bean id="companyController" class="com.newstar.hbms.customer.web.controller.CompanyController">

@@ -1,14 +1,14 @@
 package com.newstar.hbms.candidate.domain;
 
 import com.newstar.hbms.basedata.domain.TreeNode;
-import com.newstar.hbms.common.domain.Domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by fellowlong on 2014-05-27.
  */
-public class Certificate extends Domain {
+public class Certificate implements Serializable {
 
   /**
    * 编号，主键

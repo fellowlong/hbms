@@ -1,14 +1,14 @@
 package com.newstar.hbms.candidate.domain;
 
 import com.newstar.hbms.basedata.domain.TreeNode;
-import com.newstar.hbms.common.domain.Domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by fellowlong on 2014-05-27.
  */
-public class EducationExperience extends Domain {
+public class EducationExperience  implements Serializable {//dsafasdfgdgfgfhgfijwkl234klkdfkl
 
   /**
    * 编号，主键
@@ -24,8 +24,7 @@ public class EducationExperience extends Domain {
   /**
    * 学校，外键
    */
-  private Long schoolId;
-  private TreeNode school;
+  private String school;
 
   /**
    * 开始时间
@@ -79,19 +78,11 @@ public class EducationExperience extends Domain {
     this.candidate = candidate;
   }
 
-  public Long getSchoolId() {
-    return schoolId;
-  }
-
-  public void setSchoolId(Long schoolId) {
-    this.schoolId = schoolId;
-  }
-
-  public TreeNode getSchool() {
+  public String getSchool() {
     return school;
   }
 
-  public void setSchool(TreeNode school) {
+  public void setSchool(String school) {
     this.school = school;
   }
 

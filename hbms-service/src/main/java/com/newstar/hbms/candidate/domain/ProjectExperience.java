@@ -1,13 +1,12 @@
 package com.newstar.hbms.candidate.domain;
 
-import com.newstar.hbms.common.domain.Domain;
-
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by fellowlong on 2014/10/3.
  */
-public class ProjectExperience extends Domain {
+public class ProjectExperience  implements Serializable {
 
   /**
    * 编号，主键
