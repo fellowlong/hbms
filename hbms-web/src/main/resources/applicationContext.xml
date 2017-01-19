@@ -168,6 +168,10 @@
     <property name="treeService" ref="treeService"/>
   </bean>
 
+  <bean id="attachmentService" class="com.newstar.hbms.common.service.impl.AttachmentServiceImpl">
+    <property name="attachmentDao" ref="attachmentDao"/>
+  </bean>
+
   <bean id="sequenceService" class="com.newstar.hbms.common.service.impl.DbSequenceServiceImpl">
     <property name="sequenceDao">
       <bean id="sequenceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
@@ -194,12 +198,7 @@
 
   <bean id="candidateService" class="com.newstar.hbms.candidate.service.impl.CandidateServiceImpl">
     <property name="candidateDao" ref="candidateDao"/>
-    <property name="attachmentDao" ref="attachmentDao"/>
-    <property name="workExperienceDao" ref="workExperienceDao"/>
-    <property name="educationExperienceDao" ref="educationExperienceDao"/>
-    <property name="languageAbilityDao" ref="languageAbilityDao"/>
-    <property name="certificateDao" ref="certificateDao"/>
-    <property name="projectExperienceDao" ref="projectExperienceDao"/>
+    <property name="attachmentService" ref="attachmentService"/>
     <property name="resumeDao" ref="resumeDao"/>
     <property name="candidateIndexTaskDao" ref="candidateIndexTaskDao"/>
   </bean>

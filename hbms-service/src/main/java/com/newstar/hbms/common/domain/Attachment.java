@@ -9,14 +9,16 @@ import java.util.Date;
  */
 public class Attachment implements Serializable {
 
+    public static final String BUSINESS_TYPE_RESUME = "resume";
+    public static final String BUSINESS_TYPE_CANDIDATE = "candidate";
+    public static final String BUSINESS_TYPE_COMPANY = "company";
+
     private Long id;
-    private String businessBigType;
-    private String businessSmallType;
+    private String businessType;
     private Long businessId;
     private String fileName;
     private String fileType;
     private byte[] fileBinaryData;
-    private String fileStringData;
 
     private String remark;
     private Boolean yn;
@@ -33,20 +35,12 @@ public class Attachment implements Serializable {
         this.id = id;
     }
 
-    public String getBusinessBigType() {
-        return businessBigType;
+    public String getBusinessType() {
+        return businessType;
     }
 
-    public void setBusinessBigType(String businessBigType) {
-        this.businessBigType = businessBigType;
-    }
-
-    public String getBusinessSmallType() {
-        return businessSmallType;
-    }
-
-    public void setBusinessSmallType(String businessSmallType) {
-        this.businessSmallType = businessSmallType;
+    public void setBusinessType(String businessType) {
+        this.businessType = businessType;
     }
 
     public Long getBusinessId() {
@@ -79,14 +73,6 @@ public class Attachment implements Serializable {
 
     public void setFileBinaryData(byte[] fileBinaryData) {
         this.fileBinaryData = fileBinaryData;
-    }
-
-    public String getFileStringData() {
-        return fileStringData;
-    }
-
-    public void setFileStringData(String fileStringData) {
-        this.fileStringData = fileStringData;
     }
 
     public String getRemark() {

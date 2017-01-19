@@ -27,9 +27,13 @@ public class Candidate implements Serializable {
    */
   private Resume resume;
 
+  private Long deletedResumeFileId;
+
   private MultipartFile[] otherAttachmentFiles;
 
   private Attachment[] otherAttachments;
+
+  private Long[] deletedOtherAttachmentIds;
 
   /**
    * 人才编号
@@ -199,4 +203,404 @@ public class Candidate implements Serializable {
    * 修改人
    */
   private String updateUser;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public MultipartFile getResumeFile() {
+    return resumeFile;
+  }
+
+  public void setResumeFile(MultipartFile resumeFile) {
+    this.resumeFile = resumeFile;
+  }
+
+  public Resume getResume() {
+    return resume;
+  }
+
+  public void setResume(Resume resume) {
+    this.resume = resume;
+  }
+
+  public Long getDeletedResumeFileId() {
+    return deletedResumeFileId;
+  }
+
+  public void setDeletedResumeFileId(Long deletedResumeFileId) {
+    this.deletedResumeFileId = deletedResumeFileId;
+  }
+
+  public MultipartFile[] getOtherAttachmentFiles() {
+    return otherAttachmentFiles;
+  }
+
+  public void setOtherAttachmentFiles(MultipartFile[] otherAttachmentFiles) {
+    this.otherAttachmentFiles = otherAttachmentFiles;
+  }
+
+  public Attachment[] getOtherAttachments() {
+    return otherAttachments;
+  }
+
+  public void setOtherAttachments(Attachment[] otherAttachments) {
+    this.otherAttachments = otherAttachments;
+  }
+
+  public Long[] getDeletedOtherAttachmentIds() {
+    return deletedOtherAttachmentIds;
+  }
+
+  public void setDeletedOtherAttachmentIds(Long[] deletedOtherAttachmentIds) {
+    this.deletedOtherAttachmentIds = deletedOtherAttachmentIds;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Long getSexId() {
+    return sexId;
+  }
+
+  public void setSexId(Long sexId) {
+    this.sexId = sexId;
+  }
+
+  public TreeNode getSex() {
+    return sex;
+  }
+
+  public void setSex(TreeNode sex) {
+    this.sex = sex;
+  }
+
+  public Date getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+  public String getMobile() {
+    return mobile;
+  }
+
+  public void setMobile(String mobile) {
+    this.mobile = mobile;
+  }
+
+  public String getTelephone() {
+    return telephone;
+  }
+
+  public void setTelephone(String telephone) {
+    this.telephone = telephone;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getOtherContact() {
+    return otherContact;
+  }
+
+  public void setOtherContact(String otherContact) {
+    this.otherContact = otherContact;
+  }
+
+  public Long getDegreeId() {
+    return degreeId;
+  }
+
+  public void setDegreeId(Long degreeId) {
+    this.degreeId = degreeId;
+  }
+
+  public TreeNode getDegree() {
+    return degree;
+  }
+
+  public void setDegree(TreeNode degree) {
+    this.degree = degree;
+  }
+
+  public Long getMaritalId() {
+    return maritalId;
+  }
+
+  public void setMaritalId(Long maritalId) {
+    this.maritalId = maritalId;
+  }
+
+  public TreeNode getMarital() {
+    return marital;
+  }
+
+  public void setMarital(TreeNode marital) {
+    this.marital = marital;
+  }
+
+  public Long getCityId() {
+    return cityId;
+  }
+
+  public void setCityId(Long cityId) {
+    this.cityId = cityId;
+  }
+
+  public TreeNode getCity() {
+    return city;
+  }
+
+  public void setCity(TreeNode city) {
+    this.city = city;
+  }
+
+  public Integer getWorkYears() {
+    return workYears;
+  }
+
+  public void setWorkYears(Integer workYears) {
+    this.workYears = workYears;
+  }
+
+  public Boolean getOverseasExperience() {
+    return overseasExperience;
+  }
+
+  public void setOverseasExperience(Boolean overseasExperience) {
+    this.overseasExperience = overseasExperience;
+  }
+
+  public Long getIndustryId() {
+    return industryId;
+  }
+
+  public void setIndustryId(Long industryId) {
+    this.industryId = industryId;
+  }
+
+  public TreeNode getIndustry() {
+    return industry;
+  }
+
+  public void setIndustry(TreeNode industry) {
+    this.industry = industry;
+  }
+
+  public Long getCompanyId() {
+    return companyId;
+  }
+
+  public void setCompanyId(Long companyId) {
+    this.companyId = companyId;
+  }
+
+  public TreeNode getCompany() {
+    return company;
+  }
+
+  public void setCompany(TreeNode company) {
+    this.company = company;
+  }
+
+  public Long getPositionId() {
+    return positionId;
+  }
+
+  public void setPositionId(Long positionId) {
+    this.positionId = positionId;
+  }
+
+  public TreeNode getPosition() {
+    return position;
+  }
+
+  public void setPosition(TreeNode position) {
+    this.position = position;
+  }
+
+  public Double getCurrentAnnualSalary() {
+    return currentAnnualSalary;
+  }
+
+  public void setCurrentAnnualSalary(Double currentAnnualSalary) {
+    this.currentAnnualSalary = currentAnnualSalary;
+  }
+
+  public Long getJobHuntingStatusId() {
+    return jobHuntingStatusId;
+  }
+
+  public void setJobHuntingStatusId(Long jobHuntingStatusId) {
+    this.jobHuntingStatusId = jobHuntingStatusId;
+  }
+
+  public TreeNode getJobHuntingStatus() {
+    return jobHuntingStatus;
+  }
+
+  public void setJobHuntingStatus(TreeNode jobHuntingStatus) {
+    this.jobHuntingStatus = jobHuntingStatus;
+  }
+
+  public String getStrengthsAndWeaknesses() {
+    return strengthsAndWeaknesses;
+  }
+
+  public void setStrengthsAndWeaknesses(String strengthsAndWeaknesses) {
+    this.strengthsAndWeaknesses = strengthsAndWeaknesses;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
+  }
+
+  public String getKeyword() {
+    return keyword;
+  }
+
+  public void setKeyword(String keyword) {
+    this.keyword = keyword;
+  }
+
+  public Long getFavoriteId() {
+    return favoriteId;
+  }
+
+  public void setFavoriteId(Long favoriteId) {
+    this.favoriteId = favoriteId;
+  }
+
+  public TreeNode getFavorite() {
+    return favorite;
+  }
+
+  public void setFavorite(TreeNode favorite) {
+    this.favorite = favorite;
+  }
+
+  public Long getFolderId() {
+    return folderId;
+  }
+
+  public void setFolderId(Long folderId) {
+    this.folderId = folderId;
+  }
+
+  public TreeNode getFolder() {
+    return folder;
+  }
+
+  public void setFolder(TreeNode folder) {
+    this.folder = folder;
+  }
+
+  public Long getSourceId() {
+    return sourceId;
+  }
+
+  public void setSourceId(Long sourceId) {
+    this.sourceId = sourceId;
+  }
+
+  public TreeNode getSource() {
+    return source;
+  }
+
+  public void setSource(TreeNode source) {
+    this.source = source;
+  }
+
+  public Long getUploaderId() {
+    return uploaderId;
+  }
+
+  public void setUploaderId(Long uploaderId) {
+    this.uploaderId = uploaderId;
+  }
+
+  public TreeNode getUploader() {
+    return uploader;
+  }
+
+  public void setUploader(TreeNode uploader) {
+    this.uploader = uploader;
+  }
+
+  public List<Comment> getComments() {
+    return comments;
+  }
+
+  public void setComments(List<Comment> comments) {
+    this.comments = comments;
+  }
+
+  public Boolean getYn() {
+    return yn;
+  }
+
+  public void setYn(Boolean yn) {
+    this.yn = yn;
+  }
+
+  public Date getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
+
+  public String getCreateUser() {
+    return createUser;
+  }
+
+  public void setCreateUser(String createUser) {
+    this.createUser = createUser;
+  }
+
+  public Date getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
+
+  public String getUpdateUser() {
+    return updateUser;
+  }
+
+  public void setUpdateUser(String updateUser) {
+    this.updateUser = updateUser;
+  }
 }

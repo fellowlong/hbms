@@ -10,13 +10,11 @@
         </selectKey>
         insert into Attachment(
         id,
-        businessBigType,
-        businessSmallType,
+        businessType,
         businessId,
         fileName,
         fileType,
         fileBinaryData,
-        fileStringData,
         remark,
         yn,
         createTime,
@@ -25,13 +23,11 @@
         updateUser
         ) values (
         #{id},
-        #{businessBigType, jdbcType=VARCHAR},
-        #{businessSmallType, jdbcType=VARCHAR},
+        #{businessType, jdbcType=VARCHAR},
         #{businessId, jdbcType=BIGINT},
         #{fileName, jdbcType=VARCHAR},
         #{fileType, jdbcType=VARCHAR},
         #{fileBinaryData, jdbcType=BLOB},
-        #{fileStringData, jdbcType=VARCHAR},
         #{remark, jdbcType=VARCHAR},
         1,
         now(),
@@ -43,13 +39,11 @@
 
     <update id="update" parameterType="com.newstar.hbms.common.domain.Attachment">
         update Attachment set
-        businessBigType = #{businessBigType, jdbcType = VARCHAR},
-        businessSmallType = #{businessSmallType, jdbcType = VARCHAR},
+        businessType = #{businessType, jdbcType = VARCHAR},
         businessId = #{businessId, jdbcType = BIGINT},
         fileName = #{fileName, jdbcType = VARCHAR},
         fileType = #{fileType, jdbcType = VARCHAR},
         fileBinaryData = #{fileBinaryData, jdbcType = BLOB},
-        fileStringData = #{fileStringData, jdbcType = VARCHAR},
         remark = #{remark, jdbcType = VARCHAR},
         updateTime = now(),
         updateUser = #{updateUser}
@@ -86,11 +80,8 @@
         <if test="id != null">
           and a.id = #{id}
         </if>
-        <if test="businessBigType != null">
+        <if test="businessType != null">
           and a.businessBigType = #{businessBigType}
-        </if>
-        <if test="businessSmallType != null">
-          and a.businessSmallType = #{businessSmallType}
         </if>
         <if test="businessId != null">
           and a.businessId = #{businessId}

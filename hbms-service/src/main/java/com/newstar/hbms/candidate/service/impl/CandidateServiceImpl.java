@@ -5,6 +5,7 @@ import com.newstar.hbms.candidate.domain.*;
 import com.newstar.hbms.candidate.service.CandidateService;
 import com.newstar.hbms.common.dao.AttachmentDao;
 import com.newstar.hbms.common.domain.Attachment;
+import com.newstar.hbms.common.service.AttachmentService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 import com.newstar.hbms.utils.WordParser;
@@ -24,17 +25,7 @@ public class CandidateServiceImpl implements CandidateService {
 
   private ResumeDao resumeDao;
 
-  private AttachmentDao attachmentDao;
-
-  private WorkExperienceDao workExperienceDao;
-
-  private EducationExperienceDao educationExperienceDao;
-
-  private LanguageAbilityDao languageAbilityDao;
-
-  private CertificateDao certificateDao;
-
-  private ProjectExperienceDao projectExperienceDao;
+  private AttachmentService attachmentService;
 
   private CandidateIndexTaskDao candidateIndexTaskDao;
 
@@ -67,32 +58,12 @@ public class CandidateServiceImpl implements CandidateService {
     this.resumeDao = resumeDao;
   }
 
-  public void setCertificateDao(CertificateDao certificateDao) {
-    this.certificateDao = certificateDao;
-  }
-
-  public void setEducationExperienceDao(EducationExperienceDao educationExperienceDao) {
-    this.educationExperienceDao = educationExperienceDao;
-  }
-
-  public void setLanguageAbilityDao(LanguageAbilityDao languageAbilityDao) {
-    this.languageAbilityDao = languageAbilityDao;
-  }
-
-  public void setProjectExperienceDao(ProjectExperienceDao projectExperienceDao) {
-    this.projectExperienceDao = projectExperienceDao;
-  }
-
-  public void setWorkExperienceDao(WorkExperienceDao workExperienceDao) {
-    this.workExperienceDao = workExperienceDao;
+  public void setAttachmentService(AttachmentService attachmentService) {
+    this.attachmentService = attachmentService;
   }
 
   public void setCandidateIndexTaskDao(CandidateIndexTaskDao candidateIndexTaskDao) {
     this.candidateIndexTaskDao = candidateIndexTaskDao;
-  }
-
-  public void setAttachmentDao(AttachmentDao attachmentDao) {
-    this.attachmentDao = attachmentDao;
   }
 
   @Transactional(rollbackFor = Throwable.class)
@@ -101,30 +72,30 @@ public class CandidateServiceImpl implements CandidateService {
     int resultCount = 0;
     if (candidate.getId() != null) {
       resultCount = candidateDao.update(candidate);
+      if (candidate.getDeletedResumeFileId() != null) {
+        resumeDao.deleteByIds(new Long[]{candidate.getDeletedResumeFileId()});
+      }
+      if (candidate.getDeletedOtherAttachmentIds() != null) {
+        attachmentService.deleteByIds(candidate.getDeletedOtherAttachmentIds());
+      }
     } else {
       resultCount = candidateDao.insert(candidate);
     }
-
     if (candidate.getResumeFile() != null) {
       //如果是修改的话，新的简历要覆盖旧
-      if (candidate.getId() != null && candidate.getResume() != null && candidate.getResume().getId() != null) {
-        resumeDao.disable(new Long[]{candidate.getResume().getId()});
-        attachmentDao.disableByBusinessId(candidate.getResume().getId());
-      }
-
       String fileName = candidate.getResumeFile().getOriginalFilename();
       Attachment attachment = new Attachment();
-      attachment.setBusinessBigType("Candidate");
-      attachment.setBusinessSmallType("Resume");
+      attachment.setBusinessType(Attachment.BUSINESS_TYPE_RESUME);
+      attachment.setBusinessId(candidate.getId());
       String textResume = WordParser.getText(
           candidate.getResumeFile().getInputStream(),
           WordParser.getVersion(fileName));
       attachment.setFileName(fileName);
       attachment.setFileBinaryData(candidate.getResumeFile().getBytes());
-      attachment.setFileStringData(textResume);
       attachment.setFileType(fileName.substring(fileName.lastIndexOf(".") + 1));
       attachment.setRemark("Candidate Resume");
-      //===========
+      resultCount += attachmentService.insert(attachment);
+      //=================================
       Resume resume = new Resume();
       resume.setCandidateId(candidate.getId());
       resume.setAttachment(attachment);
@@ -135,22 +106,18 @@ public class CandidateServiceImpl implements CandidateService {
       resume.setUpdateUser(candidate.getUpdateUser());
       candidate.setResume(resume);
       resultCount += resumeDao.insert(resume);
-
-      attachment.setBusinessId(resume.getId());
-      resultCount += attachmentDao.insert(attachment);
     }
     if (candidate.getOtherAttachmentFiles() != null) {
       for (MultipartFile attachmentFile : candidate.getOtherAttachmentFiles() ) {
         Attachment attachment = new Attachment();
+        attachment.setBusinessType(Attachment.BUSINESS_TYPE_CANDIDATE);
         attachment.setBusinessId(candidate.getId());
-        attachment.setBusinessBigType("Candidate");
-        attachment.setBusinessSmallType("OtherAttachment");
         String fileName = attachmentFile.getOriginalFilename();
         attachment.setFileName(fileName);
         attachment.setFileBinaryData(attachmentFile.getBytes());
         attachment.setFileType(fileName.substring(fileName.lastIndexOf(".") + 1));
         attachment.setRemark("Candidate OtherAttachment");
-        resultCount += attachmentDao.insert(attachment);
+        resultCount += attachmentService.insert(attachment);
       }
     }
 
@@ -171,10 +138,10 @@ public class CandidateServiceImpl implements CandidateService {
   }
 
   @Override
-  public PagingResult<Candidate> findByBean(Candidate candidate, final PageRange pageRange) {
-    PagingResult<Candidate> resumePagingResult = candidateDao.findByBean(candidate, pageRange);
-    fillSubObjects(resumePagingResult.getRecords());
-    return resumePagingResult;
+  public PagingResult<Candidate> findByBean(Candidate candidate, PageRange pageRange) {
+    PagingResult<Candidate> result = candidateDao.findByBean(candidate, pageRange);
+    fillSubObjects(result.getRecords());
+    return result;
   }
 
   @Override
