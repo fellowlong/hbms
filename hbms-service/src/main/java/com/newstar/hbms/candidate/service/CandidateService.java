@@ -16,7 +16,7 @@ public interface CandidateService {
 
   public int insertOrUpdate(Candidate candidate) throws IOException;
 
-  public int deleteByIds(Long[] resumeIds);
+  public int disableByIds(Long[] resumeIds);
 
   public PagingResult<Candidate> findByBean(Candidate candidate, PageRange pageRange);
 

@@ -139,7 +139,7 @@ public class CandidateController extends ConfigurableMultiActionController {
         for (String idsStr : idsStrArray) {
           ids.add(new Long(idsStr));
         }
-        int result = candidateService.deleteByIds(ids.toArray(new Long[ids.size()]));
+        int result = candidateService.disableByIds(ids.toArray(new Long[ids.size()]));
         if (result > 0) {
           jsonResult.setSuccess(true);
           jsonResult.setData(result);

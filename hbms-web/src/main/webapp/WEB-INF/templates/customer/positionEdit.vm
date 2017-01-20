@@ -16,13 +16,6 @@
     margin-left: 0px;
     margin-right: 0px;
   }
-  .actionBar-container {
-    margin-top: 45px;
-  }
-  .actionBar {
-    background-color: lavender;
-    text-align: center;
-  }
 
 </style>
 

@@ -146,6 +146,14 @@
         .workspace {
           padding-top: 10px;padding-left: 10px;padding-right: 10px;
         }
+
+        .actionBar-container {
+            margin-top: 45px;
+        }
+        .actionBar {
+            background-color: lavender;
+            text-align: center;
+        }
     </style>
 
     <script type="text/javascript">

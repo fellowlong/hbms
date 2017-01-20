@@ -14,7 +14,7 @@ create table Resume(
 drop table Candidate;
 create table Candidate(
   id bigint auto_increment not null primary key comment '候选人编号,主键',
-  code varchar(100) comment '姓名',
+  code varchar(100) comment '编号',
   name varchar(100) comment '姓名',
   sexId int(1) comment '性别',
   birthday datetime comment '出生日期',
@@ -35,7 +35,6 @@ create table Candidate(
   strengthsAndWeaknesses varchar(500) comment '优劣势',
   keyword varchar(100) comment '搜索关键字',
   remark varchar(500) comment '其他信息',
-  favoriteId bigint comment '收藏夹',
   folderId bigint comment '目录',
   sourceId bigint comment '来源',
   uploaderId bigint comment '上传者',

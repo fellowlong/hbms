@@ -150,12 +150,6 @@ public class Candidate implements Serializable {
   private String keyword;
 
   /**
-   * 收藏夹
-    */
-  private Long favoriteId;
-  private TreeNode favorite;
-
-  /**
    * 所属文件夹
    */
   private Long folderId;
@@ -490,22 +484,6 @@ public class Candidate implements Serializable {
 
   public void setKeyword(String keyword) {
     this.keyword = keyword;
-  }
-
-  public Long getFavoriteId() {
-    return favoriteId;
-  }
-
-  public void setFavoriteId(Long favoriteId) {
-    this.favoriteId = favoriteId;
-  }
-
-  public TreeNode getFavorite() {
-    return favorite;
-  }
-
-  public void setFavorite(TreeNode favorite) {
-    this.favorite = favorite;
   }
 
   public Long getFolderId() {

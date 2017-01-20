@@ -5,11 +5,8 @@
 <mapper namespace="com.newstar.hbms.candidate.dao.CandidateDao">
 
   <insert id="insert" parameterType="com.newstar.hbms.candidate.domain.Candidate">
-    <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
-      sequence.global
-    </selectKey>
     insert into Candidate(
-      id,
+      code,
       name,
       sexId,
       birthday,
@@ -19,24 +16,27 @@
       otherContact,
       degreeId,
       maritalId,
-      locationId,
+      cityId,
       workYears,
       overseasExperience,
       industryId,
-      currentCompanyId,
-      currentPositionId,
+      companyId,
+      positionId,
       currentAnnualSalary,
       jobHuntingStatusId,
-      other,
-      keyword,
+      strengthsAndWeaknesses,
       remark,
+      keyword,
+      folderId,
+      sourceId,
+      uploaderId,
       yn,
       createTime,
       createUser,
       updateTime,
       updateUser
     ) values (
-      #{id, jdbcType=BIGINT},
+      #{code, jdbcType=VARCHAR},
       #{name, jdbcType=VARCHAR},
       #{sexId, jdbcType=BIGINT},
       #{birthday, jdbcType=DATE},
@@ -46,28 +46,34 @@
       #{otherContact, jdbcType=VARCHAR},
       #{degreeId, jdbcType=BIGINT},
       #{maritalId, jdbcType=BIGINT},
-      #{locationId, jdbcType=BIGINT},
+      #{cityId, jdbcType=BIGINT},
       #{workYears, jdbcType=INTEGER},
       #{overseasExperience, jdbcType=BOOLEAN},
       #{industryId, jdbcType=BIGINT},
-      #{currentCompanyId, jdbcType=BIGINT},
-      #{currentPositionId, jdbcType=BIGINT},
+      #{companyId, jdbcType=BIGINT},
+      #{positionId, jdbcType=BIGINT},
       #{currentAnnualSalary, jdbcType=DOUBLE},
       #{jobHuntingStatusId, jdbcType=BIGINT},
-      #{other, jdbcType=VARCHAR},
-      #{keyword, jdbcType=VARCHAR},
+      #{strengthsAndWeaknesses, jdbcType=VARCHAR},
       #{remark, jdbcType=VARCHAR},
+      #{keyword, jdbcType=VARCHAR},
+      #{folderId, jdbcType=BIGINT},
+      #{sourceId, jdbcType=BIGINT},
+      #{uploaderId, jdbcType=BIGINT},
       1,
       now(),
       #{createUser},
       now(),
       #{updateUser}
     )
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+      select last_insert_id()
+    </selectKey>
   </insert>
 
   <update id="update" parameterType="com.newstar.hbms.candidate.domain.Candidate">
     update Candidate set
-      id = #{id},
+      code = #{code, jdbcType=VARCHAR},
       name = #{name, jdbcType=VARCHAR},
       sexId = #{sexId, jdbcType=BIGINT},
       birthday = #{birthday, jdbcType=DATE},
@@ -77,24 +83,27 @@
       otherContact = #{otherContact, jdbcType=VARCHAR},
       degreeId = #{degreeId, jdbcType=BIGINT},
       maritalId = #{maritalId, jdbcType=BIGINT},
-      locationId = #{locationId, jdbcType=BIGINT},
+      cityId = #{cityId, jdbcType=BIGINT},
       workYears = #{workYears, jdbcType=INTEGER},
       overseasExperience = #{overseasExperience, jdbcType=BOOLEAN},
       industryId = #{industryId, jdbcType=BIGINT},
-      currentCompanyId = #{currentCompanyId, jdbcType=BIGINT},
-      currentPositionId = #{currentPositionId, jdbcType=BIGINT},
+      companyId = #{companyId, jdbcType=BIGINT},
+      positionId = #{positionId, jdbcType=BIGINT},
       currentAnnualSalary = #{currentAnnualSalary, jdbcType=DOUBLE},
       jobHuntingStatusId = #{jobHuntingStatusId, jdbcType=BIGINT},
-      other = #{other, jdbcType=VARCHAR},
-      keyword = #{keyword, jdbcType=VARCHAR},
+      strengthsAndWeaknesses = #{strengthsAndWeaknesses, jdbcType=VARCHAR},
       remark = #{remark, jdbcType=VARCHAR},
+      keyword = #{keyword, jdbcType=VARCHAR},
+      folderId = #{folderId, jdbcType=BIGINT},
+      sourceId = #{sourceId, jdbcType=BIGINT},
+      uploaderId = #{uploaderId, jdbcType=BIGINT},
       updateTime = now(),
       updateUser = #{updateUser}
     where
       id = #{id}
   </update>
 
-  <delete id="deleteByIds" parameterType="java.lang.Long">
+  <delete id="disableByIds" parameterType="java.lang.Long">
     update Candidate set yn = 0 where id in
     <foreach collection="array" open="(" close=")" separator="," item="candidateId">
       #{candidateId}
@@ -120,8 +129,8 @@
       <if test="degreeId != null">
         and degreeId = #{degreeId}
       </if>
-      <if test="currentPositionId != null">
-        and currentPositionId = #{currentPositionId}
+      <if test="positionId != null">
+        and positionId = #{positionId}
       </if>
       <if test="yn != null">
         and yn = #{yn}

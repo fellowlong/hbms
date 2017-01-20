@@ -15,7 +15,7 @@ public interface CandidateDao {
 
   public int update(Candidate candidate);
 
-  public int deleteByIds(Long[] resumeIds);
+  public int disableByIds(Long[] resumeIds);
 
   public PagingResult<Candidate> findByBean(Candidate candidate, PageRange pageRange);
 

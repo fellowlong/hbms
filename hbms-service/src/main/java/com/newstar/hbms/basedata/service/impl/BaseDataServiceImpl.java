@@ -87,6 +87,16 @@ public class BaseDataServiceImpl implements BaseDataService {
     }
 
     @Override
+    public TreeNode getCandidateFolders() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_CANDIDATE_FOLDER);
+    }
+
+    @Override
+    public TreeNode getCandidateSources() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_CANDIDATE_SOURCE);
+    }
+
+    @Override
     public TreeNode getCompanyTypes() {
         return treeService.findTreeByAncestorCode(TYPE_CODE_COMPANY_TYPE);
     }

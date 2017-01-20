@@ -37,6 +37,9 @@ public interface BaseDataService {
 
     public static final String TYPE_CODE_NATIONALITY = "NATIONALITY";
 
+    public static final String TYPE_CODE_CANDIDATE_FOLDER = "CANDIDATE_FOLDER";
+    public static final String TYPE_CODE_CANDIDATE_SOURCE = "CANDIDATE_SOURCE";
+
 
     public static final String TYPE_CODE_JOB_HUNTING_STATUS = "JOB_HUNTING_STATUS";
 
@@ -68,6 +71,8 @@ public interface BaseDataService {
     public TreeNode getCompanies();
     public TreeNode getNationalities();
     public TreeNode getJobHuntingStatuses();
+    public TreeNode getCandidateFolders();
+    public TreeNode getCandidateSources();
     public TreeNode getCompanyTypes();
     public TreeNode getCompanyFolders();
     public TreeNode getCompanyNatures();

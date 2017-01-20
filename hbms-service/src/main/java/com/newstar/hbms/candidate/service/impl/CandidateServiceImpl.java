@@ -133,8 +133,8 @@ public class CandidateServiceImpl implements CandidateService {
 
 
   @Override
-  public int deleteByIds(Long[] resumeIds) {
-    return candidateDao.deleteByIds(resumeIds);
+  public int disableByIds(Long[] resumeIds) {
+    return candidateDao.disableByIds(resumeIds);
   }
 
   @Override
