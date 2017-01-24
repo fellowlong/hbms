@@ -1,7 +1,6 @@
 package com.newstar.hbms.project.service.impl;
 
 import com.newstar.hbms.basedata.service.TreeService;
-import com.newstar.hbms.customer.domain.Position;
 import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.customer.service.ContactService;
 import com.newstar.hbms.customer.service.PositionService;

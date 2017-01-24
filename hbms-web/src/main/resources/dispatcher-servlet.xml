@@ -51,6 +51,9 @@
     </property>
     <property name="exportMap">
       <map>
+        <entry key="DateUtils">
+          <value type="java.lang.Class">com.newstar.hbms.utils.DateUtils</value>
+        </entry>
         <entry key="JsonUtils">
           <value type="java.lang.Class">com.newstar.hbms.utils.JsonUtils</value>
         </entry>

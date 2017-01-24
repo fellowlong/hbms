@@ -18,6 +18,7 @@
     }
 </style>
 
+#set($datePattern = 'yyyy-mm-dd')
 
 <form id="resumeAddForm"
       method="post"
@@ -103,7 +104,7 @@
         <label class="col-sm-1 control-label no-padding-right">生日</label>
         <div class="col-sm-5">
             <div class="input-group">
-                <input class="form-control date-picker" name="birthday" value="$!candidate.birthday"
+                <input class="form-control date-picker" name="birthday" value="$!DateUtils.dateToString($candidate.birthday, 'yyyy-mm-dd')"
                        type="text"
                        data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-rule="生日:date">
                 <span class="input-group-addon">

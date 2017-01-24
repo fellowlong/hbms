@@ -30,14 +30,14 @@
       colNames: ['姓名', '公司',  '职位', '城市', '年薪', '年龄', '手机', '标签', '状态', "最近联系", "操作"],
       colModel: [
         {name: 'name'},
-        {name: 'currentCompanyId'},
-        {name: 'currentPositionId'},
-        {name: 'locationId'},
+        {name: 'company.label'},
+        {name: 'position.label'},
+        {name: 'city.label'},
         {name: 'currentAnnualSalary'},
         {name: 'birthday'},
         {name: 'mobile'},
         {name: 'tag'},
-        {name: 'status'},
+        {name: 'jobHuntingStatus.label'},
         {name: 'lastContact'},
         {name: 'isKey', formatter: function(cellvalue, options, rowObject){
           return cellvalue ? "<i class='ace-icon glyphicon glyphicon-ok' style='color: green'></i>" : "<i class='ace-icon glyphicon glyphicon-remove' style='color: red'></i>";

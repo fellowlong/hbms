@@ -27,7 +27,10 @@ public abstract class DateUtils {
     }
   };
 
-  public static String dateFormat(Date date, String datePattern) {
+  public static String dateToString(Date date, String datePattern) {
+    if (date == null) {
+      return null;
+    }
     try {
       return datePatterns.get(datePattern).format(date);
     } catch (Exception e) {
@@ -35,7 +38,10 @@ public abstract class DateUtils {
     }
   }
 
-  public static Date dateFormat(String date, String datePattern) {
+  public static Date stringToDate(String date, String datePattern) {
+    if (datePattern == null || datePattern.isEmpty()) {
+      return null;
+    }
     try {
       return datePatterns.get(datePattern).parse(date);
     } catch (ParseException e) {

@@ -201,6 +201,9 @@
     <property name="attachmentService" ref="attachmentService"/>
     <property name="resumeDao" ref="resumeDao"/>
     <property name="candidateIndexTaskDao" ref="candidateIndexTaskDao"/>
+    <property name="userService" ref="userService"/>
+    <property name="treeService" ref="treeService"/>
+    <property name="companyService" ref="companyService"/>
   </bean>
 
 <!--  <bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">

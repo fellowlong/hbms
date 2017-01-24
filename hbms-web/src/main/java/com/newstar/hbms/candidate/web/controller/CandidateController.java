@@ -1,5 +1,6 @@
 package com.newstar.hbms.candidate.web.controller;
 
+import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.candidate.domain.Candidate;
 import com.newstar.hbms.candidate.service.CandidateService;
 import com.newstar.hbms.customer.domain.Company;
@@ -23,10 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by fellowlong on 2014-08-07.
@@ -51,6 +49,12 @@ public class CandidateController extends ConfigurableMultiActionController {
 
   public void setUserService(UserService userService) {
     this.userService = userService;
+  }
+
+  public static Map<Class, List<String>> excludedProperties = new HashMap<Class, List<String>>(0);
+
+  static {
+    excludedProperties.put(TreeNode.class, Arrays.asList(new String[]{"children"}));
   }
 
   public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -86,7 +90,7 @@ public class CandidateController extends ConfigurableMultiActionController {
     } else {
       jsonMap.put("rows", null);
     }
-    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap));
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, excludedProperties));
   }
 
   public ModelAndView findById(HttpServletRequest request, HttpServletResponse response) throws Exception {

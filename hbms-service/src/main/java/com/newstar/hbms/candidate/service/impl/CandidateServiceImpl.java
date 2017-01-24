@@ -1,13 +1,20 @@
 package com.newstar.hbms.candidate.service.impl;
 
-import com.newstar.hbms.candidate.dao.*;
-import com.newstar.hbms.candidate.domain.*;
+import com.newstar.hbms.basedata.domain.TreeNode;
+import com.newstar.hbms.basedata.service.TreeService;
+import com.newstar.hbms.candidate.dao.CandidateDao;
+import com.newstar.hbms.candidate.dao.CandidateIndexTaskDao;
+import com.newstar.hbms.candidate.dao.ResumeDao;
+import com.newstar.hbms.candidate.domain.Candidate;
+import com.newstar.hbms.candidate.domain.CandidateIndexTask;
+import com.newstar.hbms.candidate.domain.Resume;
 import com.newstar.hbms.candidate.service.CandidateService;
-import com.newstar.hbms.common.dao.AttachmentDao;
 import com.newstar.hbms.common.domain.Attachment;
 import com.newstar.hbms.common.service.AttachmentService;
+import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
+import com.newstar.hbms.system.service.UserService;
 import com.newstar.hbms.utils.WordParser;
 import com.newstar.hbms.utils.business.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,45 +32,48 @@ public class CandidateServiceImpl implements CandidateService {
 
   private ResumeDao resumeDao;
 
+  private TreeService treeService;
+
+  private CompanyService companyService;
+
+  private UserService userService;
+
   private AttachmentService attachmentService;
 
   private CandidateIndexTaskDao candidateIndexTaskDao;
 
+  private List<ObjectUtils.SubObjectConfig> subObjectConfigs = new ArrayList<ObjectUtils.SubObjectConfig>();
+
   private List<ObjectUtils.SubCollectionConfig> subCollectionConfigs = new ArrayList<ObjectUtils.SubCollectionConfig>();
 
   public CandidateServiceImpl() {
-    //填充子集合配置
-    /*ObjectUtils.SubCollectionFetcher languagesFetcher = new ObjectUtils.SubCollectionFetcher() {
+
+    //填充子对象配置
+    ObjectUtils.SubObjectFetcher baseDataFetcher = new ObjectUtils.SubObjectFetcher() {
       @Override
-      public List fetch(List parentKeys) {
-        return positionDao.findLanguagesByPositionIds((Long[]) parentKeys.toArray(new Long[parentKeys.size()]));
+      public List fetch(List keys) {
+        return treeService.findTreesByIds((Long[]) keys.toArray(new Long[keys.size()]));
       }
     };
-    subCollectionConfigs.add(new ObjectUtils.SubCollectionConfig("id", "languages", "positionId", languagesFetcher));
-    ObjectUtils.SubCollectionFetcher tagsFetcher = new ObjectUtils.SubCollectionFetcher() {
+    ObjectUtils.SubObjectFetcher userFetcher = new ObjectUtils.SubObjectFetcher() {
       @Override
-      public List fetch(List parentKeys) {
-        return positionDao.findTagsByPositionIds((Long[]) parentKeys.toArray(new Long[parentKeys.size()]));
+      public List fetch(List keys) {
+        return userService.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
       }
     };
-    subCollectionConfigs.add(new ObjectUtils.SubCollectionConfig("id", "tags", "positionId", tagsFetcher));
-*/
-  }
 
-  public void setCandidateDao(CandidateDao candidateDao) {
-    this.candidateDao = candidateDao;
-  }
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("sexId", "sex", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("degreeId", "degree", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("maritalId", "marital", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("cityId", "city", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("industryId", "industry", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig( "companyId", "company", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("positionId", "position", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("jobHuntingStatusId", "jobHuntingStatus", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("folderId", "folder", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("sourceId", "source", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("uploaderId", "uploader", "id", baseDataFetcher));
 
-  public void setResumeDao(ResumeDao resumeDao) {
-    this.resumeDao = resumeDao;
-  }
-
-  public void setAttachmentService(AttachmentService attachmentService) {
-    this.attachmentService = attachmentService;
-  }
-
-  public void setCandidateIndexTaskDao(CandidateIndexTaskDao candidateIndexTaskDao) {
-    this.candidateIndexTaskDao = candidateIndexTaskDao;
   }
 
   @Transactional(rollbackFor = Throwable.class)
@@ -140,7 +150,7 @@ public class CandidateServiceImpl implements CandidateService {
   @Override
   public PagingResult<Candidate> findByBean(Candidate candidate, PageRange pageRange) {
     PagingResult<Candidate> result = candidateDao.findByBean(candidate, pageRange);
-    fillSubObjects(result.getRecords());
+    fillAllSubObjects(result.getRecords());
     return result;
   }
 
@@ -166,8 +176,13 @@ public class CandidateServiceImpl implements CandidateService {
         }
       }
     }
-    fillSubObjects(candidates);
+    fillAllSubObjects(candidates);
     return candidates;
+  }
+
+  private void fillAllSubObjects(List<Candidate> candidates) {
+    ObjectUtils.fillSubCollection(candidates, subCollectionConfigs);
+    ObjectUtils.fillSubObjects(candidates, subObjectConfigs);
   }
 
   private void fillSubObjects(List<Candidate> candidates) {
@@ -228,4 +243,31 @@ public class CandidateServiceImpl implements CandidateService {
        });*/
   }
 
+  public void setCandidateDao(CandidateDao candidateDao) {
+    this.candidateDao = candidateDao;
+  }
+
+  public void setResumeDao(ResumeDao resumeDao) {
+    this.resumeDao = resumeDao;
+  }
+
+  public void setTreeService(TreeService treeService) {
+    this.treeService = treeService;
+  }
+
+  public void setCompanyService(CompanyService companyService) {
+    this.companyService = companyService;
+  }
+
+  public void setUserService(UserService userService) {
+    this.userService = userService;
+  }
+
+  public void setAttachmentService(AttachmentService attachmentService) {
+    this.attachmentService = attachmentService;
+  }
+
+  public void setCandidateIndexTaskDao(CandidateIndexTaskDao candidateIndexTaskDao) {
+    this.candidateIndexTaskDao = candidateIndexTaskDao;
+  }
 }

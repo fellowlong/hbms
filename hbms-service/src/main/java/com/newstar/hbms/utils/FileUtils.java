@@ -27,7 +27,7 @@ public abstract class FileUtils {
   private static final String separator = "{#%&}";
 
   public static String encodeFileName(String originalFileName, Date currentDate) {
-    String date = DateUtils.dateFormat(currentDate, Constants.DATE_PATTERN_FOR_FILE);
+    String date = DateUtils.dateToString(currentDate, Constants.DATE_PATTERN_FOR_FILE);
     String fileNameNoExtend = originalFileName.substring(0, originalFileName.lastIndexOf("."));
     String fileExtendName = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
     long random = new Random(System.currentTimeMillis()).nextInt();
