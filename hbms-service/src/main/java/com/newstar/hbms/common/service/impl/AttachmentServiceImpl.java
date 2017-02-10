@@ -37,7 +37,7 @@ public class AttachmentServiceImpl implements AttachmentService {
   }
 
   @Override
-  public List<Attachment> findByBusiness(String businessType, Long businessId) {
-    return attachmentDao.findByBusiness(businessType, businessId);
+  public List<Attachment> findByBusiness(String businessType, Long[] businessIds) {
+    return attachmentDao.findByBusiness(businessType, businessIds);
   }
 }

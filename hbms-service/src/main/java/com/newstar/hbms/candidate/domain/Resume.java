@@ -10,8 +10,6 @@ import java.util.Date;
  */
 public class Resume implements Serializable {
 
-  private Long id;
-
   private Long candidateId;
 
   /**
@@ -39,14 +37,6 @@ public class Resume implements Serializable {
   private String createUser;
   private Date updateTime;
   private String updateUser;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public Long getCandidateId() {
     return candidateId;

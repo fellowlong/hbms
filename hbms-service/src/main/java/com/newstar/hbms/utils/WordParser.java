@@ -1,5 +1,7 @@
 package com.newstar.hbms.utils;
 
+import com.aspose.words.Document;
+import com.aspose.words.SaveFormat;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.POIXMLTextExtractor;
 import org.apache.poi.hwpf.extractor.WordExtractor;
@@ -9,10 +11,7 @@ import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.xmlbeans.XmlException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * Created by fellowlong on 2014/10/3.
@@ -24,20 +23,16 @@ public abstract class WordParser {
     DOCX_2007ABOVE;
   }
 
-  public static String getText(InputStream inputStream, Version version) {
+  public static String getText(InputStream inputStream) {
     String text = null;
+    Document doc = null;
     try {
-      if (version.equals(Version.DOC_97TO2003)) {
-        WordExtractor extractor = new WordExtractor(inputStream);
-        text = extractor.getText();
-      } else if (version.equals(Version.DOCX_2007ABOVE)) {
-        POIXMLTextExtractor extractor = new XWPFWordExtractor(new XWPFDocument(inputStream));
-        text = extractor.getText();
-      } else {
-        throw new Exception("不能识别的Word版本" + version);
-      }
-    } catch (Throwable t) {
-      throw new RuntimeException("从word中解析文件出错", t);
+      doc = new Document(inputStream);
+      ByteArrayOutputStream os = new ByteArrayOutputStream();
+      doc.save(os, SaveFormat.TEXT);
+      text = os.toString();
+    } catch (Exception e) {
+      throw new RuntimeException("解析文件异常", e);
     }
     return text;
   }

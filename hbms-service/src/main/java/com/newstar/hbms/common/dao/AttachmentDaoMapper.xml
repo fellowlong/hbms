@@ -4,6 +4,23 @@
 
 <mapper namespace="com.newstar.hbms.common.dao.AttachmentDao">
 
+
+    <sql id="lightSelect">
+        select
+            id,
+            businessType,
+            businessId,
+            fileName,
+            fileType,
+            remark,
+            yn,
+            createTime,
+            createUser,
+            updateTime,
+            updateUser
+        from Attachment
+    </sql>
+
     <insert id="insert" parameterType="com.newstar.hbms.common.domain.Attachment">
         <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
             sequence.global
@@ -108,6 +125,15 @@
             resultType="com.newstar.hbms.common.domain.Attachment">
         select * from Attachment where id in
         <foreach collection="array" open="(" close=")" separator="," item="attachmentId">
+            #{attachmentId}
+        </foreach>
+    </select>
+
+    <select id="findByBusiness"
+            parameterType="com.newstar.hbms.common.domain.Attachment"
+            resultType="com.newstar.hbms.common.domain.Attachment">
+        <include refid="lightSelect"/> where businessType = #{param1} and businessId in
+        <foreach collection="param2" open="(" close=")" separator="," item="attachmentId">
             #{attachmentId}
         </foreach>
     </select>

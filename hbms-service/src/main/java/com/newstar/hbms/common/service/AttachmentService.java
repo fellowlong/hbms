@@ -15,6 +15,6 @@ public interface AttachmentService {
 
   public int deleteByBusiness(String businessType, Long businessId);
 
-  public List<Attachment> findByBusiness(String businessType, Long businessId);
+  public List<Attachment> findByBusiness(String businessType, Long[] businessIds);
 
 }

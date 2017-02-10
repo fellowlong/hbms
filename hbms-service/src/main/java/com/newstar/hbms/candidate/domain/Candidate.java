@@ -31,7 +31,7 @@ public class Candidate implements Serializable {
 
   private MultipartFile[] otherAttachmentFiles;
 
-  private Attachment[] otherAttachments;
+  private List<Attachment> otherAttachments;
 
   private Long[] deletedOtherAttachmentIds;
 
@@ -238,11 +238,11 @@ public class Candidate implements Serializable {
     this.otherAttachmentFiles = otherAttachmentFiles;
   }
 
-  public Attachment[] getOtherAttachments() {
+  public List<Attachment> getOtherAttachments() {
     return otherAttachments;
   }
 
-  public void setOtherAttachments(Attachment[] otherAttachments) {
+  public void setOtherAttachments(List<Attachment> otherAttachments) {
     this.otherAttachments = otherAttachments;
   }
 

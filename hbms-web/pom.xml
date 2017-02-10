@@ -14,6 +14,27 @@
   <version>${parent.version}</version>
   <packaging>war</packaging>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>${project.basedir}/../lib/</directory>
+              <targetPath>WEB-INF/lib</targetPath>
+              <includes>
+                <include>**/*.jar</include>
+              </includes>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
   <dependencies>
     <dependency>
       <groupId>com.newstar.hbms</groupId>
