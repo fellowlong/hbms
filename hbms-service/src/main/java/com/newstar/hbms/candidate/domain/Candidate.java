@@ -1,8 +1,8 @@
 package com.newstar.hbms.candidate.domain;
 
 import com.newstar.hbms.basedata.domain.TreeNode;
-import org.apache.poi.hmef.Attachment;
-import org.apache.poi.hslf.model.Comment;
+import com.newstar.hbms.common.domain.Attachment;
+import com.newstar.hbms.common.domain.Comment;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;

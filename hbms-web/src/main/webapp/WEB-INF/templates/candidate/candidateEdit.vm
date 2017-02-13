@@ -63,6 +63,19 @@
             </button>
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">已上传附件</label>
+        <div class="col-sm-5">
+          #foreach($attachment in $candidate.otherAttachments)
+              <span class="badge badge-primary">$attachment.fileName
+                  <a href='javascript:void()' data-id='" + $attachment.id +"' style="color: red"><i class='ace-icon fa fa-remove icon-only'></i></a>
+              </span>
+          #end
+        </div>
+        <label class="col-sm-1 control-label no-padding-right">已上传附件</label>
+        <div class="col-sm-1">
+        </div>
+    </div>
     <div id="attachments">
     </div>
     <div class="form-group">
