@@ -71,8 +71,9 @@
                   <a href='javascript:void()' data-id='" + $attachment.id +"' style="color: red"><i class='ace-icon fa fa-remove icon-only'></i></a>
               </span>
           #end
+            <div>
+            </div>
         </div>
-        <label class="col-sm-1 control-label no-padding-right">已上传附件</label>
         <div class="col-sm-1">
         </div>
     </div>
@@ -454,6 +455,13 @@
             $(item).find("label.control-label").text("附件" + ++attatementSeq);
             renderFileInput($(item).find("input"));
         });
+    }
+    
+    function deleteAtttachment(eventObj) {
+        var attatchmentId = $(eventObj).parent().data("id");
+        var index = $(eventObj).parent().parent().parent().append("input").length;
+        $(eventObj).parent().parent().parent().append("<input name=deletedOtherAttachmentIds[" + index + "]");
+        $(eventObj).parent().parent().remove();
     }
 
 </script>
