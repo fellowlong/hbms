@@ -33,7 +33,7 @@ public class Candidate implements Serializable {
 
   private List<Attachment> otherAttachments;
 
-  private Long[] deletedOtherAttachmentIds;
+  private List<Long> deletedOtherAttachmentIds;
 
   /**
    * 人才编号
@@ -246,11 +246,11 @@ public class Candidate implements Serializable {
     this.otherAttachments = otherAttachments;
   }
 
-  public Long[] getDeletedOtherAttachmentIds() {
+  public List<Long> getDeletedOtherAttachmentIds() {
     return deletedOtherAttachmentIds;
   }
 
-  public void setDeletedOtherAttachmentIds(Long[] deletedOtherAttachmentIds) {
+  public void setDeletedOtherAttachmentIds(List<Long> deletedOtherAttachmentIds) {
     this.deletedOtherAttachmentIds = deletedOtherAttachmentIds;
   }
 

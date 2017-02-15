@@ -100,7 +100,7 @@ public class CandidateServiceImpl implements CandidateService {
         resumeDao.deleteByIds(new Long[]{candidate.getDeletedResumeFileId()});
       }
       if (candidate.getDeletedOtherAttachmentIds() != null) {
-        attachmentService.deleteByIds(candidate.getDeletedOtherAttachmentIds());
+        attachmentService.deleteByIds(candidate.getDeletedOtherAttachmentIds().toArray(new Long[candidate.getDeletedOtherAttachmentIds().size()]));
       }
     } else {
       resultCount = candidateDao.insert(candidate);

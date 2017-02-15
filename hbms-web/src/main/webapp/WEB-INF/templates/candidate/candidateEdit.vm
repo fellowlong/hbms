@@ -67,8 +67,9 @@
         <label class="col-sm-1 control-label no-padding-right">已上传附件</label>
         <div class="col-sm-5">
           #foreach($attachment in $candidate.otherAttachments)
-              <span class="badge badge-primary">$attachment.fileName
-                  <a href='javascript:void()' data-id='" + $attachment.id +"' style="color: red"><i class='ace-icon fa fa-remove icon-only'></i></a>
+              <span class="badge badge-primary">
+                  $attachment.fileName
+                  <a href="javascript:void()" data-id="$attachment.id" style="color: red"><i class="ace-icon fa fa-remove icon-only" onclick="deleteAtttachment(this)"></i></a>
               </span>
           #end
             <div>
@@ -459,8 +460,8 @@
     
     function deleteAtttachment(eventObj) {
         var attatchmentId = $(eventObj).parent().data("id");
-        var index = $(eventObj).parent().parent().parent().append("input").length;
-        $(eventObj).parent().parent().parent().append("<input name=deletedOtherAttachmentIds[" + index + "]");
+        var index = $(eventObj).parent().parent().parent().find("input").length;
+        $(eventObj).parent().parent().parent().append("<input type='hidden' name='deletedOtherAttachmentIds[" + index + "]' value='" + attatchmentId + "'>");
         $(eventObj).parent().parent().remove();
     }
 

@@ -68,6 +68,13 @@
         id = #{id}
     </update>
 
+    <delete id="deleteByIds" parameterType="java.lang.Long">
+        delete from Attachment where id in
+        <foreach collection="array" open="(" close=")" separator="," item="attachmentId">
+            #{attachmentId}
+        </foreach>
+    </delete>
+
     <delete id="disable" parameterType="java.lang.Long">
         update Attachment set yn = 0 where id in
         <foreach collection="array" open="(" close=")" separator="," item="attachmentId">
