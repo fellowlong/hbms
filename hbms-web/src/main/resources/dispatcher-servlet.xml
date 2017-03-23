@@ -47,6 +47,8 @@
         <value>/project/workspace.do</value>
         <value>/project/editView.do</value>
         <value>/baseData/workspace.do</value>
+        <value>/tempCandidate/workspace.do</value>
+        <value>/tempCandidate/edit.do</value>
       </list>
     </property>
     <property name="exportMap">
@@ -140,6 +142,12 @@
     <property name="companyService" ref="companyService"/>
     <property name="contactService" ref="contactService"/>
     <property name="positionService" ref="positionService"/>
+    <property name="userService" ref="userService"/>
+    <property name="datePattern" value="${datePattern}"/>
+  </bean>
+
+  <bean id="tempCandidateController" class="com.newstar.hbms.search.web.controller.TempCandidateController">
+    <property name="tempCandidateService" ref="tempCandidateService"/>
     <property name="userService" ref="userService"/>
     <property name="datePattern" value="${datePattern}"/>
   </bean>

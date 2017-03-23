@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newstar.hbms.search.dao.TempCandidateDao">
+
+  <insert id="insert" parameterType="com.newstar.hbms.search.domain.TempCandidate">
+    insert into TempCandidate(
+      name,
+      phone,
+      email,
+      companyId,
+      company,
+      department,
+      positionId,
+      position,
+      production,
+      cityId,
+      city,
+      jobHuntingStatusId,
+      jobHuntingStatus,
+      projectId,
+      project,
+      addUsername,
+      addUser,
+      addTime,
+      searchUsername,
+      searchTime,
+      searchStatusId,
+      searchResult,
+      createTime,
+      createUser,
+      updateTime,
+      updateUser
+    )
+    values (
+      #{name,jdbcType=BIGINT},
+      #{phone,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR},
+      #{companyId,jdbcType=BIGINT},
+      #{department,jdbcType=VARCHAR},
+      #{positionId,jdbcType=BIGINT},
+      #{cityId,jdbcType=BIGINT},
+      #{jobHuntingStatusId,jdbcType=BIGINT},
+      #{projectId,jdbcType=BIGINT},
+      #{addUsername,jdbcType=VARCHAR},
+      #{addTime,jdbcType=DATE},
+      #{searchUsername,jdbcType=VARCHAR},
+      #{searchTime,jdbcType=DATE},
+      #{searchStatusId,jdbcType=BIGINT},
+      #{searchResult,jdbcType=VARCHAR},
+      #{createTime,jdbcType=DATE},
+      #{createUser,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=DATE},
+      #{updateUser,jdbcType=VARCHAR}
+    )
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+      select last_insert_id()
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterType="com.newstar.hbms.search.domain.TempCandidate">
+    update TempCandidate set
+      name = #{name,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      companyId = #{companyId,jdbcType=BIGINT},
+      department = #{department,jdbcType=VARCHAR},
+      positionId = #{positionId,jdbcType=BIGINT},
+      cityId = #{cityId,jdbcType=BIGINT},
+      jobHuntingStatusId = #{jobHuntingStatusId,jdbcType=BIGINT},
+      projectId = #{projectId,jdbcType=BIGINT},
+      addUsername = #{addUsername,jdbcType=VARCHAR},
+      addTime = #{addTime,jdbcType=DATE},
+      searchUsername = #{searchUsername,jdbcType=VARCHAR},
+      searchTime = #{searchTime,jdbcType=DATE},
+      searchStatusId = #{searchStatusId,jdbcType=BIGINT},
+      searchResult = #{searchResult,jdbcType=VARCHAR},
+      updateTime = now(),
+      updateUser = #{updateUser,jdbcType=VARCHAR}
+    where
+      id = #{id}
+  </update>
+
+  <update id="disableByIds" parameterType="java.lang.Long">
+    update TempCandidate set yn = 0 where id in
+    <foreach collection="array" open="(" close=")" separator="," item="tempCandidateId">
+      #{tempCandidateId}
+    </foreach>
+  </update>
+
+
+  <select id="findByIds"
+          parameterType="java.lang.Long"
+          resultType="com.newstar.hbms.search.domain.TempCandidate">
+    select * from TempCandidate where id in
+    <foreach collection="array" open="(" close=")" separator="," item="tempCandidateId">
+      #{tempCandidateId}
+    </foreach>
+  </select>
+
+  <select id="findByBean"
+          parameterType="com.newstar.hbms.search.domain.TempCandidate"
+          resultType="com.newstar.hbms.search.domain.TempCandidate">
+    select * from TempCandidate  where 1 = 1
+    <if test="id != null">
+      and id = #{id}
+    </if>
+    <if test="name != null">
+      and name = #{name}
+    </if>
+    <if test="companyId != null">
+      and companyId = #{companyId}
+    </if>
+    <if test="positionId != null">
+      and positionId = #{positionId}
+    </if>
+    <if test="jobHuntingStatusId != null">
+      and jobHuntingStatusId = #{jobHuntingStatusId}
+    </if>
+    <if test="projectId != null">
+      and projectId = #{projectId}
+    </if>
+    <if test="addUsername != null">
+      and addUsername = #{addUsername}
+    </if>
+    <if test="searchStatusId != null">
+      and searchStatusId = #{searchStatusId}
+    </if>
+    <if test="yn != null">
+      and yn = #{yn}
+    </if>
+  </select>
+
+</mapper>

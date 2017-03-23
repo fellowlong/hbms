@@ -8,7 +8,7 @@
 
 // -- BEGIN UMD WRAPPER PREFACE --
 
-// For more information on UMD visit:
+// For more information on UMD search:
 // https://github.com/umdjs/umd/blob/master/jqueryPlugin.js
 
 (function(factory) {

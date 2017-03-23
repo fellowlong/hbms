@@ -272,3 +272,30 @@ create table ProjectConsultant(
   projectId  bigint comment '项目外键',
   consultantId bigint comment '顾问(user)外键'
 ) comment='项目顾问';
+
+
+drop table TempCandidate;
+create table TempCandidate(
+  id bigint auto_increment not null primary key comment '客户编号,主键',
+  name varchar(50) comment '性别外键',
+  phone varchar(50) comment '电话',
+  email varchar(50) comment '邮箱',
+  companyId bigint comment '公司',
+  department varchar(100) comment '部门',
+  positionId bigint comment '职位',
+  production varchar(100) comment '负责产品',
+  cityId bigint comment '所在地',
+  jobHuntingStatusId bigint comment '求职状态',
+  projectId bigint comment '所属项目',
+  addUsername varchar(50) comment '添加人',
+  addTime datetime comment '添加时间',
+  searchUsername bigint comment '寻访人',
+  searchTime datetime comment '寻访时间',
+  searchStatusId bigint comment '寻访状态',
+  searchResult varchar(500) comment '寻访结果',
+  yn  int(1) comment '是否有效',
+  createTime datetime comment '创建时间',
+  createUser varchar(50) comment '创建人账户',
+  updateTime datetime comment '修改时间',
+  updateUser varchar(50) comment '修改人账户'
+) comment='临时候选人表';

@@ -1,0 +1,120 @@
+<div style="margin:2px">
+
+<div class="row" style="margin: 5px">
+  <form id="tempCandidateSearchForm" method="post" action="/tempCandidate/findByBean.do">
+          <div class="col-xs-6">
+            <div class="input-group">
+              <div class="input-group-addon">关键字</div>
+              <input type="text" class="form-control input-sm" name="destination"/>
+            </div>
+          </div>
+          <div class="col-xs-6">
+              <button id="tempCandidateSearch" class="btn btn-sm btn-primary" type="button">搜索</button>
+              <button id="tempCandidateAdd" class="btn btn-sm btn-primary" type="button">新增</button>
+              <button id="tempCandidateEdit" class="btn btn-sm btn-primary" type="button">编辑</button>
+              <button id="tempCandidateDisable" class="btn btn-sm btn-primary" type="button">删除</button>
+          </div>
+  </form>
+</div>
+
+  <div id="tempCandidateListDiv" style="width: 100%;left: 0;right: 0">
+    <table id="tempCandidateList"></table>
+    <div id="tempCandidateListPager"></div>
+  </div>
+
+  <script type="text/javascript">
+    $("#tempCandidateList").jqGrid({
+      url: '/tempCandidate/findByBean.do',
+      mtype: "POST",
+      datatype: "json",
+      colNames: ['姓名', '公司',  '职位', '城市', '年薪', '年龄', '手机', '标签', '状态', "最近联系", "操作"],
+      colModel: [
+        {name: 'name'},
+        {name: 'company.label'},
+        {name: 'position.label'},
+        {name: 'city.label'},
+        {name: 'currentAnnualSalary'},
+        {name: 'birthday'},
+        {name: 'mobile'},
+        {name: 'tag'},
+        {name: 'jobHuntingStatus.label'},
+        {name: 'lastContact'},
+        {name: 'isKey', formatter: function(cellvalue, options, rowObject){
+          return cellvalue ? "<i class='ace-icon glyphicon glyphicon-ok' style='color: green'></i>" : "<i class='ace-icon glyphicon glyphicon-remove' style='color: red'></i>";
+
+        }}
+      ],
+      multiselect: true,
+      rowNum: 10,
+      rowList: [10, 30, 50, 100],
+      pager: '#tempCandidateListPager',
+      forceFit:true,
+      shrinkToFit: false
+    });
+    function resizeTempCandidateList() {
+//      $("#tempCandidateList").jqGrid('setGridWidth', $(window).width() - $("#tempCandidateListDiv").position().left - 15);
+      $("#tempCandidateList").jqGrid('setGridHeight', $(window).height() - $("#tempCandidateListDiv").position().top - 100);
+    }
+    resizeTempCandidateList();
+    $(window).on('resize', function () {
+      resizeTempCandidateList();
+    });
+  </script>
+
+<script>
+  $('#tempCandidateList th input:checkbox').on('click' , function(){
+    var that = this;
+    $('#tempCandidateList').find('tr > td:first-child input:checkbox')
+        .each(function(){
+          this.checked = that.checked;
+          $(this).closest('tr').toggleClass('selected');
+        });
+  });
+
+  $("#tempCandidateSearch").on("click", function () {
+    searchTempCandidate();
+  });
+  function searchTempCandidate() {
+    $("#tempCandidateList").jqGrid('setGridParam', {
+      /*postData: {
+        name: $("#searchCustomerForm input[name='name']").val(),
+        industry: $("#searchCustomerForm input[name='industry']").val(),
+        phone: $("#searchCustomerForm input[name='phone']").val()
+      },*/
+      page: 1
+    }).trigger("reloadGrid");
+  }
+
+  $("#tempCandidateAdd").on(ace.click_event, function() {
+      window.open('/tempCandidate/edit.do');
+  });
+  $("#tempCandidateDisable").on("click", function () {
+    var rowIds = $("#tempCandidateList").jqGrid('getGridParam', 'selarrrow');
+    if (!rowIds || rowIds.length < 1) {
+      bootbox.alert("请选择一条进行编辑");
+      return;
+    }
+    bootbox.confirm("<h3>确定删除?</h3>", function (result) {
+      if (result) {
+        disableRecords(
+            "/tempCandidate/disableByIds.do",
+            {ids: rowIds},
+            function () {
+              searchTempCandidate();
+            },
+            function () {
+              searchTempCandidate();
+            });
+      }
+    })
+  });
+  $("#tempCandidateEdit").on(ace.click_event, function() {
+    var rowIds = $("#tempCandidateList").jqGrid('getGridParam', 'selarrrow');
+    if (!rowIds || rowIds.length != 1) {
+      bootbox.alert("请选择一条进行编辑");
+      return;
+    }
+    window.open('/tempCandidate/edit.do?id='+rowIds[0]);
+  });
+
+</script>

@@ -73,6 +73,7 @@
         <value>classpath:com/newstar/hbms/customer/dao/*.xml</value>
         <value>classpath:com/newstar/hbms/project/dao/*.xml</value>
         <value>classpath:com/newstar/hbms/system/dao/*.xml</value>
+        <value>classpath:com/newstar/hbms/search/dao/*.xml</value>
       </list>
     </property>
     <property name="plugins">
@@ -160,6 +161,12 @@
     <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
   </bean>
 
+
+  <bean id="tempCandidateDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.newstar.hbms.search.dao.TempCandidateDao"/>
+    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+  </bean>
+
   <bean id="treeService" class="com.newstar.hbms.basedata.service.impl.TreeServiceImpl">
     <property name="treeNodeDao" ref="treeNodeDao"/>
   </bean>
@@ -242,6 +249,10 @@
     <property name="companyService" ref="companyService"/>
     <property name="positionService" ref="positionService"/>
     <property name="treeService" ref="treeService"/>
+  </bean>
+
+  <bean id="tempCandidateService" class="com.newstar.hbms.search.service.impl.TempCandidateServiceImpl">
+    <property name="tempCandidateDao" ref="tempCandidateDao"/>
   </bean>
 
   <bean id="userService" class="com.newstar.hbms.system.service.impl.UserServiceImpl">
