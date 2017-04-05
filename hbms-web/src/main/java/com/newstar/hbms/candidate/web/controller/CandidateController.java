@@ -99,7 +99,7 @@ public class CandidateController extends ConfigurableMultiActionController {
     return modelAndView;
   }
 
-  public ModelAndView edit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public ModelAndView editView(HttpServletRequest request, HttpServletResponse response) throws Exception {
     Long id = WebUtils.getLong(request, WebUtils.ID);
     ModelAndView modelAndView = new ModelAndView("/candidate/candidateEdit");
     if (id != null) {

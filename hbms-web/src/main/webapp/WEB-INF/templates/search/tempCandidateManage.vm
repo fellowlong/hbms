@@ -1,19 +1,91 @@
 <div style="margin:2px">
 
 <div class="row" style="margin: 5px">
-  <form id="tempCandidateSearchForm" method="post" action="/tempCandidate/findByBean.do">
-          <div class="col-xs-6">
-            <div class="input-group">
-              <div class="input-group-addon">关键字</div>
-              <input type="text" class="form-control input-sm" name="destination"/>
-            </div>
-          </div>
-          <div class="col-xs-6">
-              <button id="tempCandidateSearch" class="btn btn-sm btn-primary" type="button">搜索</button>
-              <button id="tempCandidateAdd" class="btn btn-sm btn-primary" type="button">新增</button>
-              <button id="tempCandidateEdit" class="btn btn-sm btn-primary" type="button">编辑</button>
-              <button id="tempCandidateDisable" class="btn btn-sm btn-primary" type="button">删除</button>
-          </div>
+  <form id="tempCandidateSearchForm" method="post" class="form-inline" action="/tempCandidate/findByBean.do">
+
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">姓名</div>
+        <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end style="min-width: 20px">
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">公司</div>
+        <select id="companyId" class="chosen-select form-control" name="companyId" >
+          <option value="">全部</option>
+          #set($companiesBaseData = $baseDataService.getCompanies().children)
+          #foreach($company in $companiesBaseData)
+            <option value="$company.id" #if($company.id == $param['companyId']) selected #end>$company.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">职位</div>
+        <select id="positionId" class="chosen-select form-control" name="positionId" value="$!candidate.positionId">
+          <option value="">全部</option>
+          #set($positions = $baseDataService.getPositions().children)
+          #foreach($position in $positions)
+            <option value="$position.id" #if($position.id == $param['positionId']) selected #end>$position.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">城市</div>
+        <select id="cityId" class="chosen-select form-control" name="cityId" value="$!candidate.cityId">
+          <option value="">全部</option>
+          #set($cities = $baseDataService.getCities().children)
+          #foreach($city in $cities)
+            <option value="$city.id" #if($city.id == $param['cityId']) selected #end>$city.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">项目公司</div>
+        <select id="projectCompanyId" name="project.companyId" class="chosen-select form-control">
+          <option value="">全部</option>
+          #foreach($company in $companies)
+            <option value="$company.id">$company.name</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">项目</div>
+        <select id="projectId" name="projectId" class="chosen-select form-control" placeholder="">
+          <option value="">全部</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="searchCandidate" class="btn btn-primary form-control no-radius" type="button">
+            <i class="ace-icon fa fa-search"></i>搜索
+          </button>
+        </span>
+      </div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="tempCandidateAdd" class="btn btn-success form-control no-radius" type="button">
+            <i class="ace-icon fa fa-plus"></i>新增
+          </button>
+        </span>
+      </div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="tempCandidateEdit" class="btn btn-success form-control no-radius" type="button">
+            <i class="ace-icon fa fa-edit"></i>编辑
+          </button>
+        </span>
+      </div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="tempCandidateDisable" class="btn btn-danger form-control no-radius" type="button">
+            <i class="ace-icon fa fa-remove"></i>删除
+          </button>
+        </span>
+      </div>
+    </div>
   </form>
 </div>
 
@@ -27,41 +99,34 @@
       url: '/tempCandidate/findByBean.do',
       mtype: "POST",
       datatype: "json",
-      colNames: ['姓名', '公司',  '职位', '城市', '年薪', '年龄', '手机', '标签', '状态', "最近联系", "操作"],
+      colNames: ['姓名', '公司',  '职位', '城市', '项目公司', '项目', '寻访人', '寻访时间'],
       colModel: [
         {name: 'name'},
         {name: 'company.label'},
         {name: 'position.label'},
         {name: 'city.label'},
-        {name: 'currentAnnualSalary'},
-        {name: 'birthday'},
-        {name: 'mobile'},
-        {name: 'tag'},
-        {name: 'jobHuntingStatus.label'},
-        {name: 'lastContact'},
-        {name: 'isKey', formatter: function(cellvalue, options, rowObject){
-          return cellvalue ? "<i class='ace-icon glyphicon glyphicon-ok' style='color: green'></i>" : "<i class='ace-icon glyphicon glyphicon-remove' style='color: red'></i>";
-
-        }}
+        {name: 'project.company.name'},
+        {name: 'project.name'},
+        {name: 'searchUser.realName'},
+        {name: 'searchTime'}
       ],
       multiselect: true,
       rowNum: 10,
       rowList: [10, 30, 50, 100],
       pager: '#tempCandidateListPager',
       forceFit:true,
-      shrinkToFit: false
+      shrinkToFit: true
     });
     function resizeTempCandidateList() {
-//      $("#tempCandidateList").jqGrid('setGridWidth', $(window).width() - $("#tempCandidateListDiv").position().left - 15);
+      $("#tempCandidateList").jqGrid('setGridWidth', $(window).width() - $("#tempCandidateListDiv").position().left - 15);
       $("#tempCandidateList").jqGrid('setGridHeight', $(window).height() - $("#tempCandidateListDiv").position().top - 100);
     }
     resizeTempCandidateList();
     $(window).on('resize', function () {
       resizeTempCandidateList();
     });
-  </script>
 
-<script>
+
   $('#tempCandidateList th input:checkbox').on('click' , function(){
     var that = this;
     $('#tempCandidateList').find('tr > td:first-child input:checkbox')
@@ -86,7 +151,7 @@
   }
 
   $("#tempCandidateAdd").on(ace.click_event, function() {
-      window.open('/tempCandidate/edit.do');
+      window.open('/tempCandidate/editView.do');
   });
   $("#tempCandidateDisable").on("click", function () {
     var rowIds = $("#tempCandidateList").jqGrid('getGridParam', 'selarrrow');
@@ -114,7 +179,27 @@
       bootbox.alert("请选择一条进行编辑");
       return;
     }
-    window.open('/tempCandidate/edit.do?id='+rowIds[0]);
+    window.open('/tempCandidate/editView.do?id='+rowIds[0]);
   });
 
+    $("#tempCandidateSearchForm select[id=projectCompanyId]").cascadedChosen(
+        [{
+          childRef:$("#tempCandidateSearchForm select[name=projectId]"),
+          options:{
+            dataCallback: undefined,//[{value:"",label:""}, {value:"",label:""}]
+            url: "/project/findByBean.do?companyId=",
+            dataMapper: function (data) {
+              var nodeData = [{value: null, label: "全部"}];
+              $(data.rows).each(function (index, item) {
+                if (!nodeData) {
+                  nodeData = [];
+                }
+                nodeData.push({value: item.id, label: item.name});
+              });
+              return nodeData;
+            },
+            selectedData:[]
+          }
+        }
+        ]);
 </script>

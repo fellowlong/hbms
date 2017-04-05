@@ -1,19 +1,90 @@
 <div style="margin:2px">
 
 <div class="row" style="margin: 5px">
-  <form id="candidateSearchForm" method="post" action="/candidate/findByBean.do">
-          <div class="col-xs-6">
-            <div class="input-group">
-              <div class="input-group-addon">关键字</div>
-              <input type="text" class="form-control input-sm" name="destination"/>
-            </div>
-          </div>
-          <div class="col-xs-6">
-              <button id="candidateSearch" class="btn btn-sm btn-primary" type="button">搜索</button>
-              <button id="candidateAdd" class="btn btn-sm btn-primary" type="button">新增</button>
-              <button id="candidateEdit" class="btn btn-sm btn-primary" type="button">编辑</button>
-              <button id="candidateDisable" class="btn btn-sm btn-primary" type="button">删除</button>
-          </div>
+  <form id="candidateSearchForm" method="post" class="form-inline" action="/candidate/findByBean.do">
+
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">姓名</div>
+        <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end style="min-width: 20px">
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">公司</div>
+        <select id="companyId" class="chosen-select form-control" name="companyId" value="$!candidate.companyId">
+          <option value="">全部</option>
+          #set($companies = $baseDataService.getCompanies().children)
+          #foreach($company in $companies)
+            <option value="$company.id" >$company.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">职位</div>
+        <select id="positionId" class="chosen-select form-control" name="positionId" value="$!candidate.positionId">
+          <option value="">全部</option>
+          #set($positions = $baseDataService.getPositions().children)
+          #foreach($position in $positions)
+            <option value="$position.id" >$position.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">城市</div>
+        <select id="cityId" class="chosen-select form-control" name="cityId" value="$!candidate.cityId">
+          <option value="">全部</option>
+          #set($cities = $baseDataService.getCities().children)
+          #foreach($city in $cities)
+            <option value="$city.id">$city.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">求职状态</div>
+        <select id="jobHuntingStatusId" class="chosen-select form-control" name="jobHuntingStatusId" value="$!candidate.jobHuntingStatusId">
+          <option value="">全部</option>
+          #set($jobHuntingStatuses = $baseDataService.getJobHuntingStatuses().children)
+          #foreach($jobHuntingStatus in $jobHuntingStatuses)
+            <option value="$jobHuntingStatus.id">$jobHuntingStatus.label</option>
+          #end
+        </select>
+      </div>
+
+    </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">全文</div>
+          <input type="text" class="form-control input-sm" name="destination" style="min-width: 200px"/>
+        </div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="searchCandidate" class="btn btn-primary form-control no-radius" type="button">
+            <i class="ace-icon fa fa-search"></i>搜索
+          </button>
+        </span>
+      </div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="searchCandidate" class="btn btn-success form-control no-radius" type="button">
+            <i class="ace-icon fa fa-plus"></i>新增
+          </button>
+        </span>
+      </div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="searchCandidate" class="btn btn-success form-control no-radius" type="button">
+            <i class="ace-icon fa fa-edit"></i>编辑
+          </button>
+        </span>
+      </div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="searchCandidate" class="btn btn-danger form-control no-radius" type="button">
+            <i class="ace-icon fa fa-remove"></i>删除
+          </button>
+        </span>
+      </div>
+      </div>
   </form>
 </div>
 
@@ -49,10 +120,10 @@
       rowList: [10, 30, 50, 100],
       pager: '#candidateListPager',
       forceFit:true,
-      shrinkToFit: false
+      shrinkToFit: true
     });
     function resizeCandidateList() {
-//      $("#candidateList").jqGrid('setGridWidth', $(window).width() - $("#candidateListDiv").position().left - 15);
+      $("#candidateList").jqGrid('setGridWidth', $(window).width() - $("#candidateListDiv").position().left - 15);
       $("#candidateList").jqGrid('setGridHeight', $(window).height() - $("#candidateListDiv").position().top - 100);
     }
     resizeCandidateList();
@@ -86,7 +157,7 @@
   }
 
   $("#candidateAdd").on(ace.click_event, function() {
-      window.open('/candidate/edit.do');
+      window.open('/candidate/editView.do');
   });
   $("#candidateDisable").on("click", function () {
     var rowIds = $("#candidateList").jqGrid('getGridParam', 'selarrrow');
@@ -114,7 +185,29 @@
       bootbox.alert("请选择一条进行编辑");
       return;
     }
-    window.open('/candidate/edit.do?id='+rowIds[0]);
+    window.open('/candidate/editView.do?id='+rowIds[0]);
+  });
+
+  $("#searchCandidate").on("click", function () {
+    var postData = $("#candidateList").jqGrid("getGridParam", "postData");
+    while (!$.isEmptyObject(postData)) {
+      for (var key in postData) {
+        delete postData[key];
+      }
+    }
+    $("#candidateList").jqGrid('setGridParam', {
+      postData: (function () {
+        var postData = {};
+        $("#candidateSearchForm input, #candidateSearchForm select").each(function (index, item) {
+          var val = $(item).val();
+          if (val && val.length > 0) {
+            postData[$(item).attr("name")] = val;
+          }
+        });
+        return postData;
+      })(),
+      page: 1
+    }).trigger("reloadGrid");
   });
 
 </script>

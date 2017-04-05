@@ -20,184 +20,226 @@
 
 #set($datePattern = 'yyyy-mm-dd')
 
-<form id="resumeAddForm"
+<form id="tempCandidateEditForm"
       method="post"
       enctype="multipart/form-data"
       action="/tempCandidate/save.do"
-      class="form-inline"
+      class="form-horizontal"
       role="form"
       autocomplete="off"
       data-validator-option="{theme:'yellow_right_effect',stopOnError:false, timely:true}">
     <input type="hidden" name="id" value="$!tempCandidate.id">
 
-
-    <div class="form-group">
-        <div class="col-sm-6">
-            <h3><b>候选人信息</b></h3>
+    <div class="row">
+        <div class="col-sm-4">
+            <h3><b>新增临时候选人</b></h3>
             <hr/>
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">姓名</label>
-        <div class="col-sm-5">
-            <input type="text" id="name" name="name" value="$!tempCandidate.name" class="form-control"/>
+    <div class="row">
+        <div class="col-sm-1">
         </div>
-    </div>
+        <div class="col-sm-7">
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <h4><b>候选人信息</b></h4>
+                    <hr/>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">电话</label>
-        <div class="col-sm-5">
-            <input type="text" id="phone" name="phone" value="$!tempCandidate.mobile" placeholder="手机"
-                   class="form-control" data-rule="电话:required;"/>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">姓名</label>
+                <div class="col-sm-5">
+                    <input type="text" id="name" name="name" value="$!tempCandidate.name" class="form-control"/>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">邮箱</label>
-        <div class="col-sm-5">
-            <input type="text" id="email" name="email" value="$!tempCandidate.email" placeholder="邮箱"
-                   class="form-control"
-                   data-rule="邮箱:email"/>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">电话</label>
+                <div class="col-sm-5">
+                    <input type="text" id="phone" name="phone" value="$!tempCandidate.phone" placeholder="手机"
+                           class="form-control" data-rule="电话:required;"/>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">当前公司</label>
-        <div class="col-sm-5">
-            <select id="companyId" class="chosen-select form-control" name="companyId" value="$!tempCandidate.companyId">
-              #set($companies = $baseDataService.getCompanies().children)
-              #foreach($company in $companies)
-                  <option value="$company.id" #if($company.id == $candidate.companyId) selected #end>$company.label</option>
-              #end
-            </select>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">邮箱</label>
+                <div class="col-sm-5">
+                    <input type="text" id="email" name="email" value="$!tempCandidate.email" placeholder="邮箱"
+                           class="form-control"
+                           data-rule="邮箱:email"/>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">部门</label>
-        <div class="col-sm-5">
-            <input type="text" id="phone" name="phone" value="$!tempCandidate.department" placeholder="手机"
-                   class="form-control" data-rule="部门:required;"/>
-        </div>
-    </div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label no-padding-right">所在地</label>
+            <div class="col-sm-5">
+              <select id="cityId" class="chosen-select form-control" name="cityId" value="$!tempCandidate.cityId">
+                  #set($cities = $baseDataService.getCities().children)
+                  #foreach($city in $cities)
+                    <option value="$city.id" #if($city.id == $tempCandidate.cityId) selected #end>$city.label</option>
+                  #end
+              </select>
+            </div>
+          </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">职位</label>
-        <div class="col-sm-5">
-            <select id="positionId" class="chosen-select form-control" name="positionId"
-                    value="$!tempCandidate.positionId">
-              #set($positions = $baseDataService.getPositions().children)
-              #foreach($position in $positions)
-                  <option value="$position.id" #if($position.id == $candidate.positionId) selected #end>$position.label</option>
-              #end
-            </select>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">当前公司</label>
+                <div class="col-sm-5">
+                    <select id="companyId" class="chosen-select form-control" name="companyId" value="$!tempCandidate.companyId">
+                        #set($baseDataCompanies = $baseDataService.getCompanies().children)
+                        #foreach($company in $baseDataCompanies)
+                            <option value="$company.id" #if($company.id == $tempCandidate.companyId) selected #end>$company.label</option>
+                        #end
+                    </select>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">求职状态</label>
-        <div class="col-sm-5">
-            <select id="jobHuntingStatusId" class="chosen-select form-control" name="jobHuntingStatusId"
-                    value="$!tempCandidate.jobHuntingStatusId">
-              #set($jobHuntingStatuses = $baseDataService.getJobHuntingStatuses().children)
-              #foreach($jobHuntingStatus in $jobHuntingStatuses)
-                  <option value="$jobHuntingStatus.id" #if($jobHuntingStatus.id == $candidate.jobHuntingStatusId) selected #end>$jobHuntingStatus.label</option>
-              #end
-            </select>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">部门</label>
+                <div class="col-sm-5">
+                    <input type="text" id="department" name="department" value="$!tempCandidate.department" class="form-control" data-rule="部门:required;"/>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">负责的产品</label>
-        <div class="col-sm-5">
-            <input type="text" id="production" name="production" value="$!tempCandidate.production" class="form-control"/>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">职位</label>
+                <div class="col-sm-5">
+                    <select id="positionId" class="chosen-select form-control" name="positionId"
+                            value="$!tempCandidate.positionId">
+                        #set($positions = $baseDataService.getPositions().children)
+                        #foreach($position in $positions)
+                            <option value="$position.id" #if($position.id == $tempCandidate.positionId) selected #end>$position.label</option>
+                        #end
+                    </select>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <div class="col-sm-6">
-            <h3><b>创建信息</b></h3>
-            <hr/>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">求职状态</label>
+                <div class="col-sm-5">
+                    <select id="jobHuntingStatusId" class="chosen-select form-control" name="jobHuntingStatusId"
+                            value="$!tempCandidate.jobHuntingStatusId">
+                        #set($jobHuntingStatuses = $baseDataService.getJobHuntingStatuses().children)
+                        #foreach($jobHuntingStatus in $jobHuntingStatuses)
+                            <option value="$jobHuntingStatus.id" #if($jobHuntingStatus.id == $tempCandidate.jobHuntingStatusId) selected #end>$jobHuntingStatus.label</option>
+                        #end
+                    </select>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">创建人</label>
-        <div class="col-sm-5">
-            <input type="text" id="addUsername" name="addUsername" value="$!tempCandidate.addUsername" class="form-control"/>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">负责的产品</label>
+                <div class="col-sm-5">
+                    <input type="text" id="production" name="production" value="$!tempCandidate.production" class="form-control"/>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">创建时间</label>
-        <div class="col-sm-5">
-            <div class="input-group">
-                <input class="form-control date-picker" name="addTime" value="$!DateUtils.dateToString($tempCandidate.addTime, 'yyyy-mm-dd')"
-                       type="text"
-                       data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-rule="创建时间:date">
-                <span class="input-group-addon">
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <h4><b>项目信息</b></h4>
+                    <hr/>
+                </div>
+            </div>
+
+          <div class="form-group">
+            <label class="col-sm-1 control-label no-padding-right">公司</label>
+            <div class="col-sm-5">
+              <select id="projectCompanyId" name="projectCompanyId" value="$!tempCandidate.project.companyId" class="chosen-select form-control">
+                  #foreach($company in $companies)
+                    <option value="$company.id" #if($company.id == $tempCandidate.project.companyId) selected #end>$company.name</option>
+                  #end
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-1 control-label no-padding-right">项目</label>
+            <div class="col-sm-5">
+              <select id="projectId" name="projectId" value="$!tempCandidate.projectId" class="chosen-select form-control">
+                  #foreach($project in $projects)
+                    <option value="$project.id" #if($project.id == $tempCandidate.project.id) selected #end>$tempCandidate.project.name</option>
+                  #end
+              </select>
+            </div>
+          </div>
+
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <h4><b>创建信息</b></h4>
+                    <hr/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">创建人</label>
+                <div class="col-sm-5">
+                  <select id="addUserId" name="addUserId" value="$!tempCandidate.addUserId" class="chosen-select form-control">
+                    #foreach($user in $users)
+                      <option value="$user.id" #if($user.id == $!tempCandidate.addUserId) selected #end>$user.username - $user.realName</option>
+                    #end
+                  </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">创建时间</label>
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <input class="form-control date-picker" name="addTime"
+                               value="$!DateUtils.dateToString($tempCandidate.addTime, 'yyyy-mm-dd')"
+                               type="text"
+                               data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-rule="创建时间:date">
+                                <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                              </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <h4><b>寻访信息</b></h4>
+                    <hr/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">寻访人</label>
+                <div class="col-sm-5">
+                  <select id="searchUserId" name="searchUserId" value="$!tempCandidate.searchUserId" class="chosen-select form-control">
+                    #foreach($user in $users)
+                      <option value="$user.id" #if($user.id == $!tempCandidate.searchUserId) selected #end>$user.username - $user.realName</option>
+                    #end
+                  </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">寻访时间</label>
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <input class="form-control date-picker" name="searchTime" value="$!DateUtils.dateToString($tempCandidate.searchTime, 'yyyy-mm-dd')"
+                               type="text"
+                               data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-rule="寻访时间:date">
+                        <span class="input-group-addon">
                     <i class="fa fa-calendar bigger-110"></i>
                   </span>
+                    </div>
+
+                </div>
             </div>
-            <script type="text/javascript">
-                $('.date-picker').datepicker({
-                    autoclose: true,
-                    todayHighlight: true
-                }).next().on("click", function () {
-                    $('.date-picker').focus();
-                });
-            </script>
-        </div>
-    </div>
 
-
-    <div class="form-group">
-        <div class="col-sm-6">
-            <h3><b>寻访信息</b></h3>
-            <hr/>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">寻访人</label>
-        <div class="col-sm-5">
-            <input type="text" id="searchUsername" name="searchUsername" value="$!tempCandidate.searchUsername" class="form-control"/>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">寻访时间</label>
-        <div class="col-sm-5">
-            <div class="input-group">
-                <input class="form-control date-picker" name="searchTime" value="$!DateUtils.dateToString($tempCandidate.searchTime, 'yyyy-mm-dd')"
-                       type="text"
-                       data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-rule="寻访时间:date">
-                <span class="input-group-addon">
-                    <i class="fa fa-calendar bigger-110"></i>
-                  </span>
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right">寻访备注</label>
+                <div class="col-sm-5">
+            <textarea type="text" id="searchRemark" name="searchRemark" rows="5"
+                      class="form-control">$!tempCandidate.searchRemark</textarea>
+                </div>
             </div>
-            <script type="text/javascript">
-                $('.date-picker').datepicker({
-                    autoclose: true,
-                    todayHighlight: true
-                }).next().on("click", function () {
-                    $('.date-picker').focus();
-                });
-            </script>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">结果</label>
-        <div class="col-sm-5">
-            <textarea type="text" id="remark" name="remark" rows="5"
-                      class="form-control">$!tempCandidate.searchResult</textarea>
-        </div>
-    </div>
-
-##    <div class="actionBar-container">
-##        <div class="actionBar navbar-fixed-bottom">
             <div class="col-sm-7" style="text-align: center">
                 <button class="btn btn-sm btn-primary" type="submit">
                     <i class="fa fa-save bigger-200"></i>
@@ -208,106 +250,41 @@
                     重置
                 </button>
             </div>
-##        </div>
-##    </div>
+        </div>
+
+    </div>
+
 
 </form>
 
-<style>
-    .template {
-        display: none;
-    }
-</style>
-
-<div id="attachmentTemplate" class="template">
-    <div class="form-group">
-        <label class="col-sm-1 control-label no-padding-right">附件</label>
-        <div class="col-sm-5">
-            <input type="file" name="otherAttachmentFiles">
-        </div>
-        <div class="col-sm-1">
-            <button type="button" class="btn btn-sm btn-danger"
-                    onclick="$(this).parent().parent().remove();reCalculateAttatcmentSeq()">
-                <i class="ace-icon fa fa-remove bigger-110"></i>
-                删除
-            </button>
-        </div>
-    </div>
-</div>
-
 <script type="text/javascript">
-    $("#candidateEditNavbar li").on("click", function () {
-        $($(this).find("a").attr("workspace")).css("display", "block");
-        $(this).siblings().each(function () {
-            $(this).removeClass("active");
-            $($(this).find("a").attr("workspace")).css("display", "none");
-        });
-    });
-    $('.chosen-select').chosen({search_contains: true});
-    function renderFileInput(elementId) {
-        $(elementId).ace_file_input({
-            no_file: '空 ...',
-            btn_choose: '选择',
-            btn_change: '修改',
-            droppable: false,
-            onchange: null,
-            thumbnail: false //| true | large
-            //whitelist:'gif|png|jpg|jpeg'
-            //blacklist:'exe|php'
-            //onchange:''
-            //
-        });
-    }
-    renderFileInput("#resumeFile");
     $('.date-picker').datepicker({
         autoclose: true,
         todayHighlight: true
-    }).next().on("click", function () {
-        $('.date-picker').focus();
-    });
-
-    $("#addAttachment").on("click", function () {
-        $("#attachments").append($("#attachmentTemplate").html());
-        reCalculateAttatcmentSeq();
-    });
-
-    $("#addWorkExperience").on("click", function () {
-        $("#workExperiences").append($("#workExperienceTemplate").html());
-    });
-    $("#addWorkExperience").click();
-
-    $("#addEducationExperience").on("click", function () {
-        $("#educationExperiences").append($("#educationExperienceTemplate").html());
-    });
-    $("#addEducationExperience").click();
-
-    $("#addLanguageAbility").on("click", function () {
-        $("#languageAbilities").append($("#languageAbilityTemplate").html());
-    });
-    $("#addLanguageAbility").click();
-
-    $("#addCertificate").on("click", function () {
-        $("#certificates").append($("#certificateTemplate").html());
-    });
-    $("#addCertificate").click();
-
-    $("#addProjectExperience").on("click", function () {
-        $("#projectExperiences").append($("#projectExperienceTemplate").html());
-    });
-    $("#addProjectExperience").click();
-    function reCalculateAttatcmentSeq() {
-        var attatementSeq = 0;
-        $("#attachments").find(".form-group").each(function (index, item) {
-            $(item).find("label.control-label").text("附件" + ++attatementSeq);
-            renderFileInput($(item).find("input"));
+    }).each(function (index, item) {
+        $(item).next().on("click", function () {
+            $(item).focus();
         });
-    }
-    
-    function deleteAtttachment(eventObj) {
-        var attatchmentId = $(eventObj).parent().data("id");
-        var index = $(eventObj).parent().parent().parent().find("input").length;
-        $(eventObj).parent().parent().parent().append("<input type='hidden' name='deletedOtherAttachmentIds[" + index + "]' value='" + attatchmentId + "'>");
-        $(eventObj).parent().parent().remove();
-    }
-
+    });
+    $('.chosen-select').chosen({search_contains: true});
+    $("#tempCandidateEditForm select[name=projectCompanyId]").cascadedChosen(
+        [{
+          childRef:$("#tempCandidateEditForm select[name=projectId]"),
+          options:{
+            dataCallback: undefined,//[{value:"",label:""}, {value:"",label:""}]
+            url: "/project/findByBean.do?companyId=",
+            dataMapper: function (data) {
+              var nodeData = undefined;
+              $(data.rows).each(function (index, item) {
+                if (!nodeData) {
+                  nodeData = [];
+                }
+                nodeData.push({value: item.id, label: item.name});
+              });
+              return nodeData;
+            },
+            selectedData:[$!tempCandidate.projectId]
+          }
+        }
+        ]);
 </script>

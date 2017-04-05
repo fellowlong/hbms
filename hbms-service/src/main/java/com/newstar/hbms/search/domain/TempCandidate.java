@@ -24,7 +24,7 @@ public class TempCandidate implements Serializable {
 
     private Long companyId;
 
-    private Company company;
+    private TreeNode company;
 
     private String department;
 
@@ -44,13 +44,13 @@ public class TempCandidate implements Serializable {
     private Project project;
 
     //创建信息
-    private String addUsername;
+    private Long addUserId;
     private User addUser;
 
     private Date addTime;
 
     //寻访信息
-    private String searchUsername;
+    private Long searchUserId;
     private User searchUser;
 
     private Date searchTime;
@@ -59,7 +59,7 @@ public class TempCandidate implements Serializable {
     private TreeNode searchStatus;
 
     //
-    private String searchResult;
+    private String searchRemark;
 
     /**
      *
@@ -126,11 +126,11 @@ public class TempCandidate implements Serializable {
         this.companyId = companyId;
     }
 
-    public Company getCompany() {
+    public TreeNode getCompany() {
         return company;
     }
 
-    public void setCompany(Company company) {
+    public void setCompany(TreeNode company) {
         this.company = company;
     }
 
@@ -214,12 +214,12 @@ public class TempCandidate implements Serializable {
         this.project = project;
     }
 
-    public String getAddUsername() {
-        return addUsername;
+    public Long getAddUserId() {
+        return addUserId;
     }
 
-    public void setAddUsername(String addUsername) {
-        this.addUsername = addUsername;
+    public void setAddUserId(Long addUserId) {
+        this.addUserId = addUserId;
     }
 
     public User getAddUser() {
@@ -238,12 +238,12 @@ public class TempCandidate implements Serializable {
         this.addTime = addTime;
     }
 
-    public String getSearchUsername() {
-        return searchUsername;
+    public Long getSearchUserId() {
+        return searchUserId;
     }
 
-    public void setSearchUsername(String searchUsername) {
-        this.searchUsername = searchUsername;
+    public void setSearchUserId(Long searchUserId) {
+        this.searchUserId = searchUserId;
     }
 
     public User getSearchUser() {
@@ -278,12 +278,12 @@ public class TempCandidate implements Serializable {
         this.searchStatus = searchStatus;
     }
 
-    public String getSearchResult() {
-        return searchResult;
+    public String getSearchRemark() {
+        return searchRemark;
     }
 
-    public void setSearchResult(String searchResult) {
-        this.searchResult = searchResult;
+    public void setSearchRemark(String searchRemark) {
+        this.searchRemark = searchRemark;
     }
 
     public Boolean getYn() {
@@ -329,36 +329,36 @@ public class TempCandidate implements Serializable {
     @Override
     public String toString() {
         return "TempCandidate{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", companyId=" + companyId +
-                ", company=" + company +
-                ", department='" + department + '\'' +
-                ", positionId=" + positionId +
-                ", position=" + position +
-                ", production='" + production + '\'' +
-                ", cityId=" + cityId +
-                ", city=" + city +
-                ", jobHuntingStatusId=" + jobHuntingStatusId +
-                ", jobHuntingStatus=" + jobHuntingStatus +
-                ", projectId=" + projectId +
-                ", project=" + project +
-                ", addUsername='" + addUsername + '\'' +
-                ", addUser=" + addUser +
-                ", addTime=" + addTime +
-                ", searchUsername='" + searchUsername + '\'' +
-                ", searchUser=" + searchUser +
-                ", searchTime=" + searchTime +
-                ", searchStatusId=" + searchStatusId +
-                ", searchStatus=" + searchStatus +
-                ", searchResult='" + searchResult + '\'' +
-                ", yn=" + yn +
-                ", createTime=" + createTime +
-                ", createUser='" + createUser + '\'' +
-                ", updateTime=" + updateTime +
-                ", updateUser='" + updateUser + '\'' +
-                '}';
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", phone='" + phone + '\'' +
+            ", email='" + email + '\'' +
+            ", companyId=" + companyId +
+            ", company=" + company +
+            ", department='" + department + '\'' +
+            ", positionId=" + positionId +
+            ", position=" + position +
+            ", production='" + production + '\'' +
+            ", cityId=" + cityId +
+            ", city=" + city +
+            ", jobHuntingStatusId=" + jobHuntingStatusId +
+            ", jobHuntingStatus=" + jobHuntingStatus +
+            ", projectId=" + projectId +
+            ", project=" + project +
+            ", addUserId=" + addUserId +
+            ", addUser=" + addUser +
+            ", addTime=" + addTime +
+            ", searchUserId=" + searchUserId +
+            ", searchUser=" + searchUser +
+            ", searchTime=" + searchTime +
+            ", searchStatusId=" + searchStatusId +
+            ", searchStatus=" + searchStatus +
+            ", searchRemark='" + searchRemark + '\'' +
+            ", yn=" + yn +
+            ", createTime=" + createTime +
+            ", createUser='" + createUser + '\'' +
+            ", updateTime=" + updateTime +
+            ", updateUser='" + updateUser + '\'' +
+            '}';
     }
 }

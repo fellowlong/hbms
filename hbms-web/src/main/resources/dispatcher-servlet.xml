@@ -32,9 +32,8 @@
     <property name="workUris">
       <list>
         <value>/candidate/workspace.do</value>
-        <value>/candidate/resumeSearch.do</value>
         <value>/candidate/findByBean.do</value>
-        <value>/candidate/edit.do</value>
+        <value>/candidate/editView.do</value>
         <value>/candidate/insertOrUpdate.do</value>
         <value>/company/workspace.do</value>
         <value>/company/editView.do</value>
@@ -48,7 +47,7 @@
         <value>/project/editView.do</value>
         <value>/baseData/workspace.do</value>
         <value>/tempCandidate/workspace.do</value>
-        <value>/tempCandidate/edit.do</value>
+        <value>/tempCandidate/editView.do</value>
       </list>
     </property>
     <property name="exportMap">
@@ -149,6 +148,8 @@
   <bean id="tempCandidateController" class="com.newstar.hbms.search.web.controller.TempCandidateController">
     <property name="tempCandidateService" ref="tempCandidateService"/>
     <property name="userService" ref="userService"/>
+    <property name="companyService" ref="companyService"/>
+    <property name="projectService" ref="projectService"/>
     <property name="datePattern" value="${datePattern}"/>
   </bean>
 

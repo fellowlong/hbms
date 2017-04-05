@@ -10,24 +10,19 @@
       phone,
       email,
       companyId,
-      company,
       department,
       positionId,
-      position,
       production,
       cityId,
-      city,
       jobHuntingStatusId,
-      jobHuntingStatus,
       projectId,
-      project,
-      addUsername,
-      addUser,
+      addUserId,
       addTime,
-      searchUsername,
+      searchUserId,
       searchTime,
       searchStatusId,
-      searchResult,
+      searchRemark,
+      yn,
       createTime,
       createUser,
       updateTime,
@@ -40,15 +35,17 @@
       #{companyId,jdbcType=BIGINT},
       #{department,jdbcType=VARCHAR},
       #{positionId,jdbcType=BIGINT},
+      #{production,jdbcType=VARCHAR},
       #{cityId,jdbcType=BIGINT},
       #{jobHuntingStatusId,jdbcType=BIGINT},
       #{projectId,jdbcType=BIGINT},
-      #{addUsername,jdbcType=VARCHAR},
+      #{addUserId,jdbcType=VARCHAR},
       #{addTime,jdbcType=DATE},
-      #{searchUsername,jdbcType=VARCHAR},
+      #{searchUserId,jdbcType=VARCHAR},
       #{searchTime,jdbcType=DATE},
       #{searchStatusId,jdbcType=BIGINT},
-      #{searchResult,jdbcType=VARCHAR},
+      #{searchRemark,jdbcType=VARCHAR},
+      1,
       #{createTime,jdbcType=DATE},
       #{createUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=DATE},
@@ -67,15 +64,16 @@
       companyId = #{companyId,jdbcType=BIGINT},
       department = #{department,jdbcType=VARCHAR},
       positionId = #{positionId,jdbcType=BIGINT},
+      production = #{production,jdbcType=VARCHAR},
       cityId = #{cityId,jdbcType=BIGINT},
       jobHuntingStatusId = #{jobHuntingStatusId,jdbcType=BIGINT},
       projectId = #{projectId,jdbcType=BIGINT},
-      addUsername = #{addUsername,jdbcType=VARCHAR},
+      addUserId = #{addUserId,jdbcType=VARCHAR},
       addTime = #{addTime,jdbcType=DATE},
-      searchUsername = #{searchUsername,jdbcType=VARCHAR},
+      searchUserId = #{searchUserId,jdbcType=VARCHAR},
       searchTime = #{searchTime,jdbcType=DATE},
       searchStatusId = #{searchStatusId,jdbcType=BIGINT},
-      searchResult = #{searchResult,jdbcType=VARCHAR},
+      searchRemark = #{searchRemark,jdbcType=VARCHAR},
       updateTime = now(),
       updateUser = #{updateUser,jdbcType=VARCHAR}
     where
@@ -121,8 +119,8 @@
     <if test="projectId != null">
       and projectId = #{projectId}
     </if>
-    <if test="addUsername != null">
-      and addUsername = #{addUsername}
+    <if test="addUserId != null">
+      and addUserId = #{addUserId}
     </if>
     <if test="searchStatusId != null">
       and searchStatusId = #{searchStatusId}

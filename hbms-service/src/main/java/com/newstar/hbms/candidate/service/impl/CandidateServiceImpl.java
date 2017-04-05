@@ -1,6 +1,5 @@
 package com.newstar.hbms.candidate.service.impl;
 
-import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.basedata.service.TreeService;
 import com.newstar.hbms.candidate.dao.CandidateDao;
 import com.newstar.hbms.candidate.dao.CandidateIndexTaskDao;
@@ -22,7 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fellowlong on 2014-08-07.

@@ -2,8 +2,12 @@ package com.newstar.hbms.search.web.controller;
 
 import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.candidate.domain.Candidate;
+import com.newstar.hbms.customer.domain.Company;
+import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.mvc.ConfigurableMultiActionController;
 import com.newstar.hbms.mvc.MessageCollector;
+import com.newstar.hbms.project.domain.Project;
+import com.newstar.hbms.project.service.ProjectService;
 import com.newstar.hbms.search.domain.TempCandidate;
 import com.newstar.hbms.search.service.TempCandidateService;
 import com.newstar.hbms.support.paging.PageRange;
@@ -29,6 +33,10 @@ public class TempCandidateController  extends ConfigurableMultiActionController 
 
     private UserService userService;
 
+    private CompanyService companyService;
+
+    private ProjectService projectService;
+
     public static Map<Class, List<String>> excludedProperties = new HashMap<Class, List<String>>(0);
 
     static {
@@ -45,12 +53,22 @@ public class TempCandidateController  extends ConfigurableMultiActionController 
         this.userService = userService;
     }
 
+    public void setCompanyService(CompanyService companyService) {
+        this.companyService = companyService;
+    }
+
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
     public ModelAndView workspace(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return new ModelAndView("/search/tempCandidateManage");
+        ModelAndView mav = new ModelAndView("/search/tempCandidateManage");
+        mav.addObject("companies", companyService.findByBean(new Company(), new PageRange(1, 1000)).getRecords());
+        return mav;
     }
 
 
-    public ModelAndView edit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView editView(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Long id = WebUtils.getLong(request, WebUtils.ID);
         ModelAndView modelAndView = new ModelAndView("/search/tempCandidateEdit");
         if (id != null) {
@@ -60,15 +78,11 @@ public class TempCandidateController  extends ConfigurableMultiActionController 
             }
         }
         modelAndView.addObject("users", userService.findAll());
+        modelAndView.addObject("companies", companyService.findByBean(new Company(), new PageRange(1, 1000)).getRecords());
         return modelAndView;
     }
 
     public ModelAndView save(HttpServletRequest request, HttpServletResponse response, TempCandidate tempCandidate) throws Exception {
-/*     = new Candidate();
-    CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-    MultipartHttpServletRequest multipartHttpServletRequest = resolver.resolveMultipart(request);
-    ServletRequestDataBinder servletRequestDataBinder = new ServletRequestDataBinder(candidate);
-    servletRequestDataBinder.bind(multipartHttpServletRequest);*/
         int resultCount = tempCandidateService.insertOrUpdate(tempCandidate);
         MessageCollector msgCollector = new MessageCollector();
         if (resultCount == 1) {
@@ -76,9 +90,9 @@ public class TempCandidateController  extends ConfigurableMultiActionController 
         } else {
             msgCollector.addError(WebUtils.ERROR, Boolean.TRUE);
         }
-        ModelAndView modelAndView = new ModelAndView("/resumeSimple/resumeDetail");
+        ModelAndView modelAndView = new ModelAndView("/search/tempCandidateManage");
         modelAndView.addObject("msgCollector", msgCollector);
-        modelAndView.addObject("resume", tempCandidate);
+        modelAndView.addObject("tempCandidate", tempCandidate);
         return modelAndView;
     }
 

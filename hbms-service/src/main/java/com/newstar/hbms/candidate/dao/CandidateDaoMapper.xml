@@ -118,19 +118,19 @@
         and id = #{id}
       </if>
       <if test="name != null">
-        and name = #{name}
+        and name like "%"#{name}"%"
       </if>
-      <if test="sexId != null">
-        and sexId = #{sexId}
-      </if>
-      <if test="keyword != null">
-        and keyword = #{keyword}
-      </if>
-      <if test="degreeId != null">
-        and degreeId = #{degreeId}
+      <if test="companyId != null">
+        and companyId = #{companyId}
       </if>
       <if test="positionId != null">
         and positionId = #{positionId}
+      </if>
+      <if test="cityId != null">
+        and cityId = #{cityId}
+      </if>
+      <if test="jobHuntingStatusId != null">
+        and jobHuntingStatusId = #{jobHuntingStatusId}
       </if>
       <if test="yn != null">
         and yn = #{yn}

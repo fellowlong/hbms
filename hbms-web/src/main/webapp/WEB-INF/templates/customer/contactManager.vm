@@ -1,6 +1,6 @@
 <div style="padding-bottom: 10px">
   <form id="searchContactForm" class="form-inline" role="form" action="" method="post">
-    <input type="hidden" name="id" value="$!contact.id">
+##    <input type="hidden" name="id" value="$!contact.id">
     <div class="form-group">
       <div class="input-group">
         <div class="input-group-addon">中英文名</div>
@@ -8,10 +8,10 @@
       </div>
       <div class="input-group">
         <div class="input-group-addon">公司</div>
-        <select id="companyId" name="companyId" value="$!contact.companyId" data-placeholder="" class="chosen-select form-control">
+        <select id="companyId" name="companyId" data-placeholder="" class="chosen-select form-control">
           <option value="">全部</option>
           #foreach($company in $companies)
-            <option value="$company.id" #if($company.id == $!contact.companyId) selected #end>$company.name</option>
+            <option value="$company.id" #if($company.id == $param['companyId']) selected #end>$company.name</option>
           #end
         </select>
       </div>
@@ -21,11 +21,11 @@
       </div>
       <div class="input-group">
         <div class="input-group-addon">重要程度</div>
-        <select id="importantLevelId" name="importantLevelId" value="$!contact.importantLevelId" class="chosen-select form-control">
+        <select id="importantLevelId" name="importantLevelId" class="chosen-select form-control">
           #set($contactImportantLevels = $baseDataService.getContactImportantLevels().children)
           <option value="">全部</option>
           #foreach($contactImportantLevel in $contactImportantLevels)
-            <option value="$contactImportantLevel.id" #if($contactImportantLevel.id == $!contact.importantLevelId) selected #end>$contactImportantLevel.label</option>
+            <option value="$contactImportantLevel.id" #if($contactImportantLevel.id == $param['importantLevelId']) selected #end>$contactImportantLevel.label</option>
           #end
         </select>
       </div>

@@ -62,4 +62,11 @@
     </foreach>
   </select>
 
+  <select id="findByUsernames" resultType="com.newstar.hbms.system.domain.User">
+    select * from User where username in
+    <foreach collection="array" open="(" close=")" separator="," item="username">
+      #{username}
+    </foreach>
+  </select>
+
 </mapper>

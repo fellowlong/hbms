@@ -253,6 +253,11 @@
 
   <bean id="tempCandidateService" class="com.newstar.hbms.search.service.impl.TempCandidateServiceImpl">
     <property name="tempCandidateDao" ref="tempCandidateDao"/>
+    <property name="projectService" ref="projectService"/>
+    <property name="companyService" ref="companyService"/>
+    <property name="positionService" ref="positionService"/>
+    <property name="treeService" ref="treeService"/>
+    <property name="userService" ref="userService"/>
   </bean>
 
   <bean id="userService" class="com.newstar.hbms.system.service.impl.UserServiceImpl">

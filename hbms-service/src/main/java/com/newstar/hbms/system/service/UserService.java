@@ -21,4 +21,6 @@ public interface UserService {
 
   public List<User> findByIds(Long[] ids);
 
+  public List<User> findByUsernames(String[] usernames);
+
 }

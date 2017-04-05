@@ -20,5 +20,7 @@ public interface UserDao {
   public User findByUri(String uri);
 
   public List<User> findByIds(Long[] ids);
-  
+
+  public List<User> findByUsernames(String[] usernames);
+
 }

@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<User> findByIds(Long[] ids) {
-    return null;
+    return userDao.findByIds(ids);
+  }
+
+  @Override
+  public List<User> findByUsernames(String[] usernames) {
+    return userDao.findByUsernames(usernames);
   }
 }

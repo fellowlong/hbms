@@ -1,19 +1,28 @@
+
+<style>
+  .baseDataSelectorLabel {
+    min-width: 200px;
+  }
+</style>
 <div style="padding-bottom: 10px">
   <form id="searchPositionForm" class="form-inline" role="form" action="" method="post">
-    <input type="hidden" name="id" value="$!position.id">
     <div class="form-group">
       <div class="input-group">
         <div class="input-group-addon">名称</div>
         <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon" style="border: 1px solid #cccccc;">行业</div>
+        <div id="industriesForSearch" class="baseDataSelector"></div>
+      </div>
+      <div class="input-group">
         <div class="input-group-addon">公司</div>
-        <input class="form-control" name="company.name" #if($param['company.name']) value="$param['company.name']" #end>
-        <div class="input-group-addon">行业</div>
-        <input class="form-control" name="industry" #if($param['mobilePhone']) value="$param['mobilePhone']" #end>
-        <span class="input-group-btn">
-          <button id="searchPosition" class="btn btn-primary form-control no-radius" type="button">
-            <i class="ace-icon fa fa-search"></i>搜索
-          </button>
-        </span>
+        <select id="projectCompanyId" name="project.companyId" class="chosen-select form-control" data-placeholder="请选择..." style="min-width:500px">
+          <option value="">全部</option>
+          #foreach($company in $companies)
+            <option value="$company.id">$company.name</option>
+          #end
+        </select>
       </div>
     </div>
     <div class="form-group" style="padding-left: 20px">
@@ -144,8 +153,28 @@
     });
 
 
-    $('.chosen-select').chosen({search_contains:true});
-    $(".chosen-container").css("width","100%");
+  });
+
+  $('.chosen-select').chosen({search_contains:true});
+  $(".chosen-container").css("width","100%");
+
+  $("#industriesForSearch").baseDataSelector({
+    code: "INDUSTRY",
+    formFieldsMapping: [
+      {rawName: "industries[#index#].industryId", treeNodeAttr: "id"}
+    ],
+    isMultiFormField: true,
+    initServerData:(function() {
+      var serverData = [];
+      var industries = [];
+      #if($!company.industries)
+        industries = $JsonUtils.beanToJson($!company.industries);
+      #end
+      $(industries).each(function (index, itemData) {
+        serverData.push(itemData.industry);
+      });
+      return serverData;
+    })()
   });
 </script>
 
