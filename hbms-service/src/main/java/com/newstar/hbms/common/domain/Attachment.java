@@ -122,4 +122,16 @@ public class Attachment implements Serializable {
     public void setUpdateUser(String updateUser) {
         this.updateUser = updateUser;
     }
+
+    @Override
+    public String toString() {
+        return "Attachment{" +
+                "id=" + id +
+                ", businessType='" + businessType + '\'' +
+                ", businessId=" + businessId +
+                ", fileName='" + fileName + '\'' +
+                ", fileType='" + fileType + '\'' +
+                ", yn=" + yn +
+                '}';
+    }
 }

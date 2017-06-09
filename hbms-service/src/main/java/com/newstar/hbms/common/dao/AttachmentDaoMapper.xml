@@ -139,10 +139,17 @@
     <select id="findByBusiness"
             parameterType="com.newstar.hbms.common.domain.Attachment"
             resultType="com.newstar.hbms.common.domain.Attachment">
-        <include refid="lightSelect"/> where businessType = #{param1} and businessId in
-        <foreach collection="param2" open="(" close=")" separator="," item="attachmentId">
-            #{attachmentId}
-        </foreach>
+        <include refid="lightSelect"/> where 1 =1
+        <if test="param1 != null">
+          and businessType = #{param1}
+        </if>
+        <if test="param2 != null">
+            and businessId in
+            <foreach collection="param2" open="(" close=")" separator="," item="attachmentId">
+                #{attachmentId}
+            </foreach>
+        </if>
+
     </select>
 
 </mapper>

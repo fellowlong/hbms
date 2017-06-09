@@ -40,6 +40,10 @@ public class TempCandidate implements Serializable {
     private TreeNode jobHuntingStatus;
 
     //项目信息
+    private Long projectCompanyId;
+    private Company projectCompany;
+
+    //项目信息
     private Long projectId;
     private Project project;
 
@@ -198,6 +202,22 @@ public class TempCandidate implements Serializable {
         this.jobHuntingStatus = jobHuntingStatus;
     }
 
+    public Long getProjectCompanyId() {
+        return projectCompanyId;
+    }
+
+    public void setProjectCompanyId(Long projectCompanyId) {
+        this.projectCompanyId = projectCompanyId;
+    }
+
+    public Company getProjectCompany() {
+        return projectCompany;
+    }
+
+    public void setProjectCompany(Company projectCompany) {
+        this.projectCompany = projectCompany;
+    }
+
     public Long getProjectId() {
         return projectId;
     }
@@ -329,36 +349,38 @@ public class TempCandidate implements Serializable {
     @Override
     public String toString() {
         return "TempCandidate{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", phone='" + phone + '\'' +
-            ", email='" + email + '\'' +
-            ", companyId=" + companyId +
-            ", company=" + company +
-            ", department='" + department + '\'' +
-            ", positionId=" + positionId +
-            ", position=" + position +
-            ", production='" + production + '\'' +
-            ", cityId=" + cityId +
-            ", city=" + city +
-            ", jobHuntingStatusId=" + jobHuntingStatusId +
-            ", jobHuntingStatus=" + jobHuntingStatus +
-            ", projectId=" + projectId +
-            ", project=" + project +
-            ", addUserId=" + addUserId +
-            ", addUser=" + addUser +
-            ", addTime=" + addTime +
-            ", searchUserId=" + searchUserId +
-            ", searchUser=" + searchUser +
-            ", searchTime=" + searchTime +
-            ", searchStatusId=" + searchStatusId +
-            ", searchStatus=" + searchStatus +
-            ", searchRemark='" + searchRemark + '\'' +
-            ", yn=" + yn +
-            ", createTime=" + createTime +
-            ", createUser='" + createUser + '\'' +
-            ", updateTime=" + updateTime +
-            ", updateUser='" + updateUser + '\'' +
-            '}';
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", companyId=" + companyId +
+                ", company=" + company +
+                ", department='" + department + '\'' +
+                ", positionId=" + positionId +
+                ", position=" + position +
+                ", production='" + production + '\'' +
+                ", cityId=" + cityId +
+                ", city=" + city +
+                ", jobHuntingStatusId=" + jobHuntingStatusId +
+                ", jobHuntingStatus=" + jobHuntingStatus +
+                ", projectCompanyId=" + projectCompanyId +
+                ", projectCompany=" + projectCompany +
+                ", projectId=" + projectId +
+                ", project=" + project +
+                ", addUserId=" + addUserId +
+                ", addUser=" + addUser +
+                ", addTime=" + addTime +
+                ", searchUserId=" + searchUserId +
+                ", searchUser=" + searchUser +
+                ", searchTime=" + searchTime +
+                ", searchStatusId=" + searchStatusId +
+                ", searchStatus=" + searchStatus +
+                ", searchRemark='" + searchRemark + '\'' +
+                ", yn=" + yn +
+                ", createTime=" + createTime +
+                ", createUser='" + createUser + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateUser='" + updateUser + '\'' +
+                '}';
     }
 }

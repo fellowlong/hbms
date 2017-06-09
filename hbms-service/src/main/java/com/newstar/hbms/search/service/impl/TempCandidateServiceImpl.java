@@ -1,8 +1,10 @@
 package com.newstar.hbms.search.service.impl;
 
 import com.newstar.hbms.basedata.service.TreeService;
+import com.newstar.hbms.customer.dao.CompanyDao;
 import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.customer.service.PositionService;
+import com.newstar.hbms.project.dao.ProjectDao;
 import com.newstar.hbms.project.domain.Project;
 import com.newstar.hbms.project.service.ProjectService;
 import com.newstar.hbms.search.dao.TempCandidateDao;
@@ -27,11 +29,9 @@ public class TempCandidateServiceImpl implements TempCandidateService {
 
   private UserService userService;
 
-  private CompanyService companyService;
+  private CompanyDao companyDao;
 
-  private PositionService positionService;
-
-  private ProjectService projectService;
+  private ProjectDao projectDao;
 
   private List<ObjectUtils.SubObjectConfig> subObjectConfigs = new ArrayList<ObjectUtils.SubObjectConfig>();
 
@@ -45,16 +45,12 @@ public class TempCandidateServiceImpl implements TempCandidateService {
     this.userService = userService;
   }
 
-  public void setCompanyService(CompanyService companyService) {
-    this.companyService = companyService;
+  public void setCompanyDao(CompanyDao companyDao) {
+    this.companyDao = companyDao;
   }
 
-  public void setPositionService(PositionService positionService) {
-    this.positionService = positionService;
-  }
-
-  public void setProjectService(ProjectService projectService) {
-    this.projectService = projectService;
+  public void setProjectDao(ProjectDao projectDao) {
+    this.projectDao = projectDao;
   }
 
   public TempCandidateServiceImpl() {
@@ -75,13 +71,20 @@ public class TempCandidateServiceImpl implements TempCandidateService {
     ObjectUtils.SubObjectFetcher projectFetcher = new ObjectUtils.SubObjectFetcher() {
       @Override
       public List fetch(List keys) {
-        return projectService.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
+        return projectDao.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
+      }
+    };
+    ObjectUtils.SubObjectFetcher companyFetcher = new ObjectUtils.SubObjectFetcher() {
+      @Override
+      public List fetch(List keys) {
+        return companyDao.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
       }
     };
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("companyId", "company", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("positionId", "position", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("cityId", "city", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("jobHuntingStatusId", "jobHuntingStatus", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("projectCompanyId", "projectCompany", "id", companyFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("projectId", "project", "id", projectFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("addUserId", "addUser", "id", userFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("searchUserId", "searchUser", "id", userFetcher));

@@ -58,28 +58,28 @@
         </div>
       <div class="input-group">
         <span class="input-group-btn">
-          <button id="searchCandidate" class="btn btn-primary form-control no-radius" type="button">
+          <button id="candidateSearch" class="btn btn-primary form-control no-radius" type="button">
             <i class="ace-icon fa fa-search"></i>搜索
           </button>
         </span>
       </div>
       <div class="input-group">
         <span class="input-group-btn">
-          <button id="searchCandidate" class="btn btn-success form-control no-radius" type="button">
+          <button id="candidateAdd" class="btn btn-success form-control no-radius" type="button">
             <i class="ace-icon fa fa-plus"></i>新增
           </button>
         </span>
       </div>
       <div class="input-group">
         <span class="input-group-btn">
-          <button id="searchCandidate" class="btn btn-success form-control no-radius" type="button">
+          <button id="candidateEdit" class="btn btn-success form-control no-radius" type="button">
             <i class="ace-icon fa fa-edit"></i>编辑
           </button>
         </span>
       </div>
       <div class="input-group">
         <span class="input-group-btn">
-          <button id="searchCandidate" class="btn btn-danger form-control no-radius" type="button">
+          <button id="candidateDelete" class="btn btn-danger form-control no-radius" type="button">
             <i class="ace-icon fa fa-remove"></i>删除
           </button>
         </span>
@@ -100,7 +100,9 @@
       datatype: "json",
       colNames: ['姓名', '公司',  '职位', '城市', '年薪', '年龄', '手机', '标签', '状态', "最近联系", "操作"],
       colModel: [
-        {name: 'name'},
+        {name: 'name', formatter: function(cellvalue, options, rowObject){
+        return "<a href='/candidate/detail.do?id=" + rowObject.id + "' target='_blank'>" + cellvalue + "</a>";
+        }},
         {name: 'company.label'},
         {name: 'position.label'},
         {name: 'city.label'},
@@ -159,10 +161,10 @@
   $("#candidateAdd").on(ace.click_event, function() {
       window.open('/candidate/editView.do');
   });
-  $("#candidateDisable").on("click", function () {
+  $("#candidateDelete").on("click", function () {
     var rowIds = $("#candidateList").jqGrid('getGridParam', 'selarrrow');
     if (!rowIds || rowIds.length < 1) {
-      bootbox.alert("请选择一条进行编辑");
+      bootbox.alert("请选择记录进行删除");
       return;
     }
     bootbox.confirm("<h3>确定删除?</h3>", function (result) {

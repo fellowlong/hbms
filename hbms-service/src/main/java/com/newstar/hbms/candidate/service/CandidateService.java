@@ -22,5 +22,4 @@ public interface CandidateService {
 
   public List<Candidate> findByIds(Long[] ids);
 
-
 }

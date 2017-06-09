@@ -1,0 +1,223 @@
+#*    <div> 
+        <div class="col-sm-6">
+            <h3><b>候选人详情</b></h3>
+            <hr/>
+        </div>
+    </div>*#
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a>
+        </li>
+        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+            <div class="row">
+                <label class="col-sm-5">已上传附件</label>
+                <div class="col-sm-5">
+                    #foreach($attachment in $candidate.otherAttachments)
+                        <span class="badge badge-primary">
+                      $attachment.fileName
+                            <a href="javascript:void()" data-id="$attachment.id" style="color: red">
+                                <i class="ace-icon fa fa-remove icon-only" onclick="deleteAtttachment(this)"></i>
+                            </a>
+                        </span>
+                    #end
+                    <div>
+                    </div>
+                    <div class="col-sm-5
+">
+                    </div>
+                </div>
+            </div>
+
+                <div class="row">
+                    <div class="col-sm-5">编号</div>
+                    <div class="col-sm-7 no-padding-left">
+                        $!candidate.code
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">姓名</label>
+                    <div class="col-sm-5">
+                        $!candidate.name
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">性别</label>
+                    <div class="col-sm-5">
+                        $!candidate.sex.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">生日</label>
+                    <div class="col-sm-5">
+                        $!DateUtils.dateToString($candidate.birthday, 'yyyy-mm-dd')
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">手机</label>
+                    <div class="col-sm-5">
+                        $!candidate.mobile
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">座机</label>
+                    <div class="col-sm-5">
+                        $!candidate.telephone
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">邮箱</label>
+                    <div class="col-sm-5">
+                        $!candidate.email
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">其他联系方式</label>
+                    <div class="col-sm-5">
+                        $!candidate.otherContact
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">学历</label>
+                    <div class="col-sm-5">
+                        $!candidate.degree.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">婚姻状况</label>
+                    <div class="col-sm-5">
+                        $!candidate.marital.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">所在地</label>
+                    <div class="col-sm-5">
+                        $!candidate.city.name
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">工作年限</label>
+                    <div class="col-sm-5">
+                        $!candidate.workYears
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">有海外经历</label>
+                    <div class="col-sm-5">
+                        #if($candidate.overseasExperience) 是 #else 否 #end
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">所在行业</label>
+                    <div class="col-sm-5">
+                        $!candidate.industry.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">当前公司</label>
+                    <div class="col-sm-5">
+                        $!candidate.company.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">当前职位</label>
+                    <div class="col-sm-5">
+                        $!candidate.position.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">当前年薪</label>
+                    <div class="col-sm-5">
+                        $!candidate.currentAnnualSalary 万
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">求职状态</label>
+                    <div class="col-sm-5">
+                        $!candidate.jobHuntingStatus.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">备注</label>
+                    <div class="col-sm-5">
+                        $!candidate.remark
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">搜索关键字</label>
+                    <div class="col-sm-5">
+                        $!candidate.keyword
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">优劣势</label>
+                    <div class="col-sm-5">
+                        $!candidate.strengthsAndWeaknesses
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">目录</label>
+                    <div class="col-sm-5">
+                        $!candidate.folder.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">来源</label>
+                    <div class="col-sm-5">
+                        $!candidate.source.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-5">上传人</label>
+                    <div class="col-sm-5">
+                        $!candidate.uploader.name
+                    </div>
+                </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="profile">
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="messages">
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="settings">
+
+        </div>
+    </div>
+
+</div>
+
+

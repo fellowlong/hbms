@@ -112,6 +112,18 @@ public class CandidateController extends ConfigurableMultiActionController {
     return modelAndView;
   }
 
+  public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Long id = WebUtils.getLong(request, WebUtils.ID);
+    ModelAndView modelAndView = new ModelAndView("/candidate/candidateDetail");
+    if (id != null) {
+      List<Candidate> candidates = candidateService.findByIds(new Long[]{id});
+      if (candidates != null && !candidates.isEmpty()) {
+        modelAndView.getModel().put("candidate", candidates.get(0));
+      }
+    }
+    return modelAndView;
+  }
+
   public ModelAndView save(HttpServletRequest request, HttpServletResponse response, Candidate candidate) throws Exception {
 /*     = new Candidate();
     CommonsMultipartResolver resolver = new CommonsMultipartResolver();

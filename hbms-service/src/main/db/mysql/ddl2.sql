@@ -286,6 +286,7 @@ create table TempCandidate(
   production varchar(100) comment '负责产品',
   cityId bigint comment '所在地',
   jobHuntingStatusId bigint comment '求职状态',
+  projectCompanyId bigint comment '所属项目公司',
   projectId bigint comment '所属项目',
   addUserId varchar(50) comment '添加人',
   addTime datetime comment '添加时间',

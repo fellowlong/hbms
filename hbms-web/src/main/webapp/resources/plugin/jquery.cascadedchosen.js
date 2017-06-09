@@ -84,6 +84,7 @@
         }
         $(childRef).trigger("chosen:updated");
       });
+      $(".chosen-container").css("min-width","150px");
     }
   }
 

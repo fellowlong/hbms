@@ -15,6 +15,7 @@
       production,
       cityId,
       jobHuntingStatusId,
+      projectCompanyId,
       projectId,
       addUserId,
       addTime,
@@ -38,6 +39,7 @@
       #{production,jdbcType=VARCHAR},
       #{cityId,jdbcType=BIGINT},
       #{jobHuntingStatusId,jdbcType=BIGINT},
+      #{projectCompanyId,jdbcType=BIGINT},
       #{projectId,jdbcType=BIGINT},
       #{addUserId,jdbcType=VARCHAR},
       #{addTime,jdbcType=DATE},
@@ -67,6 +69,7 @@
       production = #{production,jdbcType=VARCHAR},
       cityId = #{cityId,jdbcType=BIGINT},
       jobHuntingStatusId = #{jobHuntingStatusId,jdbcType=BIGINT},
+      projectCompanyId = #{projectCompanyId,jdbcType=BIGINT},
       projectId = #{projectId,jdbcType=BIGINT},
       addUserId = #{addUserId,jdbcType=VARCHAR},
       addTime = #{addTime,jdbcType=DATE},
@@ -105,7 +108,7 @@
       and id = #{id}
     </if>
     <if test="name != null">
-      and name = #{name}
+      and name like "%"#{name}"%"
     </if>
     <if test="companyId != null">
       and companyId = #{companyId}
@@ -113,8 +116,11 @@
     <if test="positionId != null">
       and positionId = #{positionId}
     </if>
-    <if test="jobHuntingStatusId != null">
-      and jobHuntingStatusId = #{jobHuntingStatusId}
+    <if test="cityId != null">
+      and cityId = #{cityId}
+    </if>
+    <if test="projectCompanyId != null">
+      and projectCompanyId = #{projectCompanyId}
     </if>
     <if test="projectId != null">
       and projectId = #{projectId}

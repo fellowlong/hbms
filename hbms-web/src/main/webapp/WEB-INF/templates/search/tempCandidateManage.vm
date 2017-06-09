@@ -40,7 +40,7 @@
       </div>
       <div class="input-group">
         <div class="input-group-addon">项目公司</div>
-        <select id="projectCompanyId" name="project.companyId" class="chosen-select form-control">
+        <select id="projectCompanyId" name="projectCompanyId" class="chosen-select form-control">
           <option value="">全部</option>
           #foreach($company in $companies)
             <option value="$company.id">$company.name</option>
@@ -59,7 +59,7 @@
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-btn">
-          <button id="searchCandidate" class="btn btn-primary form-control no-radius" type="button">
+          <button id="searchTempCandidate" class="btn btn-primary form-control no-radius" type="button">
             <i class="ace-icon fa fa-search"></i>搜索
           </button>
         </span>
@@ -105,7 +105,7 @@
         {name: 'company.label'},
         {name: 'position.label'},
         {name: 'city.label'},
-        {name: 'project.company.name'},
+        {name: 'projectCompany.name'},
         {name: 'project.name'},
         {name: 'searchUser.realName'},
         {name: 'searchTime'}
@@ -182,6 +182,28 @@
     window.open('/tempCandidate/editView.do?id='+rowIds[0]);
   });
 
+    $("#searchTempCandidate").on("click", function () {
+        var postData = $("#tempCandidateList").jqGrid("getGridParam", "postData");
+        while (!$.isEmptyObject(postData)) {
+            for (var key in postData) {
+                delete postData[key];
+            }
+        }
+      $("#tempCandidateList").jqGrid('setGridParam', {
+          postData: (function () {
+              var postData = {};
+              $("#tempCandidateSearchForm input, #tempCandidateSearchForm select").each(function (index, item) {
+                  var val = $(item).val();
+                  if (val && val.length > 0 && val != "") {
+                      postData[$(item).attr("name")] = val;
+                  }
+              });
+              return postData;
+          })(),
+          page: 1
+    }).trigger("reloadGrid");
+  });
+
     $("#tempCandidateSearchForm select[id=projectCompanyId]").cascadedChosen(
         [{
           childRef:$("#tempCandidateSearchForm select[name=projectId]"),
@@ -189,7 +211,7 @@
             dataCallback: undefined,//[{value:"",label:""}, {value:"",label:""}]
             url: "/project/findByBean.do?companyId=",
             dataMapper: function (data) {
-              var nodeData = [{value: null, label: "全部"}];
+              var nodeData = [{value: "", label: "全部"}];
               $(data.rows).each(function (index, item) {
                 if (!nodeData) {
                   nodeData = [];
@@ -202,4 +224,6 @@
           }
         }
         ]);
+
+    $(".chosen-container").css("min-width","150px");
 </script>

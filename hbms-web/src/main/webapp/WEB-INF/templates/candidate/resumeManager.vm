@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-sm-6">
+      <h3><b>简历管理</b></h3>
+      <hr/>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+      <span class="input-group-btn">
+          <button id="candidateEdit" class="btn btn-success form-control no-radius" type="button">
+            <i class="ace-icon fa fa-edit"></i>生产HTML简历
+          </button>
+        </span>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+      转换结果：$!result
+  </div>
+</div>

@@ -144,11 +144,11 @@
             </div>
 
           <div class="form-group">
-            <label class="col-sm-1 control-label no-padding-right">公司</label>
+            <label class="col-sm-1 control-label no-padding-right">项目公司</label>
             <div class="col-sm-5">
-              <select id="projectCompanyId" name="projectCompanyId" value="$!tempCandidate.project.companyId" class="chosen-select form-control">
+              <select id="projectCompanyId" name="projectCompanyId" value="$!tempCandidate.projectCompanyId" class="chosen-select form-control">
                   #foreach($company in $companies)
-                    <option value="$company.id" #if($company.id == $tempCandidate.project.companyId) selected #end>$company.name</option>
+                    <option value="$company.id" #if($company.id == $tempCandidate.projectCompanyId) selected #end>$company.name</option>
                   #end
               </select>
             </div>
