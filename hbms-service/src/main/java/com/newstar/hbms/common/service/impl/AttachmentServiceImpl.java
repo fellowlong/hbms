@@ -37,6 +37,16 @@ public class AttachmentServiceImpl implements AttachmentService {
   }
 
   @Override
+  public List<Attachment> findByIds(Long[] attachmentIds) {
+    return attachmentDao.findByIds(attachmentIds);
+  }
+
+  @Override
+  public List<Attachment> findByBean(Attachment attachment) {
+    return attachmentDao.findByBean(attachment);
+  }
+
+  @Override
   public List<Attachment> findByBusiness(String businessType, Long[] businessIds) {
     return attachmentDao.findByBusiness(businessType, businessIds);
   }

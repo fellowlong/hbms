@@ -40,11 +40,11 @@
       </div>
       <div class="input-group">
         <div class="input-group-addon">求职状态</div>
-        <select id="jobHuntingStatusId" class="chosen-select form-control" name="jobHuntingStatusId" value="$!candidate.jobHuntingStatusId">
+        <select id="statusId" class="chosen-select form-control" name="statusId" value="$!candidate.statusId">
           <option value="">全部</option>
-          #set($jobHuntingStatuses = $baseDataService.getJobHuntingStatuses().children)
-          #foreach($jobHuntingStatus in $jobHuntingStatuses)
-            <option value="$jobHuntingStatus.id">$jobHuntingStatus.label</option>
+          #set($statuses = $baseDataService.getCandidateStatus().children)
+          #foreach($status in $statuses)
+            <option value="$status.id">$status.label</option>
           #end
         </select>
       </div>
@@ -110,7 +110,7 @@
         {name: 'birthday'},
         {name: 'mobile'},
         {name: 'tag'},
-        {name: 'jobHuntingStatus.label'},
+        {name: 'status.label'},
         {name: 'lastContact'},
         {name: 'isKey', formatter: function(cellvalue, options, rowObject){
           return cellvalue ? "<i class='ace-icon glyphicon glyphicon-ok' style='color: green'></i>" : "<i class='ace-icon glyphicon glyphicon-remove' style='color: red'></i>";

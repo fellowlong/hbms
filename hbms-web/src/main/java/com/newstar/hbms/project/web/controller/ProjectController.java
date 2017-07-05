@@ -88,6 +88,19 @@ public class ProjectController extends MultiActionController {
     return modelAndView;
   }
 
+
+  public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Long id = WebUtils.getLong(request, WebUtils.ID);
+    ModelAndView modelAndView = new ModelAndView("/project/projectDetail");
+    if (id != null) {
+      List<Project> projects = projectService.findByIds(new Long[]{id});
+      if (projects != null && !projects.isEmpty()) {
+        modelAndView.getModel().put("project", projects.get(0));
+      }
+    }
+    return modelAndView;
+  }
+
   public void insertOrUpdate(HttpServletRequest request, HttpServletResponse response, Project project) throws Exception  {
     JsonResult jsonResult = new JsonResult();
     try {

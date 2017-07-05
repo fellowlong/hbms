@@ -97,6 +97,17 @@
         update Attachment set yn = 1 where businessId = #{value}
     </delete>
 
+
+    <select id="findByIds" parameterType="java.lang.Long" resultType="com.newstar.hbms.common.domain.Attachment">
+        select * from Attachment where yn = 1
+        <if test="array != null">
+            and id in
+            <foreach collection="array" open="(" close=")" separator="," item="attachmentId">
+                #{attachmentId}
+            </foreach>
+        </if>
+    </select>
+
     <select id="findByBean"
             parameterType="com.newstar.hbms.common.domain.Attachment"
             resultType="com.newstar.hbms.common.domain.Attachment">
@@ -105,7 +116,7 @@
           and a.id = #{id}
         </if>
         <if test="businessType != null">
-          and a.businessBigType = #{businessBigType}
+          and a.businessType = #{businessType}
         </if>
         <if test="businessId != null">
           and a.businessId = #{businessId}
@@ -127,15 +138,6 @@
         </if>
     </select>
 
-    <select id="findByIds"
-            parameterType="com.newstar.hbms.common.domain.Attachment"
-            resultType="com.newstar.hbms.common.domain.Attachment">
-        select * from Attachment where id in
-        <foreach collection="array" open="(" close=")" separator="," item="attachmentId">
-            #{attachmentId}
-        </foreach>
-    </select>
-
     <select id="findByBusiness"
             parameterType="com.newstar.hbms.common.domain.Attachment"
             resultType="com.newstar.hbms.common.domain.Attachment">
@@ -145,8 +147,8 @@
         </if>
         <if test="param2 != null">
             and businessId in
-            <foreach collection="param2" open="(" close=")" separator="," item="attachmentId">
-                #{attachmentId}
+            <foreach collection="param2" open="(" close=")" separator="," item="businessId">
+                #{businessId}
             </foreach>
         </if>
 

@@ -7,7 +7,7 @@
 <div class="row">
   <div class="col-sm-6">
       <span class="input-group-btn">
-          <button id="candidateEdit" class="btn btn-success form-control no-radius" type="button">
+          <button id="resumeConvert" class="btn btn-success form-control no-radius" type="button">
             <i class="ace-icon fa fa-edit"></i>生产HTML简历
           </button>
         </span>
@@ -18,3 +18,20 @@
       转换结果：$!result
   </div>
 </div>
+<script language="JavaScript">
+    $("#resumeConvert").on(ace.click_event, function() {
+        $.ajax({
+            url:"/resume/convert.do",
+            type: "POST",
+           // data: parameter,
+            dataType: "html",
+//            timeout: 3000,
+            success: function(data, textStatus, jqXHR){
+                alert(jqXHR.responseText);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+    });
+</script>

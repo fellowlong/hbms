@@ -38,6 +38,7 @@
         <value>/candidate/detail.do</value>
         <value>/resume/index.do</value>
         <value>/resume/convert.do</value>
+        <value>/resume/view.do</value>
         <value>/company/workspace.do</value>
         <value>/company/editView.do</value>
         <value>/company/findByBean.do</value>
@@ -48,6 +49,7 @@
         <value>/position/editView.do</value>
         <value>/project/workspace.do</value>
         <value>/project/editView.do</value>
+        <value>/project/detail.do</value>
         <value>/baseData/workspace.do</value>
         <value>/tempCandidate/workspace.do</value>
         <value>/tempCandidate/editView.do</value>
@@ -125,6 +127,15 @@
 
   <bean id="resumeController" class="com.newstar.hbms.candidate.web.controller.ResumeController">
     <property name="attachmentService" ref="attachmentService"/>
+    <property name="targetFolder" value="${resume.targetFolder}"/>
+  </bean>
+
+  <bean id="attachmentController" class="com.newstar.hbms.common.web.controller.AttachmentController">
+    <property name="attachmentService" ref="attachmentService"/>
+  </bean>
+
+  <bean id="resumeViewController" class="com.newstar.hbms.candidate.web.controller.ResumeViewController">
+    <property name="targetFolder" value="${resume.targetFolder}"/>
   </bean>
 
   <bean id="companyController" class="com.newstar.hbms.customer.web.controller.CompanyController">

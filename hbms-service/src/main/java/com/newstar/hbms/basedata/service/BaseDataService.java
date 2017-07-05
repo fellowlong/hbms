@@ -41,7 +41,7 @@ public interface BaseDataService {
     public static final String TYPE_CODE_CANDIDATE_SOURCE = "CANDIDATE_SOURCE";
 
 
-    public static final String TYPE_CODE_JOB_HUNTING_STATUS = "JOB_HUNTING_STATUS";
+    public static final String TYPE_CODE_CANDIDATE_STATUS = "CANDIDATE_STATUS";
 
     public static final String TYPE_CODE_COMPANY_TYPE = "COMPANY_TYPE";
     public static final String TYPE_CODE_COMPANY_FOLDER = "COMPANY_FOLDER";
@@ -56,6 +56,7 @@ public interface BaseDataService {
     public static final String TYPE_CODE_PROJECT_IMPORTANT_LEVEL = "PROJECT_IMPORTANT_LEVEL";
 
     public static final String TYPE_CODE_PROJECT_STATUS = "PROJECT_STATUS";
+    public static final String TYPE_CODE_PROJECT_CANDIDATE_STATUS = "PROJECT_CANDIDATE_STATUS";
 
 
     public TreeNode getSexes();
@@ -70,7 +71,7 @@ public interface BaseDataService {
     public TreeNode getDepartments();
     public TreeNode getCompanies();
     public TreeNode getNationalities();
-    public TreeNode getJobHuntingStatuses();
+    public TreeNode getCandidateStatus();
     public TreeNode getCandidateFolders();
     public TreeNode getCandidateSources();
     public TreeNode getCompanyTypes();

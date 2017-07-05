@@ -119,11 +119,11 @@
             <div class="form-group">
                 <label class="col-sm-1 control-label no-padding-right">求职状态</label>
                 <div class="col-sm-5">
-                    <select id="jobHuntingStatusId" class="chosen-select form-control" name="jobHuntingStatusId"
-                            value="$!tempCandidate.jobHuntingStatusId">
-                        #set($jobHuntingStatuses = $baseDataService.getJobHuntingStatuses().children)
-                        #foreach($jobHuntingStatus in $jobHuntingStatuses)
-                            <option value="$jobHuntingStatus.id" #if($jobHuntingStatus.id == $tempCandidate.jobHuntingStatusId) selected #end>$jobHuntingStatus.label</option>
+                    <select id="statusId" class="chosen-select form-control" name="statusId"
+                            value="$!tempCandidate.statusId">
+                        #set($statuses = $baseDataService.getCandidateStatus().children)
+                        #foreach($status in $statuses)
+                            <option value="$status.id" #if($status.id == $tempCandidate.statusId) selected #end>$status.label</option>
                         #end
                     </select>
                 </div>

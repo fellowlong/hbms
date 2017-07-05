@@ -70,7 +70,7 @@ public class CandidateServiceImpl implements CandidateService {
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("industryId", "industry", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig( "companyId", "company", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("positionId", "position", "id", baseDataFetcher));
-    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("jobHuntingStatusId", "jobHuntingStatus", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("statusId", "status", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("folderId", "folder", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("sourceId", "source", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("uploaderId", "uploader", "id", baseDataFetcher));

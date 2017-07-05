@@ -23,7 +23,7 @@
       companyId,
       positionId,
       currentAnnualSalary,
-      jobHuntingStatusId,
+      statusId,
       strengthsAndWeaknesses,
       remark,
       keyword,
@@ -53,7 +53,7 @@
       #{companyId, jdbcType=BIGINT},
       #{positionId, jdbcType=BIGINT},
       #{currentAnnualSalary, jdbcType=DOUBLE},
-      #{jobHuntingStatusId, jdbcType=BIGINT},
+      #{statusId, jdbcType=BIGINT},
       #{strengthsAndWeaknesses, jdbcType=VARCHAR},
       #{remark, jdbcType=VARCHAR},
       #{keyword, jdbcType=VARCHAR},
@@ -90,7 +90,7 @@
       companyId = #{companyId, jdbcType=BIGINT},
       positionId = #{positionId, jdbcType=BIGINT},
       currentAnnualSalary = #{currentAnnualSalary, jdbcType=DOUBLE},
-      jobHuntingStatusId = #{jobHuntingStatusId, jdbcType=BIGINT},
+      statusId = #{statusId, jdbcType=BIGINT},
       strengthsAndWeaknesses = #{strengthsAndWeaknesses, jdbcType=VARCHAR},
       remark = #{remark, jdbcType=VARCHAR},
       keyword = #{keyword, jdbcType=VARCHAR},
@@ -129,8 +129,8 @@
       <if test="cityId != null">
         and cityId = #{cityId}
       </if>
-      <if test="jobHuntingStatusId != null">
-        and jobHuntingStatusId = #{jobHuntingStatusId}
+      <if test="statusId != null">
+        and statusId = #{statusId}
       </if>
       <if test="yn != null">
         and yn = #{yn}

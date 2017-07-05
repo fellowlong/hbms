@@ -82,8 +82,8 @@ public class BaseDataServiceImpl implements BaseDataService {
     }
 
     @Override
-    public TreeNode getJobHuntingStatuses() {
-        return treeService.findTreeByAncestorCode(TYPE_CODE_JOB_HUNTING_STATUS);
+    public TreeNode getCandidateStatus() {
+        return treeService.findTreeByAncestorCode(TYPE_CODE_CANDIDATE_STATUS);
     }
 
     @Override

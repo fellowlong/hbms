@@ -22,8 +22,8 @@ company
 positionId
 position
 currentAnnualSalary
-jobHuntingStatusId
-jobHuntingStatus
+statusId
+status
 strengthsAndWeaknesses
 remark
 keyword

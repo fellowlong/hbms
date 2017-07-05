@@ -74,7 +74,9 @@
       datatype: "json",
       colNames: ['名称', '职位', '公司', '项目经理', '状态', '重要程度'],
       colModel: [
-        {name: 'name', width: 150},
+        {name: 'name', width: 150, formatter: function(cellvalue, options, rowObject){
+          return "<a href='/project/detail.do?id=" + rowObject.id + "' target='_blank'>" + cellvalue + "</a>";
+        }},
         {name: 'position.name', width: 150},
         {name: 'company.name', width: 150},
         {name: 'manager.realName', width: 150},
