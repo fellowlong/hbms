@@ -119,6 +119,24 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane active" id="项目候选人">
+            <div class="row">
+              <button id="candidateSearch" class="btn btn-primary no-radius" type="button">
+                <i class="ace-icon fa fa-plus"></i>新增简历
+              </button>
+              <button id="candidateSearch" class="btn btn-primary no-radius" type="button">
+                <i class="ace-icon fa fa-search"></i>从人才库搜索
+              </button>
+              <button id="candidateSearch" class="btn btn-primary no-radius" type="button">
+                <i class="ace-icon fa fa-search"></i>批量导入简历
+              </button>
+            </div>
+            <div class="row">
+                <div id="projectCandidateListDiv" style="width: 100%;left: 0;right: 0">
+                    <table id="projectCandidateList"></table>
+                    <div id="projectCandidateListPager"></div>
+                </div>
+            </div>
+
         </div>
         <div role="tabpanel" class="tab-pane" id="发票">
         </div>
@@ -130,3 +148,44 @@
         </div>
     </div>
 </div>
+
+<script language="JavaScript">
+    $("#candidateList").jqGrid({
+        url: '/candidate/findByBean.do',
+        mtype: "POST",
+        datatype: "json",
+        colNames: ['姓名', '公司',  '职位', '年薪', '年龄', '标签', '状态', "最近联系", "操作"],
+        colModel: [
+            {name: 'name', formatter: function(cellvalue, options, rowObject){
+                return "<a href='/candidate/detail.do?id=" + rowObject.id + "' target='_blank'>" + cellvalue + "</a>";
+            }},
+            {name: 'company.label'},
+            {name: 'position.label'},
+            {name: 'city.label'},
+            {name: 'currentAnnualSalary'},
+            {name: 'birthday'},
+            {name: 'mobile'},
+            {name: 'tag'},
+            {name: 'status.label'},
+            {name: 'lastContact'},
+            {name: 'isKey', formatter: function(cellvalue, options, rowObject){
+                return cellvalue ? "<i class='ace-icon glyphicon glyphicon-ok' style='color: green'></i>" : "<i class='ace-icon glyphicon glyphicon-remove' style='color: red'></i>";
+
+            }}
+        ],
+        multiselect: true,
+        rowNum: 10,
+        rowList: [10, 30, 50, 100],
+        pager: '#candidateListPager',
+        forceFit:true,
+        shrinkToFit: true
+    });
+    function resizeCandidateList() {
+        $("#candidateList").jqGrid('setGridWidth', $(window).width() - $("#candidateListDiv").position().left - 15);
+        $("#candidateList").jqGrid('setGridHeight', $(window).height() - $("#candidateListDiv").position().top - 100);
+    }
+    resizeCandidateList();
+    $(window).on('resize', function () {
+        resizeCandidateList();
+    });
+</script>
