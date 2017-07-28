@@ -135,6 +135,14 @@
       <if test="yn != null">
         and yn = #{yn}
       </if>
+      <if test="projectIds != null">
+        and id not in
+        (select candidateId from ProjectCandidate where projectId in
+          <foreach collection="projectIds" index="index" open="(" close=")" separator=",">
+            #{projectIds[${index}]}
+          </foreach>
+        )
+      </if>
   </select>
 
   <select id="findByIds"

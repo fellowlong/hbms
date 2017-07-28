@@ -300,3 +300,15 @@ create table TempCandidate(
   updateTime datetime comment '修改时间',
   updateUser varchar(50) comment '修改人账户'
 ) comment='临时候选人表';
+
+drop table ProjectCandidate;
+create table ProjectCandidate(
+  id bigint auto_increment not null primary key comment '主键',
+  projectId bigint comment '项目编号',
+  candidateId bigint comment '项目编号',
+  statusId bigint comment '状态编号',
+  createTime datetime comment '创建时间',
+  createUser varchar(50) comment '创建人账户',
+  updateTime datetime comment '修改时间',
+  updateUser varchar(50) comment '修改人账户'
+)  comment='项目中的候选人表';

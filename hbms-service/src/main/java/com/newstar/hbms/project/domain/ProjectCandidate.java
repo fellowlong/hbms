@@ -20,13 +20,8 @@ public class ProjectCandidate implements Serializable {
   private Long candidateId;
   private Candidate candidate;
 
+  private Long statusId;
   private TreeNode status;
-
-
-  /**
-   *
-   */
-  private Boolean yn;
 
 
   /**
@@ -43,6 +38,12 @@ public class ProjectCandidate implements Serializable {
    * 修改时间
    */
   private Date updateTime;
+
+  /**
+   * 修改人
+   */
+  private String updateUser;
+
 
   public Long getId() {
     return id;
@@ -92,14 +93,6 @@ public class ProjectCandidate implements Serializable {
     this.status = status;
   }
 
-  public Boolean getYn() {
-    return yn;
-  }
-
-  public void setYn(Boolean yn) {
-    this.yn = yn;
-  }
-
   public Date getCreateTime() {
     return createTime;
   }
@@ -124,6 +117,22 @@ public class ProjectCandidate implements Serializable {
     this.updateTime = updateTime;
   }
 
+  public Long getStatusId() {
+    return statusId;
+  }
+
+  public void setStatusId(Long statusId) {
+    this.statusId = statusId;
+  }
+
+  public String getUpdateUser() {
+    return updateUser;
+  }
+
+  public void setUpdateUser(String updateUser) {
+    this.updateUser = updateUser;
+  }
+
   @Override
   public String toString() {
     return "ProjectCandidate{" +
@@ -132,11 +141,12 @@ public class ProjectCandidate implements Serializable {
             ", project=" + project +
             ", candidateId=" + candidateId +
             ", candidate=" + candidate +
+            ", statusId=" + statusId +
             ", status=" + status +
-            ", yn=" + yn +
             ", createTime=" + createTime +
             ", createUser='" + createUser + '\'' +
             ", updateTime=" + updateTime +
+            ", updateUser='" + updateUser + '\'' +
             '}';
   }
 }

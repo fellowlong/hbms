@@ -1,3 +1,17 @@
+#if($operationType == 'SELECT')
+  #include("/resource.vm")
+  <style>
+      body, html {
+          margin: 0px;
+          padding: 0;
+          width: 100%;
+          background-color: white;
+          font-family: '微软雅黑';
+          color: #666;
+          min-width: 1210px;
+      }
+  </style>
+#end
 <div style="margin:2px">
 
 <div class="row" style="margin: 5px">
@@ -63,28 +77,40 @@
           </button>
         </span>
       </div>
-      <div class="input-group">
+      #if($operationType == 'MANAGE')
+          <div class="input-group">
+          <span class="input-group-btn">
+            <button id="candidateAdd" class="btn btn-success form-control no-radius" type="button">
+              <i class="ace-icon fa fa-plus"></i>新增
+            </button>
+          </span>
+          </div>
+          <div class="input-group">
+          <span class="input-group-btn">
+            <button id="candidateEdit" class="btn btn-success form-control no-radius" type="button">
+              <i class="ace-icon fa fa-edit"></i>编辑
+            </button>
+          </span>
+          </div>
+          <div class="input-group">
+          <span class="input-group-btn">
+            <button id="candidateDelete" class="btn btn-danger form-control no-radius" type="button">
+              <i class="ace-icon fa fa-remove"></i>删除
+            </button>
+          </span>
+          </div>
+      </div>
+      #end
+      #if($operationType == 'SELECT')
+        <input type="hidden" name="projectIds[0]" value="$param['projectId']">
+        <div class="input-group">
         <span class="input-group-btn">
-          <button id="candidateAdd" class="btn btn-success form-control no-radius" type="button">
-            <i class="ace-icon fa fa-plus"></i>新增
+          <button id="candidateSelect" class="btn btn-success form-control no-radius" type="button">
+            <i class="ace-icon fa fa-plus"></i>添加人才
           </button>
         </span>
-      </div>
-      <div class="input-group">
-        <span class="input-group-btn">
-          <button id="candidateEdit" class="btn btn-success form-control no-radius" type="button">
-            <i class="ace-icon fa fa-edit"></i>编辑
-          </button>
-        </span>
-      </div>
-      <div class="input-group">
-        <span class="input-group-btn">
-          <button id="candidateDelete" class="btn btn-danger form-control no-radius" type="button">
-            <i class="ace-icon fa fa-remove"></i>删除
-          </button>
-        </span>
-      </div>
-      </div>
+        </div>
+      #end
   </form>
 </div>
 
@@ -97,9 +123,11 @@
     $("#candidateList").jqGrid({
       url: '/candidate/findByBean.do',
       mtype: "POST",
+      #if($!param['projectId']) postData: {"projectIds[0]":$!param['projectId']}, #end
       datatype: "json",
-      colNames: ['姓名', '公司',  '职位', '城市', '年薪', '年龄', '手机', '标签', '状态', "最近联系", "操作"],
+      colNames: ['主键', '姓名', '公司',  '职位', '城市', '年薪', '年龄', '手机', '状态', "最近联系", "操作"],
       colModel: [
+        {name: 'id', hidden:true},
         {name: 'name', formatter: function(cellvalue, options, rowObject){
         return "<a href='/candidate/detail.do?id=" + rowObject.id + "' target='_blank'>" + cellvalue + "</a>";
         }},
@@ -109,7 +137,6 @@
         {name: 'currentAnnualSalary'},
         {name: 'birthday'},
         {name: 'mobile'},
-        {name: 'tag'},
         {name: 'status.label'},
         {name: 'lastContact'},
         {name: 'isKey', formatter: function(cellvalue, options, rowObject){
@@ -144,20 +171,6 @@
         });
   });
 
-  $("#candidateSearch").on("click", function () {
-    searchCandidate();
-  });
-  function searchCandidate() {
-    $("#candidateList").jqGrid('setGridParam', {
-      /*postData: {
-        name: $("#searchCustomerForm input[name='name']").val(),
-        industry: $("#searchCustomerForm input[name='industry']").val(),
-        phone: $("#searchCustomerForm input[name='phone']").val()
-      },*/
-      page: 1
-    }).trigger("reloadGrid");
-  }
-
   $("#candidateAdd").on(ace.click_event, function() {
       window.open('/candidate/editView.do');
   });
@@ -190,7 +203,7 @@
     window.open('/candidate/editView.do?id='+rowIds[0]);
   });
 
-  $("#searchCandidate").on("click", function () {
+  $("#candidateSearch").on("click", function () {
     var postData = $("#candidateList").jqGrid("getGridParam", "postData");
     while (!$.isEmptyObject(postData)) {
       for (var key in postData) {
@@ -210,6 +223,23 @@
       })(),
       page: 1
     }).trigger("reloadGrid");
+  });
+
+  $("#candidateSelect").on("click", function () {
+      var rowIds = $("#candidateList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length < 1) {
+          bootbox.alert("请选择一条进行编辑");
+          return;
+      }
+      var selectedCandidates = [];
+      for (var i = 0; i < rowIds.length; i++) {
+          selectedCandidates.push($("#candidateList").getRowData(rowIds[i])["id"]);
+      }
+      if(opener.receiveSelectedCandidate(selectedCandidates)) {
+        for (var j = rowIds.length - 1; j >= 0; j--) {
+            $("#candidateList").delRowData(rowIds[j]);
+        }
+      }
   });
 
 </script>

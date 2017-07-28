@@ -211,6 +211,7 @@
     <property name="userService" ref="userService"/>
     <property name="treeService" ref="treeService"/>
     <property name="companyService" ref="companyService"/>
+    <property name="projectService" ref="projectService"/>
   </bean>
 
 <!--  <bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
@@ -243,6 +244,7 @@
   </bean>
 
   <bean id="projectService" class="com.newstar.hbms.project.service.impl.ProjectServiceImpl">
+    <property name="candidateService" ref="candidateService"/>
     <property name="projectDao" ref="projectDao"/>
     <property name="userService" ref="userService"/>
     <property name="contactService" ref="contactService"/>

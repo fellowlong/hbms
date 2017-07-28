@@ -83,6 +83,8 @@ public class Project implements Serializable {
    */
   private List<ProjectAssistant> assistants = new ArrayList<ProjectAssistant>();
 
+  private List<ProjectCandidate> candidates = new ArrayList<ProjectCandidate>();
+
   /**
    * 项目状态
    */
@@ -259,6 +261,14 @@ public class Project implements Serializable {
 
   public void setConsultants(List<ProjectConsultant> consultants) {
     this.consultants = consultants;
+  }
+
+  public List<ProjectCandidate> getCandidates() {
+    return candidates;
+  }
+
+  public void setCandidates(List<ProjectCandidate> candidates) {
+    this.candidates = candidates;
   }
 
   public Long getStatusId() {

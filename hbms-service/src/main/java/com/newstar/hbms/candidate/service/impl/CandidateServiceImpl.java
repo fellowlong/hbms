@@ -11,6 +11,8 @@ import com.newstar.hbms.candidate.service.CandidateService;
 import com.newstar.hbms.common.domain.Attachment;
 import com.newstar.hbms.common.service.AttachmentService;
 import com.newstar.hbms.customer.service.CompanyService;
+import com.newstar.hbms.project.domain.ProjectCandidate;
+import com.newstar.hbms.project.service.ProjectService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 import com.newstar.hbms.system.service.UserService;
@@ -40,6 +42,8 @@ public class CandidateServiceImpl implements CandidateService {
   private UserService userService;
 
   private AttachmentService attachmentService;
+
+  private ProjectService projectService;
 
   private CandidateIndexTaskDao candidateIndexTaskDao;
 
@@ -104,6 +108,16 @@ public class CandidateServiceImpl implements CandidateService {
       }
     } else {
       resultCount = candidateDao.insert(candidate);
+    }
+    if (candidate.getProjectIds() != null && !candidate.getProjectIds().isEmpty()) {
+      List<ProjectCandidate> projectCandidates = new ArrayList<ProjectCandidate>();
+      for (Long id : candidate.getProjectIds()) {
+        ProjectCandidate projectCandidate = new ProjectCandidate();
+        projectCandidate.setProjectId(id);
+        projectCandidate.setCandidateId(candidate.getId());
+        projectCandidates.add(projectCandidate);
+      }
+      resultCount += projectService.addProjectCandidates(projectCandidates);
     }
     if (candidate.getResumeFile() != null) {
       //如果是修改的话，新的简历要覆盖旧
@@ -204,5 +218,9 @@ public class CandidateServiceImpl implements CandidateService {
 
   public void setCandidateIndexTaskDao(CandidateIndexTaskDao candidateIndexTaskDao) {
     this.candidateIndexTaskDao = candidateIndexTaskDao;
+  }
+
+  public void setProjectService(ProjectService projectService) {
+    this.projectService = projectService;
   }
 }

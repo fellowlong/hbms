@@ -7,6 +7,7 @@ import com.newstar.hbms.customer.service.ContactService;
 import com.newstar.hbms.customer.service.PositionService;
 import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.project.domain.Project;
+import com.newstar.hbms.project.domain.ProjectCandidate;
 import com.newstar.hbms.project.service.ProjectService;
 import com.newstar.hbms.system.service.UserService;
 import com.newstar.hbms.utils.DateEditor;
@@ -180,6 +181,41 @@ public class ProjectController extends MultiActionController {
     WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, excludedProperties));
   }
 
+  public void findProjectCandidatesByBean(HttpServletRequest request, HttpServletResponse response, ProjectCandidate projectCandidate)
+          throws Exception {
+    String pageSize = request.getParameter("rows");
+    String pageNum = request.getParameter("page");
+    PageRange pageRange = new PageRange();
+    if (pageSize != null) {
+      pageRange.setPageSize(Integer.parseInt(pageSize));
+    }
+    if (pageNum != null) {
+      pageRange.setPageNum(Integer.parseInt(pageNum));
+    }
+    PagingResult<ProjectCandidate> projectCandidateResult = projectService.findProjectCandidatesByBean(projectCandidate, pageRange);
+    Map<String, Object> jsonMap = new HashMap();
+    jsonMap.put("page", pageNum);
+    jsonMap.put("total ", projectCandidateResult.getPageTotal());
+    jsonMap.put("records ", projectCandidateResult.getRecordTotal());
+    if (projectCandidateResult.getRecords() != null) {
+      jsonMap.put("rows", projectCandidateResult.getRecords().toArray());
+    } else {
+      jsonMap.put("rows", null);
+    }
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, excludedProperties));
+  }
+  public void addCandidates(HttpServletRequest request, HttpServletResponse response, Project project) throws Exception {
+    JsonResult jsonResult = new JsonResult();
+    try {
+      int resultCount = projectService.addProjectCandidates(project.getCandidates());
+      jsonResult.setSuccess(true);
+      jsonResult.setData(resultCount);
+    } catch (Throwable t) {
+      logger.error("添加候选人到项目中失败", t);
+      jsonResult.setErrorMessage(ExceptionUtils.getExceptionStack(t));
+    }
+    WebUtils.writeWithJson(response, jsonResult);
+  }
   @Override
   protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
     super.initBinder(request, binder);

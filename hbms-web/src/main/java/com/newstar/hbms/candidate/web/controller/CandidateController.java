@@ -6,6 +6,8 @@ import com.newstar.hbms.candidate.service.CandidateService;
 import com.newstar.hbms.mvc.ConfigurableMultiActionController;
 import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.mvc.MessageCollector;
+import com.newstar.hbms.project.domain.Project;
+import com.newstar.hbms.project.service.ProjectService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 import com.newstar.hbms.system.service.UserService;
@@ -36,6 +38,8 @@ public class CandidateController extends ConfigurableMultiActionController {
 
   private UserService userService;
 
+  private ProjectService projectService;
+
   public void setCandidateService(CandidateService candidateService) {
     this.candidateService = candidateService;
   }
@@ -48,20 +52,30 @@ public class CandidateController extends ConfigurableMultiActionController {
     this.userService = userService;
   }
 
+  public void setProjectService(ProjectService projectService) {
+    this.projectService = projectService;
+  }
+
   public static Map<Class, List<String>> excludedProperties = new HashMap<Class, List<String>>(0);
 
   static {
     excludedProperties.put(TreeNode.class, Arrays.asList(new String[]{"children"}));
   }
 
-  public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    return new ModelAndView("/resumeSimple/resumeIndex");
-  }
-
   public ModelAndView workspace(HttpServletRequest request,
                                  HttpServletResponse response,
                                  Candidate candidate) throws Exception {
-    return new ModelAndView("/candidate/candidateManage");
+    ModelAndView modelAndView = new ModelAndView("/candidate/candidateManage");
+    modelAndView.addObject("operationType", "MANAGE");
+    return modelAndView;
+  }
+
+  public ModelAndView select(HttpServletRequest request,
+                                 HttpServletResponse response,
+                                 Candidate candidate) throws Exception {
+    ModelAndView modelAndView = new ModelAndView("/candidate/candidateManage");
+    modelAndView.addObject("operationType", "SELECT");
+    return modelAndView;
   }
 
   public void findByBean(HttpServletRequest request,
@@ -106,6 +120,14 @@ public class CandidateController extends ConfigurableMultiActionController {
       List<Candidate> candidates = candidateService.findByIds(new Long[]{id});
       if (candidates != null && !candidates.isEmpty()) {
         modelAndView.getModel().put("candidate", candidates.get(0));
+      }
+    } else {
+      Long projectId = WebUtils.getLong(request, "projectId");
+      if (projectId != null) {
+        List<Project> projects = projectService.findByIds(new Long[]{projectId});
+        if (projects != null && !projects.isEmpty()) {
+          modelAndView.getModel().put("project", projects.get(0));
+        }
       }
     }
     modelAndView.addObject("users", userService.findAll());

@@ -3,6 +3,7 @@ package com.newstar.hbms.candidate.domain;
 import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.common.domain.Attachment;
 import com.newstar.hbms.common.domain.Comment;
+import com.newstar.hbms.project.domain.Project;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -16,6 +17,10 @@ public class Candidate implements Serializable {
    * 主键，编号
    */
   private Long id;
+
+  private List<Long> projectIds;
+
+  private List<Project> projects;
 
   /**
    * 原始简历文件，用来临时存储
@@ -580,5 +585,21 @@ public class Candidate implements Serializable {
 
   public void setUpdateUser(String updateUser) {
     this.updateUser = updateUser;
+  }
+
+  public List<Long> getProjectIds() {
+    return projectIds;
+  }
+
+  public void setProjectIds(List<Long> projectIds) {
+    this.projectIds = projectIds;
+  }
+
+  public List<Project> getProjects() {
+    return projects;
+  }
+
+  public void setProjects(List<Project> projects) {
+    this.projects = projects;
   }
 }

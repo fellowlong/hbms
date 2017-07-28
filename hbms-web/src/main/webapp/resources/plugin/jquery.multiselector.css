@@ -1,0 +1,23 @@
+/**
+ * Created by wangjinsi on 2016/12/13.
+ */
+
+.multiSelector {
+  border-bottom: dashed 1px #ddd;
+}
+.multiSelectorLabel {
+}
+.multiSelectorLabel span {
+  font-size: 10pt;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+.multiSelectorLabel a {
+  color: deeppink;
+  margin-left: 5px;
+}
+.multiSelectorValue {
+  display: none;
+  visibility: hidden;
+}
+

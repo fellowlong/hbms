@@ -1,6 +1,7 @@
 package com.newstar.hbms.project.service;
 
 import com.newstar.hbms.project.domain.Project;
+import com.newstar.hbms.project.domain.ProjectCandidate;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 
@@ -20,5 +21,11 @@ public interface ProjectService {
   public PagingResult<Project> findByBean(Project project, PageRange pageRange);
 
   public List<Project> findByIds(Long[] ids);
+
+  public int addProjectCandidates(List<ProjectCandidate> projectCandidates);
+
+  public int removeProjectCandidates(List<Long> projectCandidateIds);
+
+  public PagingResult<ProjectCandidate> findProjectCandidatesByBean(ProjectCandidate projectCandidate, PageRange pageRange);
 
 }

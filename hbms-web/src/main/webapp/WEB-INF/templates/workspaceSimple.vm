@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/validator/jquery.validator.css" />
     <link rel="stylesheet" href="/resources/ztree/zTreeStyle.css" />
     <link rel="stylesheet" href="/resources/plugin/jquery.basedata.css" />
+    <link rel="stylesheet" href="/resources/plugin/jquery.multiselector.css" />
 
     <!-- page specific plugin styles -->
 
@@ -74,6 +75,7 @@
     <script src="/resources/ztree/jquery.ztree.all.js"></script>
     <script src="/resources/plugin/jquery.basedata.js"></script>
     <script src="/resources/plugin/jquery.cascadedchosen.js"></script>
+    <script src="/resources/plugin/jquery.multiselector.js"></script>
     <script src="/js/common.js"></script>
 
     <style>

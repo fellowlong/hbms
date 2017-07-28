@@ -182,4 +182,53 @@
     </foreach>
   </select>
 
+  <insert id="addProjectCandidate">
+    insert into ProjectCandidate(
+      projectId,
+      candidateId,
+    statusId,
+      createTime,
+      createUser,
+      updateTime,
+      updateUser
+    ) values (
+      #{projectId},
+      #{candidateId},
+      #{statusId},
+      now(),
+      #{createUser, jdbcType=VARCHAR},
+      now(),
+      #{updateUser, jdbcType=VARCHAR}
+    )
+    <selectKey resultType="java.lang.Long" keyProperty="id">
+      select last_insert_id() as id
+    </selectKey>
+  </insert>
+
+  <delete id="removeProjectCandidates"  parameterType="java.lang.Long">
+    delete from ProjectCandidate where id in
+    <foreach collection="array" open="(" close=")" separator="," item="projectCandidateId">
+      #{projectCandidateId}
+    </foreach>
+  </delete>
+
+  <select id="findProjectCandidatesByBean"
+          parameterType="com.newstar.hbms.project.domain.ProjectCandidate"
+          resultType="com.newstar.hbms.project.domain.ProjectCandidate">
+    select * from ProjectCandidate pc where 1=1
+    <if test="id != null">
+      and pc.id = #{id}
+    </if>
+    <if test="projectId != null">
+      and pc.projectId = #{projectId}
+    </if>
+    <if test="candidateId != null">
+      and pc.candidateId = #{candidateId}
+    </if>
+    <if test="statusId != null">
+      and pc.statusId = #{statusId}
+    </if>
+    order by pc.updateTime desc
+  </select>
+
 </mapper>

@@ -1,12 +1,14 @@
 package com.newstar.hbms.project.service.impl;
 
 import com.newstar.hbms.basedata.service.TreeService;
+import com.newstar.hbms.candidate.service.CandidateService;
 import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.customer.service.ContactService;
 import com.newstar.hbms.customer.service.PositionService;
 import com.newstar.hbms.project.dao.ProjectDao;
 import com.newstar.hbms.project.domain.Project;
 import com.newstar.hbms.project.domain.ProjectAssistant;
+import com.newstar.hbms.project.domain.ProjectCandidate;
 import com.newstar.hbms.project.domain.ProjectConsultant;
 import com.newstar.hbms.project.service.ProjectService;
 import com.newstar.hbms.support.paging.PageRange;
@@ -23,6 +25,8 @@ import java.util.List;
  */
 public class ProjectServiceImpl implements ProjectService  {
 
+  private CandidateService candidateService;
+
   private ProjectDao projectDao;
 
   private TreeService treeService;
@@ -38,6 +42,9 @@ public class ProjectServiceImpl implements ProjectService  {
   private List<ObjectUtils.SubObjectConfig> subObjectConfigs = new ArrayList<ObjectUtils.SubObjectConfig>();
 
   private List<ObjectUtils.SubCollectionConfig> subCollectionConfigs = new ArrayList<ObjectUtils.SubCollectionConfig>();
+
+  private List<ObjectUtils.SubObjectConfig> projectCandidateSubObjectConfigs = new ArrayList<ObjectUtils.SubObjectConfig>();
+
 
   public ProjectServiceImpl() {
     //填充子对象配置
@@ -93,6 +100,26 @@ public class ProjectServiceImpl implements ProjectService  {
       }
     }));
 
+
+    ObjectUtils.SubObjectFetcher projectFetcher = new ObjectUtils.SubObjectFetcher() {
+      @Override
+      public List fetch(List keys) {
+        return projectDao.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
+      }
+    };
+    ObjectUtils.SubObjectFetcher candidateFetcher = new ObjectUtils.SubObjectFetcher() {
+      @Override
+      public List fetch(List keys) {
+        return candidateService.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
+      }
+    };
+    projectCandidateSubObjectConfigs.add(new ObjectUtils.SubObjectConfig("projectId", "project", "id", projectFetcher));
+    projectCandidateSubObjectConfigs.add(new ObjectUtils.SubObjectConfig("candidateId", "candidate", "id", candidateFetcher));
+
+  }
+
+  public void setCandidateService(CandidateService candidateService) {
+    this.candidateService = candidateService;
   }
 
   public void setProjectDao(ProjectDao projectDao) {
@@ -167,6 +194,28 @@ public class ProjectServiceImpl implements ProjectService  {
     List<Project> projects = projectDao.findByIds(ids);
     fillAllSubObjects(projects);
     return projects;
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  @Override
+  public int addProjectCandidates(List<ProjectCandidate> projectCandidates) {
+    int resultCount = 0;
+    for (ProjectCandidate projectCandidate : projectCandidates) {
+      resultCount += projectDao.addProjectCandidate(projectCandidate);
+    }
+    return resultCount;
+  }
+
+  @Override
+  public int removeProjectCandidates(List<Long> projectCandidateIds) {
+    return projectDao.removeProjectCandidates(projectCandidateIds);
+  }
+
+  @Override
+  public PagingResult<ProjectCandidate> findProjectCandidatesByBean(ProjectCandidate projectCandidate, PageRange pageRange) {
+    PagingResult<ProjectCandidate> projectCandidates = projectDao.findProjectCandidatesByBean(projectCandidate, pageRange);
+    ObjectUtils.fillSubObjects(projectCandidates.getRecords(), projectCandidateSubObjectConfigs);
+    return projectCandidates;
   }
 
 

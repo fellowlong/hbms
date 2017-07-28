@@ -8,9 +8,6 @@
         padding: 15px;
     }
 
-    #worExperiences.form-group {
-        margin: 0;
-    }
 
     .form-horizontal .form-group {
         margin-left: 0px;
@@ -38,7 +35,19 @@
         </div>
     </div>
 
-  #if($candidate.id)
+    <div class="form-group">
+        <label class="col-sm-1 control-label no-padding-right">加入项目</label>
+        <div class="col-sm-5">
+            #if(!($candidate.id) && $param["projectId"])
+                <input type="hidden" name="projectIds[0]" value="$param["projectId"]">
+                <a href='/project/detail.do?id=$param["projectId"]' target='_blank'>$project.name</a>&nbsp;
+                (<a href='/comapny/detail.do?id=$project.company.id' target='_blank'>$project.company.name</a>)
+            #else
+                <div id="projectsOfCandidate" class="multiSelector"></div>
+            #end
+        </div>
+    </div>
+  #if($candidate.id and $candidate.resume and $candidate.resume.id)
       <div class="form-group">
           <label class="col-sm-1 control-label no-padding-right">已上传简历</label>
           <div class="col-sm-5">
@@ -394,6 +403,27 @@
             $($(this).find("a").attr("workspace")).css("display", "none");
         });
     });
+    $("#projectsOfCandidate").multiSelector({
+        openSelectDialog:function () {
+            window.open('/candidate/editView.do', '_blank', 'width=1150,height=680,left=1150,top=0,scrollbars=yes');
+        },
+        formFieldsMapping: [
+            {rawName: "projects[#index#].id", value: "value"},
+            {rawName: "projects[#index#].name", value: "label"}
+        ],
+        isMultiFormField: true,
+        initServerData: (function () {
+            var serverData = [];
+            var projects = [];
+            #if($candidate.projects)
+                projects = $JsonUtils.beanToJson($candidate.projects);
+            #end
+            $(projects).each(function (index, itemData) {
+                serverData.push({value:itemData.id, label:itemData.name});
+            });
+            return serverData;
+        })()
+    });
     $('.chosen-select').chosen({search_contains: true});
     function renderFileInput(elementId) {
         $(elementId).ace_file_input({
@@ -460,5 +490,7 @@
         $(eventObj).parent().parent().parent().append("<input type='hidden' name='deletedOtherAttachmentIds[" + index + "]' value='" + attatchmentId + "'>");
         $(eventObj).parent().parent().remove();
     }
+
+
 
 </script>

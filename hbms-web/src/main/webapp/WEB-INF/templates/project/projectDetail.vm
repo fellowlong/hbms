@@ -120,18 +120,18 @@
         </div>
         <div role="tabpanel" class="tab-pane active" id="项目候选人">
             <div class="row">
-              <button id="candidateSearch" class="btn btn-primary no-radius" type="button">
+              <button id="addNewCandidate" class="btn btn-primary no-radius" type="button">
                 <i class="ace-icon fa fa-plus"></i>新增简历
               </button>
-              <button id="candidateSearch" class="btn btn-primary no-radius" type="button">
+              <button id="selectExistedCandidate" class="btn btn-primary no-radius" type="button">
                 <i class="ace-icon fa fa-search"></i>从人才库搜索
               </button>
-              <button id="candidateSearch" class="btn btn-primary no-radius" type="button">
+              <button id="importBatchCandidate" class="btn btn-primary no-radius" type="button">
                 <i class="ace-icon fa fa-search"></i>批量导入简历
               </button>
             </div>
             <div class="row">
-                <div id="projectCandidateListDiv" style="width: 100%;left: 0;right: 0">
+                <div id="projectCandidateListDiv" style="left: 5px;right: 0">
                     <table id="projectCandidateList"></table>
                     <div id="projectCandidateListPager"></div>
                 </div>
@@ -150,22 +150,21 @@
 </div>
 
 <script language="JavaScript">
-    $("#candidateList").jqGrid({
-        url: '/candidate/findByBean.do',
+    $("#projectCandidateList").jqGrid({
+        url: '/project/findProjectCandidatesByBean.do',
         mtype: "POST",
+        postData: {projectId : $project.id},
         datatype: "json",
-        colNames: ['姓名', '公司',  '职位', '年薪', '年龄', '标签', '状态', "最近联系", "操作"],
+        colNames: ['姓名', '公司', '城市',  '职位', '年薪', '年龄', '状态', "最近联系", "操作"],
         colModel: [
-            {name: 'name', formatter: function(cellvalue, options, rowObject){
+            {name: 'candidate.name', formatter: function(cellvalue, options, rowObject){
                 return "<a href='/candidate/detail.do?id=" + rowObject.id + "' target='_blank'>" + cellvalue + "</a>";
             }},
-            {name: 'company.label'},
-            {name: 'position.label'},
-            {name: 'city.label'},
-            {name: 'currentAnnualSalary'},
-            {name: 'birthday'},
-            {name: 'mobile'},
-            {name: 'tag'},
+            {name: 'candidate.company.label'},
+            {name: 'candidate.position.label'},
+            {name: 'candidate.city.label'},
+            {name: 'candidate.currentAnnualSalary'},
+            {name: 'candidate.birthday'},
             {name: 'status.label'},
             {name: 'lastContact'},
             {name: 'isKey', formatter: function(cellvalue, options, rowObject){
@@ -176,16 +175,61 @@
         multiselect: true,
         rowNum: 10,
         rowList: [10, 30, 50, 100],
-        pager: '#candidateListPager',
+        pager: '#projectCandidateListPager',
         forceFit:true,
         shrinkToFit: true
     });
     function resizeCandidateList() {
-        $("#candidateList").jqGrid('setGridWidth', $(window).width() - $("#candidateListDiv").position().left - 15);
-        $("#candidateList").jqGrid('setGridHeight', $(window).height() - $("#candidateListDiv").position().top - 100);
+        $("#projectCandidateList").jqGrid('setGridWidth', $(window).width() - $("#projectCandidateListDiv").position().left - 100);
+        $("#projectCandidateList").jqGrid('setGridHeight', $(window).height() - $("#projectCandidateListDiv").position().top - 260);
     }
     resizeCandidateList();
     $(window).on('resize', function () {
         resizeCandidateList();
     });
+
+    $("#addNewCandidate").on(ace.click_event, function() {
+        window.open('/candidate/editView.do?projectId='+$project.id, '_blank', 'width=1150,height=680,left=1150,top=0,scrollbars=yes');
+    });
+
+    function receiveSelectedCandidate(candidates) {
+        var param = {};
+        for (var i = 0 ;i < candidates.length; i++) {
+            param["candidates[" + i + "].projectId"] = $project.id;
+            param["candidates[" + i + "].candidateId"] = candidates[i];
+        }
+        var result = false;
+        $.ajax({
+            type: "POST",
+            url: "/project/addCandidates.do",
+            data: param,
+            dataType: "json",
+            timeout: 3000,
+            async: false,
+            success: function (data, textStatus, jqXHR) {
+                if (data && data.success) {
+                    $("#projectCandidateList").jqGrid().trigger("reloadGrid");
+                }
+                result = true;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var tipHtml = "<h5 class='red'><i class=\"icon-warning-sign red bigger-130\"></i>加载失败</h5>";
+                bootbox.dialog({
+                    message: tipHtml,
+                    buttons: {
+                        "danger": {
+                            "label": "关闭",
+                            "className": "btn-sm btn-danger"
+                        }
+                    }
+                });
+            }
+        });
+        return result;
+    }
+
+    $("#selectExistedCandidate").on(ace.click_event, function() {
+        window.open('/candidate/select.do?projectId='+$project.id, '_blank', 'width=1150,height=680,left=1150,top=0,scrollbars=yes');
+    });
+
 </script>

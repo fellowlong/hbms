@@ -123,6 +123,7 @@
     <property name="candidateService" ref="candidateService"/>
     <!--<property name="httpSolrServer" ref="httpSolrServer"/>-->
     <property name="userService" ref="userService"/>
+    <property name="projectService" ref="projectService"/>
   </bean>
 
   <bean id="resumeController" class="com.newstar.hbms.candidate.web.controller.ResumeController">

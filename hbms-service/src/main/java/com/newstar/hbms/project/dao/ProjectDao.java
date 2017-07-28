@@ -1,9 +1,11 @@
 package com.newstar.hbms.project.dao;
 
+import com.newstar.hbms.candidate.domain.Candidate;
 import com.newstar.hbms.customer.domain.PositionLanguage;
 import com.newstar.hbms.customer.domain.PositionTag;
 import com.newstar.hbms.project.domain.Project;
 import com.newstar.hbms.project.domain.ProjectAssistant;
+import com.newstar.hbms.project.domain.ProjectCandidate;
 import com.newstar.hbms.project.domain.ProjectConsultant;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
@@ -39,4 +41,9 @@ public interface ProjectDao {
 
   public List<ProjectConsultant> findConsultantsByProjectIds(Long[] projectIds);
 
+  public int addProjectCandidate(ProjectCandidate projectCandidate);
+
+  public int removeProjectCandidates(List<Long> projectCandidateIds);
+
+  public PagingResult<ProjectCandidate> findProjectCandidatesByBean(ProjectCandidate projectCandidate, PageRange pageRang);
 }
