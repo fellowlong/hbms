@@ -42,16 +42,16 @@ public class ResumeController extends ConfigurableMultiActionController {
         String fileName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
         File resumeFile = new File(targetFolder + "/" + fileName);
         if (!resumeFile.exists() || resumeFile.isDirectory()) {
-            throw new RuntimeException("请求错误，不存在的文件" + fileName);
+            response.getOutputStream().write("请求错误，不存在的简历，先检查是否已经上传简历，如果已经上传再看看是否生产简历镜像".getBytes());
+        } else {
+            FileInputStream in = new FileInputStream(resumeFile);
+            OutputStream os = new BufferedOutputStream(response.getOutputStream());
+            int length = 0;
+            byte[] buffer = new byte[2048];
+            while ((length = in.read(buffer, 0, length)) > 0) {
+                os.write(buffer, 0, length);
+            }
         }
-        FileInputStream in = new FileInputStream(resumeFile);
-        OutputStream os = new BufferedOutputStream(response.getOutputStream());
-        int length = 0;
-        byte[] buffer = new byte[2048];
-        while ((length = in.read(buffer, 0, length)) > 0) {
-            os.write(buffer, 0, length);
-        }
-//        return new ModelAndView("/candidate/resumeManager");
     }
 
     public ModelAndView convert(HttpServletRequest request, HttpServletResponse response) throws Exception {

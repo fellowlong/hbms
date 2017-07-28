@@ -104,7 +104,7 @@ public class ProjectServiceImpl implements ProjectService  {
     ObjectUtils.SubObjectFetcher projectFetcher = new ObjectUtils.SubObjectFetcher() {
       @Override
       public List fetch(List keys) {
-        return projectDao.findByIds((Long[]) keys.toArray(new Long[keys.size()]));
+        return findByIds((Long[]) keys.toArray(new Long[keys.size()]));
       }
     };
     ObjectUtils.SubObjectFetcher candidateFetcher = new ObjectUtils.SubObjectFetcher() {

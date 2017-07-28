@@ -30,18 +30,22 @@ public class ResumeViewController extends ConfigurableMultiActionController {
     }
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("utf-8");
         String fileName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
         File resumeFile = new File(targetFolder + "/" + fileName);
         if (!resumeFile.exists() || resumeFile.isDirectory()) {
-            String msg = "请求错误，不存在的文件" + fileName;
+            String msg = "请求错误，不存在的文件" + fileName + ",先检查是否已经上传简历，如果已经上传再看看是否生产简历镜像";
             logger.error(msg);
-            throw new RuntimeException(msg);
-        }
-        FileInputStream in = new FileInputStream(resumeFile);
-        int length = 0;
-        byte[] buffer = new byte[2048];
-        while ((length = in.read(buffer, 0, buffer.length)) > 0) {
-            response.getOutputStream().write(buffer, 0, length);
+            response.getOutputStream().write(msg.getBytes("utf-8"));
+        } else {
+            FileInputStream in = new FileInputStream(resumeFile);
+            int length = 0;
+            byte[] buffer = new byte[2048];
+            while ((length = in.read(buffer, 0, buffer.length)) > 0) {
+                response.getOutputStream().write(buffer, 0, length);
+            }
+            in.close();
         }
         return null;
     }

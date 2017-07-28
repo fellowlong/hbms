@@ -7,6 +7,7 @@ import com.newstar.hbms.mvc.ConfigurableMultiActionController;
 import com.newstar.hbms.mvc.JsonResult;
 import com.newstar.hbms.mvc.MessageCollector;
 import com.newstar.hbms.project.domain.Project;
+import com.newstar.hbms.project.domain.ProjectCandidate;
 import com.newstar.hbms.project.service.ProjectService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
@@ -147,11 +148,6 @@ public class CandidateController extends ConfigurableMultiActionController {
   }
 
   public ModelAndView save(HttpServletRequest request, HttpServletResponse response, Candidate candidate) throws Exception {
-/*     = new Candidate();
-    CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-    MultipartHttpServletRequest multipartHttpServletRequest = resolver.resolveMultipart(request);
-    ServletRequestDataBinder servletRequestDataBinder = new ServletRequestDataBinder(candidate);
-    servletRequestDataBinder.bind(multipartHttpServletRequest);*/
     int resultCount = candidateService.insertOrUpdate(candidate);
     MessageCollector msgCollector = new MessageCollector();
     if (resultCount == 1) {
@@ -225,4 +221,33 @@ public class CandidateController extends ConfigurableMultiActionController {
     return modelAndView;
   }
 
+
+  public void findProjectsByCandidateId(HttpServletRequest request,
+                         HttpServletResponse response,
+                         ProjectCandidate projectCandidate) throws Exception {
+    String pageSize = request.getParameter("rows");
+    String pageNum = request.getParameter("page");
+    PageRange pageRange = new PageRange();
+    if (pageSize != null) {
+      pageRange.setPageSize(Integer.parseInt(pageSize));
+    }
+    if (pageNum != null) {
+      pageRange.setPageNum(Integer.parseInt(pageNum));
+    }
+    PagingResult<ProjectCandidate> candidateResult = projectService.findProjectCandidatesByBean(projectCandidate, pageRange);
+    Map<String, Object> jsonMap = new HashMap();
+    jsonMap.put("page", pageNum);
+    jsonMap.put("total ", candidateResult.getPageTotal());
+    jsonMap.put("records ", candidateResult.getRecordTotal());
+    if (candidateResult.getRecords() != null) {
+      List<Project> projects = new ArrayList<Project>(candidateResult.getRecords().size());
+      for (ProjectCandidate perProjectCandidate : candidateResult.getRecords()) {
+        projects.add(perProjectCandidate.getProject());
+      }
+      jsonMap.put("rows", projects.toArray());
+    } else {
+      jsonMap.put("rows", null);
+    }
+    WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, excludedProperties));
+  }
 }
