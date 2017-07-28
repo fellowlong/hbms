@@ -1,6 +1,7 @@
 package com.newstar.hbms.utils.file;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -67,5 +68,17 @@ public abstract class FileUtils {
             throw new RuntimeException("转换文件失败:", e);
         }
     }
+
+    public static byte[] readToBytes(InputStream inputStream) {
+        try {
+            byte[] bytes = new byte[inputStream.available()];
+            inputStream.read(bytes, 0, bytes.length);
+            return bytes;
+        } catch (IOException e) {
+            throw new RuntimeException("读取数据量出错");
+        }
+    }
+
+
 
 }
