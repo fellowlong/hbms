@@ -16,8 +16,9 @@ import com.newstar.hbms.project.service.ProjectService;
 import com.newstar.hbms.support.paging.PageRange;
 import com.newstar.hbms.support.paging.PagingResult;
 import com.newstar.hbms.system.service.UserService;
-import com.newstar.hbms.utils.WordParser;
 import com.newstar.hbms.utils.business.ObjectUtils;
+import com.newstar.hbms.utils.file.FileType;
+import com.newstar.hbms.utils.file.FileUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -137,7 +138,9 @@ public class CandidateServiceImpl implements CandidateService {
       resume.setAttachment(attachment);
       resume.setName(fileName);
       resume.setAttachmentId(attachment.getId());
-      String textResume = WordParser.getText(new ByteArrayInputStream(resumeFileData));
+      String textResume = FileUtils.getText(
+              new ByteArrayInputStream(resumeFileData),
+              FileType.getFileType(candidate.getResumeFile().getOriginalFilename()));
       resume.setTextResume(textResume);
       resume.setCreateUser(candidate.getCreateUser());
       resume.setUpdateUser(candidate.getUpdateUser());

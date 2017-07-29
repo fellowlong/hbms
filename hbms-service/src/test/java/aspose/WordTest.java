@@ -24,7 +24,7 @@ public class WordTest extends TestCase {
             try {
                 FileUtils.convert(
                         new FileInputStream(resume),
-                        "E:\\OfficeFiles\\newstar\\测试简历\\html\\" + resume.getName() + ".html",
+                        new FileOutputStream("E:\\OfficeFiles\\newstar\\测试简历\\html\\" + resume.getName() + ".html"),
                         FileType.getFileType(resume.getName()),
                         FileType.html);
             } catch (Exception e) {

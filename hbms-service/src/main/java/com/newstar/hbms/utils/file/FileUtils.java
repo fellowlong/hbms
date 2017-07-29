@@ -1,9 +1,6 @@
 package com.newstar.hbms.utils.file;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * Created by wangjinsi on 2017/6/7.
@@ -21,7 +18,7 @@ public abstract class FileUtils {
         }
     }
 
-    public static void convert(InputStream sourceInputStream, String targetFileName, FileType sourceFileType, FileType targetFileType) {
+    public static void convert(InputStream sourceInputStream, OutputStream targetOutputStream, FileType sourceFileType, FileType targetFileType) {
         int pdfSaveFormat = -1;
         int wordSaveFormat = -1;
         int excelSaveFormat = -1;
@@ -52,21 +49,48 @@ public abstract class FileUtils {
         try {
             if (sourceFileType.equals(FileType.pdf)) {
                 com.aspose.pdf.Document doc = new com.aspose.pdf.Document(sourceInputStream);
-                doc.save(targetFileName, pdfSaveFormat);
+                doc.save(targetOutputStream, pdfSaveFormat);
                 doc.freeMemory();
                 doc.close();
             } else if (sourceFileType.equals(FileType.doc) || sourceFileType.equals(FileType.docx)) {
                 com.aspose.words.Document doc = new com.aspose.words.Document(sourceInputStream);
-                doc.save(targetFileName, wordSaveFormat);
+                doc.save(targetOutputStream, wordSaveFormat);
             } else if (sourceFileType.equals(FileType.xls) || sourceFileType.equals(FileType.xlsx)) {
                 com.aspose.cells.Workbook doc = new com.aspose.cells.Workbook(sourceInputStream);
-                doc.save(targetFileName, excelSaveFormat);
+                doc.save(targetOutputStream, excelSaveFormat);
             } else {
                 throw new RuntimeException("不支持的源文件格式:" + sourceFileType);
             }
         } catch (Exception e) {
             throw new RuntimeException("转换文件失败:", e);
         }
+    }
+
+    public static String getText(InputStream sourceInputStream, FileType sourceFileType) {
+        String text = null;
+        try {
+            if (sourceFileType.equals(FileType.pdf)) {
+                com.aspose.pdf.Document doc = new com.aspose.pdf.Document(sourceInputStream);
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                doc.save(outputStream, com.aspose.pdf.SaveFormat.TeX);
+                doc.freeMemory();
+                doc.close();
+                text = outputStream.toString();
+            } else if (sourceFileType.equals(FileType.doc) || sourceFileType.equals(FileType.docx)) {
+                com.aspose.words.Document doc = new com.aspose.words.Document(sourceInputStream);
+                text = doc.toString(com.aspose.words.SaveFormat.TEXT);
+            } else if (sourceFileType.equals(FileType.xls) || sourceFileType.equals(FileType.xlsx)) {
+                com.aspose.cells.Workbook doc = new com.aspose.cells.Workbook(sourceInputStream);
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                doc.save(outputStream, com.aspose.cells.SaveFormat.CSV);
+                text = outputStream.toString();
+            } else {
+                throw new RuntimeException("不支持的源文件格式:" + sourceFileType);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("转换文件失败:", e);
+        }
+        return text;
     }
 
     public static byte[] readToBytes(InputStream inputStream) {

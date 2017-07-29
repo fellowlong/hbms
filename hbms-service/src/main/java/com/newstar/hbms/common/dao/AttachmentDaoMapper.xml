@@ -4,7 +4,6 @@
 
 <mapper namespace="com.newstar.hbms.common.dao.AttachmentDao">
 
-
     <sql id="lightSelect">
         select
             id,
@@ -22,35 +21,32 @@
     </sql>
 
     <insert id="insert" parameterType="com.newstar.hbms.common.domain.Attachment">
-        <selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
-            sequence.global
-        </selectKey>
         insert into Attachment(
-        id,
-        businessType,
-        businessId,
-        fileName,
-        fileType,
-        fileBinaryData,
-        remark,
-        yn,
-        createTime,
-        createUser,
-        updateTime,
-        updateUser
+            id,
+            businessType,
+            businessId,
+            fileName,
+            fileType,
+            fileBinaryData,
+            remark,
+            yn,
+            createTime,
+            createUser,
+            updateTime,
+            updateUser
         ) values (
-        #{id},
-        #{businessType, jdbcType=VARCHAR},
-        #{businessId, jdbcType=BIGINT},
-        #{fileName, jdbcType=VARCHAR},
-        #{fileType, jdbcType=VARCHAR},
-        #{fileBinaryData, jdbcType=BLOB},
-        #{remark, jdbcType=VARCHAR},
-        1,
-        now(),
-        #{createUser},
-        now(),
-        #{updateUser}
+            #{id},
+            #{businessType, jdbcType=VARCHAR},
+            #{businessId, jdbcType=BIGINT},
+            #{fileName, jdbcType=VARCHAR},
+            #{fileType, jdbcType=VARCHAR},
+            #{fileBinaryData, jdbcType=BLOB},
+            #{remark, jdbcType=VARCHAR},
+            1,
+            now(),
+            #{createUser},
+            now(),
+            #{updateUser}
         )
     </insert>
 
@@ -141,7 +137,7 @@
     <select id="findByBusiness"
             parameterType="com.newstar.hbms.common.domain.Attachment"
             resultType="com.newstar.hbms.common.domain.Attachment">
-        <include refid="lightSelect"/> where 1 =1
+        <include refid="lightSelect"/> where yn = 1
         <if test="param1 != null">
           and businessType = #{param1}
         </if>

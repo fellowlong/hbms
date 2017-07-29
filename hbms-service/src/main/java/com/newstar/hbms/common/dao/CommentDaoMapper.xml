@@ -4,4 +4,136 @@
 
 <mapper namespace="com.newstar.hbms.common.dao.CommentDao">
 
+    <sql id="lightSelect">
+        select
+        id,
+        businessType,
+        businessId,
+        fileName,
+        fileType,
+        remark,
+        yn,
+        createTime,
+        createUser,
+        updateTime,
+        updateUser
+        from Attachment
+    </sql>
+
+    <insert id="insert" parameterType="com.newstar.hbms.common.domain.Attachment">
+        insert into Comment(
+            businessType,
+            businessId,
+            content,
+            yn,
+            createTime,
+            createUser,
+            updateTime,
+            updateUser
+        ) values (
+            #{businessType, jdbcType=VARCHAR},
+            #{businessId, jdbcType=BIGINT},
+            #{content, jdbcType=VARCHAR},
+            1,
+            now(),
+            #{createUser},
+            now(),
+            #{updateUser}
+        )
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="com.newstar.hbms.common.domain.Attachment">
+        update Comment set
+            businessType = #{businessType, jdbcType = VARCHAR},
+            businessId = #{businessId, jdbcType = BIGINT},
+            content = #{fileName, jdbcType = VARCHAR},
+            updateTime = now(),
+            updateUser = #{updateUser}
+        where
+          id = #{id}
+    </update>
+
+    <delete id="deleteByIds" parameterType="java.lang.Long">
+        delete from Comment where id in
+        <foreach collection="array" open="(" close=")" separator="," item="commentId">
+            #{commentId}
+        </foreach>
+    </delete>
+
+    <delete id="disable" parameterType="java.lang.Long">
+        update Comment set yn = 0 where id in
+        <foreach collection="array" open="(" close=")" separator="," item="commentId">
+            #{commentId}
+        </foreach>
+    </delete>
+
+    <delete id="disableByBusinessId" parameterType="java.lang.Long">
+        update Comment set yn = 0 where businessId = #{value}
+    </delete>
+
+    <delete id="enable" parameterType="java.lang.Long">
+        update Comment set yn = 1 where id in
+        <foreach collection="array" open="(" close=")" separator="," item="commentId">
+            #{commentId}
+        </foreach>
+    </delete>
+
+    <delete id="enableByBusinessId" parameterType="java.lang.Long">
+        update Comment set yn = 1 where businessId = #{value}
+    </delete>
+
+
+    <select id="findByIds" parameterType="java.lang.Long" resultType="com.newstar.hbms.common.domain.Comment">
+        select * from Comment where yn = 1
+        <if test="array != null">
+            and id in
+            <foreach collection="array" open="(" close=")" separator="," item="commentId">
+                #{commentId}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="findByBean"
+            parameterType="com.newstar.hbms.common.domain.Attachment"
+            resultType="com.newstar.hbms.common.domain.Attachment">
+        select c.* from Comment c where 1=1
+        <if test="id != null">
+            and c.id = #{id}
+        </if>
+        <if test="businessType != null">
+            and c.businessType = #{businessType}
+        </if>
+        <if test="businessId != null">
+            and c.businessId = #{businessId}
+        </if>
+        <if test="yn != null">
+            and c.yn = #{yn}
+        </if>
+        <if test="createUser != null">
+            and c.createUser = #{createUser}
+        </if>
+        <if test="updateUser != null">
+            and c.updateUser = #{updateUser}
+        </if>
+    </select>
+
+    <select id="findByBusiness"
+            parameterType="com.newstar.hbms.common.domain.Attachment"
+            resultType="com.newstar.hbms.common.domain.Attachment">
+        select * from Comment where yn=1
+        <if test="param1 != null">
+            and businessType = #{param1}
+        </if>
+        <if test="param2 != null">
+            and businessId in
+            <foreach collection="param2" open="(" close=")" separator="," item="businessId">
+                #{businessId}
+            </foreach>
+        </if>
+
+    </select>
+
 </mapper>

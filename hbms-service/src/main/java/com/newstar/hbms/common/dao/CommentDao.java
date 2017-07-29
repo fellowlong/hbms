@@ -15,11 +15,13 @@ public interface CommentDao {
 
     public int update(Comment comment);
 
-    public int disable(Long[] commentIds);
+    public int disableByIds(Long[] commentIds);
 
-    public int enable(Long[] commentIds);
+    public int disableByBusiness(String businessType, Long businessId);
 
     public PagingResult<Comment> findByBean(Comment comment, PageRange pageRange);
 
     public List<Comment> findByIds(Long[] ids);
+
+    public List<Comment> findByBusiness(String businessType, Long[] businessIds);
 }
