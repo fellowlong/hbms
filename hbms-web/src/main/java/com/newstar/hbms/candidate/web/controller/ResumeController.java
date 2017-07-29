@@ -64,7 +64,7 @@ public class ResumeController extends ConfigurableMultiActionController {
             try {
                 FileUtils.convert(
                         new ByteArrayInputStream(perAttachment.getFileBinaryData()),
-                        targetFolder + "/" + perAttachment.getBusinessId() + ".html",
+                        new FileOutputStream(targetFolder + "/" + perAttachment.getBusinessId() + ".html"),
                         FileType.getFileType(perAttachment.getFileName()),
                         FileType.html);
                 result.append( perAttachment.getBusinessId() + " " + perAttachment.getFileName() + "\n");
