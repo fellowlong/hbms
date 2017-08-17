@@ -79,9 +79,6 @@
     <property name="plugins">
       <list>
         <bean class="com.newstar.hbms.support.paging.PagingPlugin"/>
-        <bean class="com.newstar.hbms.support.SelectKeyFromSequenceInterceptor">
-          <property name="sequenceService" ref="sequenceService"/>
-        </bean>
       </list>
     </property>
   </bean>
@@ -177,25 +174,6 @@
 
   <bean id="attachmentService" class="com.newstar.hbms.common.service.impl.AttachmentServiceImpl">
     <property name="attachmentDao" ref="attachmentDao"/>
-  </bean>
-
-  <bean id="sequenceService" class="com.newstar.hbms.common.service.impl.DbSequenceServiceImpl">
-    <property name="sequenceDao">
-      <bean id="sequenceDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.newstar.hbms.common.dao.SequenceDao"/>
-        <property name="sqlSessionFactory">
-          <bean class="org.mybatis.spring.SqlSessionFactoryBean">
-            <property name="dataSource" ref="dataSource"/>
-            <property name="mapperLocations">
-              <list>
-                <value>classpath:com/newstar/hbms/common/dao/SequenceDaoMapper.xml</value>
-              </list>
-            </property>
-          </bean>
-        </property>
-      </bean>
-    </property>
-    <property name="shardSize" value="1"/>
   </bean>
 
   <bean id="fileService" class="com.newstar.hbms.common.service.impl.FileServiceImpl">

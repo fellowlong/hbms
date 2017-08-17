@@ -1,0 +1,245 @@
+#if($operationType == 'SELECT')
+  #include("/resource.vm")
+  <style>
+      body, html {
+          margin: 0px;
+          padding: 0;
+          width: 100%;
+          background-color: white;
+          font-family: '微软雅黑';
+          color: #666;
+          min-width: 1210px;
+      }
+  </style>
+#end
+<div style="margin:2px">
+
+<div class="row" style="margin: 5px">
+  <form id="candidateSearchForm" method="post" class="form-inline" action="/candidate/findByBean.do">
+
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">姓名</div>
+        <input class="form-control" name="name" #if($param['name']) value="$param['name']" #end style="min-width: 20px">
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">公司</div>
+        <select id="companyId" class="chosen-select form-control" name="companyId" value="$!candidate.companyId">
+          <option value="">全部</option>
+          #set($companies = $baseDataService.getCompanies().children)
+          #foreach($company in $companies)
+            <option value="$company.id" >$company.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">职位</div>
+        <select id="positionId" class="chosen-select form-control" name="positionId" value="$!candidate.positionId">
+          <option value="">全部</option>
+          #set($positions = $baseDataService.getPositions().children)
+          #foreach($position in $positions)
+            <option value="$position.id" >$position.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">城市</div>
+        <select id="cityId" class="chosen-select form-control" name="cityId" value="$!candidate.cityId">
+          <option value="">全部</option>
+          #set($cities = $baseDataService.getCities().children)
+          #foreach($city in $cities)
+            <option value="$city.id">$city.label</option>
+          #end
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-group-addon">求职状态</div>
+        <select id="statusId" class="chosen-select form-control" name="statusId" value="$!candidate.statusId">
+          <option value="">全部</option>
+          #set($statuses = $baseDataService.getCandidateStatus().children)
+          #foreach($status in $statuses)
+            <option value="$status.id">$status.label</option>
+          #end
+        </select>
+      </div>
+
+    </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">全文</div>
+          <input type="text" class="form-control input-sm" name="destination" style="min-width: 200px"/>
+        </div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="candidateSearch" class="btn btn-primary form-control no-radius" type="button">
+            <i class="ace-icon fa fa-search"></i>搜索
+          </button>
+        </span>
+      </div>
+      #if($operationType == 'MANAGE')
+          <div class="input-group">
+          <span class="input-group-btn">
+            <button id="candidateAdd" class="btn btn-success form-control no-radius" type="button">
+              <i class="ace-icon fa fa-plus"></i>新增
+            </button>
+          </span>
+          </div>
+          <div class="input-group">
+          <span class="input-group-btn">
+            <button id="candidateEdit" class="btn btn-success form-control no-radius" type="button">
+              <i class="ace-icon fa fa-edit"></i>编辑
+            </button>
+          </span>
+          </div>
+          <div class="input-group">
+          <span class="input-group-btn">
+            <button id="candidateDelete" class="btn btn-danger form-control no-radius" type="button">
+              <i class="ace-icon fa fa-remove"></i>删除
+            </button>
+          </span>
+          </div>
+      </div>
+      #end
+      #if($operationType == 'SELECT')
+        <input type="hidden" name="projectIds[0]" value="$param['projectId']">
+        <div class="input-group">
+        <span class="input-group-btn">
+          <button id="candidateSelect" class="btn btn-success form-control no-radius" type="button">
+            <i class="ace-icon fa fa-plus"></i>添加人才
+          </button>
+        </span>
+        </div>
+      #end
+  </form>
+</div>
+
+  <div id="candidateListDiv" style="width: 100%;left: 0;right: 0">
+    <table id="candidateList"></table>
+    <div id="candidateListPager"></div>
+  </div>
+
+  <script type="text/javascript">
+    $("#candidateList").jqGrid({
+      url: '/candidate/findByBean.do',
+      mtype: "POST",
+      #if($!param['projectId']) postData: {"projectIds[0]":$!param['projectId']}, #end
+      datatype: "json",
+      colNames: ['主键', '姓名', '公司',  '职位', '城市', '年薪', '年龄', '手机', '状态', "最近联系", "操作"],
+      colModel: [
+        {name: 'id', hidden:true},
+        {name: 'name', formatter: function(cellvalue, options, rowObject){
+        return "<a href='/candidate/detail.do?id=" + rowObject.id + "' target='_blank'>" + cellvalue + "</a>";
+        }},
+        {name: 'company.label'},
+        {name: 'position.label'},
+        {name: 'city.label'},
+        {name: 'currentAnnualSalary'},
+        {name: 'birthday'},
+        {name: 'mobile'},
+        {name: 'status.label'},
+        {name: 'lastContact'},
+        {name: 'isKey', formatter: function(cellvalue, options, rowObject){
+          return cellvalue ? "<i class='ace-icon glyphicon glyphicon-ok' style='color: green'></i>" : "<i class='ace-icon glyphicon glyphicon-remove' style='color: red'></i>";
+
+        }}
+      ],
+      multiselect: true,
+      rowNum: 10,
+      rowList: [10, 30, 50, 100],
+      pager: '#candidateListPager',
+      forceFit:true,
+      shrinkToFit: true
+    });
+    function resizeCandidateList() {
+      $("#candidateList").jqGrid('setGridWidth', $(window).width() - $("#candidateListDiv").position().left - 15);
+      $("#candidateList").jqGrid('setGridHeight', $(window).height() - $("#candidateListDiv").position().top - 100);
+    }
+    resizeCandidateList();
+    $(window).on('resize', function () {
+      resizeCandidateList();
+    });
+  </script>
+
+<script>
+  $('#candidateList th input:checkbox').on('click' , function(){
+    var that = this;
+    $('#candidateList').find('tr > td:first-child input:checkbox')
+        .each(function(){
+          this.checked = that.checked;
+          $(this).closest('tr').toggleClass('selected');
+        });
+  });
+
+  $("#candidateAdd").on(ace.click_event, function() {
+      window.open('/candidate/editView.do');
+  });
+  $("#candidateDelete").on("click", function () {
+    var rowIds = $("#candidateList").jqGrid('getGridParam', 'selarrrow');
+    if (!rowIds || rowIds.length < 1) {
+      bootbox.alert("请选择记录进行删除");
+      return;
+    }
+    bootbox.confirm("<h3>确定删除?</h3>", function (result) {
+      if (result) {
+        disableRecords(
+            "/candidate/disableByIds.do",
+            {ids: rowIds},
+            function () {
+              searchCandidate();
+            },
+            function () {
+              searchCandidate();
+            });
+      }
+    })
+  });
+  $("#candidateEdit").on(ace.click_event, function() {
+    var rowIds = $("#candidateList").jqGrid('getGridParam', 'selarrrow');
+    if (!rowIds || rowIds.length != 1) {
+      bootbox.alert("请选择一条进行编辑");
+      return;
+    }
+    window.open('/candidate/editView.do?id='+rowIds[0]);
+  });
+
+  $("#candidateSearch").on("click", function () {
+    var postData = $("#candidateList").jqGrid("getGridParam", "postData");
+    while (!$.isEmptyObject(postData)) {
+      for (var key in postData) {
+        delete postData[key];
+      }
+    }
+    $("#candidateList").jqGrid('setGridParam', {
+      postData: (function () {
+        var postData = {};
+        $("#candidateSearchForm input, #candidateSearchForm select").each(function (index, item) {
+          var val = $(item).val();
+          if (val && val.length > 0) {
+            postData[$(item).attr("name")] = val;
+          }
+        });
+        return postData;
+      })(),
+      page: 1
+    }).trigger("reloadGrid");
+  });
+
+  $("#candidateSelect").on("click", function () {
+      var rowIds = $("#candidateList").jqGrid('getGridParam', 'selarrrow');
+      if (!rowIds || rowIds.length < 1) {
+          bootbox.alert("请选择一条进行编辑");
+          return;
+      }
+      var selectedCandidates = [];
+      for (var i = 0; i < rowIds.length; i++) {
+          selectedCandidates.push($("#candidateList").getRowData(rowIds[i])["id"]);
+      }
+      if(opener.receiveSelectedCandidate(selectedCandidates)) {
+        for (var j = rowIds.length - 1; j >= 0; j--) {
+            $("#candidateList").delRowData(rowIds[j]);
+        }
+      }
+  });
+
+</script>

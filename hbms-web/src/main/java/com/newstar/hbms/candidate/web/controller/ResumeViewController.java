@@ -35,7 +35,7 @@ public class ResumeViewController extends ConfigurableMultiActionController {
         String fileName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
         File resumeFile = new File(targetFolder + "/" + fileName);
         if (!resumeFile.exists() || resumeFile.isDirectory()) {
-            String msg = "请求错误，不存在的文件" + fileName + ",先检查是否已经上传简历，如果已经上传再看看是否生产简历镜像";
+            String msg = "请求错误，不存在的文件“" + fileName + "”,先检查是否已经上传简历，如果已经上传请确认简历镜像已生成。";
             logger.error(msg);
             response.getOutputStream().write(msg.getBytes("utf-8"));
         } else {
