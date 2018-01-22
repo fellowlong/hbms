@@ -1,6 +1,7 @@
 package com.newstar.hbms.customer.web.controller;
 
 import com.newstar.hbms.basedata.domain.TreeNode;
+import com.newstar.hbms.candidate.domain.Candidate;
 import com.newstar.hbms.customer.domain.Company;
 import com.newstar.hbms.customer.domain.CompanyFolder;
 import com.newstar.hbms.customer.domain.CompanyIndustry;
@@ -173,6 +174,19 @@ public class CompanyController extends MultiActionController {
         }
       }
     }
+  }
+
+
+  public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Long id = WebUtils.getLong(request, WebUtils.ID);
+    ModelAndView modelAndView = new ModelAndView("/customer/companyDetail");
+    if (id != null) {
+      List<Company> companies = companyService.findByIds(new Long[]{id});
+      if (companies != null && !companies.isEmpty()) {
+        modelAndView.getModel().put("company", companies.get(0));
+      }
+    }
+    return modelAndView;
   }
 
 }

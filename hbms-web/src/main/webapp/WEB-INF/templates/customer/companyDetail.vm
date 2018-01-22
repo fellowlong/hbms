@@ -1,0 +1,175 @@
+<h3>公司&nbsp;<strong><span class="font-size:80">$!company.name</span></strong>&nbsp;详情</h3>
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#公司信息" aria-controls="home" role="tab" data-toggle="tab">公司信息</a></li>
+        <li role="presentation"><a href="#批注" aria-controls="settings" role="tab" data-toggle="tab">批注</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="公司信息">
+
+
+            <div class="row" style="margin:0;padding-left: 50px">
+
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">客户类型</div>
+                    <div class="col-sm-5">
+                        $!company.companyType.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">名称</div>
+                    <div class="col-sm-5">
+                        $!company.name
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">全称</div>
+                    <div class="col-sm-5">
+                        $!company.fullName
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">所属行业</div>
+                    <div class="col-sm-5">
+                        #foreach($companyIndustry in $company.industries)
+                            $companyIndustry.industry.label、
+                        #end
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">所在城市</div>
+                    <div class="col-sm-5">
+                        $!company.city.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">电话</div>
+                    <div class="col-sm-5">
+                        $!company.phone
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">网址</div>
+                    <div class="col-sm-5">
+                        $!company.webSite
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">地址</div>
+                    <div class="col-sm-5">
+                        $!company.address
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">邮箱</div>
+                    <div class="col-sm-5">
+                        $!company.email
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">传真</div>
+                    <div class="col-sm-5">
+                        $!company.fax
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">员工数量</div>
+                    <div class="col-sm-5">
+                        $!company.staffCount
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">企业性质</div>
+                    <div class="col-sm-5">
+                        $!company.nature.label
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">产品</div>
+                    <div class="col-sm-5">
+                        $!company.products
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">注册资金</div>
+                    <div class="col-sm-5">
+                        $!company.registeredCapital
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">法人</div>
+                    <div class="col-sm-5">
+                        $!company.legalPerson
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">产权结构</div>
+                    <div class="col-sm-5">
+                        $!company.propertyRightStructure.label
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">企业简介</div>
+                    <div class="col-sm-5">$!company.intro</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">备注</div>
+                    <div class="col-sm-5">$!company.remark</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">搜索关键字</div>
+                    <div class="col-sm-5">
+                        $!company.keyword
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">BD</div>
+                    <div class="col-sm-5">
+                        $!company.maintainer.realName
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1" style="text-align: right;font-weight: bold">所属文件夹</div>
+                    <div class="col-sm-5">
+                        #foreach($companyFolder in $company.folders)
+                            $companyFolder.folder.label、
+                        #end
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div role="tabpanel" class="tab-pane active" id="批注">
+        </div>
+    </div>
+</div>
+</div>

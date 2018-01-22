@@ -43,6 +43,7 @@
         <value>/company/editView.do</value>
         <value>/company/findByBean.do</value>
         <value>/company/workspace.do</value>
+        <value>/company/detail.do</value>
         <value>/contact/workspace.do</value>
         <value>/contact/editView.do</value>
         <value>/position/workspace.do</value>
@@ -53,6 +54,7 @@
         <value>/baseData/workspace.do</value>
         <value>/tempCandidate/workspace.do</value>
         <value>/tempCandidate/editView.do</value>
+        <value>/tempCandidate/detail.do</value>
       </list>
     </property>
     <property name="exportMap">

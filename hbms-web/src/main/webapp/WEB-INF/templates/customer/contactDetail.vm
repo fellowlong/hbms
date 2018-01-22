@@ -1,0 +1,175 @@
+<style>
+  .widget-title {
+    color: #000;
+    font-family: '微软雅黑';
+  }
+
+  .widget-body {
+    padding: 15px;
+  }
+
+  #worExperiences.row {
+    margin: 0;
+  }
+
+  .form-horizontal .row {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .actionBar-container {
+    margin-top: 45px;
+  }
+  .actionBar {
+    background-color: lavender;
+    text-align: center;
+  }
+</style>
+
+  <div class="row" style="margin:0;padding-left: 50px">
+
+
+    <div class="row">
+      <div class="col-sm-6">
+        <h3><b>新增客户联系人</b></h3>
+        <hr/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">重要程度</label>
+      <div class="col-sm-5">
+        <select id="importantLevelId" name="importantLevelId" value="$!contact.importantLevelId" class="chosen-select form-control">
+          #set($contactImportantLevels = $baseDataService.getContactImportantLevels().children)
+          #foreach($contactImportantLevel in $contactImportantLevels)
+            <option value="$contactImportantLevel.id" #if($contactImportantLevel.id == $!contact.importantLevelId) selected #end>$contactImportantLevel.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">所属公司</label>
+      <div class="col-sm-5">
+        <select id="companyId" name="companyId" value="$!contact.companyId" class="chosen-select form-control">
+          #foreach($company in $companies)
+            <option value="$company.id" #if($company.id == $!contact.companyId) selected #end>$company.name</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">姓名<sup style="color:red">*</sup></label>
+      <div class="col-sm-5">
+        <div class="col-sm-11">$!contact.name" placeholder="姓名" class="form-control"
+               />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">英文姓名</label>
+      <div class="col-sm-5">
+        <div class="col-sm-11">$!contact.englishName" placeholder="英文姓名" class="form-control"
+               />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">性别</label>
+      <div class="col-sm-5">
+        <select id="sexId" name="sexId" value="$!candidate.sexId" class="chosen-select form-control">
+          #set($sexes = $baseDataService.getSexes().children)
+          #foreach($sex in $sexes)
+            <option value="$sex.id" #if($sex.id == $!contact.sexId) selected #end>$sex.label</option>
+          #end
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">所在部门</label>
+      <div class="col-sm-5">
+        <div class="col-sm-11">$!contact.department" placeholder="所在部门" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">职位</label>
+      <div class="col-sm-5">
+        <div class="col-sm-11">$!contact.position" placeholder="职位" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">公司电话</label>
+      <div class="col-sm-5">
+        <div class="col-sm-11">$!contact.companyPhone" placeholder="公司电话" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">手机</label>
+      <div class="col-sm-5">
+        <div class="col-sm-11">$!contact.mobilePhone" placeholder="手机" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">公司传真</label>
+      <div class="col-sm-5">
+        <div class="col-sm-11">$!contact.companyFax" placeholder="公司传真" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">邮箱</label>
+      <div class="col-sm-5">
+        <div class="col-sm-11">$!contact.email" placeholder="邮箱" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">其他联系方式</label>
+      <div class="col-sm-5">
+        <div class="col-sm-11">$!contact.otherContact" placeholder="其他联系方式" class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">生日</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <div class="col-sm-11">$!contact.birthday" type="text"
+                 data-date-format="yyyy-mm-dd" data-date-language="zh-CN" data-rule="生日:date">
+          <span class="input-group-addon">
+            <i class="fa fa-calendar bigger-110"></i>
+          </span>
+        </div>
+        <script type="text/javascript">
+          $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+          }).next().on("click", function () {
+            $('.date-picker').focus();
+          });
+        </script>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1" style="text-align: right;font-weight: bold">备注</label>
+      <div class="col-sm-5">
+        <textarea type="text" id="remark" name="remark" rows="5" class="form-control">$!contact.remark</textarea>
+      </div>
+    </div>
+
+  </div>
+
+

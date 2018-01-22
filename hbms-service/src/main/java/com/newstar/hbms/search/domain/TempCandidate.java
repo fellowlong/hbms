@@ -36,8 +36,8 @@ public class TempCandidate implements Serializable {
     private Long cityId;
     private TreeNode city;
 
-    private Long statusId;
-    private TreeNode status;
+    private Long jobHuntingStatusId;
+    private TreeNode jobHuntingStatus;
 
     //项目信息
     private Long projectCompanyId;
@@ -186,20 +186,20 @@ public class TempCandidate implements Serializable {
         this.city = city;
     }
 
-    public Long getStatusId() {
-        return statusId;
+    public Long getJobHuntingStatusId() {
+        return jobHuntingStatusId;
     }
 
-    public void setStatusId(Long statusId) {
-        this.statusId = statusId;
+    public void setJobHuntingStatusId(Long jobHuntingStatusId) {
+        this.jobHuntingStatusId = jobHuntingStatusId;
     }
 
-    public TreeNode getStatus() {
-        return status;
+    public TreeNode getJobHuntingStatus() {
+        return jobHuntingStatus;
     }
 
-    public void setStatus(TreeNode status) {
-        this.status = status;
+    public void setJobHuntingStatus(TreeNode jobHuntingStatus) {
+        this.jobHuntingStatus = jobHuntingStatus;
     }
 
     public Long getProjectCompanyId() {
@@ -361,8 +361,8 @@ public class TempCandidate implements Serializable {
                 ", production='" + production + '\'' +
                 ", cityId=" + cityId +
                 ", city=" + city +
-                ", statusId=" + statusId +
-                ", status=" + status +
+                ", jobHuntingStatusId=" + jobHuntingStatusId +
+                ", jobHuntingStatus=" + jobHuntingStatus +
                 ", projectCompanyId=" + projectCompanyId +
                 ", projectCompany=" + projectCompany +
                 ", projectId=" + projectId +

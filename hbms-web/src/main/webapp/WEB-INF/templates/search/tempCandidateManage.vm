@@ -101,7 +101,9 @@
       datatype: "json",
       colNames: ['姓名', '公司',  '职位', '城市', '项目公司', '项目', '寻访人', '寻访时间'],
       colModel: [
-        {name: 'name'},
+        {name: 'name', formatter: function(cellvalue, options, rowObject){
+                return "<a href='/tempCandidate/detail.do?id=" + rowObject.id + "' target='_blank'>" + cellvalue + "</a>";
+            }},
         {name: 'company.label'},
         {name: 'position.label'},
         {name: 'city.label'},

@@ -123,6 +123,18 @@ public class TempCandidateController  extends ConfigurableMultiActionController 
         WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, excludedProperties));
     }
 
+    public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Long id = WebUtils.getLong(request, WebUtils.ID);
+        ModelAndView modelAndView = new ModelAndView("/search/tempCandidateDetail");
+        if (id != null) {
+            List<TempCandidate> tempCandidates = tempCandidateService.findByIds(new Long[]{id});
+            if (tempCandidates != null && !tempCandidates.isEmpty()) {
+                modelAndView.getModel().put("tempCandidate", tempCandidates.get(0));
+            }
+        }
+        return modelAndView;
+    }
+
     public void setDatePattern(String datePattern) {
         this.datePattern = datePattern;
     }

@@ -1,0 +1,165 @@
+    <input type="hidden" name="id" value="$!tempCandidate.id">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3><b>寻访详情</b></h3>
+            <hr/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-11">
+
+
+    <div class="row">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4><b>候选人信息</b></h4>
+                    <hr/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">姓名</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!tempCandidate.name
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">电话</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!tempCandidate.phone
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">邮箱</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!tempCandidate.email
+                </div>
+            </div>
+
+          <div class="row">
+            <div class="col-sm-1" style="text-align: right;font-weight: bold">所在地</label></div>
+            <div class="col-sm-11" style="text-align: left">
+                $!tempCandidate.city.label
+            </div>
+          </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">当前公司</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!tempCandidate.company.label
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">部门</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!tempCandidate.department
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">职位</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!tempCandidate.position.label
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">求职状态</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!tempCandidate.jobHuntingStatus.label
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">负责的产品</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!tempCandidate.production
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4><b>项目信息</b></h4>
+                    <hr/>
+                </div>
+            </div>
+
+          <div class="row">
+            <div class="col-sm-1" style="text-align: right;font-weight: bold">项目公司</label></div>
+            <div class="col-sm-11" style="text-align: left">
+                $!tempCandidate.projectCompany.name
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-1" style="text-align: right;font-weight: bold">项目</label></div>
+            <div class="col-sm-11" style="text-align: left">
+                $!tempCandidate.project.name
+            </div>
+          </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4><b>创建信息</b></h4>
+                    <hr/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">创建人</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    #if($tempCandidate.addUser)
+                        $!tempCandidate.addUser.name - $!tempCandidate.addUser.name
+                    #end
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">创建时间</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!DateUtils.dateToString($tempCandidate.addTime, 'yyyy-mm-dd HH:mm:ss')
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4><b>寻访信息</b></h4>
+                    <hr/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">寻访人</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    #if($tempCandidate.searchUser)
+                        $!tempCandidate.searchUser.name - $!tempCandidate.searchUser.name
+                    #end
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">寻访时间</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!DateUtils.dateToString($tempCandidate.searchTime, 'yyyy-mm-dd HH:mm:ss')
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1" style="text-align: right;font-weight: bold">寻访备注</label></div>
+                <div class="col-sm-11" style="text-align: left">
+                    $!tempCandidate.searchRemark
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+    </div>

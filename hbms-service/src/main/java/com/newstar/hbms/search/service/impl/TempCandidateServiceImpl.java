@@ -83,7 +83,7 @@ public class TempCandidateServiceImpl implements TempCandidateService {
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("companyId", "company", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("positionId", "position", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("cityId", "city", "id", baseDataFetcher));
-    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("statusId", "status", "id", baseDataFetcher));
+    subObjectConfigs.add(new ObjectUtils.SubObjectConfig("jobHuntingStatusId", "jobHuntingStatus", "id", baseDataFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("projectCompanyId", "projectCompany", "id", companyFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("projectId", "project", "id", projectFetcher));
     subObjectConfigs.add(new ObjectUtils.SubObjectConfig("addUserId", "addUser", "id", userFetcher));
