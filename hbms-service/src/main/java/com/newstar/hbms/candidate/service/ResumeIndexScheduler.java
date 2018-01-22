@@ -14,7 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by wangjinsi on 2016/10/11.
+ * Created by fellowlong on 2016/10/11.
  */
 public class ResumeIndexScheduler {
 

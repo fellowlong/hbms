@@ -1,5 +1,5 @@
 /**
- * Created by wangjinsi on 17-1-10.
+ * Created by fellowlong on 17-1-10.
  */
 ;(function ($, window, document, undefined) {
   var CascadedChosen = function (currentRef, children, options) {

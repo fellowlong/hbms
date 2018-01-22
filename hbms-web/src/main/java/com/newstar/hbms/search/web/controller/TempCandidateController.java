@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by wangjinsi on 2017/3/23.
+ * Created by fellowlong on 2017/3/23.
  */
 public class TempCandidateController  extends ConfigurableMultiActionController {
 

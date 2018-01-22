@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by wangjinsi on 2016/10/11.
+ * Created by fellowlong on 2016/10/11.
  */
 public class CandidateIndexTask implements Serializable {
 

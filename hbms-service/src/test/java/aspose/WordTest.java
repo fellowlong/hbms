@@ -13,7 +13,7 @@ import java.io.*;
 import java.util.Iterator;
 
 /**
- * Created by wangjinsi on 17-2-10.
+ * Created by fellowlong on 17-2-10.
  */
 public class WordTest extends TestCase {
     public void testParseWord() throws Exception {

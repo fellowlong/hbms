@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by wangjinsi on 2015-09-17.
+ * Created by fellowlong on 2015-09-17.
  */
 public class VelocityView extends org.springframework.web.servlet.view.velocity.VelocityView {
 

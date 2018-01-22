@@ -1,5 +1,5 @@
 /**
- * Created by wangjinsi on 2017/2/24.
+ * Created by fellowlong on 2017/2/24.
  */
 ;(function ($, window, document, undefined) {
 

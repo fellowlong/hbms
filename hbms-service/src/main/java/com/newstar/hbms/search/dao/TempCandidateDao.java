@@ -7,7 +7,7 @@ import com.newstar.hbms.support.paging.PagingResult;
 import java.util.List;
 
 /**
- * Created by wangjinsi on 2017/3/23.
+ * Created by fellowlong on 2017/3/23.
  */
 public interface TempCandidateDao {
 

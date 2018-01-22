@@ -5,7 +5,7 @@ import com.newstar.hbms.system.domain.User;
 import java.io.Serializable;
 
 /**
- * Created by wangjinsi on 2016/11/18.
+ * Created by fellowlong on 2016/11/18.
  */
 public class ProjectAssistant implements Serializable {
 

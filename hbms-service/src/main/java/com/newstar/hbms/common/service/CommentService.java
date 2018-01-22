@@ -7,7 +7,7 @@ import com.newstar.hbms.support.paging.PagingResult;
 import java.util.List;
 
 /**
- * Created by wangjinsi on 17-1-18.
+ * Created by fellowlong on 17-1-18.
  */
 public interface CommentService {
 

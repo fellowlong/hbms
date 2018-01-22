@@ -4,7 +4,7 @@ import com.newstar.hbms.utils.FileUtils;
 import junit.framework.TestCase;
 
 /**
- * Created by wangjinsi on 2016/2/12.
+ * Created by fellowlong on 2016/2/12.
  */
 public class FileUtilsTest extends TestCase {
 

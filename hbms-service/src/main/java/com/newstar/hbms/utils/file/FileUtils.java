@@ -3,7 +3,7 @@ package com.newstar.hbms.utils.file;
 import java.io.*;
 
 /**
- * Created by wangjinsi on 2017/6/7.
+ * Created by fellowlong on 2017/6/7.
  */
 public abstract class FileUtils {
 

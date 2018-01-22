@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by wangjinsi on 2017-07-11.
+ * Created by fellowlong on 2017-07-11.
  */
 public class ResumeImport extends TestCase {
 

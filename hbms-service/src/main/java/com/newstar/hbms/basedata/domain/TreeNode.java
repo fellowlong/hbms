@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by wangjinsi on 2016/11/2.
+ * Created by fellowlong on 2016/11/2.
  */
 public class TreeNode implements Serializable {
 

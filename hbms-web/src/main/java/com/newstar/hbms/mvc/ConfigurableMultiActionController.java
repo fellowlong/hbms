@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by wangjinsi on 2016/11/12.
+ * Created by fellowlong on 2016/11/12.
  */
 public class ConfigurableMultiActionController extends MultiActionController {
 

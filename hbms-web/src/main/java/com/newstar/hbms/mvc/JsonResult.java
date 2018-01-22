@@ -3,7 +3,7 @@ package com.newstar.hbms.mvc;
 import java.io.Serializable;
 
 /**
- * Created by wangjinsi on 2016/3/2.
+ * Created by fellowlong on 2016/3/2.
  */
 public class JsonResult implements Serializable {
 

@@ -7,7 +7,7 @@ import com.newstar.hbms.system.service.AuthorityService;
 import java.util.*;
 
 /**
- * Created by wangjinsi on 2016/10/21.
+ * Created by fellowlong on 2016/10/21.
  */
 public class AuthorityServiceImpl implements AuthorityService {
 

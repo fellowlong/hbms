@@ -7,7 +7,7 @@ import com.jacob.activeX.*;
 import java.io.File;
 
 /**
- * Created by wangjinsi on 2017/7/11.
+ * Created by fellowlong on 2017/7/11.
  */
 public class MhtmlToWord extends TestCase {
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by wangjinsi on 2016/11/18.
+ * Created by fellowlong on 2016/11/18.
  */
 public class ProjectCandidate implements Serializable {
 

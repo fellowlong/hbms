@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
- * Created by wangjinsi on 2016/10/22.
+ * Created by fellowlong on 2016/10/22.
  */
 public class CompanyController extends MultiActionController {
 

@@ -15,7 +15,7 @@ import java.io.*;
 import java.util.List;
 
 /**
- * Created by wangjinsi on 2017/6/8.
+ * Created by fellowlong on 2017/6/8.
  */
 public class ResumeController extends ConfigurableMultiActionController {
 

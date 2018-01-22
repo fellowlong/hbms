@@ -7,7 +7,7 @@ import com.newstar.hbms.common.service.AttachmentService;
 import java.util.List;
 
 /**
- * Created by wangjinsi on 17-1-18.
+ * Created by fellowlong on 17-1-18.
  */
 public class AttachmentServiceImpl implements AttachmentService {
 

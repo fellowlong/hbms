@@ -1,7 +1,7 @@
 package com.newstar.hbms.utils;
 
 /**
- * Created by wangjinsi on 2016/2/10.
+ * Created by fellowlong on 2016/2/10.
  */
 
 import java.io.*;

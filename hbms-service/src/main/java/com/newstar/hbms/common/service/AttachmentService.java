@@ -5,7 +5,7 @@ import com.newstar.hbms.common.domain.Attachment;
 import java.util.List;
 
 /**
- * Created by wangjinsi on 17-1-18.
+ * Created by fellowlong on 17-1-18.
  */
 public interface AttachmentService {
 

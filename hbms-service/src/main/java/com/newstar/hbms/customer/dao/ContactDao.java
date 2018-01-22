@@ -7,7 +7,7 @@ import com.newstar.hbms.support.paging.PagingResult;
 import java.util.List;
 
 /**
- * Created by wangjinsi on 2016/10/22.
+ * Created by fellowlong on 2016/10/22.
  */
 public interface ContactDao {
 

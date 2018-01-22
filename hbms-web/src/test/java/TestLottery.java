@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * Created by wangjinsi on 2017-07-08.
+ * Created by fellowlong on 2017-07-08.
  */
 public class TestLottery extends TestCase {
 

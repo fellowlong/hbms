@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by wangjinsi on 2016/11/2.
+ * Created by fellowlong on 2016/11/2.
  */
 public class Comment implements Serializable {
 

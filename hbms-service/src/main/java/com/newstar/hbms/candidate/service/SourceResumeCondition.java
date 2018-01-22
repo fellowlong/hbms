@@ -3,7 +3,7 @@ package com.newstar.hbms.candidate.service;
 import java.util.Date;
 
 /**
- * Created by wangjinsi on 2016/2/14.
+ * Created by fellowlong on 2016/2/14.
  */
 public class SourceResumeCondition {
 
