@@ -10,6 +10,7 @@ public class Comment implements Serializable {
 
     public static final String BUSINESS_TYPE_CANDIDATE = "candidate";
     public static final String BUSINESS_TYPE_COMPANY = "company";
+    public static final String BUSINESS_TYPE_CONTACT = "contact";
     public static final String BUSINESS_TYPE_POSITION = "position";
     public static final String BUSINESS_TYPE_PROJECT = "project";
 

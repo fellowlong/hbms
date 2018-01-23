@@ -1,0 +1,207 @@
+<h3>职位&nbsp;<strong><span class="font-size:80">$!position.name</span></strong>&nbsp;详情</h3>
+
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#职位信息" aria-controls="home" role="tab" data-toggle="tab">职位信息</a>
+    </li>
+    <li role="presentation"><a href="#批注" aria-controls="settings" role="tab" data-toggle="tab">批注</a></li>
+  </ul>
+
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="职位信息">
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">所属公司</div>
+        <div class="col-sm-11">
+          $!position.company.name
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">客户联系人</div>
+        <div class="col-sm-11">
+          $!position.contact.name
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">编码</div>
+        <div class="col-sm-11">
+          $!position.code
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">职位名称</div>
+        <div class="col-sm-11">
+          $!position.name
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">优先级</div>
+        <div class="col-sm-11">
+          $!position.priority.label
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">所属行业</div>
+        <div class="col-sm-11">
+          $!position.industry.label
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">职能</div>
+        <div class="col-sm-11">
+          $!position.function.label
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">所在城市</div>
+        <div class="col-sm-11">
+          $!position.city.label
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">名企背景</div>
+        <div class="col-sm-11">
+          $!position.fameCompanyBackground.label
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">国籍</div>
+        <div class="col-sm-11">
+          $!position.nationality.label
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">学历</div>
+        <div class="col-sm-11">
+          $!position.degree.label
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">语言要求</div>
+        <div class="col-sm-11">
+          #foreach($positionLanguage in $!position.languages)
+            $positionLanguage.language.label、
+          #end
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">年龄要求</div>
+        <div class="col-sm-11">
+          <div class="input-group">
+            $!position.minAge - $!position.maxAge
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">工作年限要求</div>
+        <div class="col-sm-11">
+          $!position.minWorkYears - $!position.maxWorkYears
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">年薪范围</div>
+        <div class="col-sm-11">
+          $!position.minAnnualSalary - $!position.maxAnnualSalary
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">性别</div>
+        <div class="col-sm-11">
+          $!position.sex.label
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">招聘地址</div>
+        <div class="col-sm-11">
+          $!position.address
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">标签</div>
+        <div class="col-sm-11">
+          #foreach($positionTag in $!position.tags)
+            $positionTag.tag.label、
+          #end
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">说明</div>
+        <div class="col-sm-11">
+          $!position.description
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">职位亮点及优势</div>
+        <div class="col-sm-11">
+          $!position.brightAndAdvantage
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">流程及领导介绍</div>
+        <div class="col-sm-11">
+          $!position.processAndLeaderIntro
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">薪资结构</div>
+        <div class="col-sm-11">
+          $!position.salaryStructure
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">寻访方向</div>
+        <div class="col-sm-11">
+          $!position.searchDirection
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">备注</div>
+        <div class="col-sm-11">
+          $!position.remark
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-1" style="text-align: right;font-weight: bold">BD</div>
+        <div class="col-sm-11">
+          $!position.businessDeveloper
+        </div>
+      </div>
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="批注">
+    </div>
+
+  </div>

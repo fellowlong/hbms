@@ -79,7 +79,9 @@
       datatype: "json",
       colNames: ['名称', '公司', '城市', '行业', '工作年限要求', '客户联系人'],
       colModel: [
-        {name: 'name', width: 150},
+        {name: 'name', width: 150, formatter: function(cellvalue, options, rowObject){
+            return "<a href='/position/detail.do?id=" + rowObject.id + "' target='_blank'>" + cellvalue + "</a>";
+          }},
         {name: 'company.name', width: 150},
         {name: 'city.label', width: 150},
         {name: 'industry.label', width: 150},

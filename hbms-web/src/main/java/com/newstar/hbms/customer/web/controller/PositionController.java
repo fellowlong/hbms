@@ -2,6 +2,7 @@ package com.newstar.hbms.customer.web.controller;
 
 import com.newstar.hbms.basedata.domain.TreeNode;
 import com.newstar.hbms.customer.domain.Company;
+import com.newstar.hbms.customer.domain.Contact;
 import com.newstar.hbms.customer.domain.Position;
 import com.newstar.hbms.customer.service.CompanyService;
 import com.newstar.hbms.customer.service.PositionService;
@@ -144,6 +145,19 @@ public class PositionController extends MultiActionController {
       jsonMap.put("rows", null);
     }
     WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap, excludedProperties));
+  }
+
+
+  public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Long id = WebUtils.getLong(request, WebUtils.ID);
+    ModelAndView modelAndView = new ModelAndView("/customer/positionDetail");
+    if (id != null) {
+      List<Position> positions = positionService.findByIds(new Long[]{id});
+      if (positions != null && !positions.isEmpty()) {
+        modelAndView.getModel().put("position", positions.get(0));
+      }
+    }
+    return modelAndView;
   }
 
   @Override

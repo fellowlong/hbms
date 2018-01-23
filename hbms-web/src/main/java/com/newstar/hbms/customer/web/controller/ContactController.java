@@ -146,6 +146,20 @@ public class ContactController extends MultiActionController {
     WebUtils.writeWithJson(response, JsonUtils.beanToJson(jsonMap));
   }
 
+  public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Long id = WebUtils.getLong(request, WebUtils.ID);
+    ModelAndView modelAndView = new ModelAndView("/customer/contactDetail");
+    if (id != null) {
+      List<Contact> contacts = contactService.findByIds(new Long[]{id});
+      if (contacts != null && !contacts.isEmpty()) {
+        modelAndView.getModel().put("contact", contacts.get(0));
+      }
+    }
+    return modelAndView;
+  }
+
+
+
   @Override
   protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
     super.initBinder(request, binder);

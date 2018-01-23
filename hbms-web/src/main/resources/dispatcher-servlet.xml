@@ -46,8 +46,10 @@
         <value>/company/detail.do</value>
         <value>/contact/workspace.do</value>
         <value>/contact/editView.do</value>
+        <value>/contact/detail.do</value>
         <value>/position/workspace.do</value>
         <value>/position/editView.do</value>
+        <value>/position/detail.do</value>
         <value>/project/workspace.do</value>
         <value>/project/editView.do</value>
         <value>/project/detail.do</value>
