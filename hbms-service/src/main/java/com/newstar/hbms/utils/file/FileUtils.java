@@ -1,5 +1,10 @@
 package com.newstar.hbms.utils.file;
 
+import com.aspose.pdf.DocSaveOptions;
+import com.aspose.pdf.SaveOptions;
+import com.aspose.words.IImageSavingCallback;
+import com.aspose.words.ImageSavingArgs;
+
 import java.io.*;
 
 /**
@@ -19,45 +24,77 @@ public abstract class FileUtils {
     }
 
     public static void convert(InputStream sourceInputStream, OutputStream targetOutputStream, FileType sourceFileType, FileType targetFileType) {
-        int pdfSaveFormat = -1;
-        int wordSaveFormat = -1;
-        int excelSaveFormat = -1;
-        if (targetFileType.equals(FileType.doc)) {
-            pdfSaveFormat = com.aspose.pdf.SaveFormat.Doc;
-            wordSaveFormat = com.aspose.words.SaveFormat.DOC;
-        } else if (targetFileType.equals(FileType.docx)) {
-            pdfSaveFormat = com.aspose.pdf.SaveFormat.DocX;
-            wordSaveFormat = com.aspose.words.SaveFormat.DOCX;
+        Object pdfSaveOptions = -1;
+        Object wordSaveOptions = -1;
+        Object excelSaveOptions = -1;
+        Object imageSavingCallback = null;
+        if (targetFileType.equals(FileType.doc) || targetFileType.equals(FileType.docx)) {
+            com.aspose.pdf.DocSaveOptions docSaveOptionsByPdf = new com.aspose.pdf.DocSaveOptions();
+            docSaveOptionsByPdf.setFormat(com.aspose.pdf.SaveFormat.DocX);
+            pdfSaveOptions = docSaveOptionsByPdf;
+            //不支持  DOC、DOCX、XLS、XLSX转PPT、PPTX
         } else if (targetFileType.equals(FileType.ppt) || targetFileType.equals(FileType.pptx)) {
-            pdfSaveFormat = com.aspose.pdf.SaveFormat.Pptx;
+            com.aspose.pdf.PptxSaveOptions pptxSaveOptions = new com.aspose.pdf.PptxSaveOptions();
+            pdfSaveOptions = pptxSaveOptions;
+            //不支持  DOC、DOCX、XLS、XLSX转PPT、PPTX
         } else if (targetFileType.equals(FileType.xls) || targetFileType.equals(FileType.xlsx)) {
-            pdfSaveFormat = com.aspose.pdf.SaveFormat.Excel;
+            com.aspose.pdf.ExcelSaveOptions excelSaveOptionsByPdf = new com.aspose.pdf.ExcelSaveOptions();
+            pdfSaveOptions = excelSaveOptionsByPdf;
+            //不支持  DOC、DOCX、XLS、XLSX转XLS、XLSX
         } else if (targetFileType.equals(FileType.txt) || targetFileType.equals(FileType.text)) {
-            pdfSaveFormat = com.aspose.pdf.SaveFormat.TeX;
-            wordSaveFormat = com.aspose.words.SaveFormat.TEXT;
-            excelSaveFormat = com.aspose.cells.SaveFormat.CSV;
+            com.aspose.pdf.LaTeXSaveOptions textSaveOptionsByPdf = new com.aspose.pdf.LaTeXSaveOptions();
+            pdfSaveOptions = textSaveOptionsByPdf;
+
+            com.aspose.words.TxtSaveOptions txtSaveOptionsByDoc = new com.aspose.words.TxtSaveOptions();
+            txtSaveOptionsByDoc.setSaveFormat(com.aspose.words.SaveFormat.TEXT);
+            wordSaveOptions = txtSaveOptionsByDoc;
+
+            com.aspose.cells.TxtSaveOptions txtSaveOptionsByExcel =new com.aspose.cells.TxtSaveOptions();
+            txtSaveOptionsByExcel.setEncoding(com.aspose.cells.Encoding.getUTF8());
+            excelSaveOptions = txtSaveOptionsByExcel;
+
         } else if (targetFileType.equals(FileType.html)) {
-            pdfSaveFormat = com.aspose.pdf.SaveFormat.Html;
-            wordSaveFormat = com.aspose.words.SaveFormat.HTML;
-            excelSaveFormat = com.aspose.cells.SaveFormat.HTML;
+
+            com.aspose.pdf.HtmlSaveOptions htmlSaveOptionsByPdf = new com.aspose.pdf.HtmlSaveOptions(com.aspose.pdf.SaveFormat.Html);
+            pdfSaveOptions = htmlSaveOptionsByPdf;
+
+            com.aspose.words.HtmlSaveOptions htmlSaveOptionsByDoc = new com.aspose.words.HtmlSaveOptions(com.aspose.words.SaveFormat.HTML);
+            htmlSaveOptionsByDoc.setImageSavingCallback(new IImageSavingCallback() {
+                @Override
+                public void imageSaving(ImageSavingArgs imageSavingArgs) throws Exception {
+                    imageSavingArgs.setImageStream(new ByteArrayOutputStream());
+                    imageSavingArgs.setKeepImageStreamOpen(false);
+                }
+            });
+            htmlSaveOptionsByDoc.setSaveFormat(com.aspose.words.SaveFormat.HTML);
+            wordSaveOptions = htmlSaveOptionsByDoc;
+
+            com.aspose.cells.HtmlSaveOptions htmlSaveOptionsByExcel =new com.aspose.cells.HtmlSaveOptions(com.aspose.cells.SaveFormat.HTML);
+            excelSaveOptions = htmlSaveOptionsByExcel;
+
         } else if (targetFileType.equals(FileType.pdf)) {
-            wordSaveFormat = com.aspose.words.SaveFormat.PDF;
-            excelSaveFormat = com.aspose.cells.SaveFormat.PDF;
+            com.aspose.words.PdfSaveOptions pdfSaveOptionsByDoc = new com.aspose.words.PdfSaveOptions();
+            pdfSaveOptionsByDoc.setSaveFormat(com.aspose.words.SaveFormat.PDF);
+            wordSaveOptions = pdfSaveOptionsByDoc;
+
+            com.aspose.cells.XlsSaveOptions pdfSaveOptionsByExcel =new com.aspose.cells.XlsSaveOptions(com.aspose.cells.SaveFormat.PDF);
+            excelSaveOptions = pdfSaveOptionsByExcel;
+            //不支持PDF转PDF
         } else {
             throw new RuntimeException("不能识别的类型:" + targetFileType);
         }
         try {
             if (sourceFileType.equals(FileType.pdf)) {
                 com.aspose.pdf.Document doc = new com.aspose.pdf.Document(sourceInputStream);
-                doc.save(targetOutputStream, pdfSaveFormat);
+                doc.save(targetOutputStream, (SaveOptions) pdfSaveOptions);
                 doc.freeMemory();
                 doc.close();
             } else if (sourceFileType.equals(FileType.doc) || sourceFileType.equals(FileType.docx)) {
                 com.aspose.words.Document doc = new com.aspose.words.Document(sourceInputStream);
-                doc.save(targetOutputStream, wordSaveFormat);
+                doc.save(targetOutputStream, (com.aspose.words.SaveOptions) wordSaveOptions);
             } else if (sourceFileType.equals(FileType.xls) || sourceFileType.equals(FileType.xlsx)) {
                 com.aspose.cells.Workbook doc = new com.aspose.cells.Workbook(sourceInputStream);
-                doc.save(targetOutputStream, excelSaveFormat);
+                doc.save(targetOutputStream, (com.aspose.cells.SaveOptions) excelSaveOptions);
             } else {
                 throw new RuntimeException("不支持的源文件格式:" + sourceFileType);
             }
