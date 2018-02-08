@@ -23,8 +23,8 @@ public class WordTest extends TestCase {
             if (resume.isDirectory()) continue;
             try {
                 FileUtils.convert(
-                        new FileInputStream(resume),
-                        new FileOutputStream("E:\\OfficeFiles\\newstar\\测试简历\\html\\" + resume.getName() + ".html"),
+                    new FileInputStream(resume),
+                        "E:\\OfficeFiles\\newstar\\测试简历\\html\\" + resume.getName() + ".html",
                         FileType.getFileType(resume.getName()),
                         FileType.html);
             } catch (Exception e) {

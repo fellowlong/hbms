@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by fellowlong on 2016/12/13.
  */
 ;(function ($, window, document, undefined) {
@@ -90,7 +90,7 @@
         } else {
           var name = node.label;
           if (node.parent && node.parent != null) {
-              name = getPathedNodeNameFromServer(node.parent) + "/" + name;
+            name = getPathedNodeNameFromServer(node.parent) + "/" + name;
           }
           return name.charAt(0) == '/' ? name : "/" + name;
         }
@@ -109,12 +109,12 @@
         });
         itemHtml += "</span>";
         if (!this.options.isMultiFormField) {
-            break;
+          break;
         }
       }
       var itemElement = $(this.element).children("div").first().children("div").first();
       if (!this.options.isMultiFormField) {
-          itemElement.empty();
+        itemElement.empty();
       }
       itemElement.append(itemHtml);
       reCalValueIndex(itemElement);
@@ -196,11 +196,11 @@
     }
     return name.charAt(0) == '/' ? name : "/" + name;
   }
-  
+
   $.fn.baseDataSelector = function (options) {
     var selector = new BaseDataSelector(this, options);
     selector.init();
     return selector;
   }
-  
+
 })(jQuery, window, document);

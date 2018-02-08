@@ -25,6 +25,7 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
   <import resource="applicationContext.xml"/>
+  <import resource="applicationSecurity.xml"/>
 
   <!--web-->
   <bean class="com.newstar.hbms.mvc.FrameworkControllerHandlerAdapter">

@@ -23,7 +23,7 @@ public abstract class FileUtils {
         }
     }
 
-    public static void convert(InputStream sourceInputStream, OutputStream targetOutputStream, FileType sourceFileType, FileType targetFileType) {
+    public static void convert(InputStream sourceInputStream, final String targetFile, FileType sourceFileType, FileType targetFileType) {
         Object pdfSaveOptions = -1;
         Object wordSaveOptions = -1;
         Object excelSaveOptions = -1;
@@ -60,9 +60,16 @@ public abstract class FileUtils {
 
             com.aspose.words.HtmlSaveOptions htmlSaveOptionsByDoc = new com.aspose.words.HtmlSaveOptions(com.aspose.words.SaveFormat.HTML);
             htmlSaveOptionsByDoc.setImageSavingCallback(new IImageSavingCallback() {
+
+                int index = 1;
+
                 @Override
                 public void imageSaving(ImageSavingArgs imageSavingArgs) throws Exception {
-                    imageSavingArgs.setImageStream(new ByteArrayOutputStream());
+                    String targetShortFileName = targetFile.substring((targetFile.lastIndexOf("/") > -1 ? targetFile.lastIndexOf("/") : targetFile.lastIndexOf("\\")) + 1, targetFile.lastIndexOf("."));
+                    String imageShortName = targetShortFileName + "-"  + index++ +"." + imageSavingArgs.getImageFileName().substring(imageSavingArgs.getImageFileName().lastIndexOf(".") + 1);
+                    String imageFullPathName = targetFile.substring(0, targetFile.lastIndexOf("/") + 1) + imageShortName;
+                    imageSavingArgs.setImageFileName(imageShortName);
+                    imageSavingArgs.setImageStream(new FileOutputStream(imageFullPathName));
                     imageSavingArgs.setKeepImageStreamOpen(false);
                 }
             });
@@ -86,15 +93,15 @@ public abstract class FileUtils {
         try {
             if (sourceFileType.equals(FileType.pdf)) {
                 com.aspose.pdf.Document doc = new com.aspose.pdf.Document(sourceInputStream);
-                doc.save(targetOutputStream, (SaveOptions) pdfSaveOptions);
+                doc.save(targetFile, (SaveOptions) pdfSaveOptions);
                 doc.freeMemory();
                 doc.close();
             } else if (sourceFileType.equals(FileType.doc) || sourceFileType.equals(FileType.docx)) {
                 com.aspose.words.Document doc = new com.aspose.words.Document(sourceInputStream);
-                doc.save(targetOutputStream, (com.aspose.words.SaveOptions) wordSaveOptions);
+                doc.save(targetFile, (com.aspose.words.SaveOptions) wordSaveOptions);
             } else if (sourceFileType.equals(FileType.xls) || sourceFileType.equals(FileType.xlsx)) {
                 com.aspose.cells.Workbook doc = new com.aspose.cells.Workbook(sourceInputStream);
-                doc.save(targetOutputStream, (com.aspose.cells.SaveOptions) excelSaveOptions);
+                doc.save(targetFile, (com.aspose.cells.SaveOptions) excelSaveOptions);
             } else {
                 throw new RuntimeException("不支持的源文件格式:" + sourceFileType);
             }
